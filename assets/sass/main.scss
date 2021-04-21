@@ -7,6 +7,20 @@
     --light           : #F3F3F3;
   }
 
+  .sub-header {
+    white-space: nowrap;
+    flex-flow: wrap;
+  }
+
+  .sub-header ul {
+    display: flex;
+    flex-flow: wrap;
+  }
+
+  .sub-header ul li {
+    display: block;
+  }
+
   .navbar-brand {
     flex: 1;
   }
