@@ -53,3 +53,15 @@ home = ["HTML", "RSS", "Algolia"]
     name = "Docs"
     url = "https://docs.kubewarden.io/"
     weight = -110
+
+  [[menu.main]]
+    identifier = "slack"
+    name = "Slack"
+    url = "https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden"
+    weight = -100
+
+  [[menu.main]]
+    identifier = "twitter"
+    name = "Twitter"
+    url = "https://twitter.com/kubewarden"
+    weight = -90
