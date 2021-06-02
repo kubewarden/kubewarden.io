@@ -10,6 +10,7 @@
 
     <nav>
       <ul class="menu">
+        <li><a href="/blog" class="btn no-bg">Blog</a></li>
         {{ range . }}
         <li><a href="{{ .URL }}" class="btn no-bg" target="_blank">{{ .Name }}</a></li>
         {{ end }}
