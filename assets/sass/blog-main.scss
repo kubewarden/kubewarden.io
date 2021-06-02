@@ -97,8 +97,13 @@ footer {
   align-items: center;
 }
 
-.rancher-header {
+.rancher-header,
+header {
   background:var(--dark);
+
+  ul {
+    display: flex;
+  }
 
   a {
     color: white;
