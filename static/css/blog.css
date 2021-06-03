@@ -37,6 +37,16 @@ main h1, h2, h3, h4 {
     text-align: left;
 }
 
+main article author, main article time {
+    display: block;
+    font-size: medium;
+    font-style: italic;
+}
+
+main #blog-post-content {
+    padding-top: 4em;
+}
+
 main pre {
     overflow-x: auto;
     white-space: pre;

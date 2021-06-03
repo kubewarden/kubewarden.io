@@ -15,8 +15,9 @@
   	<section class="wrap">
   		<article>
   			<h1>{{ .Title }}</h1>
+        <author>{{ delimit .Params.authors ", " " and "}}</author>
         <time>{{ .Date.Format "02 Jan 2006" }}</time>
-  			<div>
+        <div id="blog-post-content">
   				{{ .Content }}
   			</div>
   			<div>
