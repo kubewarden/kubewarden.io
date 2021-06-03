@@ -1,0 +1,382 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Writing your first policy with Kubewarden</title><link rel=stylesheet type=text/css href=/sass/blog.min.css?1622706200><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a class=navbar-brand href><img src=/images/logo-kubewarden.svg alt=kubewarden></a><nav><ul class=menu><li><a href=/blog class="btn no-bg">Blog</a></li><li><a href=https://hub.kubewarden.io/ class="btn no-bg" target=_blank>Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ class="btn no-bg" target=_blank>Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ class="btn no-bg" target=_blank>Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" class="btn no-bg" target=_blank>Slack</a></li><li><a href=https://twitter.com/kubewarden class="btn no-bg" target=_blank>Twitter</a></li><li><a href=https://github.com/kubewarden class=btn><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Writing your first policy with Kubewarden</h1><author>Rafael Fernández López</author>
+<time>02 Jun 2021</time><div id=blog-post-content><p>Kubewarden is a project focused on security and compliance. Its main
+goal is to allow you to write, test, distribute and run policies using
+the tooling that you already know and master, with a focus on
+controlling Kubernetes inner behaviors.</p><p>Policies are written in one of the supported languages, and the target
+object is a WebAssembly binary artifact. This is how Kubewarden can
+ensure that no matter where you built the policy, it can run on all
+platforms without any kind of adaptation.</p><p>Kubewarden supports both validating and mutating Kubernetes
+webhooks. We have published Kubewarden SDKs for different
+languages. These allow you to implement your policies and reuse some
+common bits and pieces in an idiomatic way.</p><p>A policy can be deployed multiple times in the same cluster. This is
+so because policies are regular programs, and an important optional
+bit of the input we provide the policy is the configuration of the
+policy itself. This is how you can have a generic policy that depends
+on some configuration provided to it, and thus, behaves in a different
+way depending on the instance.</p><p>Whether you are developing your own internal policy, for the
+community, or are looking to try some policies you found in the wild
+in our <a href=https://hub.kubewarden.io>Policy Hub</a>, chances are that you
+want to check if the policy behaves as you expect &ndash; leaving aside the
+fact that you might want to audit it; we will cover it in a future
+blog post. &ndash;</p><p>Enough of an introduction. Let&rsquo;s get our feet wet!</p><h2 id=the-policy-idea>The policy idea</h2><p>Let&rsquo;s write a simple policy that has to do with internal company
+compliance. Let&rsquo;s say that in your organization, all teams have an
+identifier, and that all the namespaces in your cluster must meet the
+following requirements:</p><ul><li>Name is prefixed with the team identifier owning the namespace<ul><li>Due to internal company compliance, all team identifiers follow
+the pattern <code>t-\w+-\w+</code>.</li></ul></li><li>The following annotation keys are required. The annotation names are
+also part of the compliance rules and agreed upon within the
+company:<ul><li><code>compliance.my-company.com/team-contact-email</code><ul><li>Must be a syntactically valid email ending with our company
+domain.</li></ul></li><li><code>compliance.my-company.com/team-region</code><ul><li>Allowed values: <code>AMER</code> (North, Central and South America),
+<code>APAC</code> (Asia-Pacific), <code>EMEA</code> (Europe, Middle-East and
+Africa).</li></ul></li></ul></li></ul><p>The policy won&rsquo;t allow the creation of new namespaces that don&rsquo;t
+follow any of this rules.</p><p>That&rsquo;s it for now. I am sure you already have in mind several ways to
+enrichen, improve and secure this simple policy.</p><h2 id=the-language>The language</h2><p>At the time of writing we have SDKs for the following languages:</p><ul><li><a href=https://github.com/kubewarden/policy-sdk-rust>Rust</a></li><li><a href=https://github.com/kubewarden/policy-sdk-swift>Swift</a></li><li><a href=https://github.com/kubewarden/policy-sdk-go>TinyGo</a></li></ul><p>This list is not static and more will be implemented over time. If you
+want to know more about the SDKs and the languages we support and why,
+you can <a href=https://docs.kubewarden.io/writing-policies/index.html#programming-language-requirements>extend the read through the Kubewarden
+book</a>.</p><p>We are going to write our policy in Go, thus, we will use the TinyGo
+compiler.</p><p>In general, starting a new policy is a matter of using the policy
+template we have on GitHub, except for Rust, that has a dedicated
+tool. You can find more information <a href=https://docs.kubewarden.io/>in the
+book</a>.</p><h2 id=the-policy>The policy</h2><p>We head to the <a href=https://github.com/kubewarden/go-policy-template><code>go-policy-template</code>
+repo</a> and use that
+template, creating a repository in one of our GitHub organizations.</p><h3 id=prerequisites>Prerequisites</h3><p>We clone the repository we just generated from the template
+locally. Your organization and repository name depend on what you
+chose on the GitHub web interface when using the template:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ git clone git@github.com:your-organization/your-templated-policy.git
+</code></pre></div><blockquote><p><strong>Note</strong>: you will need <code>docker</code> or <code>podman</code> installed for this
+exercise. At the time of writing, the policy template&rsquo;s <code>Makefile</code>
+calls to the <code>docker</code> CLI, so if you use <code>podman</code>, make sure you
+also have a <code>docker</code> wrapper or symlink in your <code>$PATH</code>. This is so
+you don&rsquo;t have to install TinyGo yourself.</p></blockquote><p>Let&rsquo;s perform a sanity check by running <code>make</code>:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ rm -rf vendor
+$ make
+</code></pre></div><blockquote><p><strong>Note</strong>: we remove the <code>vendor</code> folder so dependencies will be
+fetched on every build. This is just for the sake of ease of build
+for the blog post: you don&rsquo;t need to do <code>go mod tidy</code> and <code>go mod vendor</code> afterwards when we add more dependencies, so you don&rsquo;t need
+to have any kind of Go toolchain with the right versions on your
+machine &ndash; a simple <code>make</code> will build it, a little bit slower than
+vendored, but still. &ndash;</p></blockquote><p>We can see that as a result of the previous command, the sample policy
+that the template contains has been built in a file called
+<code>policy.wasm</code>.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ file policy.wasm
+policy.wasm: WebAssembly (wasm) binary module version 0x1 (MVP)
+</code></pre></div><p>Looks about right! Now, let&rsquo;s go ahead and write our policy!</p><h3 id=policy-first-go>Policy first go</h3><p>Let&rsquo;s start by editing the <code>main.go</code> file. For the sake blog post
+brevity, I&rsquo;ll keep the code on the <code>main.go</code> file, so it&rsquo;s
+straightforward to follow. Also, I&rsquo;ll be skipping some other best
+practices, like TDD or even having unit tests, again for the sake of
+brevity.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+	<span style=color:#a6e22e>wapc</span> <span style=color:#e6db74>&#34;github.com/wapc/wapc-guest-tinygo&#34;</span>
+	<span style=color:#a6e22e>kubewarden</span> <span style=color:#e6db74>&#34;github.com/kubewarden/policy-sdk-go&#34;</span>
+)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+	<span style=color:#a6e22e>wapc</span>.<span style=color:#a6e22e>RegisterFunctions</span>(<span style=color:#a6e22e>wapc</span>.<span style=color:#a6e22e>Functions</span>{
+        <span style=color:#75715e>// function that validates the k8s request
+</span><span style=color:#75715e></span>		<span style=color:#e6db74>&#34;validate&#34;</span>: <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>payload</span> []<span style=color:#66d9ef>byte</span>) ([]<span style=color:#66d9ef>byte</span>, <span style=color:#66d9ef>error</span>) {
+			<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>AcceptRequest</span>()
+		},
+        <span style=color:#75715e>// function that validates the policy settings
+</span><span style=color:#75715e></span>		<span style=color:#e6db74>&#34;validate_settings&#34;</span>: <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>payload</span> []<span style=color:#66d9ef>byte</span>) ([]<span style=color:#66d9ef>byte</span>, <span style=color:#66d9ef>error</span>) {
+			<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>AcceptSettings</span>()
+		},
+	})
+}
+</code></pre></div><p>Now we have a program, but we don&rsquo;t have a way to know if it does what
+we want. This instance is pretty trivial, right? It does nothing. It
+just accepts the request as if there was no policy at all. If policy
+ghosting was a thing, this would be it.</p><p>On the upside, though, we have a Wasm target object that we can run
+everywhere, provided we have the right Wasm engine tooling on the
+host. How cool is that?</p><p>Take into account that despite the function is named
+<code>AcceptRequest()</code>, this doesn&rsquo;t mean the request will be accepted, it
+just means that this policy will not reject it. Other active webhooks
+or policies could reject it though. Rejecting is final: if only one
+webhook or policy rejects the request, it will be rejected.</p><h2 id=dry-running>Dry running</h2><p>In order to dry run our policy we will use the <a href=https://github.com/kubewarden/kwctl><code>kwctl</code> command-line
+tool</a>. You can go to the
+<a href=https://github.com/kubewarden/kwctl/releases/>releases page</a>, and
+fetch the latest one.</p><p>Check that the tool is correctly installed:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ kwctl --version
+kwctl 0.1.1
+</code></pre></div><p>You can inspect the <code>kwctl</code> commands by running <code>kwctl --help</code>. However, we will focus on the <code>run</code> command in this post.</p><p>In order to run a policy, you need two mandatory things:</p><ul><li>The policy to be executed (the <code>policy.wasm</code> file we produced
+earlier as a first smoke test, and that we will really implement in
+the next section of this post).</li><li>The request to be evaluated<ul><li>This is the <a href=https://github.com/kubernetes/api/blob/v0.21.1/admission/v1beta1/types.go#L34-L42>Kubernetes <code>AdmissionReview</code>
+object</a>,
+or the <a href=https://github.com/kubernetes/api/blob/v0.21.1/admission/v1beta1/types.go#L45-L118><code>AdmissionRequest</code> object it
+contains</a>. Any
+of those will work. It has to be provided in JSON format, that is
+how the Kubernetes API server informs the webhook, and thus, the
+policy.</li></ul></li></ul><p>Now we need a request to be evaluated. We can retrieve this request by
+auditing the API server, but I will hand you an example, given the
+goal of this post is not to record or audit requests :)</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+	<span style=color:#f92672>&#34;kind&#34;</span>: <span style=color:#e6db74>&#34;AdmissionReview&#34;</span>,
+	<span style=color:#f92672>&#34;apiVersion&#34;</span>: <span style=color:#e6db74>&#34;admission.k8s.io/v1&#34;</span>,
+	<span style=color:#f92672>&#34;request&#34;</span>: {
+		<span style=color:#f92672>&#34;uid&#34;</span>: <span style=color:#e6db74>&#34;150d1761-43fb-4f36-bb73-7a3888a0bca2&#34;</span>,
+		<span style=color:#f92672>&#34;kind&#34;</span>: {
+			<span style=color:#f92672>&#34;group&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+			<span style=color:#f92672>&#34;version&#34;</span>: <span style=color:#e6db74>&#34;v1&#34;</span>,
+			<span style=color:#f92672>&#34;kind&#34;</span>: <span style=color:#e6db74>&#34;Namespace&#34;</span>
+		},
+		<span style=color:#f92672>&#34;resource&#34;</span>: {
+			<span style=color:#f92672>&#34;group&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+			<span style=color:#f92672>&#34;version&#34;</span>: <span style=color:#e6db74>&#34;v1&#34;</span>,
+			<span style=color:#f92672>&#34;resource&#34;</span>: <span style=color:#e6db74>&#34;namespaces&#34;</span>
+		},
+		<span style=color:#f92672>&#34;requestKind&#34;</span>: {
+			<span style=color:#f92672>&#34;group&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+			<span style=color:#f92672>&#34;version&#34;</span>: <span style=color:#e6db74>&#34;v1&#34;</span>,
+			<span style=color:#f92672>&#34;kind&#34;</span>: <span style=color:#e6db74>&#34;Namespace&#34;</span>
+		},
+		<span style=color:#f92672>&#34;requestResource&#34;</span>: {
+			<span style=color:#f92672>&#34;group&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+			<span style=color:#f92672>&#34;version&#34;</span>: <span style=color:#e6db74>&#34;v1&#34;</span>,
+			<span style=color:#f92672>&#34;resource&#34;</span>: <span style=color:#e6db74>&#34;namespaces&#34;</span>
+		},
+		<span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;test-policy-ns&#34;</span>,
+		<span style=color:#f92672>&#34;namespace&#34;</span>: <span style=color:#e6db74>&#34;test-policy-ns&#34;</span>,
+		<span style=color:#f92672>&#34;operation&#34;</span>: <span style=color:#e6db74>&#34;CREATE&#34;</span>,
+		<span style=color:#f92672>&#34;userInfo&#34;</span>: {
+			<span style=color:#f92672>&#34;username&#34;</span>: <span style=color:#e6db74>&#34;kubernetes-admin&#34;</span>,
+			<span style=color:#f92672>&#34;groups&#34;</span>: [<span style=color:#e6db74>&#34;system:masters&#34;</span>, <span style=color:#e6db74>&#34;system:authenticated&#34;</span>]
+		},
+		<span style=color:#f92672>&#34;object&#34;</span>: {
+			<span style=color:#f92672>&#34;kind&#34;</span>: <span style=color:#e6db74>&#34;Namespace&#34;</span>,
+			<span style=color:#f92672>&#34;apiVersion&#34;</span>: <span style=color:#e6db74>&#34;v1&#34;</span>,
+			<span style=color:#f92672>&#34;metadata&#34;</span>: {
+				<span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;test-policy-ns&#34;</span>,
+				<span style=color:#f92672>&#34;uid&#34;</span>: <span style=color:#e6db74>&#34;2cc6b1fc-7896-4091-b9c3-e034c89c0535&#34;</span>,
+				<span style=color:#f92672>&#34;creationTimestamp&#34;</span>: <span style=color:#e6db74>&#34;2021-05-27T15:55:39Z&#34;</span>,
+				<span style=color:#f92672>&#34;managedFields&#34;</span>: [{
+					<span style=color:#f92672>&#34;manager&#34;</span>: <span style=color:#e6db74>&#34;kubectl&#34;</span>,
+					<span style=color:#f92672>&#34;operation&#34;</span>: <span style=color:#e6db74>&#34;Update&#34;</span>,
+					<span style=color:#f92672>&#34;apiVersion&#34;</span>: <span style=color:#e6db74>&#34;v1&#34;</span>,
+					<span style=color:#f92672>&#34;time&#34;</span>: <span style=color:#e6db74>&#34;2021-05-27T15:55:39Z&#34;</span>,
+					<span style=color:#f92672>&#34;fieldsType&#34;</span>: <span style=color:#e6db74>&#34;FieldsV1&#34;</span>,
+					<span style=color:#f92672>&#34;fieldsV1&#34;</span>: {
+						<span style=color:#f92672>&#34;f:status&#34;</span>: {
+							<span style=color:#f92672>&#34;f:phase&#34;</span>: {}
+						}
+					}
+				}]
+			},
+			<span style=color:#f92672>&#34;spec&#34;</span>: {
+				<span style=color:#f92672>&#34;finalizers&#34;</span>: [<span style=color:#e6db74>&#34;kubernetes&#34;</span>]
+			},
+			<span style=color:#f92672>&#34;status&#34;</span>: {
+				<span style=color:#f92672>&#34;phase&#34;</span>: <span style=color:#e6db74>&#34;Active&#34;</span>
+			}
+		},
+		<span style=color:#f92672>&#34;oldObject&#34;</span>: <span style=color:#66d9ef>null</span>,
+		<span style=color:#f92672>&#34;dryRun&#34;</span>: <span style=color:#66d9ef>false</span>,
+		<span style=color:#f92672>&#34;options&#34;</span>: {
+			<span style=color:#f92672>&#34;kind&#34;</span>: <span style=color:#e6db74>&#34;CreateOptions&#34;</span>,
+			<span style=color:#f92672>&#34;apiVersion&#34;</span>: <span style=color:#e6db74>&#34;meta.k8s.io/v1&#34;</span>
+		}
+	}
+}
+</code></pre></div><p>I save this request as <code>request.json</code>. Now, we have all the
+ingredients to dry run the policy, so let&rsquo;s do it:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ kwctl run policy.wasm --request-path request.json 2&gt; /dev/null | jq
+{
+  &#34;uid&#34;: &#34;150d1761-43fb-4f36-bb73-7a3888a0bca2&#34;,
+  &#34;allowed&#34;: true
+}
+</code></pre></div><p>As expected, the response of the policy is that the request is
+accepted. This is a really good start! Now, let&rsquo;s go and write the
+real policy logic.</p><h2 id=policy-implementation>Policy implementation</h2><p>We have to implement three main checks based on the restrictions that
+have been described by our compliance team:</p><ol><li>The namespace name has to meet a specific prefix format
+(<code>t-\w+-\w+</code> &ndash; e.g. <code>t-ei-billing</code>, <code>t-sre-security</code>&mldr;)</li><li>Two annotations have to exist:<ol><li><code>compliance.my-company.com/team-contact-email</code>: has to be an
+email address with the host part pointing to <code>@my-company.com</code>; we
+won&rsquo;t allow other domain names as contact email.</li><li><code>compliance.my-company.com/team-region</code>: has to be one (and
+only one) of <code>AMER</code>, <code>APAC</code> or <code>EMEA</code>.</li></ol></li></ol><p>Let&rsquo;s implement the first check:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+	<span style=color:#e6db74>&#34;fmt&#34;</span>
+	<span style=color:#e6db74>&#34;github.com/kubewarden/gjson&#34;</span>
+	<span style=color:#a6e22e>kubewarden</span> <span style=color:#e6db74>&#34;github.com/kubewarden/policy-sdk-go&#34;</span>
+	<span style=color:#e6db74>&#34;regexp&#34;</span>
+	<span style=color:#a6e22e>wapc</span> <span style=color:#e6db74>&#34;github.com/wapc/wapc-guest-tinygo&#34;</span>
+)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+	<span style=color:#a6e22e>wapc</span>.<span style=color:#a6e22e>RegisterFunctions</span>(<span style=color:#a6e22e>wapc</span>.<span style=color:#a6e22e>Functions</span>{
+        <span style=color:#75715e>// function that validates the k8s request
+</span><span style=color:#75715e></span>		<span style=color:#e6db74>&#34;validate&#34;</span>: <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>payload</span> []<span style=color:#66d9ef>byte</span>) ([]<span style=color:#66d9ef>byte</span>, <span style=color:#66d9ef>error</span>) {
+            <span style=color:#75715e>// extract the name of the namespace by looking into the resource metadata attribute
+</span><span style=color:#75715e></span>			<span style=color:#a6e22e>namespaceName</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>gjson</span>.<span style=color:#a6e22e>GetBytes</span>(<span style=color:#a6e22e>payload</span>, <span style=color:#e6db74>&#34;request.object.metadata.name&#34;</span>)
+			<span style=color:#a6e22e>namespaceNameMatches</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>regexp</span>.<span style=color:#a6e22e>MatchString</span>(<span style=color:#e6db74>`^t-\w+-\w+`</span>, <span style=color:#a6e22e>namespaceName</span>.<span style=color:#a6e22e>String</span>())
+			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+				<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>RejectRequest</span>(<span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>Message</span>(<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;internal error while processing namespace &#39;%s&#39;: %v&#34;</span>, <span style=color:#a6e22e>namespaceName</span>, <span style=color:#a6e22e>err</span>)), <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>NoCode</span>)
+			}
+			<span style=color:#66d9ef>if</span> !<span style=color:#a6e22e>namespaceNameMatches</span> {
+				<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>RejectRequest</span>(<span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>Message</span>(<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;namespace &#39;%s&#39; does not comply with the company namespace naming convention: check https://internal.my-company.com/k8s/naming-conventions.md for more information&#34;</span>, <span style=color:#a6e22e>namespaceName</span>)), <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>NoCode</span>)
+			}
+			<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>AcceptRequest</span>()
+		},
+        <span style=color:#75715e>// function that validates the policy settings
+</span><span style=color:#75715e></span>        <span style=color:#e6db74>&#34;validate_settings&#34;</span>: <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>payload</span> []<span style=color:#66d9ef>byte</span>) ([]<span style=color:#66d9ef>byte</span>, <span style=color:#66d9ef>error</span>) {
+			<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>AcceptSettings</span>()
+		},
+	})
+}
+</code></pre></div><p>Now the policy will check that the namespace name is compliant with
+the naming rule.</p><p>If we try to create a namespace that does not follow this pattern,
+like the previous <code>request.json</code> file, we will receive the following
+error:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ kwctl run policy.wasm --request-path request.json 2&gt; /dev/null | jq
+{
+  &#34;uid&#34;: &#34;150d1761-43fb-4f36-bb73-7a3888a0bca2&#34;,
+  &#34;allowed&#34;: false,
+  &#34;status&#34;: {
+    &#34;message&#34;: &#34;namespace &#39;test-policy-ns&#39; does not comply with the company namespace naming convention: check https://internal.my-company.com/k8s/naming-conventions.md for more information&#34;
+  }
+}
+</code></pre></div><p>Now let&rsquo;s implement the rest of the checks:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+	<span style=color:#e6db74>&#34;fmt&#34;</span>
+	<span style=color:#e6db74>&#34;github.com/kubewarden/gjson&#34;</span>
+	<span style=color:#a6e22e>kubewarden</span> <span style=color:#e6db74>&#34;github.com/kubewarden/policy-sdk-go&#34;</span>
+	<span style=color:#e6db74>&#34;regexp&#34;</span>
+	<span style=color:#a6e22e>wapc</span> <span style=color:#e6db74>&#34;github.com/wapc/wapc-guest-tinygo&#34;</span>
+)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+	<span style=color:#a6e22e>wapc</span>.<span style=color:#a6e22e>RegisterFunctions</span>(<span style=color:#a6e22e>wapc</span>.<span style=color:#a6e22e>Functions</span>{
+		<span style=color:#e6db74>&#34;validate&#34;</span>: <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>payload</span> []<span style=color:#66d9ef>byte</span>) ([]<span style=color:#66d9ef>byte</span>, <span style=color:#66d9ef>error</span>) {
+            <span style=color:#75715e>// extract the name of the namespace by looking into the resource metadata attribute
+</span><span style=color:#75715e></span>			<span style=color:#a6e22e>namespaceName</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>gjson</span>.<span style=color:#a6e22e>GetBytes</span>(<span style=color:#a6e22e>payload</span>, <span style=color:#e6db74>&#34;request.object.metadata.name&#34;</span>)
+			<span style=color:#a6e22e>namespaceNameMatches</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>regexp</span>.<span style=color:#a6e22e>MatchString</span>(<span style=color:#e6db74>`^t-\w+-\w+`</span>, <span style=color:#a6e22e>namespaceName</span>.<span style=color:#a6e22e>String</span>())
+			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+				<span style=color:#66d9ef>return</span>
+			<span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>RejectRequest</span>(<span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>Message</span>(<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;[compliance] internal error while processing namespace &#39;%s&#39;: %v&#34;</span>, <span style=color:#a6e22e>err</span>)), <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>NoCode</span>)
+			}
+			<span style=color:#66d9ef>if</span> !<span style=color:#a6e22e>namespaceNameMatches</span> {
+				<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>RejectRequest</span>(<span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>Message</span>(<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;[compliance] namespace &#39;%s&#39; does not comply with the company namespace naming convention: check https://internal.my-company.com/k8s/naming-conventions.md for more information&#34;</span>, <span style=color:#a6e22e>namespaceName</span>)), <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>NoCode</span>)
+			}
+			<span style=color:#a6e22e>teamContactEmail</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>gjson</span>.<span style=color:#a6e22e>GetBytes</span>(<span style=color:#a6e22e>payload</span>, <span style=color:#e6db74>&#34;request.object.metadata.annotations.compliance\\.my-company\\.com/team-contact-email&#34;</span>).<span style=color:#a6e22e>String</span>()
+			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>teamContactEmail</span> <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;&#34;</span> {
+				<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>RejectRequest</span>(<span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>Message</span>(<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;[compliance] the namespace &#39;%s&#39; is missing a mandatory annotation compliance.my-company.com/team-contact-email&#34;</span>, <span style=color:#a6e22e>namespaceName</span>)), <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>NoCode</span>)
+			}
+			<span style=color:#a6e22e>teamContactEmailValidDomain</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>regexp</span>.<span style=color:#a6e22e>MatchString</span>(<span style=color:#e6db74>`@my-company\.com$`</span>, <span style=color:#a6e22e>teamContactEmail</span>)
+			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+				<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>RejectRequest</span>(<span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>Message</span>(<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;[compliance] internal error while processing namespace: %v&#34;</span>, <span style=color:#a6e22e>err</span>)), <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>NoCode</span>)
+			}
+			<span style=color:#66d9ef>if</span> !<span style=color:#a6e22e>teamContactEmailValidDomain</span> {
+				<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>RejectRequest</span>(<span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>Message</span>(<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;[compliance] the namespace &#39;%s&#39; does not comply with the company namespace naming convention: the compliance.my-company.com/team-contact-email annotation must end with @my-company.com&#34;</span>, <span style=color:#a6e22e>namespaceName</span>)), <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>NoCode</span>)
+			}
+			<span style=color:#a6e22e>teamRegion</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>gjson</span>.<span style=color:#a6e22e>GetBytes</span>(<span style=color:#a6e22e>payload</span>, <span style=color:#e6db74>&#34;request.object.metadata.annotations.compliance\\.my-company\\.com/team-region&#34;</span>).<span style=color:#a6e22e>String</span>()
+			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>teamRegion</span> <span style=color:#f92672>!=</span> <span style=color:#e6db74>&#34;AMER&#34;</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#a6e22e>teamRegion</span> <span style=color:#f92672>!=</span> <span style=color:#e6db74>&#34;APAC&#34;</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#a6e22e>teamRegion</span> <span style=color:#f92672>!=</span> <span style=color:#e6db74>&#34;EMEA&#34;</span> {
+				<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>RejectRequest</span>(<span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>Message</span>(<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;[compliance] the namespace &#39;%s&#39; does not comply with the company namespace naming convention: the compliance.my-company.com/team-region annotation must be one of: AMER, APAC or EMEA; is: &#39;%s&#39;&#34;</span>, <span style=color:#a6e22e>namespaceName</span>, <span style=color:#a6e22e>teamRegion</span>)), <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>NoCode</span>)
+			}
+			<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>AcceptRequest</span>()
+		},
+		<span style=color:#e6db74>&#34;validate_settings&#34;</span>: <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>payload</span> []<span style=color:#66d9ef>byte</span>) ([]<span style=color:#66d9ef>byte</span>, <span style=color:#66d9ef>error</span>) {
+			<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>AcceptSettings</span>()
+		},
+	})
+}
+</code></pre></div><p>Despite the checks can be improved further, we have an initial
+implementation of the policy that checks for compliance of the
+namespace for our organization.</p><p>However, as you can see, we have a number of hardcoded logic, messages
+and bits that could be parameters. This way, we can have a pattern
+that can be reused with different parameters. Depending on the policy,
+you might even have multiple instances of the policy with different
+settings &ndash; potentially targeting different resources or HTTP verbs,
+so they could perform potentially different checks.</p><p>Now, let&rsquo;s close the circle, and test a valid request against our
+latest policy. I will save this request as <code>valid-request.json</code>:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+	<span style=color:#f92672>&#34;kind&#34;</span>: <span style=color:#e6db74>&#34;AdmissionReview&#34;</span>,
+	<span style=color:#f92672>&#34;apiVersion&#34;</span>: <span style=color:#e6db74>&#34;admission.k8s.io/v1&#34;</span>,
+	<span style=color:#f92672>&#34;request&#34;</span>: {
+		<span style=color:#f92672>&#34;uid&#34;</span>: <span style=color:#e6db74>&#34;150d1761-43fb-4f36-bb73-7a3888a0bca2&#34;</span>,
+		<span style=color:#f92672>&#34;kind&#34;</span>: {
+			<span style=color:#f92672>&#34;group&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+			<span style=color:#f92672>&#34;version&#34;</span>: <span style=color:#e6db74>&#34;v1&#34;</span>,
+			<span style=color:#f92672>&#34;kind&#34;</span>: <span style=color:#e6db74>&#34;Namespace&#34;</span>
+		},
+		<span style=color:#f92672>&#34;resource&#34;</span>: {
+			<span style=color:#f92672>&#34;group&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+			<span style=color:#f92672>&#34;version&#34;</span>: <span style=color:#e6db74>&#34;v1&#34;</span>,
+			<span style=color:#f92672>&#34;resource&#34;</span>: <span style=color:#e6db74>&#34;namespaces&#34;</span>
+		},
+		<span style=color:#f92672>&#34;requestKind&#34;</span>: {
+			<span style=color:#f92672>&#34;group&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+			<span style=color:#f92672>&#34;version&#34;</span>: <span style=color:#e6db74>&#34;v1&#34;</span>,
+			<span style=color:#f92672>&#34;kind&#34;</span>: <span style=color:#e6db74>&#34;Namespace&#34;</span>
+		},
+		<span style=color:#f92672>&#34;requestResource&#34;</span>: {
+			<span style=color:#f92672>&#34;group&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>,
+			<span style=color:#f92672>&#34;version&#34;</span>: <span style=color:#e6db74>&#34;v1&#34;</span>,
+			<span style=color:#f92672>&#34;resource&#34;</span>: <span style=color:#e6db74>&#34;namespaces&#34;</span>
+		},
+		<span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;t-ei-billing&#34;</span>,
+		<span style=color:#f92672>&#34;namespace&#34;</span>: <span style=color:#e6db74>&#34;t-ei-billing&#34;</span>,
+		<span style=color:#f92672>&#34;operation&#34;</span>: <span style=color:#e6db74>&#34;CREATE&#34;</span>,
+		<span style=color:#f92672>&#34;userInfo&#34;</span>: {
+			<span style=color:#f92672>&#34;username&#34;</span>: <span style=color:#e6db74>&#34;kubernetes-admin&#34;</span>,
+			<span style=color:#f92672>&#34;groups&#34;</span>: [<span style=color:#e6db74>&#34;system:masters&#34;</span>, <span style=color:#e6db74>&#34;system:authenticated&#34;</span>]
+		},
+		<span style=color:#f92672>&#34;object&#34;</span>: {
+			<span style=color:#f92672>&#34;kind&#34;</span>: <span style=color:#e6db74>&#34;Namespace&#34;</span>,
+			<span style=color:#f92672>&#34;apiVersion&#34;</span>: <span style=color:#e6db74>&#34;v1&#34;</span>,
+			<span style=color:#f92672>&#34;metadata&#34;</span>: {
+				<span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;t-ei-billing&#34;</span>,
+				<span style=color:#f92672>&#34;uid&#34;</span>: <span style=color:#e6db74>&#34;2cc6b1fc-7896-4091-b9c3-e034c89c0535&#34;</span>,
+				<span style=color:#f92672>&#34;creationTimestamp&#34;</span>: <span style=color:#e6db74>&#34;2021-05-27T15:55:39Z&#34;</span>,
+				<span style=color:#f92672>&#34;annotations&#34;</span>: {
+					<span style=color:#f92672>&#34;compliance.my-company.com/team-contact-email&#34;</span>: <span style=color:#e6db74>&#34;ei-billing@my-company.com&#34;</span>,
+					<span style=color:#f92672>&#34;compliance.my-company.com/team-region&#34;</span>: <span style=color:#e6db74>&#34;EMEA&#34;</span>
+				},
+				<span style=color:#f92672>&#34;managedFields&#34;</span>: [{
+					<span style=color:#f92672>&#34;manager&#34;</span>: <span style=color:#e6db74>&#34;kubectl&#34;</span>,
+					<span style=color:#f92672>&#34;operation&#34;</span>: <span style=color:#e6db74>&#34;Update&#34;</span>,
+					<span style=color:#f92672>&#34;apiVersion&#34;</span>: <span style=color:#e6db74>&#34;v1&#34;</span>,
+					<span style=color:#f92672>&#34;time&#34;</span>: <span style=color:#e6db74>&#34;2021-05-27T15:55:39Z&#34;</span>,
+					<span style=color:#f92672>&#34;fieldsType&#34;</span>: <span style=color:#e6db74>&#34;FieldsV1&#34;</span>,
+					<span style=color:#f92672>&#34;fieldsV1&#34;</span>: {
+						<span style=color:#f92672>&#34;f:status&#34;</span>: {
+							<span style=color:#f92672>&#34;f:phase&#34;</span>: {}
+						}
+					}
+				}]
+			},
+			<span style=color:#f92672>&#34;spec&#34;</span>: {
+				<span style=color:#f92672>&#34;finalizers&#34;</span>: [<span style=color:#e6db74>&#34;kubernetes&#34;</span>]
+			},
+			<span style=color:#f92672>&#34;status&#34;</span>: {
+				<span style=color:#f92672>&#34;phase&#34;</span>: <span style=color:#e6db74>&#34;Active&#34;</span>
+			}
+		},
+		<span style=color:#f92672>&#34;oldObject&#34;</span>: <span style=color:#66d9ef>null</span>,
+		<span style=color:#f92672>&#34;dryRun&#34;</span>: <span style=color:#66d9ef>false</span>,
+		<span style=color:#f92672>&#34;options&#34;</span>: {
+			<span style=color:#f92672>&#34;kind&#34;</span>: <span style=color:#e6db74>&#34;CreateOptions&#34;</span>,
+			<span style=color:#f92672>&#34;apiVersion&#34;</span>: <span style=color:#e6db74>&#34;meta.k8s.io/v1&#34;</span>
+		}
+	}
+}
+</code></pre></div><p>Now, we can run this policy against the <code>valid-request.json</code> request:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ kwctl run policy.wasm --request-path valid-request.json 2&gt; /dev/null | jq
+{
+  &#34;uid&#34;: &#34;150d1761-43fb-4f36-bb73-7a3888a0bca2&#34;,
+  &#34;allowed&#34;: true
+}
+</code></pre></div><p>Feel free to play with the request. You can modify the annotations or
+naming of the namespace, and check the error result you get back if
+the request is not compliant.</p><p>And so, we can see that the policy behaves as we expect! We have seen
+some aspects of Kubewarden and the policy cycle:</p><ul><li>How to write a policy from scratch</li><li>How to test a policy with different requests</li></ul><p>However, for your policy to be active on a Kubernetes cluster there
+are some bits and pieces we are still missing. The main questions at
+this point are:</p><ul><li>How to safely make the policy easy to distribute<ul><li>Kubewarden has focused on you reusing your existing knowledge
+and tools, so policies can either be distributed using an HTTPS
+server, or preferrably, an OCI registry.</li></ul></li><li>How to deploy the policy to a Kubernetes cluster<ul><li>We have created the <a href=https://github.com/kubewarden/kubewarden-controller><code>kubewarden-controller</code>
+project</a>
+that makes it trivial to deploy policies inside your cluster,
+once the previous point has been covered.</li></ul></li><li>How can I connect the policy in Kubernetes? How can I establish what
+type of requests will be evaluated by a policy?</li></ul><p>There are also some open questions, such as: what happens if a
+resource that was accepted with a previous revision of a policy now
+would be rejected with the latest policy version? In a living and
+evolving environment that holds state this is a common
+situation. Kubewarden has also plans to have you covered in this case.</p><p>We will cover these topics in a much broader way in future blog
+posts.</p><h2 id=conclusion>Conclusion</h2><p>Thank you for reading up to this point, we hope you enjoyed the post!</p><p>We have seen how to build a policy from scratch, in this case using Go
+(and the TinyGo compiler). We have also seen that there are more SDKs
+available to you such as the Rust and Swift ones.</p><p>We have also covered how to test a policy once we have the WebAssembly
+binary artifact, so we can run tests against the policy, ensuring that
+it behaves as we expect.</p><p>There are some open questions regarding the policy distribution and
+running policies in a Kubernetes cluster that we opened in the last
+section, and that we will cover in future blog posts.</p><p>Stay tuned and thank you for reading!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2021 <a href>kubewarden</a></p><div class=project-icons><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=blank><img src=/images/icon-slack.svg height=20></a>
+<a href=https://twitter.com/kubewarden target=blank><img src=/images/icon-twitter.svg height=20></a>
+<a href=https://github.com/kubewarden target=blank><img src=/images/icon-github.svg height=20></a></div></footer></body></html>
