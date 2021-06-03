@@ -1,0 +1,53 @@
+/* Header */
+.intro h1 a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Content */
+
+.post {
+    position: relative;
+    padding: 4em;
+    background: #eee;
+    border-radius: 25px;
+    margin-top: 4em;
+}
+
+.post h2 {
+    text-align: left;
+}
+
+.post:first-child {
+    margin-top: 0;
+}
+
+.post time {
+    position: absolute;
+    top: 2em;
+    right: 2em;
+    font-size: large;
+}
+
+.post .summary {
+    font-size: large;
+}
+
+main h1, h2, h3, h4 {
+    text-align: left;
+}
+
+main article author, main article time {
+    display: block;
+    font-size: medium;
+    font-style: italic;
+}
+
+main #blog-post-content {
+    padding-top: 4em;
+}
+
+main pre {
+    overflow-x: auto;
+    white-space: pre;
+}

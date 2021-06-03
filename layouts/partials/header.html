@@ -2,7 +2,7 @@
 
 	<div class="sub-header">
     <a class="navbar-brand" href="{{ .Site.BaseURL }}">
-      <img  src="../images/logo-{{ .Site.Title }}.svg" alt="{{ .Site.Title }}">
+      <img  src="/images/logo-{{ .Site.Title }}.svg" alt="{{ .Site.Title }}">
     </a>
     <!-- nav -->
     {{ with .Site.Menus.main }}
@@ -10,13 +10,15 @@
 
     <nav>
       <ul class="menu">
+        <li><a href="/blog" class="btn no-bg">Blog</a></li>
         {{ range . }}
         <li><a href="{{ .URL }}" class="btn no-bg" target="_blank">{{ .Name }}</a></li>
         {{ end }}
         <!-- github  -->
-        <li><a href="{{ $.Site.Params.github }}" class="btn"><img src="../images/icon-github.svg"><span>Github</span></a></li>
+        <li><a href="{{ $.Site.Params.github }}" class="btn"><img src="/images/icon-github.svg"><span>Github</span></a></li>
       </ul>
     </nav>
     {{ end }}
   </div>
+
 </header>

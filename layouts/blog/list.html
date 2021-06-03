@@ -1,0 +1,26 @@
+{{ define "main" }}
+  <link rel="stylesheet" href="/css/blog.css"/>
+
+  <section class="intro">
+    <div class="bg-primary">
+      <div class="wrap grid-one">
+        <div>
+          <h1 style="color: white;">
+            <a href="/blog">The Kubewarden blog</a>
+            <a href="/blog/index.xml">
+              <img src="/images/icon-rss.svg" class="fill-white" height="20">
+            </a>
+          </h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="wrap">
+      {{ range .Paginator.Pages }}
+        {{ .Render "summary" }}
+      {{ end }}
+    </section>
+  </main>
+{{ end }}
