@@ -1,0 +1,129 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Introducing kwctl to Kubernetes Administrators</title><link rel=stylesheet type=text/css href=/sass/blog.min.css?1623257162><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a class=navbar-brand href=/><img src=/images/logo-kubewarden.svg alt=kubewarden></a><nav><ul class=menu><li><a href=/blog class="btn no-bg">Blog</a></li><li><a href=https://hub.kubewarden.io/ class="btn no-bg" target=_blank>Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ class="btn no-bg" target=_blank>Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ class="btn no-bg" target=_blank>Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" class="btn no-bg" target=_blank>Slack</a></li><li><a href=https://twitter.com/kubewarden class="btn no-bg" target=_blank>Twitter</a></li><li><a href=https://github.com/kubewarden class=btn><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Introducing kwctl to Kubernetes Administrators</h1><author>Flavio Castelli</author>
+<time>09 Jun 2021</time><div id=blog-post-content><p>We are pleased to announce the availability of a new tool within the Kubewarden
+project: <a href=https://github.com/kubewarden/kwctl>kwctl</a>.</p><p>kwctl is a command line utility designed to help both policy authors
+and Kubernetes administrators.</p><p>This blog post focuses on the user experience of Kubernetes administrators.
+Future ones will cover the policy developer side of the story.</p><h2 id=a-real-world-example-controlling-container-capabilities>A Real-World Example: Controlling Container Capabilities</h2><p>The main character of today&rsquo;s story is Alice. Alice is a Kubernetes
+administrator who wants to keep her Kubernetes cluster secure.</p><p>Alice uses many solutions to accomplish that, including
+<a href=https://kubernetes.io/docs/concepts/policy/pod-security-policy/>Kubernetes PSP</a>.</p><p>Pod Security Policies are currently deprecated and are going to be removed from Kubernetes 1.25.
+Due to that, Alice wants to find an alternative to Kubernetes PSPs.</p><p>Today Alice will work to replace the <a href=https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-capabilities-for-a-container>container capabilities PSP</a>
+with a Kubewarden policy.</p><p>We will tag along with Alice, watch all the steps she has to perform
+and learn how <code>kwctl</code> will help her.</p><h2 id=finding-the-right-policy>Finding the Right Policy</h2><p>As a first step, Alice visits <a href=https://hub.kubewarden.io>Kubewarden’s Policy Hub</a>,
+the place where Kubewarden policies can be made discoverable.</p><p>Alice enters the <em>&ldquo;capabilities&rdquo;</em> query and finds a policy that seems to be
+doing exactly what she&rsquo;s looking for. The name of the policy is
+<em>&ldquo;psp-capabilities&rdquo;</em>.</p><h2 id=obtaining-the-policy>Obtaining the Policy</h2><p>Next Alice has to obtain the policy. This can be done with a
+simple command:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>$ kwctl pull registry://ghcr.io/kubewarden/policies/psp-capabilities:v0.1.4
+</code></pre></div><p>This downloads the policy and stores it under Alice&rsquo;s home directory.</p><h2 id=understanding-how-the-policy-works>Understanding How the Policy Works</h2><p>Alice now needs to understand how to use the policy. Each policy listed on
+Kubewarden&rsquo;s Policy Hub has links pointing to their documentation.</p><p>Instead of opening one of these links, Alice prefers to consult the
+metadata provided by the policy:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>$ kwctl inspect registry://ghcr.io/kubewarden/policies/psp-capabilities:v0.1.4
+</code></pre></div><p>This command produces the following output:</p><p><img src=/images/2021-june-kwctl-intro-admin-inspect-output.png alt="Output of kwctl inspect"></p><blockquote><p><strong>Note well:</strong> a Kubewarden policy is a regular &ldquo;<code>.wasm</code>&rdquo; file that, in addition
+to contain the policy&rsquo;s bytecode, it also embeds additional metadata.</p><p>This allows to have everything in a <strong>single place</strong>, <strong>versioned together</strong> and
+<strong>available off-line</strong>.</p></blockquote><h2 id=evaluating-the-policy>Evaluating the Policy</h2><p>Now Alice wants to assess the reliability of the policy, plus find the right
+configuration values to satisfy her requirements.</p><p>There are some good news for Alice: she doesn&rsquo;t need to deploy the policy into
+a Kubernetes cluster to perform this kind of rapid iterations. Once again, kwctl
+can help her with the <code>run</code> subcommand.</p><p>The <code>kwctl run</code> command takes the following parameters:</p><ul><li><strong><code>-r &lt;request-path></code></strong>: path to a file containing the Kubernetes Admission Request
+to be evaluated</li><li><strong><code>--settings-json "&lt;JSON document>"</code></strong>: a string containing the JSON
+representation of policy&rsquo;s settings. It&rsquo;s also possible to use the
+&ldquo;<strong><code>-s &lt;settings-path></code></strong>&rdquo; flag to read the policy settings from a local file</li><li><strong><code>&lt;URI of the policy></code></strong>: the URI pointing to the policy to be used</li></ul><blockquote><p><strong>Note well:</strong> unfortunately, obtaining Kubernetes Admission Requests
+requires some extra work. This is a &ldquo;Kubernetes problem&rdquo;, we plan to
+address it in the near future.</p><p>In the meantime, we will assume Alice has access to files like
+<a href=https://github.com/kubewarden/psp-capabilities/tree/a786aba746e807aa3c6121438e8c05e724400861/test_data>these ones</a>.</p></blockquote><p>Alice will use <a href=https://raw.githubusercontent.com/kubewarden/psp-capabilities/a786aba746e807aa3c6121438e8c05e724400861/test_data/req_pod_with_container_with_capabilities_added.json>this request</a>;
+that attempts to create a Pod with a container that has the
+following <code>securityContext</code> configuration:</p><ul><li>Add the <code>NET_ADMIN</code> and the <code>SYS_TIME</code> capabilities</li><li>Drop the <code>SYS_PTRACE</code> capability</li></ul><p>As a first step, Alice defines a policy that allows containers to add only the <code>SYS_TIME</code> capability:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>$ kwctl run registry://ghcr.io/kubewarden/policies/psp-capabilities:v0.1.4 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>            -r req_pod_with_container_with_capabilities_added.json <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>            --settings-json <span style=color:#e6db74>&#39;{&#34;allowed_capabilities&#34;: [&#34;SYS_TIME&#34;]}&#39;</span>
+</code></pre></div><p>The output of the command, piped into <a href=https://stedolan.github.io/jq/><code>jq</code></a>, is the following one:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{ 
+  <span style=color:#f92672>&#34;uid&#34;</span>: <span style=color:#e6db74>&#34;1299d386-525b-4032-98ae-1949f69f9cfc&#34;</span>,
+  <span style=color:#f92672>&#34;allowed&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;status&#34;</span>: {
+    <span style=color:#f92672>&#34;message&#34;</span>: <span style=color:#e6db74>&#34;PSP capabilities policies doesn&#39;t allow these capabilities to be added: {\&#34;NET_ADMIN\&#34;}&#34;</span> 
+  }
+}
+</code></pre></div><p>This is the behavior expected by Alice: the request is rejected because the
+<code>NET_ADMIN</code> capability is not part of the allow list.</p><p>This policy is capable of mutating incoming requests, Alice wants to try it
+out using the following command:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>$ kwctl run registry://ghcr.io/kubewarden/policies/psp-capabilities:v0.1.4 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>        -r req_pod_with_container_with_capabilities_added.json <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>        --settings-json <span style=color:#e6db74>&#39;{&#34;default_add_capabilities&#34;: [&#34;AUDIT_READ&#34;]}&#39;</span>
+</code></pre></div><p>The command will fail with the following output:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#f92672>{</span><span style=color:#e6db74>&#34;valid&#34;</span>:false,<span style=color:#e6db74>&#34;message&#34;</span>:<span style=color:#e6db74>&#34;These capabilities cannot be added by default because they are not allowed: {\&#34;AUDIT_READ\&#34;}&#34;</span><span style=color:#f92672>}</span>
+Error: Provided settings are not valid: Some<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;These capabilities cannot be added by default because they are not allowed: {\&#34;AUDIT_READ\&#34;}&#34;</span><span style=color:#f92672>)</span>
+</code></pre></div><p>Nice, the author of the policy implemented some validation of the settings
+provided by the end users!
+The error message points Alice in the right direction: the <code>AUDIT_READ</code> capability
+cannot be added to all the containers unless it&rsquo;s also on the list of the
+allowed capabilities.</p><p>Alice runs the policy again, this time with a different configuration:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>$ kwctl run registry://ghcr.io/kubewarden/policies/psp-capabilities:v0.1.4 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>      -r req_pod_with_container_with_capabilities_added.json <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>      --settings-json <span style=color:#e6db74>&#39;{&#34;default_add_capabilities&#34;: [&#34;AUDIT_READ&#34;], &#34;allowed_capabilities&#34;: [&#34;AUDIT_READ&#34;]}&#39;</span>
+</code></pre></div><p>This time the configuration is correct, but the request is rejected with
+the following explanation:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+  <span style=color:#f92672>&#34;uid&#34;</span>: <span style=color:#e6db74>&#34;1299d386-525b-4032-98ae-1949f69f9cfc&#34;</span>,
+  <span style=color:#f92672>&#34;allowed&#34;</span>: <span style=color:#66d9ef>false</span>,
+  <span style=color:#f92672>&#34;status&#34;</span>: {
+    <span style=color:#f92672>&#34;message&#34;</span>: <span style=color:#e6db74>&#34;PSP capabilities policies doesn&#39;t allow these capabilities to be added: {\&#34;NET_ADMIN\&#34;, \&#34;SYS_TIME\&#34;}&#34;</span>
+  }
+}
+</code></pre></div><p>That&rsquo;s actually a correct behavior, Alice forgot to allow the capabilities
+the container is already adding to itself.</p><p>Alice now runs the kwctl command one last time:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>$ kwctl run registry://ghcr.io/kubewarden/policies/psp-capabilities:v0.1.4 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>        -r req_pod_with_container_with_capabilities_added.json <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>        --settings-json <span style=color:#e6db74>&#39;{&#34;default_add_capabilities&#34;: [&#34;AUDIT_READ&#34;], &#34;allowed_capabilities&#34;: [&#34;AUDIT_READ&#34;, &#34;NET_ADMIN&#34;, &#34;SYS_TIME&#34;]}&#39;</span>
+</code></pre></div><p>This time the policy accepts the incoming request, plus it mutates it.
+This is the output returned:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+  <span style=color:#f92672>&#34;uid&#34;</span>: <span style=color:#e6db74>&#34;1299d386-525b-4032-98ae-1949f69f9cfc&#34;</span>,
+  <span style=color:#f92672>&#34;allowed&#34;</span>: <span style=color:#66d9ef>true</span>,
+  <span style=color:#f92672>&#34;patchType&#34;</span>: <span style=color:#e6db74>&#34;JSONPatch&#34;</span>,
+  <span style=color:#f92672>&#34;patch&#34;</span>: <span style=color:#e6db74>&#34;W3sib3AiOiJhZGQiLCJwYXRoIjoiL3NwZWMvY29udGFpbmVycy8wL3NlY3VyaXR5Q29udGV4dC9jYXBhYmlsaXRpZXMvYWRkLzIiLCJ2YWx1ZSI6IkFVRElUX1JFQUQifV0=&#34;</span>
+}
+</code></pre></div><p>Alice can see what the policy is going to change by looking at the contents of
+the <code>patch</code> attribute.
+As requested by Kubernetes, the patch operation is encoded using <code>base64</code>:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>$ kwctl run registry://ghcr.io/kubewarden/policies/psp-capabilities:v0.1.4 <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>        -r req_pod_with_container_with_capabilities_added.json <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>        --settings-json <span style=color:#e6db74>&#39;{&#34;default_add_capabilities&#34;: [&#34;AUDIT_READ&#34;], &#34;allowed_capabilities&#34;: [&#34;AUDIT_READ&#34;, &#34;NET_ADMIN&#34;, &#34;SYS_TIME&#34;]}&#39;</span> <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>  | jq -r .patch | base64 -d
+</code></pre></div><p>This produces the following output:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>[{<span style=color:#f92672>&#34;op&#34;</span>:<span style=color:#e6db74>&#34;add&#34;</span>,<span style=color:#f92672>&#34;path&#34;</span>:<span style=color:#e6db74>&#34;/spec/containers/0/securityContext/capabilities/add/2&#34;</span>,<span style=color:#f92672>&#34;value&#34;</span>:<span style=color:#e6db74>&#34;AUDIT_READ&#34;</span>}]
+</code></pre></div><p>This <a href=https://en.wikipedia.org/wiki/JSON_Patch>JSONPatch</a> document is composed
+by the following parts:</p><ul><li><strong><code>op</code></strong>: this defines the operation to perform against the original request</li><li><strong><code>value</code></strong>: the string to be added to the original request</li><li><strong><code>path</code></strong>: the JSON Pointer that defines which part of the original request
+is going to be changed</li></ul><p>Hence, this JSONPatch adds &ldquo;AUDIT_READ&rdquo; to the original Pod object, at
+<code>/spec/containers/0/securityContext/capabilities/add/2</code> location.</p><p>Let&rsquo;s take a closer look at the JSON Pointer:</p><ul><li><strong><code>/spec/containers</code></strong>: this references the <code>containers</code> section of the Pod <code>spec</code></li><li><strong><code>/0</code></strong>: since <code>spec.containers</code> is an array, this fragment of
+the path points to the first element of it. Note well, arrays elements
+are referenced using <a href=https://en.wikipedia.org/wiki/Zero-based_numbering>zero-based numbering</a></li><li><strong><code>/securityContext/capabilities/add</code></strong>: this navigates into the <code>securityContext</code>
+of the container, then into the <code>capabilities</code> object and finally into the
+<code>add</code> section. This is the place where container capabilities to be added
+are specified</li><li><strong><code>/2</code></strong>: the original container has already two capabilities to be added,
+<code>NET_ADMIN</code> and <code>SYS_TIME</code>. Using zero-based numbering, <code>/2</code> points to
+the third entry of the array.</li></ul><p>The policy is working as expected; it leads to the creation of a Pod with
+a container that has the <code>NET_ADMIN</code>, <code>SYS_TIME</code>, <code>AUDIT_READ</code> capabilities
+added.</p><h2 id=deploying-the-policy>Deploying the Policy</h2><p>After more experiments with <code>kwctl run</code>, Alice wants to deploy the policy
+inside of a Kubernetes cluster.</p><p>Kubewarden policies are defined using the
+<a href=https://github.com/kubewarden/kubewarden-controller/blob/a74144e2c2f69dd96a7317feb44719a03677a885/docs/crds/README.asciidoc>ClusterAdmissionPolicy</a>,
+a Custom Resource provided by Kubewarden.</p><p>Alice can quickly scaffold the YAML file defining this resource using kwctl:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>$ kwctl manifest -t ClusterAdmissionPolicy registry://ghcr.io/kubewarden/policies/psp-capabilities:v0.1.4
+</code></pre></div><p>The command will produce the following output:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>policies.kubewarden.io/v1alpha2</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterAdmissionPolicy</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>generated-policy</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>module</span>: <span style=color:#e6db74>&#34;registry://ghcr.io/kubewarden/policies/psp-capabilities:v0.1.4&#34;</span>
+  <span style=color:#f92672>settings</span>: {}
+  <span style=color:#f92672>rules</span>:
+    - <span style=color:#f92672>apiGroups</span>:
+        - <span style=color:#e6db74>&#34;&#34;</span>
+      <span style=color:#f92672>apiVersions</span>:
+        - <span style=color:#ae81ff>v1</span>
+      <span style=color:#f92672>resources</span>:
+        - <span style=color:#ae81ff>pods</span>
+      <span style=color:#f92672>operations</span>:
+        - <span style=color:#ae81ff>CREATE</span>
+  <span style=color:#f92672>mutating</span>: <span style=color:#66d9ef>true</span>
+</code></pre></div><p>kwctl just saved quite some time for Alice 😊</p><h2 id=mirroring-policies>Mirroring Policies</h2><p>Kubewarden policies are distributed via OCI container registries, the very
+same pieces of infrastructure already used to distribute container images.</p><p>Alice doesn&rsquo;t want her cluster to pull the Kubewarden policy straight from
+<code>ghcr.io/kubewarden/policies/psp-capabilities:v0.1.4</code>, she rather prefers to
+fetch it from a local registry she controls.</p><p>This can be done using the following commands:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>$ kwctl push -p registry://ghcr.io/kubewarden/policies/psp-capabilities:v0.1.4
+                registry.alice.corp.lan/policies/psp-capabilities:v0.1.4
+</code></pre></div><p>Alice can now use the <code>registry.alice.corp.lan/policies/psp-capabilities:v0.1.4</code>
+url inside of the <code>ClusterAdmissionPolicy</code> definition.</p><p>The policy can now be enforced inside of the local Kubernetes cluster with
+a <code>kubectl apply</code> command 🎉</p><h2 id=recap>Recap</h2><p>kwctl allows us to download, test and deploy Kubewarden policies. The UX of kwctl
+mimics the one of docker, hence cloud native users should quickly feel at home
+with it.</p><p>We hope kwctl will be able to simplify the process of interacting with
+Kubewarden policies.
+We have many ideas about how to further expand its capabilities, but we would
+love to hear what you would like to see addressed or changed.</p><p>What are you waiting for? Do like Alice and <a href=https://github.com/kubewarden/kwctl/releases>give kwctl a spin</a>!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2021 <a href>kubewarden</a></p><div class=project-icons><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=blank><img src=/images/icon-slack.svg height=20></a>
+<a href=https://twitter.com/kubewarden target=blank><img src=/images/icon-twitter.svg height=20></a>
+<a href=https://github.com/kubewarden target=blank><img src=/images/icon-github.svg height=20></a></div></footer></body></html>
