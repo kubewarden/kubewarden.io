@@ -5,7 +5,7 @@ authors:
 date: 2021-06-11
 ---
 
-As you probably know, Kubernetes Pod Security Policies [are being
+As you probably know, Kubernetes Pod Security Policies (PSPs) [are being
 deprecated in Kubernetes
 1.21](https://github.com/kubernetes/kubernetes/blob/a3abd06ad53b2f02dcb6e060c7606ceda41f44af/CHANGELOG/CHANGELOG-1.21.md#deprecation-of-podsecuritypolicy)
 -- although these APIs will be served until Kubernetes 1.25 it's a
