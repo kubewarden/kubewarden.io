@@ -1,0 +1,78 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Introducing the PSP host namespaces policy</title><link rel=stylesheet type=text/css href=/sass/blog.min.css?1623397055><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a class=navbar-brand href=/><img src=/images/logo-kubewarden.svg alt=kubewarden></a><nav><ul class=menu><li><a href=/blog class="btn no-bg">Blog</a></li><li><a href=https://hub.kubewarden.io/ class="btn no-bg" target=_blank>Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ class="btn no-bg" target=_blank>Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ class="btn no-bg" target=_blank>Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" class="btn no-bg" target=_blank>Slack</a></li><li><a href=https://twitter.com/kubewarden class="btn no-bg" target=_blank>Twitter</a></li><li><a href=https://github.com/kubewarden class=btn><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Introducing the PSP host namespaces policy</h1><author>Rafael Fernández López</author>
+<time>11 Jun 2021</time><div id=blog-post-content><p>As you probably know, Kubernetes Pod Security Policies (PSPs) <a href=https://github.com/kubernetes/kubernetes/blob/a3abd06ad53b2f02dcb6e060c7606ceda41f44af/CHANGELOG/CHANGELOG-1.21.md#deprecation-of-podsecuritypolicy>are being
+deprecated in Kubernetes
+1.21</a>
+&ndash; although these APIs will be served until Kubernetes 1.25 it&rsquo;s a
+good time to start thinking about what you will use to replace them.</p><p>At Kubewarden we have an ongoing effort to replace the Pod Security
+Policies with small, targeted Kubewarden policies.</p><p>Up until now, we have implemented some policies that replace some Pod
+Security Policies:</p><ul><li><a href=https://github.com/kubewarden/psp-capabilities><code>psp-capabilities</code></a>:
+validating and mutating policy that allows you to control the usage
+of container capabilities, for example allowing you to ensure that a
+container has the required capabilities it needs to work correctly,
+or that it drops capabilities it doesn&rsquo;t need, reducing the attack
+surface of your containers.</li><li><a href=https://github.com/kubewarden/psp-allow-privilege-escalation><code>psp-allow-privilege-escalation</code></a>:
+validating policy that allows you to ensure that no containers in a
+given pod can set <code>.securityContext.allowPrivilegeEscalation: true</code>
+in the security context of the container.</li><li><a href=https://github.com/kubewarden/psp-apparmor><code>psp-apparmor</code></a>:
+validating policy that allows you to specify a list of allowed
+AppArmor profiles that a <code>Pod</code> can use.</li></ul><p>And now, the
+<a href=https://github.com/kubewarden/psp-host-namespaces><code>psp-host-namespaces</code></a>
+policy joins this list. Let&rsquo;s inspect it a bit further.</p><h2 id=the-policy>The policy</h2><p>This policy is able to control whether a <code>Pod</code> can request certain
+host namespaces, instead of using a dedicated namespace for that pod
+&ndash; as is the regular case.</p><p>While using the host namespaces is something to be avoided, there are
+situations in which a workload needs to access them. For example, a
+workload that inspects the processes running on the host.</p><h3 id=policy-settings>Policy settings</h3><p>The policy allows the following settings:</p><ul><li><p><code>allow_host_ipc</code>: allows the pod to set <code>.spec.HostIPC</code> to true.</p></li><li><p><code>allow_host_network</code>: allows the pod to set <code>.spec.HostNetwork</code> to true.</p></li><li><p><code>allow_host_pid</code>: allows the pod to set <code>.spec.HostPID</code> to true.</p></li><li><p><code>allow_host_ports</code>: is a list of port ranges of the form:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>allow_host_ports</span>:
+  - <span style=color:#f92672>min</span>: <span style=color:#ae81ff>80</span>
+    <span style=color:#f92672>max</span>: <span style=color:#ae81ff>80</span>
+  - <span style=color:#f92672>min</span>: <span style=color:#ae81ff>443</span>
+    <span style=color:#f92672>max</span>: <span style=color:#ae81ff>443</span>
+  - <span style=color:#f92672>min</span>: <span style=color:#ae81ff>8000</span>
+    <span style=color:#f92672>max</span>: <span style=color:#ae81ff>9000</span>
+</code></pre></div><p>This example would allow host ports <code>80</code>, <code>443</code> and the range
+<code>8000-9000</code> in the Pod <code>.spec.containers[].ports[].hostPort</code> attributes.</p></li></ul><p>By default all settings are disallowed, so if you want to allow the
+usage of, say, the host network and the host PID namespace usage, the
+policy would need to have the following settings:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>allow_host_network</span>: <span style=color:#66d9ef>true</span>
+<span style=color:#f92672>allow_host_pid</span>: <span style=color:#66d9ef>true</span>
+</code></pre></div><h3 id=running-the-policy>Running the policy</h3><p>The policy validates Pods at creation time.</p><p>Let&rsquo;s run a couple of tests with <a href=https://github.com/kubewarden/kwctl/>our CLI tool,
+<code>kwctl</code></a>.</p><p>You will need at least <code>kwctl</code> version 0.1.7 to execute this examples.</p><p>Let&rsquo;s start by evaluating a Pod creation request which has host PID
+enabled:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ curl https://raw.githubusercontent.com/kubewarden/psp-host-namespaces/v0.0.7/test_data/pod_host_pid_enabled.json 2&gt; /dev/null | \
+    kwctl run -r - registry://ghcr.io/kubewarden/policies/psp-host-namespaces:v0.0.7 | jq
+{
+  &#34;uid&#34;: &#34;1299d386-525b-4032-98ae-1949f69f9cfc&#34;,
+  &#34;allowed&#34;: false,
+  &#34;status&#34;: {
+    &#34;message&#34;: &#34;Pod has host PID enabled, but this is not allowed&#34;
+  }
+}
+</code></pre></div><p>As you can see, the request is rejected and a proper explanation is
+returned to the user.</p><p>In the previous run no settings were provided to the policy, so the
+default settings defined by the policy were used. Settings can also be
+provided as an empty string or an empty object. It&rsquo;s always up to the
+policy to do settings defaulting, if any.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ curl https://raw.githubusercontent.com/kubewarden/psp-host-namespaces/v0.0.7/test_data/pod_host_pid_enabled.json 2&gt; /dev/null | \
+    kwctl run --settings-json &#39;{}&#39; -r - registry://ghcr.io/kubewarden/policies/psp-host-namespaces:v0.0.7 | jq
+{
+  &#34;uid&#34;: &#34;1299d386-525b-4032-98ae-1949f69f9cfc&#34;,
+  &#34;allowed&#34;: false,
+  &#34;status&#34;: {
+    &#34;message&#34;: &#34;Pod has host PID enabled, but this is not allowed&#34;
+  }
+}
+</code></pre></div><p>The pod was rejected again, as this execution is equivalent to the
+previous one, as their settings are defaulted by the policy to the
+same ones.</p><p>Now, let&rsquo;s enable the PID namespace host in the policy settings:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ curl https://raw.githubusercontent.com/kubewarden/psp-host-namespaces/v0.0.7/test_data/pod_host_pid_enabled.json 2&gt; /dev/null | \
+    kwctl run --settings-json &#39;{ &#34;allow_host_pid&#34;: true }&#39; -r - registry://ghcr.io/kubewarden/policies/psp-host-namespaces:v0.0.7 | jq
+{
+  &#34;uid&#34;: &#34;1299d386-525b-4032-98ae-1949f69f9cfc&#34;,
+  &#34;allowed&#34;: true
+}
+</code></pre></div><p>And that works as expected!</p><h2 id=conclusion>Conclusion</h2><p>Stay tuned, because during the following weeks we will implement the
+<a href=https://github.com/kubewarden/policy-hub/issues/32>rest of the Pod Security Policies in separate, small Kubewarden
+policies</a>.</p><p>You can use <a href="https://github.com/kubewarden/?q=psp&type=&language=&sort=">this GitHub
+search</a> to
+find out what Kubewarden policies are implementing Pod Security
+Policies.</p><p>You can also discover more policies in the <a href=https://hub.kubewarden.io/>Policy
+Hub</a>.</p><p>You can read more about <a href=https://docs.kubewarden.io/>how to run this policies in a Kubernetes
+cluster by reading our documentation</a>.</p><p>As always, thank you for reading!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2021 <a href>kubewarden</a></p><div class=project-icons><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=blank><img src=/images/icon-slack.svg height=20></a>
+<a href=https://twitter.com/kubewarden target=blank><img src=/images/icon-twitter.svg height=20></a>
+<a href=https://github.com/kubewarden target=blank><img src=/images/icon-github.svg height=20></a></div></footer></body></html>
