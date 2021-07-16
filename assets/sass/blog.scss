@@ -48,3 +48,22 @@ intro h1 a {
     color: white;
     text-decoration: none;
 }
+
+figure.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+figure.floatright {
+  max-width: 30%;
+  height: auto;
+  float: right;
+}
+
+figure.floatleft {
+  max-width: 30%;
+  height: auto;
+  float: left;
+}
