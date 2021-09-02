@@ -35,3 +35,10 @@ section.wrap p {
 .font-weight-light {
   font-weight: 300;
 }
+
+footer .project-icons a img {
+  filter: saturate(10%)invert(100%)brightness(10)grayscale(1);
+  margin: 0 0 0 10px;
+  border-radius: 3px;
+  transition: ease-in-out all .25s;
+}

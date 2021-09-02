@@ -1,6 +1,6 @@
 baseURL = ""
 languageCode = "en-us"
-title = "kubewarden"
+title = "Kubewarden"
 theme = "projects-theme"
 pluralizeListTitles = false
 enableRobotsTXT = true

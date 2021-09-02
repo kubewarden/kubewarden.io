@@ -2,7 +2,7 @@
 
 	<div class="sub-header">
     <a class="navbar-brand" href="/">
-      <img  src="/images/logo-{{ .Site.Title }}.svg" alt="{{ .Site.Title }}">
+      <img  src="/images/logo-{{lower .Site.Title }}.svg" alt="{{ .Site.Title }}">
     </a>
     <!-- nav -->
     {{ with .Site.Menus.main }}
