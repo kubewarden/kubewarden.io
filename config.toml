@@ -7,6 +7,7 @@ enableRobotsTXT = true
 pygmentsCodeFences = true
 pygmentsCodeFencesGuessSyntax = true
 enableGitInfo = true
+googleAnalytics = 'UA-56382716-13'
 
 [blackfriday]
 fractions = false
@@ -29,6 +30,8 @@ params = ["categories", "tags"]
 home = ["HTML", "RSS", "Algolia"]
 
 [privacy]
+  [privacy.googleAnalytics]
+    anonymizeIP = true
   [privacy.twitter]
     disable = false
     enableDNT = false
