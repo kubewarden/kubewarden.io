@@ -3,7 +3,7 @@ title: Towards a universal policy platform
 authors:
     - Flavio Castelli
     - Rafael Fernández López
-date: 2021-09-02
+date: 2021-09-21
 ---
 
 Kubewarden is a policy framework for Kubernetes. It can be used to
