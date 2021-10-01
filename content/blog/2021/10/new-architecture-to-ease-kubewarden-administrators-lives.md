@@ -8,8 +8,8 @@ date: 2021-10-01
 We are pleased to announce a new architecture for the Kubewarden stack, in line
 with its journey to maturity:
 
-The introduction of a **PolicyServer** Custom Resource Definition which allows
-users to describe a policy-server Deployment, together with binding
+The introduction of a **PolicyServer** Custom Resource Definition (CRD) which
+allows users to describe a policy-server Deployment, together with binding
 **ClusterAdmissionPolicies** to a specific **PolicyServer** instance.
 
 These 2 changes are accompanied by a multitude of improvements to make Kubewarden
