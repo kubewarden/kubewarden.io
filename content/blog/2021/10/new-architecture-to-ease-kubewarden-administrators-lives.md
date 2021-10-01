@@ -24,9 +24,9 @@ charts.
 
 In previous versions, the Kubewarden Controller instantiated a single Deployment
 of policy-server. That policy-server was configured via a ConfigMap, which
-contained the Deployment options (image, replicas, ...), and a list of policies to
-load compiled from the instantiated ClusterAdmissionPolicies, with information
-on where to pull them from, their configuration options and so on.
+contained the Deployment options (image, replicas, ...), and a list of policies
+to be loaded, with information on where to pull them from, their configuration
+options and so on.
 
 With the addition of the new **PolicyServer** Custom Resource, administrators
 have a better UX, since they can define as many policy servers as they need, and
@@ -53,6 +53,10 @@ spec:
   image: ghcr.io/kubewarden/policy-server:v0.1.10
   replicas: 1
 ```
+
+The PolicyServer Custom Resource also accepts an optional
+`spec.serviceAccountName` to be associated with (if not set, as here, the
+Namespace ServiceAccount will be used).
 
 A ClusterAdmissionPolicy targeting that PolicyServer needs to set
 `spec.policyServer` to `tenant-a`, as such:
@@ -86,23 +90,32 @@ docs](https://docs.kubewarden.io/architecture.html), and the [Kubewarden CRDs do
 
 ## Ok, but what does this mean for administrators?
 
-Moving from 1 PolicyServer to several increases resiliency and segregation. Now,
-we can take admission reviews from policies and separate them into several
-PolicyServers. While the old architecture was already HA, a noisy
-tenant/namespace or a frequently used policy could bring to a crawl the only
-policy server and break havoc in the Cluster.
+With the possibility to use more than one PolicyServer, it is now up to the
+Kubernetes administrators on how they want to split and organize policy
+evaluations, at the same time that resilience grows.
 
-With the new possibility of several PolicyServers, a Kubernetes Operator can
-isolate policy evaluations per tenant/namespace, and run mission critical
-policies separately, making the whole infrastructure more resilient.
+While the old architecture was already HA, a noisy tenant/namespace or a
+frequently used policy could in the past bring to a crawl the only policy server
+and break havoc in the Cluster (as all admission reviews for the cluster went
+through it to be screened).
+
+Now for example, a Kubernetes Administrator can decide to isolate policy
+evaluations per tenant/namespace by creating a PolicyServer for each tenant
+workload. Or run mission critical policies separately, making the whole
+infrastructure more resilient.
+
+In the future, with an upcoming namespaced AdmissionPolicy Custom Resource,
+administrators will be able to give different tenants control over their own
+admission policies, reducing administrative overload.
 
 The new architecture also validates and mutates PolicyServers and
 ClusterAdmissionPolicies with dedicated admission controllers, for a better UX.
 Which means that administrators can rest comfortably when editing them, as
 catastrophic outcomes (such as all policies being dropped by a misconfigured
-PolicyServer, leading to DOS against the cluster) can never happen. Also,
-ClusterAdmissionPolicies will, if no `spec.policyServer` is defined, bind to the
-PolicyServer named `default`. In addition,
+PolicyServer, leading to DOS against the cluster) can never happen.
+
+Also, ClusterAdmissionPolicies will, if no `spec.policyServer` is defined, bind
+to the PolicyServer named `default` (created by the Helm chart). In addition,
 [Finalizers](https://kubernetes.io/docs/concepts/overview/working-with-objects/finalizers/)
 are now added to all Kubewarden Custom Resources, which ensure orderly deletion
 by the Kubewarden Controller.
