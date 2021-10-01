@@ -104,8 +104,8 @@ PolicyServer, leading to DOS against the cluster) can never happen. Also,
 ClusterAdmissionPolicies will, if no `spec.policyServer` is defined, bind to the
 PolicyServer named `default`. In addition,
 [Finalizers](https://kubernetes.io/docs/concepts/overview/working-with-objects/finalizers/)
-are now added to all Kubewarden CRs, which ensure orderly deletion by the
-Kubewarden Controller.
+are now added to all Kubewarden Custom Resources, which ensure orderly deletion
+by the Kubewarden Controller.
 
 The inclusion of validating and mutating webhooks for Kuberwarden CRDs means that
 the controller webhook server needs to be securely hooked up to the Kubernetes
@@ -120,8 +120,8 @@ For ease of deployment, we have separated the CRDs into its own Helm chart:
 The Kubewarden Controller and default policy server stay in the
 `kubewarden-controller` Helm chart.
 
-All of the new changes simplify managing clusters. Which makes managing multiple
-clusters via [Fleet](https://fleet.rancher.io/) more consistent and streamlined.
+All of the new changes simplify managing clusters. Which makes Kubewarden use
+via [Fleet](https://fleet.rancher.io/) more consistent and streamlined.
 
 ## A hands-on example
 
@@ -130,11 +130,7 @@ simple policy.
 
 ### Installing Kubewarden
 
-Make sure you have [`cert-manager`
-installed](https://cert-manager.io/docs/installation/) and then install the
-`kubewarden-crds` and `kubewarden-controller` chart.
-
-For example:
+Follow this example:
 ```console
 $ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
 $ kubectl wait --for=condition=Available deployment --timeout=2m -n cert-manager --all
@@ -143,11 +139,11 @@ $ helm install --create-namespace -n kubewarden kubewarden-crds kubewarden/kubew
 $ helm install --wait -n kubewarden kubewarden-controller kubewarden/kubewarden-controller
 ```
 
-This will install cert-manager, and then install the `kubewarden-crds` and
-`kubewarden-controller` Helm charts on the Kubernetes cluster in the default
-configuration (which includes self-signed TLS certs). After ~1 minute, you
-will have the Kubewarden Controller running and 1 PolicyServer, named `default`,
-on the `kubewarden` namespace:
+This will install [cert-manager](https://cert-manager.io), a dependency of
+Kubewarden, and then install the `kubewarden-crds` and `kubewarden-controller`
+Helm charts in the default configuration (which includes self-signed TLS certs).
+Shortly after, you will have the Kubewarden Controller running and one
+PolicyServer, named `default`, on the `kubewarden` namespace:
 
 
 ```console
