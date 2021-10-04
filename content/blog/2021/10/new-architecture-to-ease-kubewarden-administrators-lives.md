@@ -33,7 +33,7 @@ have a better UX, since they can define as many policy servers as they need, and
 get to select what PolicyServer each ClusterAdmissionPolicy targets. Let's see a
 diagram of the new architecture:
 
-{{< figure class="center" src="/images/how-it-works-kubewarden.svg" width="90%" alt="new architecture diagram">}}
+{{<figure src="/images/how-it-works-kubewarden.svg" alt="new architecture diagram">}}
 
 On the diagram, notice the 2 separate PolicyServer Deployments in cyan and mauve
 (right), created as specified in the 2 PolicyServer resources (left).
