@@ -56,7 +56,7 @@ spec:
 
 The PolicyServer Custom Resource also accepts an optional
 `spec.serviceAccountName` to be associated with (if not set, as here, the
-Namespace ServiceAccount will be used).
+Namespace default ServiceAccount will be used).
 
 A ClusterAdmissionPolicy targeting that PolicyServer needs to set
 `spec.policyServer` to `tenant-a`, as such:
