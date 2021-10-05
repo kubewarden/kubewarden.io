@@ -17,8 +17,11 @@ more comfortable for Kubernetes Administrators, such as validation for
 Kuberwarden Custom Resources, improvements in Helm Charts, Status and
 Conditions for **ClusterAdmissionPolicies**.
 
-For a comprehensive list, see the [release notes](TODO) of our latest Helm
-charts.
+For a comprehensive list, see the release notes of
+[kubewarden-crds-0.1.0](https://github.com/kubewarden/helm-charts/releases/tag/kubewarden-crds-0.1.0)
+and
+[kubewarden-controller-0.3.0](https://github.com/kubewarden/helm-charts/releases/tag/kubewarden-controller-0.3.0)
+Helm charts.
 
 ## How does it look like?
 
