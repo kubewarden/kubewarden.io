@@ -91,7 +91,6 @@ date: 2021-04-16T13:28:46+02:00
     <pre>
 <code>
 $ helm repo add kubewarden https://charts.kubewarden.io
-$ helm install --namespace kubewarden --create-namespace kubewarden-controller kubewarden/kubewarden-controller
 $ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
 $ helm install --create-namespace -n kubewarden kubewarden-crds kubewarden/kubewarden-crds
 $ helm install --wait -n kubewarden kubewarden-controller kubewarden/kubewarden-controller
