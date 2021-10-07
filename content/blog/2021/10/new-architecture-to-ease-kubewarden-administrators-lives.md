@@ -208,19 +208,6 @@ spec:
 EOF
 ```
 
----
-> Note for Windows ([Rancher Desktop](https://rancherdesktop.io)) users:
-> 
-> The above uses Linux shell syntax and won't work on Windows PowerShell
-> or [Windows Terminal](https://github.com/Microsoft/Terminal).
-> 
-> You can use this command instead:
-> 
-> ```console
-> kubectl apply -f https://www.kubewarden.io/blog/2021/10/new-architecture/deploy-pod-privileged.yaml
-> ```
----
-
 ```console
 $ kubectl get policyservers
 NAME               AGE
@@ -267,13 +254,6 @@ EOF
 
 Error from server: error when creating "STDIN": admission webhook "privileged-pods.kubewarden.admission" denied the request: User 'youruser:yourrole' cannot schedule privileged containers
 ```
-
----
-> Here the same command for Windows (Rancher Desktop):
-> ```console
-> kubectl apply -f https://www.kubewarden.io/blog/2021/10/new-architecture/create-privileged-pod.yaml
-> ```
----
 
 # Foreword
 
