@@ -217,7 +217,7 @@ EOF
 > You can use this command instead:
 > 
 > ```console
-> kubectl apply -f https://www.kubewarden.io/blog/2021/10/deploy-pod-privileged.yaml
+> kubectl apply -f https://www.kubewarden.io/blog/2021/10/new-architecture/deploy-pod-privileged.yaml
 > ```
 ---
 
@@ -271,7 +271,7 @@ Error from server: error when creating "STDIN": admission webhook "privileged-po
 ---
 > Here the same command for Windows (Rancher Desktop):
 > ```console
-> kubectl apply -f https://www.kubewarden.io/blog/2021/10/create-privileged-pod.yaml
+> kubectl apply -f https://www.kubewarden.io/blog/2021/10/new-architecture/create-privileged-pod.yaml
 > ```
 ---
 
