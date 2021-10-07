@@ -55,6 +55,7 @@ metadata:
 spec:
   image: ghcr.io/kubewarden/policy-server:v0.1.10
   replicas: 1
+  serviceAccountName: policy-server
 ```
 
 The PolicyServer Custom Resource also accepts an optional
