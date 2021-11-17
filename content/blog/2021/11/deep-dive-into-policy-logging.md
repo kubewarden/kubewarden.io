@@ -5,29 +5,27 @@ authors:
 date: 2021-11-15
 ---
 
-Policies are regular programs. As such they have the need to log often times. In general, we are
-used to make our programs log into standard output (stdout) and standard error (stderr) outputs.
+Policies are regular programs. As such they often have the need to log information. In general, we
+are used to make our programs log into standard output (stdout) and standard error (stderr) outputs.
 
 However, policies run in a confined WebAssembly environment. For this mechanism to work as usual
-Kubewarden would need to set up the runtime environment in a way that stdout and stderr file
-descriptors are set up so that the policy can write to them, and upon completion, Kubewarden can
-check them -- or stream them as they pop up.
+Kubewarden would need to set up the runtime environment in a way that the policy can write to stdout
+and stderr file descriptors, and upon completion, Kubewarden can check them -- or stream log
+messages as they pop up.
 
-Although the previous approach was our very first initial implementation in Kubewarden, it's no
-longer implemented that way.
-
-Given we are providing SDK's for supported languages we can do a bit better. As we have described in
-previous posts and in our documentation, Kubewarden uses waPC for allowing intercommunication
-between the guest (the policy) and the host (Kubewarden -- the `policy-server` or `kwctl` if we are
-running policies manually).
+Given Kubewarden uses [waPC](https://wapc.io/) for allowing intercommunication between the guest
+(the policy) and the host (Kubewarden -- the `policy-server` or `kwctl` if we are running policies
+manually), we have extended our language SDK's so that they can log messages by using waPC
+internally.
 
 Kubewarden has defined  a contract between policies (guests) and the host (Kubewarden) for
 performing [policy settings
 validation](https://docs.kubewarden.io/writing-policies/spec/02-settings.html), [policy
 validation](https://docs.kubewarden.io/writing-policies/spec/03-validating-policies.html), [policy
-mutation](https://docs.kubewarden.io/writing-policies/spec/04-mutating-policies.html) and logging.
+mutation](https://docs.kubewarden.io/writing-policies/spec/04-mutating-policies.html) and now,
+logging.
 
-The waPC interface used for logging is a therefore a contract, because once you have built a policy,
+The waPC interface used for logging is therefore a contract, because once you have built a policy,
 it should be possible to run it in future Kubewarden versions. In this sense, Kubewarden keeps this
 contract behind the SDK of your preferred language, so you don't have to deal with the details of
 how logging is implemented in Kubewarden. You just have to use your logging library of choice for
@@ -35,7 +33,7 @@ the language you are working with.
 
 Let's look into how to take advantage of logging with Kubewarden in specific languages!
 
-## Policy Authors
+## For Policy Authors
 
 ### Go
 
@@ -132,8 +130,9 @@ You can read more about slog [here](https://github.com/slog-rs/slog).
 We will be looking at the [Swift policy
 template](https://github.com/kubewarden/swift-policy-template) for this example.
 
-As happens with Go and Rust's SDK's, the Swift SDK is instrumented to use Swift's `LogHandler`, so
-our policy only has to initialize it. In our `Sources/Policy/main.swift` file:
+As happens with Go and Rust's SDK's, the Swift SDK is instrumented to use Swift's `LogHandler` from
+the [`swift-log` project](https://github.com/apple/swift-log), so our policy only has to initialize
+it. In our `Sources/Policy/main.swift` file:
 
 ```swift
 import kubewardenSdk
@@ -164,18 +163,18 @@ Following the same strategy as the Go and Rust SDK's, the Swift SDK is able to [
 the host through
 waPC](https://github.com/kubewarden/policy-sdk-swift/blob/59cc979fa9994f1653d3d3e3dd3072188b2c0a18/Sources/kubewardenSdk/logger.swift#L75-L80).
 
-## Cluster Administrators
+## For Cluster Administrators
 
 Being able to log from within a policy is half of the story. Then, we have to be able to read and
 potentially collect these logs.
 
 As we have seen, Kubewarden policies support structured logging that is then forwarded to the
 component running the policy. Usually, this is `kwctl` if you are executing the policy in a manual
-fashion, or the `policy-server` if the policy is being ran in a Kubernetes environment.
+fashion, or `policy-server` if the policy is being ran in a Kubernetes environment.
 
-Both `kwctl` and the  `policy-server` use the `tracing` crate to produce log events, either the
-events that are produced by the application itself, or by policies that are running in WebAssembly
-runtime environments.
+Both `kwctl` and `policy-server` use the [`tracing`](https://github.com/tokio-rs/tracing) crate to
+produce log events, either the events that are produced by the application itself, or by policies
+that are running in WebAssembly runtime environments.
 
 ### `kwctl`
 
@@ -188,10 +187,12 @@ The `policy-server` supports [different log
 formats](https://github.com/kubewarden/policy-server/blob/d615bfe7fdf1fe6001e655360fe85f0db2194410/src/cli.rs#L174-L206):
 `json`, `text` and `otlp`.
 
-`otlp`? I hear you ask. It stands for OpenTelemetry Protocol. We will look into that in a bit.
+`otlp`? I hear you ask. It stands for [OpenTelemetry](https://opentelemetry.io/) Protocol. We will
+look into that in a bit.
 
 If the `policy-server` is run with the `--log-fmt` argument set to `json` or `text`, the output will
-be printed to the standard error file descriptor in JSON or plain text formats.
+be printed to the standard error file descriptor in JSON or plain text formats. These messages can
+be read using `kubectl logs <policy-server-pod>`.
 
 If `--log-fmt` is set to `otlp`, the `policy-server` will use OpenTelemetry to report logs and
 traces.
@@ -200,7 +201,7 @@ traces.
 
 Kubewarden is instrumented with OpenTelemetry, so it's possible for the `policy-server` to send
 trace events to an [OpenTelemetry collector](https://opentelemetry.io/docs/collector/) by using the
-OpenTelemtry Protocol (`otlp`).
+OpenTelemetry Protocol (`otlp`).
 
 Our official [Kubewarden Helm
 Chart](https://github.com/kubewarden/helm-charts/blob/199b18b74ca664ab9370ba5fc101f890a3f3d00f/charts/kubewarden-controller/values.yaml)
@@ -217,5 +218,8 @@ telemetry:
 
 This functionality closes the gap on logging/tracing, given the freedom that the OpenTelemetry
 collector provides to us in terms of flexibility of what to do with this logs and traces.
+
+You can read more about Kubewarden's integration with OpenTelemetry in [our
+documentation](https://docs.kubewarden.io/operator-manual/telemetry/opentelemetry/01-quickstart.html).
 
 But this is a big enough topic on its own worth a future blog post. Stay logged!
