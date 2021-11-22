@@ -1,0 +1,113 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Deep Dive into policy logging</title><link rel=stylesheet type=text/css href=/sass/blog.min.css?1637589702><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a class=navbar-brand href=/><img src=/images/logo-kubewarden.svg alt=Kubewarden></a><nav><ul class=menu><li><a href=/blog class="btn no-bg">Blog</a></li><li><a href=https://hub.kubewarden.io/ class="btn no-bg" target=_blank>Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ class="btn no-bg" target=_blank>Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ class="btn no-bg" target=_blank>Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" class="btn no-bg" target=_blank>Slack</a></li><li><a href=https://twitter.com/kubewarden class="btn no-bg" target=_blank>Twitter</a></li><li><a href=https://github.com/kubewarden class=btn><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Deep Dive into policy logging</h1><author>Rafael Fernández López</author>
+<time>15 Nov 2021</time><div id=blog-post-content><p>Policies are regular programs. As such they often have the need to log information. In general, we
+are used to make our programs log into standard output (stdout) and standard error (stderr) outputs.</p><p>However, policies run in a confined WebAssembly environment. For this mechanism to work as usual
+Kubewarden would need to set up the runtime environment in a way that the policy can write to stdout
+and stderr file descriptors, and upon completion, Kubewarden can check them &ndash; or stream log
+messages as they pop up.</p><p>Given Kubewarden uses <a href=https://wapc.io/>waPC</a> for allowing intercommunication between the guest
+(the policy) and the host (Kubewarden &ndash; the <code>policy-server</code> or <code>kwctl</code> if we are running policies
+manually), we have extended our language SDK&rsquo;s so that they can log messages by using waPC
+internally.</p><p>Kubewarden has defined a contract between policies (guests) and the host (Kubewarden) for
+performing <a href=https://docs.kubewarden.io/writing-policies/spec/02-settings.html>policy settings
+validation</a>, <a href=https://docs.kubewarden.io/writing-policies/spec/03-validating-policies.html>policy
+validation</a>, <a href=https://docs.kubewarden.io/writing-policies/spec/04-mutating-policies.html>policy
+mutation</a> and now,
+logging.</p><p>The waPC interface used for logging is therefore a contract, because once you have built a policy,
+it should be possible to run it in future Kubewarden versions. In this sense, Kubewarden keeps this
+contract behind the SDK of your preferred language, so you don&rsquo;t have to deal with the details of
+how logging is implemented in Kubewarden. You just have to use your logging library of choice for
+the language you are working with.</p><p>Let&rsquo;s look into how to take advantage of logging with Kubewarden in specific languages!</p><h2 id=for-policy-authors>For Policy Authors</h2><h3 id=go>Go</h3><p>We are going to use the <a href=https://github.com/kubewarden/go-policy-template>Go policy template</a> as a
+starting point.</p><p>Our Go SDK provides integration with the <a href=https://github.com/francoispqt/onelog><code>onelog</code></a> library.
+When our policy is built for the WebAssembly target, it will send the logs to the host through waPC.
+Otherwise, it will just print them on stderr &ndash; but this is only relevant if you happen to run your
+policy outside a Kubewarden runtime environment.</p><p>One of the first things our policy does on its
+<a href=https://github.com/kubewarden/go-policy-template/blob/a8dd2b374ce32ab01838d0c3a04efda1735599b3/main.go><code>main.go</code></a>
+file is to initialize the logger:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> (
+	<span style=color:#a6e22e>logWriter</span> = <span style=color:#a6e22e>kubewarden</span>.<span style=color:#a6e22e>KubewardenLogWriter</span>{}
+	<span style=color:#a6e22e>logger</span>    = <span style=color:#a6e22e>onelog</span>.<span style=color:#a6e22e>New</span>(
+		<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>logWriter</span>,
+		<span style=color:#a6e22e>onelog</span>.<span style=color:#a6e22e>ALL</span>, <span style=color:#75715e>// shortcut for onelog.DEBUG|onelog.INFO|onelog.WARN|onelog.ERROR|onelog.FATAL
+</span><span style=color:#75715e></span>	)
+)
+</code></pre></div><p>We are then able to use <code>onelog</code> API in order to produce log messages. We could, for example,
+perform structured logging with debugging level:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>DebugWithFields</span>(<span style=color:#e6db74>&#34;validating object&#34;</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>e</span> <span style=color:#a6e22e>onelog</span>.<span style=color:#a6e22e>Entry</span>) {
+    <span style=color:#a6e22e>e</span>.<span style=color:#a6e22e>String</span>(<span style=color:#e6db74>&#34;name&#34;</span>, <span style=color:#a6e22e>gjson</span>.<span style=color:#a6e22e>GetBytes</span>(<span style=color:#a6e22e>payload</span>, <span style=color:#e6db74>&#34;request.object.metadata.name&#34;</span>).<span style=color:#a6e22e>String</span>())
+	<span style=color:#a6e22e>e</span>.<span style=color:#a6e22e>String</span>(<span style=color:#e6db74>&#34;namespace&#34;</span>, <span style=color:#a6e22e>gjson</span>.<span style=color:#a6e22e>GetBytes</span>(<span style=color:#a6e22e>payload</span>, <span style=color:#e6db74>&#34;request.object.metadata.namespace&#34;</span>).<span style=color:#a6e22e>String</span>())
+})
+</code></pre></div><p>Or, with info level:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>InfoWithFields</span>(<span style=color:#e6db74>&#34;validating object&#34;</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>e</span> <span style=color:#a6e22e>onelog</span>.<span style=color:#a6e22e>Entry</span>) {
+    <span style=color:#a6e22e>e</span>.<span style=color:#a6e22e>String</span>(<span style=color:#e6db74>&#34;name&#34;</span>, <span style=color:#a6e22e>gjson</span>.<span style=color:#a6e22e>GetBytes</span>(<span style=color:#a6e22e>payload</span>, <span style=color:#e6db74>&#34;request.object.metadata.name&#34;</span>).<span style=color:#a6e22e>String</span>())
+	<span style=color:#a6e22e>e</span>.<span style=color:#a6e22e>String</span>(<span style=color:#e6db74>&#34;namespace&#34;</span>, <span style=color:#a6e22e>gjson</span>.<span style=color:#a6e22e>GetBytes</span>(<span style=color:#a6e22e>payload</span>, <span style=color:#e6db74>&#34;request.object.metadata.namespace&#34;</span>).<span style=color:#a6e22e>String</span>())
+})
+</code></pre></div><p>What happens under the covers is that our Go SDK sends <a href=https://github.com/kubewarden/policy-sdk-go/blob/95c4b93adf6830862b85f953bc09d31de7490872/log_writer_wasi.go#L15>every log event to the <code>kubewarden</code> host
+through
+waPC</a>.</p><h3 id=rust>Rust</h3><p>Let&rsquo;s use the <a href=https://github.com/kubewarden/policy-rust-template>Rust policy template</a> as our
+guide.</p><p>Our Rust SDK implements an integration with the <code>slog</code> crate. This crate exposes the concept of
+drains, so we have to <a href=https://github.com/kubewarden/policy-rust-template/blob/fd46e75b3794dbacbf499da6632d5294bdcea28c/src/lib.rs#L16-L21>define a global drain that we will use throughout our policy
+code</a>:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>use</span> kubewarden::logging;
+<span style=color:#66d9ef>use</span> slog::{o, Logger};
+lazy_static<span style=color:#f92672>!</span> {
+    <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>ref</span> LOG_DRAIN: <span style=color:#a6e22e>Logger</span> <span style=color:#f92672>=</span> Logger::root(
+        logging::KubewardenDrain::new(),
+        o<span style=color:#f92672>!</span>(<span style=color:#e6db74>&#34;some-key&#34;</span> <span style=color:#f92672>=&gt;</span> <span style=color:#e6db74>&#34;some-value&#34;</span>) <span style=color:#75715e>// This key value will be shared by all logging events that use
+</span><span style=color:#75715e></span>                                       <span style=color:#75715e>// this logger
+</span><span style=color:#75715e></span>    );
+}
+</code></pre></div><p>Then, we can use the macros provided by <code>slog</code> to log on different levels:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>use</span> slog::{crit, debug, error, info, trace, warn};
+</code></pre></div><p>Let&rsquo;s log an info level message:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>info<span style=color:#f92672>!</span>(
+    LOG_DRAIN,
+    <span style=color:#e6db74>&#34;rejecting resource&#34;</span>;
+    <span style=color:#e6db74>&#34;resource_name&#34;</span> <span style=color:#f92672>=&gt;</span> <span style=color:#f92672>&amp;</span>resource_name
+);
+</code></pre></div><p>As happens with the Go SDK implementation, our Rust implementation of the <code>slog</code> drain sends <a href=https://github.com/kubewarden/policy-sdk-rust/blob/642d13b07053be6455c0b5f49df0e87ff6f022c5/src/logging/drain.rs#L57-L60>this
+logging events to the host by using
+waPC</a>.</p><p>You can read more about slog <a href=https://github.com/slog-rs/slog>here</a>.</p><h3 id=swift>Swift</h3><p>We will be looking at the <a href=https://github.com/kubewarden/swift-policy-template>Swift policy
+template</a> for this example.</p><p>As happens with Go and Rust&rsquo;s SDK&rsquo;s, the Swift SDK is instrumented to use Swift&rsquo;s <code>LogHandler</code> from
+the <a href=https://github.com/apple/swift-log><code>swift-log</code> project</a>, so our policy only has to initialize
+it. In our <code>Sources/Policy/main.swift</code> file:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-swift data-lang=swift><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>kubewardenSdk</span>
+<span style=color:#66d9ef>import</span> <span style=color:#a6e22e>Logging</span>
+
+LoggingSystem.bootstrap(PolicyLogHandler.<span style=color:#66d9ef>init</span>)
+</code></pre></div><p>Then, in our policy business logic, under <code>Sources/BusinessLogic/validate.swift</code>, we are able to log
+with <a href=https://apple.github.io/swift-log/docs/current/Logging/Structs/Logger.html>different levels</a>:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-swift data-lang=swift><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>Logging</span>
+
+<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>func</span> <span style=color:#a6e22e>validate</span>(payload: String) -&gt; String {
+    <span style=color:#75715e>// ...</span>
+
+    logger.info(<span style=color:#e6db74>&#34;validating object&#34;</span>,
+        metadata: [
+            <span style=color:#e6db74>&#34;some-key&#34;</span>: <span style=color:#e6db74>&#34;some-value&#34;</span>,
+        ])
+
+    <span style=color:#75715e>// ...</span>
+}
+</code></pre></div><p>Following the same strategy as the Go and Rust SDK&rsquo;s, the Swift SDK is able to <a href=https://github.com/kubewarden/policy-sdk-swift/blob/59cc979fa9994f1653d3d3e3dd3072188b2c0a18/Sources/kubewardenSdk/logger.swift#L75-L80>push log events to
+the host through
+waPC</a>.</p><h2 id=for-cluster-administrators>For Cluster Administrators</h2><p>Being able to log from within a policy is half of the story. Then, we have to be able to read and
+potentially collect these logs.</p><p>As we have seen, Kubewarden policies support structured logging that is then forwarded to the
+component running the policy. Usually, this is <code>kwctl</code> if you are executing the policy in a manual
+fashion, or <code>policy-server</code> if the policy is being ran in a Kubernetes environment.</p><p>Both <code>kwctl</code> and <code>policy-server</code> use the <a href=https://github.com/tokio-rs/tracing><code>tracing</code></a> crate to
+produce log events, either the events that are produced by the application itself, or by policies
+that are running in WebAssembly runtime environments.</p><h3 id=kwctl><code>kwctl</code></h3><p>The <code>kwctl</code> CLI tool takes a very straightforward approach to logging from policies: it will print
+them to the standard error file descriptor.</p><h3 id=policy-server><code>policy-server</code></h3><p>The <code>policy-server</code> supports <a href=https://github.com/kubewarden/policy-server/blob/d615bfe7fdf1fe6001e655360fe85f0db2194410/src/cli.rs#L174-L206>different log
+formats</a>:
+<code>json</code>, <code>text</code> and <code>otlp</code>.</p><p><code>otlp</code>? I hear you ask. It stands for <a href=https://opentelemetry.io/>OpenTelemetry</a> Protocol. We will
+look into that in a bit.</p><p>If the <code>policy-server</code> is run with the <code>--log-fmt</code> argument set to <code>json</code> or <code>text</code>, the output will
+be printed to the standard error file descriptor in JSON or plain text formats. These messages can
+be read using <code>kubectl logs &lt;policy-server-pod></code>.</p><p>If <code>--log-fmt</code> is set to <code>otlp</code>, the <code>policy-server</code> will use OpenTelemetry to report logs and
+traces.</p><h2 id=opentelemetry>OpenTelemetry</h2><p>Kubewarden is instrumented with OpenTelemetry, so it&rsquo;s possible for the <code>policy-server</code> to send
+trace events to an <a href=https://opentelemetry.io/docs/collector/>OpenTelemetry collector</a> by using the
+OpenTelemetry Protocol (<code>otlp</code>).</p><p>Our official <a href=https://github.com/kubewarden/helm-charts/blob/199b18b74ca664ab9370ba5fc101f890a3f3d00f/charts/kubewarden-controller/values.yaml>Kubewarden Helm
+Chart</a>
+has certain values that allow you to deploy Kubewarden with OpenTelemetry support, reporting logs
+and traces to, for example, a Jaeger instance:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>telemetry</span>:
+  <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>True</span>
+  <span style=color:#f92672>tracing</span>:
+    <span style=color:#f92672>jaeger</span>:
+      <span style=color:#f92672>endpoint</span>: <span style=color:#e6db74>&#34;all-in-one-collector.jaeger.svc.cluster.local:14250&#34;</span>
+</code></pre></div><p>This functionality closes the gap on logging/tracing, given the freedom that the OpenTelemetry
+collector provides to us in terms of flexibility of what to do with this logs and traces.</p><p>You can read more about Kubewarden&rsquo;s integration with OpenTelemetry in <a href=https://docs.kubewarden.io/operator-manual/telemetry/opentelemetry/01-quickstart.html>our
+documentation</a>.</p><p>But this is a big enough topic on its own worth a future blog post. Stay logged!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2021 SUSE. Kubewarden is an open source project of the <a href=https://suse.com>SUSE</a> <a href=https://rancher.com>Rancher</a> Engineering group.</p><div class=project-icons><a href=https://k3s.io target=blank><img src=images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
