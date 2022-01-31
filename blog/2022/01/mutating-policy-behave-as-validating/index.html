@@ -1,0 +1,29 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Kubewarden policies cover all the Kubernetes Pod Security Policies.</title><link rel=stylesheet type=text/css href=/sass/blog.min.css?1643636986><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a class=navbar-brand href=/><img src=/images/logo-kubewarden.svg alt=Kubewarden></a><nav><ul class=menu><li><a href=/blog class="btn no-bg">Blog</a></li><li><a href=https://hub.kubewarden.io/ class="btn no-bg" target=_blank>Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ class="btn no-bg" target=_blank>Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ class="btn no-bg" target=_blank>Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" class="btn no-bg" target=_blank>Slack</a></li><li><a href=https://twitter.com/kubewarden class="btn no-bg" target=_blank>Twitter</a></li><li><a href=https://github.com/kubewarden class=btn><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Kubewarden policies cover all the Kubernetes Pod Security Policies.</h1><author>José Guilherme Vanz</author>
+<time>31 Jan 2022</time><div id=blog-post-content><p>The Kubewarden team worked tirelessly to create equivalent Kubewarden policies
+for all the deprecated Pod Security Policies (PSP). In order to reach this very
+important milestone, the team wrote the policies with the same validations
+available in the Kubernetes PSPs, and we counted on the community help to map
+and validate the policies.</p><p>This will allow our users to replace deprecated PSPs while continuing to enforce
+their security rules.</p><p>The Kubewarden policies which replace all the Kubernetes PSPs, are available
+in the Policy Hub, and you can find them by typing the keyword &ldquo;PSP&rdquo;. And, to
+have the exact same behavior of the Kubernetes PSPs is necessary a minimum version
+for some of the Kubewarden components, which are:</p><ul><li>Kubewarden controller v0.4.5</li><li>Policy Server version v0.2.6</li></ul><p>You may are thinking: why do I need to use these specific versions?</p><p>The answer is related to &ldquo;requests mutation&rdquo;. Let me explain.</p><p>In the previous versions of Kubewarden Policy Server, if a policy mutated a
+request and it&rsquo;s configured as a &ldquo;mutating&rdquo; policy, the Policy Server would
+always accept the request and this behavior is not aligned with the Kubernetes
+PSP validation.</p><p>Instead, you should be able to reject a request even if a mutation happens.
+To solve this misalignment, the team changed the Kubewarden controller and
+Policy Server to allow you configure a mutating policy to behave like a
+validated one. But if you don&rsquo;t need it, you can use the policies in previous
+Kubewarden versions as well.</p><p>Since the Kubewarden controller and Policy Server versions update, if you mark
+a policy as &ldquo;mutating&rdquo; (setting <code>true</code> in the &ldquo;mutating&rdquo; field in the
+ClusterAdmissionPolicy resource), the mutated requests will be accepted as before.
+In the other hand, if you deploy a policy which mutates requests with the
+&ldquo;mutating&rdquo; field set to <code>false</code>, the requests will be rejected.</p><p>This means Kubewarden now have policies which cover 100% of the deprecated PSPs,
+and they behave the same way than the PSPs.</p><p>Thanks to the community for helping the team spot missing policies and the
+discrepancies between the Kubernetes PSPs and Kubewarden policies. The combined
+work is what made Kubewarden reach this important milestone.</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2022 SUSE. Kubewarden is an open source project of the <a href=https://suse.com>SUSE</a> <a href=https://rancher.com>Rancher</a> Engineering group.</p><div class=project-icons><a href=https://k3s.io target=blank><img src=images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
