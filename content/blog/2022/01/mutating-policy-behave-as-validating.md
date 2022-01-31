@@ -1,7 +1,7 @@
 ---
 title: Kubewarden policies cover all the Kubernetes Pod Security Policies.
 authors:
-	- José Guilherme Vanz
+- José Guilherme Vanz
 date: 2022-01-31
 ---
 
