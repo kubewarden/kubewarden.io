@@ -35,18 +35,10 @@ for both libraries.
 
 ### The libc
 
-`glibc` only applies to `linux` builds, so in principle is not what
-keeps us from multi platform convergence. However, we thought that
-producing a final static binary for our users in all platforms is
-interesting; specially for a CLI tool like `kwctl`, that our users
-will interact with directly in their environment.
+In the early stage of development, the Kubewarden team decided to use the [`musl libc`](https://musl.libc.org/) library.
+This allowed us to avoid potential difficulties with `glibc` down the road (i.e. Cross-compilation time or making a full static binary).
 
-However, compiling a static binary with `glibc` is tricky and can
-become problematic.
-
-The [`musl`](https://musl.libc.org/) libc is providing us with this
-safe, stable and straightforward static linking for our binaries
-targeting linux.
+The team also thinks that producing a final static binary for all platforms is in our users own interests; specially for a CLI tool like `kwctl`, which interacts directly with our users' environment.
 
 ### The SSL stack
 
