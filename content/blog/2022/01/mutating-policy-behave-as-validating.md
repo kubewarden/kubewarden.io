@@ -1,7 +1,7 @@
 ---
-title: Kubewarden policies cover all the Kubernetes Pod Security Policies.
+title: Kubewarden policies cover all the Kubernetes Pod Security Policies
 authors:
-- José Guilherme Vanz
+    - José Guilherme Vanz
 date: 2022-01-31
 ---
 
@@ -48,4 +48,3 @@ and they behave the same way than the PSPs.
 Thanks to the community for helping the team spot missing policies and the
 discrepancies between the Kubernetes PSPs and Kubewarden policies. The combined
 work is what made Kubewarden reach this important milestone.
-
