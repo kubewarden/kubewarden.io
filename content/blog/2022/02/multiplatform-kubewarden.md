@@ -70,7 +70,7 @@ dependencies we use in our code base.
 > Silicon (macOS). We are following this closely and will release the
 > new architecture as soon as it's possible.
 >
-> In the meantime, you'll have to fallback to `rosetta` in this
+> In the meantime, you'll have to fall back to `rosetta` in this
 > environment, so you can use the `x86_64` version of `kwctl`.
 
 Try [Kubewarden](https://docs.kubewarden.io/quick-start.html) in as
