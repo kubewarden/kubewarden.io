@@ -51,7 +51,7 @@ operating systems such as Windows and macOS (Darwin).
 Luckily for us, a new TLS implementation has popped up in the Rust
 ecosystem: [rustls](https://github.com/rustls/rustls). Thanks to
 `rustls`, it's now easier to produce a final binary of `kwctl` that
-will work on all major platforms. And all that, from the same source
+will work on all major platforms. And all of that is from the same source
 code.
 
 ## Closing
