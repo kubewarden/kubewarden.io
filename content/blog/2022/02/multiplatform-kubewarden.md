@@ -56,7 +56,7 @@ code.
 
 ## Closing
 
-This decisions might seem very technical or bringing "not-so-high"
+These decisions might seem very technical or bring less
 value as other features. But for the Kubewarden team, it's important
 we provide a solution that is suitable for as many people as
 possible.
