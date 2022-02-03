@@ -61,7 +61,7 @@ value as other features. But for the Kubewarden team, it's important
 we provide a solution that is suitable for as many people as
 possible.
 
-And at the same time, we try to keep the project as convergent as
+And at the same time, we are trying to keep the project as convergent as
 possible, by reducing the number of critical, high-complexity
 dependencies we use in our code base.
 
