@@ -30,7 +30,7 @@ Initially, we were using `glibc` and `openssl` as dependencies in our
 project. However, these two libraries are somewhat special and
 sometimes problematic to converge into other platforms.
 
-Here is a short resume of the lessons learned, sometimes the hard way,
+Here is a short summary of the lessons learned, sometimes the hard way,
 for both libraries.
 
 ### The libc
