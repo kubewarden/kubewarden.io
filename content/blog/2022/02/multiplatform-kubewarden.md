@@ -48,7 +48,7 @@ of software.
 As stated above, we are interested in cross compiling for multiple
 operating systems such as Windows and macOS (Darwin).
 
-Lucky us, a new TLS implementation has popped up in the Rust
+Luckily for us, a new TLS implementation has popped up in the Rust
 ecosystem: [rustls](https://github.com/rustls/rustls). Thanks to
 `rustls` it's now easier to produce a final binary of `kwctl` that
 will work on all major platforms. And all that, from the same source
