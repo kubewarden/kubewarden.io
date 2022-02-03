@@ -58,7 +58,7 @@ code.
 
 This decisions might seem very technical or bringing "not-so-high"
 value as other features. But for the Kubewarden team, it's important
-we provide a solution that can be suitable for as many people as
+we provide a solution that is suitable for as many people as
 possible.
 
 And at the same time, we try to keep the project as convergent as
