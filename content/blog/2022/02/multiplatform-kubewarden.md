@@ -46,7 +46,7 @@ The second part of the puzzle is `openssl`. It's also a complex piece
 of software.
 
 As stated above, we are interested in cross compiling for multiple
-Operating Systems such as Windows and MacOS (Darwin).
+operating systems such as Windows and macOS (Darwin).
 
 Lucky us, a new TLS implementation has popped up in the Rust
 ecosystem: [rustls](https://github.com/rustls/rustls). Thanks to
