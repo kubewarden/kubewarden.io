@@ -67,7 +67,7 @@ dependencies we use in our code base.
 
 > Note: [`kwctl` is not building
 > yet](https://github.com/kubewarden/kwctl/issues/124) on Apple
-> Silicon (MacOS). We are following this closely and will release the
+> Silicon (macOS). We are following this closely and will release the
 > new architecture as soon as it's possible.
 >
 > In the meantime, you'll have to fallback to `rosetta` in this
