@@ -35,7 +35,7 @@ for both libraries.
 
 ### The libc
 
-In the early stage of development, the Kubewarden team decided to use the [`musl libc`](https://musl.libc.org/) library.
+In the early stages of development, the Kubewarden team decided to use the [`musl libc`](https://musl.libc.org/) library.
 This allowed us to avoid potential difficulties with `glibc` down the road (i.e., Cross-compilation time or making a full static binary).
 
 The team also thinks that producing a final static binary for all platforms is in our users' own interests, especially for a CLI tool like `kwctl`, which interacts directly with our users' environment.
