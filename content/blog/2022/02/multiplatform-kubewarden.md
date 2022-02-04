@@ -2,7 +2,7 @@
 title: Multiplatform Kubewarden
 authors:
     - Rafael Fernández López
-date: 2022-02-02
+date: 2022-02-04
 ---
 
 The Kubewarden team is glad to announce that in the spirit of helping
