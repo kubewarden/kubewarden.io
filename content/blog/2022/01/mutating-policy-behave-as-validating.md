@@ -48,3 +48,9 @@ and they behave the same way than the PSPs.
 Thanks to the community for helping the team spot missing policies and the
 discrepancies between the Kubernetes PSPs and Kubewarden policies. The combined
 work is what made Kubewarden reach this important milestone.
+
+It's worth full to mention that our community colleagues from (appvia)[https://www.appvia.io/]
+have made available a (tool)[https://appvia.github.io/psp-migration/] to help PSP \
+users migrate to Kubewarden policies and similar options like Gatekeeper and Kyverno.
+Check it out!
+
