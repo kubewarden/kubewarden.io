@@ -164,13 +164,11 @@ footer {
       text-decoration: none;
 
       img {
-        filter: brightness(10) grayscale(1);
         margin: 0 0 0 10px;
         border-radius: 3px;
         transition: ease-in-out all .25s;
         &:hover {
-          filter: brightness(1) grayscale(0);
-          background: white;
+          filter: brightness(3) grayscale(1);
         }
       }
     }
