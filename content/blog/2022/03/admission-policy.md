@@ -93,7 +93,7 @@ kubectl apply -f privileged-pod.yaml -n development
 Do you want your policy to be applied to resources across all namespaces or cluster-wide resources? Then use `ClusterAdmissionPolicies`. 
 
 Is your cluster shared by multiple users or teams? Are they using different namespaces? Do you want your policy to be applied to resources within a namespace? Then you can now take advantage of the new `AdmissionPolicy`.
-You can find the `AdmissionPolicy` specification [here](https://github.com/kubewarden/kubewarden-controller/blob/main/docs/crds/README.asciidoc#admissionpolicy).
+You can find the `AdmissionPolicy` specification [here](https://github.com/kubewarden/kubewarden-controller/blob/e0433fc3774d06dcf5e08bf2c600ad0117b89448/docs/crds/README.asciidoc#admissionpolicy).
 
 We would love to hear your feedback! Feel free to open issues in the
 [github.com/kubewarden](https://github.com/kubewarden) projects or get in
