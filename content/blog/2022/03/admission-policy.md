@@ -7,7 +7,7 @@ date: 2022-03-09
 
 Up until now, the only way to define a policy in Kubewarden was to use a `ClusterAdmissionPolicy` which is applied to cluster-wide resources across all namespaces.
 
-That's why we're thrilled to announce the new `AdmissionPolicy` resource. This new resource is created inside a `namespace` and the policies will process only the requests that are targeting the namespace where the `AdmissionPolicy` is defined. Except from being a "namespaced" resource, AdmissionPolicy` works exactly the same as the `ClusterAdmissionPolicy`.
+That's why we're thrilled to announce the new `AdmissionPolicy` resource. This new resource is created inside a `namespace` and the policies will process only the requests that are targeting the namespace where the `AdmissionPolicy` is defined. Except from being a "namespaced" resource, `AdmissionPolicy` works exactly the same as the `ClusterAdmissionPolicy`.
 
 ## Understanding the motivation for using AdmissionPolicies
 
