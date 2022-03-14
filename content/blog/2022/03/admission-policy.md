@@ -100,5 +100,5 @@ You can find the `AdmissionPolicy` specification [here](https://github.com/kubew
 
 As a community, we strive on feedback and welcome your suggestions! Feel free to open an issue against our
 [GitHub repository](https://github.com/kubewarden/kubewarden-controller) or get in
-touch in the [#kubewarden Slack channel](https://kubernetes.slack.com/archives/C01T3GTC3L7)!
+touch on the [#kubewarden Slack channel](https://kubernetes.slack.com/archives/C01T3GTC3L7)!
 
