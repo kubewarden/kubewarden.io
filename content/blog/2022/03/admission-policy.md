@@ -5,16 +5,16 @@ authors:
 date: 2022-03-16
 ---
 
-Up until now, the only way to define a policy in Kubewarden was to use a `ClusterAdmissionPolicy` which is applied to cluster-wide resources across all namespaces.
+Up till now, the only way to define a policy in Kubewarden was to use the [`ClusterAdmissionPolicy`](https://github.com/kubewarden/kubewarden-controller/blob/main/docs/crds/README.asciidoc#k8s-api-github-com-kubewarden-kubewarden-controller-apis-policies-v1alpha2-clusteradmissionpolicy) resource that would be applied to cluster-wide resources across all namespaces.
 
-That's why we're thrilled to announce the new `AdmissionPolicy` resource. This new resource is created inside a `namespace` and the policies will process only the requests that are targeting the namespace where the `AdmissionPolicy` is defined. Except from being a "namespaced" resource, `AdmissionPolicy` works exactly the same as the `ClusterAdmissionPolicy`.
+That's why we're thrilled to announce the new `AdmissionPolicy` resource. This new resource is created inside a `namespace` and the policies will only process the requests that are targeting the namespace where the `AdmissionPolicy` is defined. Except from being a "namespaced" resource, `AdmissionPolicy` works exactly the same as the `ClusterAdmissionPolicy`.
 
 ## Why should you use AdmissionPolicies?
 
-It's possible to restrict the namespaces where a `ClusterAdmissionPolicy` evaluates resources using a `namespaceSelector`. However there's no way for Kubernetes administrators to restrict users from creating `ClusterAdmissionPolicies` that evaluate resources just in a particular namespace. 
+It was possible to restrict the namespaces where a `ClusterAdmissionPolicy` evaluated resources using a [`namespaceSelector`](https://github.com/kubewarden/kubewarden-controller/blob/main/docs/crds/README.asciidoc#clusteradmissionpolicyspec). However there was no way for Kubernetes administrators to restrict users from creating `ClusterAdmissionPolicies` that evaluate resources just in a particular namespace. 
 
-Allowing all tenants to deploy `ClusterAdmissionPolicies` is risky. A tenant could apply policies that affect resources in all namespaces, even if they don't have access to all of them.
-You probably want to allow tenants to deploy policies only in the namespaces they have access to. That's where `AdmissionPolicies` come into play! We can achieve this restriction with `AdmissionPolicies` and [Role-Based Access Control (RBAC) in Kubernetes](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
+Moreover, allowing all tenants to deploy `ClusterAdmissionPolicies` is risky. A tenant could apply policies that affect resources in all namespaces, even if they don't have access to all of them.
+Which is why, as a Kubernetes administrator, you probably want to allow tenants to deploy policies only in the namespaces they have access to. That's where `AdmissionPolicies` come into play! `AdmissionPolicies` combined with [Role-Based Access Control (RBAC) in Kubernetes](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) allow you to enforce this restriction by delimiting the tenants to deploy resources only across namespaces they have access to.
 
 As an example, let's say you want a tenant who can deploy resources just to the `development` namespace. You can allow this tenant to deploy `AdmissionPolicies` just in this namespace using RBAC. However, if you allowed them to create `ClusterAdmissionPolicies`, they could block other resources from being handled in other namespaces.
 
@@ -98,7 +98,7 @@ On the other hand, if your cluster is shared by multiple users or teams, uses di
 
 You can find the `AdmissionPolicy` specification [here](https://github.com/kubewarden/kubewarden-controller/blob/e0433fc3774d06dcf5e08bf2c600ad0117b89448/docs/crds/README.asciidoc#admissionpolicy).
 
-As a community, we strive on feedback and welcome your suggestions! Feel free to open an issue against our
+As a community, we thrive on feedback and welcome your suggestions! Feel free to open an issue against our
 [GitHub repository](https://github.com/kubewarden/kubewarden-controller) or get in
 touch on the [#kubewarden Slack channel](https://kubernetes.slack.com/archives/C01T3GTC3L7)!
 
