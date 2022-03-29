@@ -3,6 +3,7 @@ title: Introducing the AdmissionPolicy
 authors:
 - Raul Cabello Martin
 date: 2022-03-16
+lastmod: 2022-03-29
 ---
 
 Up till now, the only way to define a policy in Kubewarden was to use the [`ClusterAdmissionPolicy`](https://github.com/kubewarden/kubewarden-controller/blob/main/docs/crds/README.asciidoc#k8s-api-github-com-kubewarden-kubewarden-controller-apis-policies-v1alpha2-clusteradmissionpolicy) resource that would be applied to cluster-wide resources across all namespaces.
