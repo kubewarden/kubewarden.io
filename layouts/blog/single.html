@@ -20,8 +20,13 @@
   	<section class="wrap">
   		<article>
   			<h1>{{ .Title }}</h1>
-        <author>{{ delimit .Params.authors ", " " and "}}</author>
-        <time>{{ .Date.Format "02 Jan 2006" }}</time>
+        <p>Author: <author>{{ delimit .Params.authors ", " " and "}}</author></p>
+        <p>Published: <time>{{ .Date.Format "02 Jan 2006" }}</time></p>
+        {{ $date := .Date.Format "02 Jan 2006" }}
+        {{ $lastmod := .Lastmod.Format "02 Jan 2006" }}
+        {{ if and (ne $lastmod $date) (gt .Lastmod .Date) }}
+        <p>Updated: <time>{{ $lastmod }}</time></p>
+        {{ end }}
         <div id="blog-post-content">
   				{{ .Content }}
   			</div>
