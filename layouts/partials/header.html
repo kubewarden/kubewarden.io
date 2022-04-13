@@ -1,24 +1,32 @@
 <header>
-
-	<div class="sub-header">
-    <a class="navbar-brand" href="/">
-      <img  src="/images/logo-{{lower .Site.Title }}.svg" alt="{{ .Site.Title }}">
+  <div class="sub-header">
+    <a href="{{ .Site.BaseURL }}">
+      <img src="/images/logo-{{lower .Site.Title }}.svg" alt="{{ .Site.Title }}">
     </a>
-    <!-- nav -->
+    <a href="#main-menu" id="main-menu-toggle" class="menu-toggle" aria-label="Open main menu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
     {{ with .Site.Menus.main }}
+    <nav id="main-menu" class="main-menu" aria-label="Main menu">
+      <a href="#main-menu-toggle" id="main-menu-close" class="menu-close" aria-label="Close main menu">
+        <span class="sr-only">Close main menu</span>
+        <span class="fa fa-close" aria-hidden="true"></span>
+      </a>
 
+      <h2 id="main-menu-heading" class="sr-only">Main menu</h2>
 
-    <nav>
       <ul class="menu">
-        <li><a href="/blog" class="btn no-bg">Blog</a></li>
         {{ range . }}
-        <li><a href="{{ .URL }}" class="btn no-bg" target="_blank">{{ .Name }}</a></li>
+        <li><a href="{{ .URL | relURL }}" class="btn no-bg">{{ .Name }}</a></li>
         {{ end }}
         <!-- github  -->
-        <li><a href="{{ $.Site.Params.github }}" class="btn"><img src="/images/icon-github.svg"><span>Github</span></a></li>
+        <li><a href="{{ $.Site.Params.github }}" class="btn"><img src="/images/icon-github.svg"><span>Github</span></a>
+        </li>
       </ul>
     </nav>
     {{ end }}
+    <a href="#main-menu-toggle" class="backdrop" tabindex="-1" aria-hidden="true" hidden></a>
   </div>
-
 </header>
