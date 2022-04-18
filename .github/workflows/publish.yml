@@ -7,12 +7,12 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
+      - run: |
+          git config --global --add safe.directory /github/workspace
       - name: Checkout Repo
         uses: actions/checkout@master
         with:
           submodules: true
-      - run: |
-          git config --global --add safe.directory /github/workspace
       - name: Publish Site
         uses: chabad360/hugo-gh-pages@master
         with:
