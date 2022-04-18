@@ -143,6 +143,10 @@ section.wrap p {
   .main-menu a:focus {
     background: none; /* Remove background from off-canvas styling */
     color: var(--primary-color);
+
+    &.github {
+      background: var(--primary-color);
+    }
   }
 }
 
