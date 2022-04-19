@@ -12,7 +12,9 @@ jobs:
         with:
           submodules: true
       - name: Publish Site
-        uses: ereslibre/hugo-gh-pages@fix-publishing
+        # We use a forked action due to
+        # https://github.blog/2022-04-12-git-security-vulnerability-announced/ (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-24765).
+        uses: kubewarden/hugo-gh-pages@fix-publishing
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           hugoVersion: extended_0.82.0
