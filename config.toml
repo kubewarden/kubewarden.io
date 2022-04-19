@@ -68,3 +68,9 @@ home = ["HTML", "RSS", "Algolia"]
     name = "Twitter"
     url = "https://twitter.com/kubewarden"
     weight = -80
+
+  [[menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "https://kubewarden.io/blog"
+    weight = -70
