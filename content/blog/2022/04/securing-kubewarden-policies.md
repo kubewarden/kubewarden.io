@@ -100,8 +100,13 @@ Pushing signature to: ghcr.io/viccuad/policies/volumes-psp
 What happened? `cosign` prompted us for an OpenID Connect provider on the
 browser, which authenticated us, and allowed Fulcio to sign our ephemeral keys.
 
-If this were to happen in a CI, for example GH Actions, the CI would provide an authentication token.
-This is how it works for policies built by the Kubewarden team: we [call cosign](https://github.com/kubewarden/github-actions/blob/520eaa5e479fcb253ba09009c63f7fcfca1f743d/policy-release/action.yaml#L43),
+If this were to happen in a CI, the CI can provide an OIDC identity token in
+their environment. `cosign` has support for detecting some automated
+environments and producing an identity token. Currently that covers
+[Github And Google Cloud, but one can always use a flag](https://github.com/sigstore/cosign/blob/main/KEYLESS.md#identity-tokens).
+
+This is how it works for policies built by the Kubewarden team in GH Actions:
+we [call cosign](https://github.com/kubewarden/github-actions/blob/520eaa5e479fcb253ba09009c63f7fcfca1f743d/policy-release/action.yaml#L43),
 and the resulting signature will be signed by a cert. This cert has:
 - An `issuer`,  telling you who certifies the image:
   `https://token.actions.githubusercontent.com`
