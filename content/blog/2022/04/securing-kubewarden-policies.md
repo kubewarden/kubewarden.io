@@ -118,7 +118,7 @@ The end result is the same, a signature added, as a new image layer. You can see
 with [`sha256-<sha>.sig` in the
 repo](https://github.com/kubewarden/user-group-psp-policy/pkgs/container/policies%2Fuser-group-psp/versions).
 Or better, either using `kwctl pull <policy_url>; kwctl inspect <policy_url>` or
-with tools like `crane`.
+with tools like [`crane`](https://github.com/google/go-containerregistry/blob/main/cmd/crane/doc/crane.md).
 
 If you want to verify policies locally, you now can use `kwctl verify`:
 ```console
@@ -202,11 +202,12 @@ $ helm upgrade --set policyServer.verificationConfig=my-verification-config \
 
 ## Recap
 
-Using `cosign`, `kwctl verify`, and  `kwctl inspect`, we can sign our authored
-policies. And using `kwctl pull` and `kwctl run` we can test policies locally,
-plus now verify their signatures too.
-Once we are satisfied, [we can deploy Kubewarden PolicyServers so they enforce
-those signatures](TODO link to doc page on verification). And if we want, the
+Using `cosign sign` we can sign our authored policies. With `kwctl verify`, we
+can verify them, and with  `kwctl inspect` (and other tools such as `crane
+manifest`), we can inspect the signatures.
+We can keep using `kwctl pull` and `kwctl run` to test policies locally as in
+the past, plus now verify their signatures too. Once we are satisfied,
+[we can deploy Kubewarden PolicyServers so they enforce those signatures](TODO link to doc page on verification). And if we want, the
 same verification config format can be used for `kwctl` and the cluster stack.
 
 This way we are sure that the policies come from their stated authors, and have
