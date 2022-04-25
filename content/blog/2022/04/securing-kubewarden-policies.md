@@ -22,13 +22,19 @@ digitally sign and verify artifacts; in our case, OCI images. It also provides a
 transparency log to monitor such signatures. The workflow allows to sign
 artifacts with traditional Public-Private key pairs, or sign in Keyless mode.
 
-Keyless mode is interesting: it uses short-lived CA certs with you as issuer, and
-issued by a root CA: Sigstore's root CA ([Fulcio](https://github.com/sigstore/fulcio)).
-These short-lived certs get certified by proving to Fulcio that you are who you
-are with an OpenID Connect service (SSO via your own Okta instance, Github,
-Google, etc). Nobody (neither developers, project leads, sponsors...) needs to
-have access to keys (hence "keyless") and Sigstore never obtains your private
-key.
+Keyless mode is interesting: signatures are created with short-lived CA certs
+with an OpenID Connect (OIDC) service as issuer, and with Sigstore's CA
+([Fulcio](https://github.com/sigstore/fulcio)) as root CA.
+
+The OpenID Connect service (SSO via your own Okta instance, Github, Google, etc)
+proves to Fulcio that you are who you say you are, and creates the short-lived
+certificate. This certificate has the OIDC service as issuer, and info related
+to your artifact and how it was build in the subject key. And with it, the
+signature is created.
+
+Nobody (neither developers, project leads, sponsors...) needs to have access to
+keys (hence "keyless") and Sigstore never obtains your private key. And one
+doesn't need an expensive infra for creating and validating signatures.
 
 Once the artifact is signed, the proof of signature is then send to an
 append-only transparency log ([Rekor](https://github.com/sigstore/rekor)) that
