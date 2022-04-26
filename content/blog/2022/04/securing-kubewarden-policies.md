@@ -22,7 +22,7 @@ digitally sign and verify artifacts; in our case, OCI images. It also provides a
 transparency log to monitor such signatures. The workflow allows to sign
 artifacts with traditional Public-Private key pairs, or sign in Keyless mode.
 
-Keyless mode is interesting: signatures are created with short-lived CA certs
+Keyless mode is interesting: signatures are created with short-lived certs
 with an OpenID Connect (OIDC) service as issuer, and with Sigstore's CA
 ([Fulcio](https://github.com/sigstore/fulcio)) as root CA.
 
