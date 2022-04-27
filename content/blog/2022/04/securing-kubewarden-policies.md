@@ -220,7 +220,7 @@ team have been signed in this way.
 
 With `kwctl verify`, operators
 can verify them, and with  `kwctl inspect` (and other tools such as `crane
-manifest`), we can inspect the signatures.
+manifest`), operators can inspect the signatures.
 We can keep using `kwctl pull` and `kwctl run` to test policies locally as in
 the past, plus now verify their signatures too. Once we are satisfied,
 [we can deploy Kubewarden PolicyServers so they enforce those signatures](TODO link to doc page on verification). And if we want, the
