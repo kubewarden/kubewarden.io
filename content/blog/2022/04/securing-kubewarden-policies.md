@@ -24,14 +24,20 @@ transparency log to monitor such signatures. The workflow allows to sign
 artifacts with traditional Public-Private key pairs, or sign in Keyless mode.
 
 Keyless mode is interesting: signatures are created with short-lived certs
-with an OpenID Connect (OIDC) service as issuer, and with Sigstore's CA
-([Fulcio](https://github.com/sigstore/fulcio)) as root CA.
+with an OpenID Connect (OIDC) service as issuer. Those short-lived certs are
+issued by Sigstore's PKI infrastructure:
+[Fulcio](https://github.com/sigstore/fulcio).
 
-The OpenID Connect service (SSO via your own Okta instance, Github, Google, etc)
-proves to Fulcio that you are who you say you are, and creates the short-lived
-certificate. This certificate has the OIDC service as issuer, and info related
-to your artifact and how it was build in the subject key. And with it, the
-signature is created.
+Fulcio acts as Registration Authority, authenticating that you are who you say
+you are by using an OIDC service (SSO via your own Okta instance, Github,
+Google, etc). Once authenticated, Fulcio acts as Cert Authority, issuing the
+short-lived certificate that you will use to make signatures.
+
+This short-lived certificate includes the identity information obtained by the
+OIDC service inside of the certificate extensions attributes. The private key
+associated with the certificate is then used to sign the object. While the
+certificate itself has a public key that can be used to verify the signatures
+produced by the private key.
 
 The certificates issued by Fulcio have a really short validity because they are generated with a really close
 expiration time. This is an interesting property that we will discuss shortly.
