@@ -19,7 +19,7 @@ Since a full Sigstore dive is not for this post, we recommend [their nice docs](
 
 In short, Sigstore provides an automatable workflow thought out to match the
 distributed Open Source development model. The workflow specifies how to
-digitally sign and verify artifacts; in our case, OCI images. It also provides a
+digitally sign and verify artifacts; in our case, Kubewarden Policies. It also provides a
 transparency log to monitor such signatures. The workflow allows to sign
 artifacts with traditional Public-Private key pairs, or sign in Keyless mode.
 
