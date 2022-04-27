@@ -33,13 +33,25 @@ certificate. This certificate has the OIDC service as issuer, and info related
 to your artifact and how it was build in the subject key. And with it, the
 signature is created.
 
-Nobody (neither developers, project leads, sponsors...) needs to have access to
-keys (hence "keyless") and Sigstore never obtains your private key. And one
-doesn't need an expensive infra for creating and validating signatures.
+The certificates issued by Fulcio have a really short validity because they are generated with a really close
+expiration time. This is an interesting property that we will discuss shortly.
 
 Once the artifact is signed, the proof of signature is then send to an
 append-only transparency log ([Rekor](https://github.com/sigstore/rekor)) that
 allows monitoring of such signatures and protects against timing attacks.
+The proof of signature is signed by Rekor, and this information is stored inside of the signature itself.
+
+By using the timestamp found inside of the proof of signature, the verifier can ensure
+the signature has been done during the limited lifetime of the certificate.
+
+Because of that, the private key associated with the certificate doesn't need to be
+safely stored. It can be discarded at the end of the signature process.
+An attacker could even reuse the private key, but the signatures would not be considered
+valid if they are done outside of the limited lifetime of the certificate.
+
+Nobody (neither developers, project leads, sponsors...) needs to have access to
+keys (hence "keyless") and Sigstore never obtains your private key. And one
+doesn't need an expensive infra for creating and validating signatures.
 
 Since there's no need for key secrets and the like in Keyless mode, it is easily
 automated inside CIs and implemented and monitored in the open. Hence why it is
