@@ -194,7 +194,7 @@ The verification config format has several niceties, [see its reference docs](TO
 For example, `kind: githubAction` with `owner` and `repo`, instead of checking the `issuer` and
 `subject` strings blindly. Or `anyOf` a list of signatures, with `anyOf.atLeast` a number
 of them: this allows for accepting at least a specific number of signatures, and
-makes migration between signatures in your cluster easy. It's the little things :).
+makes migration between signatures in your cluster easy. It's the little things 🤓.
 
 If you want support for other CIs (such as Gitlab, Jenkins, etc) drop us some
 words!
