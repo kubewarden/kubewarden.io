@@ -121,11 +121,16 @@ environments and producing an identity token. Currently that covers
 
 This is how it works for policies built by the Kubewarden team in GitHhub Actions:
 we [call cosign](https://github.com/kubewarden/github-actions/blob/520eaa5e479fcb253ba09009c63f7fcfca1f743d/policy-release/action.yaml#L43),
-and the resulting signature will be signed by a cert. This cert has:
+and sign the policy in keyless mode. The certificate issued by Fulcio includes the
+following details about the identity of the signer inside of its x503v extensions:
 - An `issuer`,  telling you who certifies the image:
   `https://token.actions.githubusercontent.com`
 - A `subject` related to the specific workflow and worker, for example:
   `https://github.com/kubewarden/policy-secure-pod-images/.github/workflows/release.yml@refs/heads/main`
+
+If you are curious, and want to see the contents of one of the certificates issued by Fulcio, install
+the [`crane`](https://github.com/google/go-containerregistry/tree/main/cmd/crane) cli tool, `jq` and
+`openssl` and execute the following command:
 
 The end result is the same, a signature added, as a new image layer. You can see those signatures as added
 [layers](https://github.com/kubewarden/user-group-psp-policy/pkgs/container/policies%2Fuser-group-psp/15759776?tag=v0.2.0),
