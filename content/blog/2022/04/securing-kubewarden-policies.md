@@ -112,7 +112,7 @@ Pushing signature to: ghcr.io/viccuad/policies/volumes-psp
 ```
 
 What happened? `cosign` prompted us for an OpenID Connect provider on the
-browser, which authenticated us, and allowed Fulcio to sign our ephemeral keys.
+browser, which authenticated us, and allowed Fulcio generate an ephemeral private key and a x509 certificate with the associated public key.
 
 If this were to happen in a CI, the CI can provide an OIDC identity token in
 their environment. `cosign` has support for detecting some automated
