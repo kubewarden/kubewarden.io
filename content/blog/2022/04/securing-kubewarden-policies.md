@@ -132,7 +132,7 @@ If you are curious, and want to see the contents of one of the certificates issu
 the [`crane`](https://github.com/google/go-containerregistry/tree/main/cmd/crane) cli tool, `jq` and
 `openssl` and execute the following command:
 
-The end result is the same, a signature added, as a new image layer. You can see those signatures as added
+The end result is the same, a signature added, as a new image layer of a special OCI object created and managed by Sigstore. You can see those signatures as added
 [layers](https://github.com/kubewarden/user-group-psp-policy/pkgs/container/policies%2Fuser-group-psp/15759776?tag=v0.2.0),
 with [`sha256-<sha>.sig` in the
 repo](https://github.com/kubewarden/user-group-psp-policy/pkgs/container/policies%2Fuser-group-psp/versions).
