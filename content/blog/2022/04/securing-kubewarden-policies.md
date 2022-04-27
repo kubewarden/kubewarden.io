@@ -196,7 +196,7 @@ For example, `kind: githubAction` with `owner` and `repo`, instead of checking t
 of them: this allows for accepting at least a specific number of signatures, and
 makes migration between signatures in your cluster easy. It's the little things 🤓.
 
-If you want support for other CIs (such as Gitlab, Jenkins, etc) drop us some
+If you want support for other CIs (such as GitLab, Jenkins, etc) drop us some
 words!
 
 Once you have crafted your verification config, create your ConfigMap:
