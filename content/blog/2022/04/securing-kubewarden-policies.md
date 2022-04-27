@@ -69,7 +69,7 @@ in an upstream-first manner, and it is taking a life of its own.
 ## Securing kubewarden policies
 
 As you may already know, Kubewarden Policies are just small wasm-compiled
-executables (~1 to ~6MBs) that they are shipped as OCI images. Let see how
+binaries (~1 to ~6MBs) that are distributed via container registries as OCI artifacts. Let see how
 Kubewarden protects policies against Secure Supply Chain attacks by signing and
 verifying them before they run.
 
