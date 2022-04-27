@@ -231,7 +231,7 @@ not been tampered with. Phew!
 
 We the Kubewarden team are curious on how you approach this. What workflows are you interested in?
 What challenges do you have? Drop as word in our [Slack channel](https://kubernetes.slack.com/archives/C01T3GTC3L7)
-or in a [Github issue](https://github.com/kubewarden)!
+or in a [GitHub issue](https://github.com/kubewarden)!
 
 Still, there's more things to secure in the chain. Stay tunned for more blog
 entries on how to secure your supply chain with Kubewarden!
