@@ -163,7 +163,7 @@ We don't leave certs around, and they are verifiable by third parties.
 
 You can now configure
 [PolicyServers](https://doc.crds.dev/github.com/kubewarden/kubewarden-controller/policies.kubewarden.io/PolicyServer/v1alpha2)
-to enforce that all policies being run will need to be signed. And when
+to enforce that all policies being run need to be signed. When
 deploying Kubewarden via Helm charts, you can do it so for the default
 PolicyServer installed by `kubewarden-defaults` chart.
 
