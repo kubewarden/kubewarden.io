@@ -119,7 +119,7 @@ their environment. `cosign` has support for detecting some automated
 environments and producing an identity token. Currently that covers
 [Github And Google Cloud, but one can always use a flag](https://github.com/sigstore/cosign/blob/main/KEYLESS.md#identity-tokens).
 
-This is how it works for policies built by the Kubewarden team in GH Actions:
+This is how it works for policies built by the Kubewarden team in GitHhub Actions:
 we [call cosign](https://github.com/kubewarden/github-actions/blob/520eaa5e479fcb253ba09009c63f7fcfca1f743d/policy-release/action.yaml#L43),
 and the resulting signature will be signed by a cert. This cert has:
 - An `issuer`,  telling you who certifies the image:
