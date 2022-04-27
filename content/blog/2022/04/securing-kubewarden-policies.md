@@ -75,8 +75,9 @@ verifying them before they run.
 
 ### Signing your Kubewarden Policy
 
-Signing a Policy, or what is the same, a container image, means just adding a
-new layer with the signature. In the Sigstore workflow, one can sign with
+Signing a Policy is done in the same way as signing a container image, means just adding a
+new layer with the signature to a dedicated signature object managed by Sigstore.
+In the Sigstore workflow, one can sign with
 Public-Private keypair, or Keyless. Both can also add `key=value` annotations to
 the signatures.
 
