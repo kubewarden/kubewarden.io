@@ -6,8 +6,9 @@ date: 2022-04-21
 lastmod: 2022-04-21
 ---
 
-With the recent releases, Kubewarden stack is now gaining support for the
-[Sigstore standard](https://www.sigstore.dev/).
+With the recent releases, Kubewarden stack is now gaining support for 
+verifying the integrity and authenticity of contents using the
+[Sigstore project](https://www.sigstore.dev/).
 
 In this post, we focus on Kubewarden Policies and how to create a Secure Supply
 Chain for them.
