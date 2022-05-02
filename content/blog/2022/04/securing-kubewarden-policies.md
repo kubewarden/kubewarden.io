@@ -42,7 +42,7 @@ produced by the private key.
 The certificates issued by Fulcio have a short validity because they are generated with a really close
 expiration time. This is an interesting property that we will discuss shortly.
 
-Once the artifact is signed, the proof of signature is then send to an
+Once the artifact is signed, the proof of signature is then sent to an
 append-only transparency log ([Rekor](https://github.com/sigstore/rekor)) that
 allows monitoring of such signatures and protects against timing attacks.
 The proof of signature is signed by Rekor, and this information is stored inside of the signature itself.
