@@ -39,7 +39,7 @@ associated with the certificate is then used to sign the object. While the
 certificate itself has a public key that can be used to verify the signatures
 produced by the private key.
 
-The certificates issued by Fulcio have a really short validity because they are generated with a really close
+The certificates issued by Fulcio have a short validity because they are generated with a really close
 expiration time. This is an interesting property that we will discuss shortly.
 
 Once the artifact is signed, the proof of signature is then send to an
