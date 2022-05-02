@@ -24,7 +24,7 @@ transparency log to monitor such signatures. The workflow allows to sign
 artifacts with traditional Public-Private key pairs, or sign in Keyless mode.
 
 Keyless mode is interesting: signatures are created with short-lived certs
-with an OpenID Connect (OIDC) service as issuer. Those short-lived certs are
+with an OpenID Connect (OIDC) service as identity provider. Those short-lived certs are
 issued by Sigstore's PKI infrastructure:
 [Fulcio](https://github.com/sigstore/fulcio).
 
