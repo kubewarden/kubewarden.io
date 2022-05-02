@@ -209,7 +209,7 @@ allOf:
 anyOf: ~
 ```
 
-The verification config format has several niceties, [see its reference docs](TODO point to VerificationConfig reference in docs).
+The verification config format has several niceties, [see its reference docs](https://docs.kubewarden.io/distributing-policies/secure-supply-chain.html).
 For example, `kind: githubAction` with `owner` and `repo`, instead of checking the `issuer` and
 `subject` strings blindly. Or `anyOf` a list of signatures, with `anyOf.atLeast` a number
 of them: this allows for accepting at least a specific number of signatures, and
@@ -242,7 +242,7 @@ can verify them, and with `kwctl inspect` (and other tools such as `crane
 manifest`), operators can inspect the signatures.
 We can keep using `kwctl pull` and `kwctl run` to test policies locally as in
 the past, plus now verify their signatures too. Once we are satisfied,
-[we can deploy Kubewarden PolicyServers so they enforce those signatures](TODO link to doc page on verification). And if we want, the
+[we can deploy Kubewarden PolicyServers so they enforce those signatures](https://docs.kubewarden.io/distributing-policies/secure-supply-chain.html). And if we want, the
 same verification config format can be used for `kwctl` and the cluster stack.
 
 This way we are sure that the policies come from their stated authors, and have
