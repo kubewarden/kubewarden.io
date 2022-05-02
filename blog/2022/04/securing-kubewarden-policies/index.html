@@ -1,0 +1,148 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Secure Supply Chain with Kubewarden: securing Kubewarden policies</title><link rel=stylesheet type=text/css href=/sass/blog.min.css?1651498001><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href=https://hub.kubewarden.io/ target=_blank class="btn no-bg">Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=https://kubewarden.io/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Secure Supply Chain with Kubewarden: securing Kubewarden policies</h1><p>Author: <author>Víctor Cuadrado Juan</author></p><p>Published: <time>02 May 2022</time></p><div id=blog-post-content><p>With the recent releases, Kubewarden stack is now gaining support for
+verifying the integrity and authenticity of contents using the
+<a href=https://www.sigstore.dev/>Sigstore project</a>.</p><p>In this post, we focus on Kubewarden Policies and how to create a Secure Supply
+Chain for them.</p><h2 id=sigstore>Sigstore?</h2><p>Since a full Sigstore dive is not for this post, we recommend <a href=https://docs.sigstore.dev>their nice docs</a>.</p><p>In short, Sigstore provides an automatable workflow thought out to match the
+distributed Open Source development model. The workflow specifies how to
+digitally sign and verify artifacts; in our case, Kubewarden Policies. It also provides a
+transparency log to monitor such signatures. The workflow allows to sign
+artifacts with traditional Public-Private key pairs, or sign in Keyless mode.</p><p>Keyless mode is interesting: signatures are created with short-lived certs
+with an OpenID Connect (OIDC) service as identity provider. Those short-lived certs are
+issued by Sigstore&rsquo;s PKI infrastructure:
+<a href=https://github.com/sigstore/fulcio>Fulcio</a>.</p><p>Fulcio acts as Registration Authority, authenticating that you are who you say
+you are by using an OIDC service (SSO via your own Okta instance, GitHub,
+Google, etc). Once authenticated, Fulcio acts as Cert Authority, issuing the
+short-lived certificate that you will use to make signatures.</p><p>This short-lived certificate includes the identity information obtained by the
+OIDC service inside of the certificate extensions attributes. The private key
+associated with the certificate is then used to sign the object. While the
+certificate itself has a public key that can be used to verify the signatures
+produced by the private key.</p><p>The certificates issued by Fulcio have a short validity because they are generated with a really close
+expiration time. This is an interesting property that we will discuss shortly.</p><p>Once the artifact is signed, the proof of signature is then sent to an
+append-only transparency log (<a href=https://github.com/sigstore/rekor>Rekor</a>) that
+allows monitoring of such signatures and protects against timing attacks.
+The proof of signature is signed by Rekor, and this information is stored inside of the signature itself.</p><p>By using the timestamp found inside of the proof of signature, the verifier can ensure
+the signature has been done during the limited lifetime of the certificate.</p><p>Because of that, the private key associated with the certificate doesn&rsquo;t need to be
+safely stored. It can be discarded at the end of the signature process.
+An attacker could even reuse the private key, but the signatures would not be considered
+valid if they are done outside of the limited lifetime of the certificate.</p><p>Nobody (neither developers, project leads, sponsors&mldr;) needs to have access to
+keys (hence &ldquo;keyless&rdquo;) and Sigstore never obtains your private key. And one
+doesn&rsquo;t need an expensive infra for creating and validating signatures.</p><p>Since there&rsquo;s no need for key secrets and the like in Keyless mode, it is easily
+automated inside CIs and implemented and monitored in the open. Hence why it is
+so interesting.</p><h3 id=building-a-rust-sigstore-stack>Building a Rust Sigstore stack</h3><p>The part of the Kubewarden stack that instantiates and runs policies (the
+<a href=https://github.com/kubewarden/policy-server>policy server</a> and libs) is
+written in Rust. This meant we needed a good Rust implementation of Sigstore
+features, and one didn&rsquo;t exist. We are glad to say we have created a new crate,
+<a href=https://github.com/sigstore/sigstore-rs>sigstore-rs</a>, under the Sigstore org
+in an upstream-first manner, and it is taking a life of its own.</p><h2 id=securing-kubewarden-policies>Securing kubewarden policies</h2><p>As you may already know, Kubewarden Policies are just small wasm-compiled
+binaries (~1 to ~6 MB) that are distributed via container registries as OCI artifacts. Let see how
+Kubewarden protects policies against Secure Supply Chain attacks by signing and
+verifying them before they run.</p><h3 id=signing-your-kubewarden-policy>Signing your Kubewarden Policy</h3><p>Signing a Policy is done in the same way as signing a container image, means just adding a
+new layer with the signature to a dedicated signature object managed by Sigstore.
+In the Sigstore workflow, one can sign with
+Public-Private keypair, or Keyless. Both can also add <code>key=value</code> annotations to
+the signatures.</p><p>The Public-Private key pair signing is straightforward, using <a href=https://github.com/SigStore/cosign>sigstore/cosign</a>:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ COSIGN_PASSWORD=yourpass cosign generate-key-pair
+
+Private key written to cosign.key
+Public key written to cosign.pub
+
+$ COSIGN_PASSWORD=yourpass cosign sign \
+  --key cosign.key --annotations blog=yes \
+  ghcr.io/kubewarden/policies/user-group-psp:v0.2.0
+
+Pushing signature to: ghcr.io/kubewarden/policies/user-group-psp
+</code></pre></div><p>The Keyless mode is more interesting:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ COSIGN_EXPERIMENTAL=1 cosign sign \
+  --annotations blog=yes \
+  ghcr.io/kubewarden/policies/user-group-psp:v0.2.0
+
+Generating ephemeral keys...
+Retrieving signed certificate...
+Your browser will now be opened to:
+https://oauth2.sigstore.dev/auth/auth?access_type=online&amp;client_id=sigstore&amp;code_challenge=(...)
+Successfully verified SCT...
+tlog entry created with index: (...)
+Pushing signature to: ghcr.io/viccuad/policies/volumes-psp
+</code></pre></div><p>What happened? <code>cosign</code> prompted us for an OpenID Connect provider on the
+browser, which authenticated us, and allowed Fulcio generate an ephemeral private key and a x509 certificate with the associated public key.</p><p>If this were to happen in a CI, the CI can provide an OIDC identity token in
+their environment. <code>cosign</code> has support for detecting some automated
+environments and producing an identity token. Currently that covers
+<a href=https://github.com/sigstore/cosign/blob/main/KEYLESS.md#identity-tokens>GitHub And Google Cloud, but one can always use a flag</a>.</p><p>This is how it works for policies built by the Kubewarden team in GitHhub Actions:
+we <a href=https://github.com/kubewarden/github-actions/blob/520eaa5e479fcb253ba09009c63f7fcfca1f743d/policy-release/action.yaml#L43>call cosign</a>,
+and sign the policy in keyless mode. The certificate issued by Fulcio includes the
+following details about the identity of the signer inside of its x503v extensions:</p><ul><li>An <code>issuer</code>, telling you who certifies the image:<div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>https://token.actions.githubusercontent.com
+</code></pre></div></li><li>A <code>subject</code> related to the specific workflow and worker, for example:<div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>https://github.com/kubewarden/policy-secure-pod-images/.github/workflows/release.yml@refs/heads/main
+</code></pre></div></li></ul><p>If you are curious, and want to see the contents of one of the certificates issued by Fulcio, install
+the <a href=https://github.com/google/go-containerregistry/tree/main/cmd/crane><code>crane</code></a> cli tool, <code>jq</code> and
+<code>openssl</code> and execute the following command:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>crane manifest \
+  $(cosign triangulate ghcr.io/kubewarden/policies/pod-privileged:v0.1.10) | \
+  jq -r &#39;.layers[0].annotations.&#34;dev.sigstore.cosign/certificate&#34;&#39; | \
+  openssl x509 -noout -text -in -
+</code></pre></div><p>The end result is the same, a signature added, as a new image layer of a special OCI object created and managed by Sigstore. You can see those signatures as added
+<a href="https://github.com/kubewarden/user-group-psp-policy/pkgs/container/policies%2Fuser-group-psp/15759776?tag=v0.2.0">layers</a>,
+with <a href=https://github.com/kubewarden/user-group-psp-policy/pkgs/container/policies%2Fuser-group-psp/versions><code>sha256-&lt;sha>.sig</code> in the
+repo</a>.
+Or better, either using</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>kwctl pull &lt;policy_url&gt;; kwctl inspect &lt;policy_url&gt;
+</code></pre></div><p>or
+with tools like <a href=https://github.com/google/go-containerregistry/blob/main/cmd/crane/doc/crane.md><code>crane</code></a>.</p><p>If you want to verify policies locally, you now can use <code>kwctl verify</code>:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ kwctl verify --github-owner kubewarden registry://ghcr.io/kubewarden/policies/pod-privileged:v0.1.10
+$ echo $?
+0
+</code></pre></div><p>And when testing policies locally with <code>kwctl pull</code> or <code>kwctl run</code>, you can also
+enable signature verification by using any verification related flag. For example:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ kwctl pull --github-owner kubewarden registry://ghcr.io/kubewarden/policies/pod-privileged:v0.1.10
+$ echo $?
+0
+</code></pre></div><p>All the policies from the Kubewarden team are signed in keyless mode by the
+workers of the CI job. In our case, the workers used in the CI job of Github.
+We don&rsquo;t leave certs around, and they are verifiable by third parties.</p><h3 id=enforcing-signature-verification-for-instantiated-kubewarden-policies>Enforcing signature verification for instantiated Kubewarden policies</h3><p>You can now configure
+<a href=https://doc.crds.dev/github.com/kubewarden/kubewarden-controller/policies.kubewarden.io/PolicyServer/v1alpha2>PolicyServers</a>
+to enforce that all policies being run need to be signed. When
+deploying Kubewarden via Helm charts, you can do it so for the default
+PolicyServer installed by <code>kubewarden-defaults</code> chart.</p><p>For this, the PolicyServers have a new <a href=https://doc.crds.dev/github.com/kubewarden/kubewarden-controller/policies.kubewarden.io/PolicyServer/v1alpha2#spec-verificationConfig><code>spec.VerificationConfig</code></a> argument.
+Here, you can put the name of a ConfigMap containing a &ldquo;verification config&rdquo;, to
+specify the needed signatures.</p><p>You can obtain a default verification config for policies from the Kubewarden
+team with:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#ae81ff>$ kwctl scaffold verification-config</span>
+<span style=color:#75715e># Default Kubewarden verification config</span>
+<span style=color:#75715e>#</span>
+<span style=color:#75715e># With this config, the only valid policies are those signed by Kubewarden</span>
+<span style=color:#75715e># infrastructure.</span>
+<span style=color:#75715e>#</span>
+<span style=color:#75715e># This config can be saved to its default location (for this OS) with:</span>
+<span style=color:#75715e>#   kwctl scaffold verification-config &gt; /home/youruser/.config/kubewarden/verification-config.yml</span>
+<span style=color:#75715e>#</span>
+<span style=color:#75715e># Providing a config in the default location enables Sigstore verification.</span>
+<span style=color:#75715e># See https://docs.kubewarden.io for more Sigstore verification options.</span>
+---
+<span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+<span style=color:#f92672>allOf</span>:
+  - <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>githubAction</span>
+    <span style=color:#f92672>owner</span>: <span style=color:#ae81ff>kubewarden</span>
+    <span style=color:#f92672>repo</span>: <span style=color:#ae81ff>~</span>
+    <span style=color:#f92672>annotations</span>: <span style=color:#ae81ff>~</span>
+<span style=color:#f92672>anyOf</span>: <span style=color:#ae81ff>~</span>
+</code></pre></div><p>The verification config format has several niceties, <a href=https://docs.kubewarden.io/distributing-policies/secure-supply-chain.html>see its reference docs</a>.
+For example, <code>kind: githubAction</code> with <code>owner</code> and <code>repo</code>, instead of checking the <code>issuer</code> and
+<code>subject</code> strings blindly. Or <code>anyOf</code> a list of signatures, with <code>anyOf.atLeast</code> a number
+of them: this allows for accepting at least a specific number of signatures, and
+makes migration between signatures in your cluster easy. It&rsquo;s the little things 🤓.</p><p>If you want support for other CIs (such as GitLab, Jenkins, etc) drop us some
+words!</p><p>Once you have crafted your verification config, create your ConfigMap:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ kubectl create configmap my-verification-config \
+  --from-file=verification-config=./my-verification-config.yml \
+  --namespace=kubewarden
+</code></pre></div><p>And pass it to your PolicyServers in <code>spec.VerificationConfig</code>, or if using the
+default PolicyServer from the <code>kubewarden-defaults</code> chart, set it there with for example:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ helm upgrade --set policyServer.verificationConfig=my-verification-config \
+  --wait -n kubewarden kubewarden-defaults ./kubewarden-defaults
+</code></pre></div><h2 id=recap>Recap</h2><p>Using <code>cosign sign</code> policy authors can sign our author their policies. All the policies owned by the Kubewarden
+team have already been signed in this way.</p><p>With <code>kwctl verify</code>, operators
+can verify them, and with <code>kwctl inspect</code> (and other tools such as <code>crane manifest</code>), operators can inspect the signatures.
+We can keep using <code>kwctl pull</code> and <code>kwctl run</code> to test policies locally as in
+the past, plus now verify their signatures too. Once we are satisfied,
+<a href=https://docs.kubewarden.io/distributing-policies/secure-supply-chain.html>we can deploy Kubewarden PolicyServers so they enforce those signatures</a>. And if we want, the
+same verification config format can be used for <code>kwctl</code> and the cluster stack.</p><p>This way we are sure that the policies come from their stated authors, and have
+not been tampered with. Phew!</p><p>We the Kubewarden team are curious on how you approach this. What workflows are you interested in?
+What challenges do you have? Drop us a word in our <a href=https://kubernetes.slack.com/archives/C01T3GTC3L7>Slack channel</a>
+or in a <a href=https://github.com/kubewarden>GitHub issue</a>!</p><p>Still, there&rsquo;s more things to secure in the chain. Stay tunned for more blog
+entries on how to secure your supply chain with Kubewarden!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2022 SUSE. Kubewarden is an open source project of the <a href=https://suse.com>SUSE</a>
+<a href=https://rancher.com>Rancher</a> Engineering group.</p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
