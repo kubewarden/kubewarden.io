@@ -129,9 +129,13 @@ we [call cosign](https://github.com/kubewarden/github-actions/blob/520eaa5e479fc
 and sign the policy in keyless mode. The certificate issued by Fulcio includes the
 following details about the identity of the signer inside of its x503v extensions:
 - An `issuer`,  telling you who certifies the image:
-  `https://token.actions.githubusercontent.com`
+  ```
+  https://token.actions.githubusercontent.com
+  ```
 - A `subject` related to the specific workflow and worker, for example:
-  `https://github.com/kubewarden/policy-secure-pod-images/.github/workflows/release.yml@refs/heads/main`
+  ```
+  https://github.com/kubewarden/policy-secure-pod-images/.github/workflows/release.yml@refs/heads/main
+  ```
 
 If you are curious, and want to see the contents of one of the certificates issued by Fulcio, install
 the [`crane`](https://github.com/google/go-containerregistry/tree/main/cmd/crane) cli tool, `jq` and
@@ -148,7 +152,11 @@ The end result is the same, a signature added, as a new image layer of a special
 [layers](https://github.com/kubewarden/user-group-psp-policy/pkgs/container/policies%2Fuser-group-psp/15759776?tag=v0.2.0),
 with [`sha256-<sha>.sig` in the
 repo](https://github.com/kubewarden/user-group-psp-policy/pkgs/container/policies%2Fuser-group-psp/versions).
-Or better, either using `kwctl pull <policy_url>; kwctl inspect <policy_url>` or
+Or better, either using
+```
+kwctl pull <policy_url>; kwctl inspect <policy_url>
+```
+or
 with tools like [`crane`](https://github.com/google/go-containerregistry/blob/main/cmd/crane/doc/crane.md).
 
 If you want to verify policies locally, you now can use `kwctl verify`:
