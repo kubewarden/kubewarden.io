@@ -249,7 +249,7 @@ This way we are sure that the policies come from their stated authors, and have
 not been tampered with. Phew!
 
 We the Kubewarden team are curious on how you approach this. What workflows are you interested in?
-What challenges do you have? Drop as word in our [Slack channel](https://kubernetes.slack.com/archives/C01T3GTC3L7)
+What challenges do you have? Drop us a word in our [Slack channel](https://kubernetes.slack.com/archives/C01T3GTC3L7)
 or in a [GitHub issue](https://github.com/kubewarden)!
 
 Still, there's more things to secure in the chain. Stay tunned for more blog
