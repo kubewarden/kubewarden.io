@@ -238,7 +238,7 @@ Using `cosign sign` policy authors can sign our author their policies. All the p
 team have already been signed in this way.
 
 With `kwctl verify`, operators
-can verify them, and with  `kwctl inspect` (and other tools such as `crane
+can verify them, and with `kwctl inspect` (and other tools such as `crane
 manifest`), operators can inspect the signatures.
 We can keep using `kwctl pull` and `kwctl run` to test policies locally as in
 the past, plus now verify their signatures too. Once we are satisfied,
