@@ -29,7 +29,7 @@ issued by Sigstore's PKI infrastructure:
 [Fulcio](https://github.com/sigstore/fulcio).
 
 Fulcio acts as Registration Authority, authenticating that you are who you say
-you are by using an OIDC service (SSO via your own Okta instance, Github,
+you are by using an OIDC service (SSO via your own Okta instance, GitHub,
 Google, etc). Once authenticated, Fulcio acts as Cert Authority, issuing the
 short-lived certificate that you will use to make signatures.
 
