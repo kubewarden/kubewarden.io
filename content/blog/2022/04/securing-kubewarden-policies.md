@@ -235,7 +235,7 @@ $ helm upgrade --set policyServer.verificationConfig=my-verification-config \
 ## Recap
 
 Using `cosign sign` policy authors can sign our author their policies. All the policies owned by the Kubewarden
-team have been signed in this way.
+team have already been signed in this way.
 
 With `kwctl verify`, operators
 can verify them, and with  `kwctl inspect` (and other tools such as `crane
