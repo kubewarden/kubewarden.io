@@ -14,7 +14,7 @@ Chain for them.
 
 ## Sigstore?
 
-Since a full Sigstore dive is not for this post, we recommend checking out [their nice docs](https://docs.sigstore.dev).
+Since a full Sigstore dive is not within the scope for this post, we recommend checking out [their nice docs](https://docs.sigstore.dev).
 
 In short, Sigstore provides an automatable workflow to match the
 distributed Open Source development model. The workflow specifies how to
