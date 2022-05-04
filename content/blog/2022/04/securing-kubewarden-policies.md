@@ -5,7 +5,7 @@ authors:
 date: 2022-05-02
 ---
 
-recent releases, the Kubewarden stack supports 
+With recent releases, the Kubewarden stack supports 
 verifying the integrity and authenticity of content using the
 [Sigstore project](https://www.sigstore.dev/).
 
