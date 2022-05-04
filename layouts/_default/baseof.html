@@ -5,16 +5,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>{{ .Title }}</title>
-	{{ if and (.Site.Params.gtm_id) (templates.Exists "partials/gtm.html") }}{{- partial "gtm.html" . }}{{ end }}
+  {{ if and (.Site.Params.gtm_id) (templates.Exists "partials/gtm.html") }}{{- partial "gtm.html" . }}{{ end }}
 
-	{{ partial "favicon.html" .}}
+  {{ partial "favicon.html" .}}
 
 	{{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
 	{{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
-
+	
 	{{- $cache :=  now.Unix -}}
 	{{- $opt := (dict "outputStyle" "compressed" "enableSourceMap" "true") -}}
-	{{- $style := resources.Get "sass/blog.scss" | toCSS $opt | minify -}}
+	{{- $style := resources.Get "sass/main.scss" | toCSS $opt | minify -}}
 	<link rel="stylesheet" type="text/css" href="{{ $style.Permalink }}?{{ $cache }}"/>
 
 	{{ with .OutputFormats.Get "RSS" -}}
