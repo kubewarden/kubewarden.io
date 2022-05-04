@@ -3,6 +3,7 @@ title: "Secure Supply Chain with Kubewarden: securing Kubewarden policies"
 authors:
 - Víctor Cuadrado Juan
 date: 2022-05-02
+lastmod: 2022-05-04
 ---
 
 With recent releases, the Kubewarden stack supports 
