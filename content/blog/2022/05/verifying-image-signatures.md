@@ -5,8 +5,8 @@ authors:
 date: 2022-05-02
 ---
 
-We keep adding support for verifying the integrity and authenticity of contents using the Sigstore project. In this
-post, we focus on verifying container image signatures using the
+We continue to add support for verifying the integrity and authenticity of artefacts within Kubewarden using the Sigstore project. In this
+post, we shall focus on verifying container image signatures using the
 new [verify-image-signatures](https://github.com/kubewarden/verify-image-signatures) policy
 
 If you don't know how Sigstore works, we recommend reading our
@@ -14,7 +14,7 @@ previous [blog](https://www.kubewarden.io/blog/2022/04/securing-kubewarden-polic
 
 ## Verify Image Signatures Policy
 
-This policy validates Sigstore signatures for images that match the name provided. If all signature validation pass or
+This policy validates Sigstore signatures for images that match the name provided. If all signature validations pass or
 there is no container that matches the image name, the Pod will be accepted.
 
 This policy also mutates matching images to add the image digest, therefore the version of the deployed image can't
@@ -121,5 +121,5 @@ We will get the following error:
 Error from server: error when creating "STDIN": admission webhook "clusterwide-verify-image-signatures.kubewarden.admission" denied the request: Pod verify-image-invalid is not accepted: verification of image ghcr.io/kubewarden/test-verify-image-signatures:unsigned failed: error invoking wapc verify: Error(HostError("Callback evaluation failure: signatures can't be fetched for image: ghcr.io/kubewarden/test-verify-image-signatures:unsigned"))
 ```
 
-This policy may cover all your needs, but if you prefer you can build your own policy using one of the SDKs Kubewarden
+This policy is designed to meet all your needs. However, if you prefer you can build your own policy using one of the SDKs Kubewarden
 provides. We will show how to do this in an upcoming blog! Stay tuned!
