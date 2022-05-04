@@ -3,10 +3,11 @@ title: "Secure Supply Chain with Kubewarden: securing Kubewarden policies"
 authors:
 - Víctor Cuadrado Juan
 date: 2022-05-02
+lastmod: 2022-05-04
 ---
 
-With the recent releases, Kubewarden stack is now gaining support for 
-verifying the integrity and authenticity of contents using the
+With recent releases, the Kubewarden stack supports 
+verifying the integrity and authenticity of content using the
 [Sigstore project](https://www.sigstore.dev/).
 
 In this post, we focus on Kubewarden Policies and how to create a Secure Supply
@@ -14,77 +15,79 @@ Chain for them.
 
 ## Sigstore?
 
-Since a full Sigstore dive is not for this post, we recommend [their nice docs](https://docs.sigstore.dev).
+Since a full Sigstore dive is not within the scope for this post, we recommend checking out [their nice docs](https://docs.sigstore.dev).
 
-In short, Sigstore provides an automatable workflow thought out to match the
+In short, Sigstore provides an automatable workflow to match the
 distributed Open Source development model. The workflow specifies how to
-digitally sign and verify artifacts; in our case, Kubewarden Policies. It also provides a
-transparency log to monitor such signatures. The workflow allows to sign
-artifacts with traditional Public-Private key pairs, or sign in Keyless mode.
+digitally sign and verify artifacts which in our case are Kubewarden Policies. 
+It also provides a transparency log to monitor such signatures. The workflow allows to sign
+artifacts with traditional Public-Private key pairs, or in Keyless mode.
 
-Keyless mode is interesting: signatures are created with short-lived certs
-with an OpenID Connect (OIDC) service as identity provider. Those short-lived certs are
-issued by Sigstore's PKI infrastructure:
-[Fulcio](https://github.com/sigstore/fulcio).
+In the keyless mode, signatures are created with short-lived certs
+using an OpenID Connect (OIDC) service as identity provider. Those short-lived certs are
+issued by Sigstore's PKI infrastructure, [Fulcio](https://github.com/sigstore/fulcio).
 
-Fulcio acts as Registration Authority, authenticating that you are who you say
+Fulcio acts as a Registration Authority, authenticating that you are who you say
 you are by using an OIDC service (SSO via your own Okta instance, GitHub,
-Google, etc). Once authenticated, Fulcio acts as Cert Authority, issuing the
-short-lived certificate that you will use to make signatures.
+Google, etc). Once authenticated, Fulcio acts as a Certificate Authority, issuing the
+short-lived certificate that you will use to sign artifacts.
 
-This short-lived certificate includes the identity information obtained by the
+These short-lived certificate include the identity information obtained by the
 OIDC service inside of the certificate extensions attributes. The private key
-associated with the certificate is then used to sign the object. While the
+associated with the certificate is then used to sign the object while the
 certificate itself has a public key that can be used to verify the signatures
 produced by the private key.
 
-The certificates issued by Fulcio have a short validity because they are generated with a really close
-expiration time. This is an interesting property that we will discuss shortly.
+The certificates issued by Fulcio have a short validity because they are generated
+to be short-lived. This is an interesting property that we will discuss shortly.
 
 Once the artifact is signed, the proof of signature is then sent to an
-append-only transparency log ([Rekor](https://github.com/sigstore/rekor)) that
+append-only transparency log, [Rekor](https://github.com/sigstore/rekor), that
 allows monitoring of such signatures and protects against timing attacks.
-The proof of signature is signed by Rekor, and this information is stored inside of the signature itself.
+The proof of signature is signed by Rekor and this information is stored 
+inside of the signature itself.
 
-By using the timestamp found inside of the proof of signature, the verifier can ensure
-the signature has been done during the limited lifetime of the certificate.
+By using the timestamp found inside of the proof of signature, the verifier can 
+ensure that the signing action has been performed during the limited lifetime of 
+the certificate.
 
-Because of that, the private key associated with the certificate doesn't need to be
+Due to this the private key associated with the certificate doesn't need to be
 safely stored. It can be discarded at the end of the signature process.
-An attacker could even reuse the private key, but the signatures would not be considered
-valid if they are done outside of the limited lifetime of the certificate.
+An attacker could even reuse the private key, but the signature would not be 
+considered valid if used outside of the limited lifetime of the certificate.
 
-Nobody (neither developers, project leads, sponsors...) needs to have access to
-keys (hence "keyless") and Sigstore never obtains your private key. And one
-doesn't need an expensive infra for creating and validating signatures.
+Nobody - developers, project leads, or sponsors, needs to have access to
+keys and Sigstore never obtains your private key. Hence the term keyless. 
+Additionaly, one doesn't need expensive infra for creating and validating 
+signatures.
 
 Since there's no need for key secrets and the like in Keyless mode, it is easily
-automated inside CIs and implemented and monitored in the open. Hence why it is
-so interesting.
+automated inside CIs and implemented and monitored in the open. This is one of the
+reasons that makes it so interesting.
 
 ### Building a Rust Sigstore stack
 
-The part of the Kubewarden stack that instantiates and runs policies (the
-[policy server](https://github.com/kubewarden/policy-server) and libs) is
-written in Rust. This meant we needed a good Rust implementation of Sigstore
-features, and one didn't exist. We are glad to say we have created a new crate,
-[sigstore-rs](https://github.com/sigstore/sigstore-rs), under the Sigstore org
-in an upstream-first manner, and it is taking a life of its own.
+The [policy server](https://github.com/kubewarden/policy-server) and libs within the
+Kubewarden stack are responsible for instantiating and running policies. They are
+written in Rust and therefore, we needed a good Rust implementation of Sigstore
+features. Since there weren't any available, we are glad to announce that we have
+created a new crate, [sigstore-rs](https://github.com/sigstore/sigstore-rs), under the 
+Sigstore org. This was done in an upstream-first manner and we're happy to report that
+it is now taking a life of its own.
 
 ## Securing kubewarden policies
 
-As you may already know, Kubewarden Policies are just small wasm-compiled
-binaries (~1 to ~6 MB) that are distributed via container registries as OCI artifacts. Let see how
-Kubewarden protects policies against Secure Supply Chain attacks by signing and
-verifying them before they run.
+As you may already know, Kubewarden Policies are small wasm-compiled
+binaries (~1 to ~6 MB) that are distributed via container registries as OCI artifacts. 
+Let us see how Kubewarden protects policies against Secure Supply Chain attacks by 
+signing and verifying them before they run.
 
 ### Signing your Kubewarden Policy
 
-Signing a Policy is done in the same way as signing a container image, means just adding a
-new layer with the signature to a dedicated signature object managed by Sigstore.
-In the Sigstore workflow, one can sign with
-Public-Private keypair, or Keyless. Both can also add `key=value` annotations to
-the signatures.
+Signing a Policy is done in the same way as signing a container image. This means just adding a
+new layer within the signature to a dedicated signature object managed by Sigstore.
+In the Sigstore workflow, one can sign with Public-Private keypair, or Keyless. 
+Both can also add `key=value` annotations to the signatures.
 
 The Public-Private key pair signing is straightforward, using [sigstore/cosign](https://github.com/SigStore/cosign):
 
@@ -117,18 +120,19 @@ Pushing signature to: ghcr.io/viccuad/policies/volumes-psp
 ```
 
 What happened? `cosign` prompted us for an OpenID Connect provider on the
-browser, which authenticated us, and allowed Fulcio generate an ephemeral private key and a x509 certificate with the associated public key.
+browser, which authenticated us, and instructed Fulcio to generate an ephemeral 
+private key and a x509 certificate with the associated public key.
 
-If this were to happen in a CI, the CI can provide an OIDC identity token in
-their environment. `cosign` has support for detecting some automated
+If this were to happen in a CI, the CI would provide the OIDC identity token in
+its environment. `cosign` has support for detecting some automated
 environments and producing an identity token. Currently that covers
 [GitHub And Google Cloud, but one can always use a flag](https://github.com/sigstore/cosign/blob/main/KEYLESS.md#identity-tokens).
 
-This is how it works for policies built by the Kubewarden team in GitHhub Actions:
-we [call cosign](https://github.com/kubewarden/github-actions/blob/520eaa5e479fcb253ba09009c63f7fcfca1f743d/policy-release/action.yaml#L43),
-and sign the policy in keyless mode. The certificate issued by Fulcio includes the
-following details about the identity of the signer inside of its x503v extensions:
-- An `issuer`,  telling you who certifies the image:
+We shall now detail how it works for policies built by the Kubewarden team in GitHub Actions.
+First, we [call cosign](https://github.com/kubewarden/github-actions/blob/520eaa5e479fcb253ba09009c63f7fcfca1f743d/policy-release/action.yaml#L43), and sign the policy in keyless mode. The certificate issued by Fulcio includes the following details
+about the identity of the signer inside of its x503v extensions:
+
+- An `issuer`,  telling you who certified the image:
   ```
   https://token.actions.githubusercontent.com
   ```
@@ -148,16 +152,16 @@ crane manifest \
   openssl x509 -noout -text -in -
 ```
 
-The end result is the same, a signature added, as a new image layer of a special OCI object created and managed by Sigstore. You can see those signatures as added
-[layers](https://github.com/kubewarden/user-group-psp-policy/pkgs/container/policies%2Fuser-group-psp/15759776?tag=v0.2.0),
-with [`sha256-<sha>.sig` in the
-repo](https://github.com/kubewarden/user-group-psp-policy/pkgs/container/policies%2Fuser-group-psp/versions).
-Or better, either using
+The end result is the same.  A signature is added as a new image layer of a special OCI object
+that is created and managed by Sigstore. You can view those signatures as added
+[layers](https://github.com/kubewarden/user-group-psp-policy/pkgs/container/policies%2Fuser-group-psp/15759776?tag=v0.2.0),with [`sha256-<sha>.sig` in the repo](https://github.com/kubewarden/user-group-psp-policy/pkgs/container/policies%2Fuser-group-psp/versions).
+
+Even better, you can use tools like [`crane`](https://github.com/google/go-containerregistry/blob/main/cmd/crane/doc/crane.md) or the CLI tool, kwctl to
+perform the same action as demonstrated below.
+
 ```
 kwctl pull <policy_url>; kwctl inspect <policy_url>
 ```
-or
-with tools like [`crane`](https://github.com/google/go-containerregistry/blob/main/cmd/crane/doc/crane.md).
 
 If you want to verify policies locally, you now can use `kwctl verify`:
 ```console
@@ -166,7 +170,7 @@ $ echo $?
 0
 ```
 
-And when testing policies locally with `kwctl pull` or `kwctl run`, you can also
+When testing policies locally with `kwctl pull` or `kwctl run`, you can also
 enable signature verification by using any verification related flag. For example:
 ```console
 $ kwctl pull --github-owner kubewarden registry://ghcr.io/kubewarden/policies/pod-privileged:v0.1.10
@@ -176,8 +180,8 @@ $ echo $?
 
 
 All the policies from the Kubewarden team are signed in keyless mode by the
-workers of the CI job. In our case, the workers used in the CI job of Github.
-We don't leave certs around, and they are verifiable by third parties.
+workers of the CI job, specifically the CI job of Github.
+We don't leave certs around and they are verifiable by third parties.
 
 ### Enforcing signature verification for instantiated Kubewarden policies
 
@@ -222,8 +226,8 @@ For example, `kind: githubAction` with `owner` and `repo`, instead of checking t
 of them: this allows for accepting at least a specific number of signatures, and
 makes migration between signatures in your cluster easy. It's the little things 🤓.
 
-If you want support for other CIs (such as GitLab, Jenkins, etc) drop us some
-words!
+If you want support for other CIs (such as GitLab, Jenkins, etc) drop us a
+note on Slack or file a GitHub issue!
 
 Once you have crafted your verification config, create your ConfigMap:
 ```console
@@ -241,7 +245,7 @@ $ helm upgrade --set policyServer.verificationConfig=my-verification-config \
 
 ## Recap
 
-Using `cosign sign` policy authors can sign our author their policies. All the policies owned by the Kubewarden
+Using `cosign sign` policy authors can sign or author their policies. All the policies owned by the Kubewarden
 team have already been signed in this way.
 
 With `kwctl verify`, operators
@@ -249,15 +253,15 @@ can verify them, and with `kwctl inspect` (and other tools such as `crane
 manifest`), operators can inspect the signatures.
 We can keep using `kwctl pull` and `kwctl run` to test policies locally as in
 the past, plus now verify their signatures too. Once we are satisfied,
-[we can deploy Kubewarden PolicyServers so they enforce those signatures](https://docs.kubewarden.io/distributing-policies/secure-supply-chain.html). And if we want, the
+[we can deploy Kubewarden PolicyServers so they enforce those signatures](https://docs.kubewarden.io/distributing-policies/secure-supply-chain.html). If we want, the
 same verification config format can be used for `kwctl` and the cluster stack.
 
 This way we are sure that the policies come from their stated authors, and have
 not been tampered with. Phew!
 
-We the Kubewarden team are curious on how you approach this. What workflows are you interested in?
+We, the Kubewarden team, are curious on how you approach this. What workflows are you interested in?
 What challenges do you have? Drop us a word in our [Slack channel](https://kubernetes.slack.com/archives/C01T3GTC3L7)
-or in a [GitHub issue](https://github.com/kubewarden)!
+or foile a [GitHub issue](https://github.com/kubewarden)!
 
-Still, there's more things to secure in the chain. Stay tunned for more blog
-entries on how to secure your supply chain with Kubewarden!
+There are more things to secure in the chain and we're excited for what lays ahead.
+Stay tuned for more blog entries on how to secure your supply chain with Kubewarden!
