@@ -1,5 +1,5 @@
 ---
-title: Verifying image signatures
+title: Secure Supply Chain: Verifying image signatures
 authors:
 - Raul Cabello Martin
 date: 2022-05-02
