@@ -10,7 +10,7 @@ post, we shall focus on verifying container image signatures using the
 new [verify-image-signatures](https://github.com/kubewarden/verify-image-signatures) policy
 
 If you don't know how Sigstore works, we recommend reading our
-previous [blog](https://www.kubewarden.io/blog/2022/04/securing-kubewarden-policies/)
+previous [post](https://www.kubewarden.io/blog/2022/04/securing-kubewarden-policies/)
 
 ## Verify Image Signatures Policy
 
@@ -27,7 +27,7 @@ described in the [quick start guide](https://docs.kubewarden.io/quick-start.html
 
 We need an image with a signature that we can verify. You can use [cosign](https://github.com/sigstore/cosign) to sign
 your images. For this example we'll use the image
-`ghcr.io/kubewarden/test-verify-image-signatures:signed` that was signed using a key. 
+`ghcr.io/kubewarden/test-verify-image-signatures:signed` that was signed using public key verification. 
 
 We will use the following public key to verify the signature:
 
