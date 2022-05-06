@@ -5,7 +5,7 @@ authors:
 date: 2022-05-02
 ---
 
-We continue to add support for verifying the integrity and authenticity of artefacts within Kubewarden using the Sigstore project. In this
+After these last releases Kubewarden now has support for verifying the integrity and authenticity of artefacts within Kubewarden using the Sigstore project. In this
 post, we shall focus on verifying container image signatures using the
 new [verify-image-signatures](https://github.com/kubewarden/verify-image-signatures) policy
 
