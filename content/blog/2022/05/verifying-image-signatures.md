@@ -14,11 +14,13 @@ previous [post](https://www.kubewarden.io/blog/2022/04/securing-kubewarden-polic
 
 ## Verify Image Signatures Policy
 
-This policy validates Sigstore signatures for images that match the name provided. If all signature validations pass or
-there is no container that matches the image name, the Pod will be accepted.
+This policy validates Pods by checking their container images for signatures (that is, containers, init containers and 
+ephemera containers in the pod). If all signature validations pass of there is no container image that matches the image
+name query, the Pod will be accepted.
 
-This policy also mutates matching images to add the image digest, therefore the version of the deployed image can't
-change. This mutation can be disabled in the [settings](https://github.com/kubewarden/verify-image-signatures#settings).
+Once the image has been verified with a signature, one needs to ensure that the specific image tag from that signature 
+is the one instantiated. This is achieved by the policy by mutating the Pod request and adding that validated image digest. 
+This mutation can be disabled in the [settings](https://github.com/kubewarden/verify-image-signatures#settings).
 
 ## Let's see it in action!
 
