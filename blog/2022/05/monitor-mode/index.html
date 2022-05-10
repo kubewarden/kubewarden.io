@@ -1,0 +1,39 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Introducing the Monitor mode</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1652172118><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href=https://hub.kubewarden.io/ target=_blank class="btn no-bg">Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=https://kubewarden.io/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Introducing the Monitor mode</h1><p>Author: <author>Rafael Fernández López</author></p><p>Published: <time>06 May 2022</time></p><p>Updated: <time>10 May 2022</time></p><div id=blog-post-content><p>Policies are a core component of a Kubernetes cluster story that
+involves security, compliance and consistency.</p><p>Being this process an iterative one, it&rsquo;s common for new policies to
+potentially reject operations that we might be issuing today in our
+production clusters.</p><p>As an example, we might have decided that it&rsquo;s not possible to change
+certain annotations on existing resources after the fact. In this
+case, we don&rsquo;t want to revoke <code>UPDATE</code> rights completely, but just to
+define an inalterable set of annotations after the resource has been
+created.</p><p>Following this example, it might happen that we haven&rsquo;t audited to the
+last detail the code that is doing the rollout of existing resources
+of our stack.</p><p>Deploying this policy in a strict way will make certain rollouts to
+not succeed as expected, because some <code>UPDATE</code> operations will be
+rejected by the policy.</p><p>There is some middle ground so that we can evolve our platform, and
+still accept these requests: the Monitor mode.</p><p>Policies can be deployed now in two different modes: <code>monitor</code> and
+<code>protect</code>. By default, they are deployed in <code>protect</code> mode, unless
+configured otherwise. This ensures compatibility with the current and
+expected behavior.</p><p>With the Monitor mode, we are able to deploy new policies so that they
+will not reject or mutate any request they might be targeting. The
+rest of the mechanism for policy evaluation will work as usual, so
+that you can still:</p><ul><li><p>Inspect the <code>policy-server</code> logs and traces for actions this policy
+would have taken had it been in <code>protect</code> mode.</p></li><li><p>Inspect the <code>policy-server</code> metrics, given the mode is now part of
+the metric baggage.</p></li></ul><h2 id=transitioning-the-mode>Transitioning the mode</h2><p>Given an existing policy, it&rsquo;s possible for it to transition from
+<code>monitor</code> to <code>protect</code> mode, but not the other way around.</p><p>This ensures that users with RBAC permissions to update policies can
+only make the policy more strict, never less strict. In order for a
+policy to transition from <code>protect</code> to <code>monitor</code> it would need to be
+deleted and recreated in <code>monitor</code> mode, what would require <code>DELETE</code>
+permissions.</p><h2 id=wrapping-up>Wrapping up</h2><p>We think the Monitor mode is very interesting for organizations to
+start adopting policy-as-code in a safer way, so they can be confident
+about the consequences deploying new policies will have on their
+existing operations.</p><p>You can read more about the Monitor mode in <a href=https://docs.kubewarden.io/operator-manual/monitor-mode/01-intro.html>our
+documentation</a>.</p><p>Stay tuned for more and thrilling features in the UX side of
+Kubewarden!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2022 SUSE. Kubewarden is an open source project of the <a href=https://suse.com>SUSE</a>
+<a href=https://rancher.com>Rancher</a> Engineering group.</p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
