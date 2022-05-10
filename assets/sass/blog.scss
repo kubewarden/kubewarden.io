@@ -35,6 +35,17 @@ section.wrap {
     line-height: 2.8rem;
   }
 
+  ul {
+    display: block;
+    padding-left: revert;
+  }
+  
+  li {
+    display: list-item;
+    border-bottom: none;
+    padding: revert;
+  }
+
   time {
     font-size: 1.5rem;
   }
