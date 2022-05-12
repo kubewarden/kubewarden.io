@@ -2,7 +2,7 @@
 title: "Have you migrated your Kubernetes PodSecurityPolicy?"
 authors:
 - José Guilherme Vanz
-date: 2022-05-16
+date: 2022-05-12
 ---
 
 If you use a version of Kubernetes (< v1.24) that supports the deprecated PodSecurityPolicy (a.k.a PSP), you would be
