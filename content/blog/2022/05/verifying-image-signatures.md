@@ -39,8 +39,8 @@ COSIGN_EXPERIMENTAL=1 cosign verify ghcr.io/viccuad/app-example:v0.1.0
 
 ```
 ...
-"Issuer": "https://github.com/login/oauth",
-"Subject": "me@viccuad.me"
+"Issuer": "https://token.actions.githubusercontent.com",
+"Subject": "https://github.com/viccuad/app-example/.github/workflows/ci.yml@refs/tags/v0.1.0"
 ...
 ```
 
@@ -67,8 +67,8 @@ spec:
     signatures:
       - image: "*"
         keyless:
-          - issuer: "https://github.com/login/oauth"
-            subject: "me@viccuad.me"
+          - issuer: "https://token.actions.githubusercontent.com"
+            subject: "https://github.com/viccuad/app-example/.github/workflows/ci.yml@refs/tags/v0.1.0"
 EOF
 ````
 
