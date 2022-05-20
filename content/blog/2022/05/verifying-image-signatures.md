@@ -5,22 +5,30 @@ authors:
 date: 2022-05-20
 ---
 
-After these last releases Kubewarden now has support for verifying the integrity and authenticity of artefacts within
+After these last releases Kubewarden now has support for verifying the integrity and authenticity of artifacts within
 Kubewarden using the Sigstore project. In this post, we shall focus on verifying container image signatures using the
-new [verify-image-signatures](https://github.com/kubewarden/verify-image-signatures) policy
+new [verify-image-signatures](https://github.com/kubewarden/verify-image-signatures) policy.
 
-If you don't know how Sigstore works, we recommend reading our
+To learn more about how Sigstore works, take a look at our
 previous [post](https://www.kubewarden.io/blog/2022/04/securing-kubewarden-policies/)
 
 ## Verify Image Signatures Policy
 
-This policy validates Pods by checking their container images for signatures (that is, containers, init containers and 
-ephemera containers in the pod). If all signature validations pass or there is no container image that matches the image
-name query, the Pod will be accepted.
+This policy validates Pods by checking their container images for signatures (that is, containers, init containers and
+ephemeral containers in the pod)
 
-Once the image has been verified with a signature, one needs to ensure that the specific image tag from that signature 
-is the one instantiated. This is achieved by the policy by mutating the Pod request and adding that validated image digest. 
-This mutation can be disabled in the [settings](https://github.com/kubewarden/verify-image-signatures#settings).
+The policy can inspect all the container images defined inside of a Pod or it can just analyze the ones that
+are matching a pattern provided by the user.
+
+Container image tags are mutable, they can be changed to point to a completely different content. That's why it's a
+good security practice to reference container images by their immutable checksum.
+
+This policy can rewrite the image definitions that are using a tag to instead reference the image by its checksum.
+
+The policy will:
+* Ensure the image referenced by a tag is satisfying the signature requested by the operator
+* Extract the immutable reference of the image from the signatures
+* Rewrite the image reference to be in the form `<image ref>@sha256:<digest>`
 
 ## Let's see it in action!
 
@@ -45,7 +53,7 @@ COSIGN_EXPERIMENTAL=1 cosign verify ghcr.io/viccuad/app-example:v0.1.0
 ```
 
 Let's create a cluster-wide policy that will verify all images, and
-we'll use the issuer and subject for verification:
+let's use the issuer and subject for verification:
 
 ```
 kubectl apply -f - <<EOF
@@ -93,11 +101,13 @@ spec:
 EOF
 ```
 
-Then check that the image was modified with the digest
+Then check that the image was modified with the digest:
 
 ```
 kubectl get pod verify-image-valid -o=jsonpath='{.spec.containers[0].image}'
 ```
+
+This will produce the following output:
 
 ```
 ghcr.io/viccuad/app-example:v0.1.0@sha256:d97d00f668dc5b7f0af65edbff6b37924c8e9b1edfc0ab0f7d2e522cab162d38
@@ -123,6 +133,8 @@ We will get the following error:
 ```
 Error from server: error when creating "STDIN": admission webhook "clusterwide-verify-image-signatures.kubewarden.admission" denied the request: Pod verify-image-invalid is not accepted: verification of image ghcr.io/kubewarden/test-verify-image-signatures:unsigned failed: Host error: Callback evaluation failure: no signatures found for image: ghcr.io/kubewarden/test-verify-image-signatures:unsigned 
 ```
+
+## Recap
 
 This policy is designed to meet all your needs. However, if you prefer you can build your own policy using one of the SDKs Kubewarden
 provides. We will show how to do this in an upcoming blog! Stay tuned!
