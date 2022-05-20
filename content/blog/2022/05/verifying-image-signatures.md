@@ -25,7 +25,7 @@ This mutation can be disabled in the [settings](https://github.com/kubewarden/ve
 ## Let's see it in action!
 
 For this example, a Kubernetes cluster with Kubewarden already installed is required. The installation process is
-described in the [quick start guide](https://docs.kubewarden.io/quick-start.html).
+described in the [quick start guide](https://docs.kubewarden.io/quick-start).
 
 We need an image with a signature that we can verify. You can use [cosign](https://github.com/sigstore/cosign) to sign
 your images. For this example we'll use the image
