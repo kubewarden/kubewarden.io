@@ -2,7 +2,7 @@
 title: "Secure Supply Chain: Verifying image signatures"
 authors:
 - Raul Cabello Martin
-date: 2022-05-02
+date: 2022-05-20
 ---
 
 After these last releases Kubewarden now has support for verifying the integrity and authenticity of artefacts within
