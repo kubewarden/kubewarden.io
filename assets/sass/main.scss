@@ -148,6 +148,17 @@ section.wrap p {
       background: var(--primary-color);
     }
   }
+
+  .cncf .cncf-logo {
+    display: block;
+    width: 300px;
+    margin: auto;
+    padding-bottom: 2rem;
+  }
+
+  .cncf p {
+    font-size: 22px;
+  }
 }
 
 
