@@ -1,0 +1,74 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Kubewarden reaches 1.0.0 release 🎉</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1655910257><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href=https://hub.kubewarden.io/ target=_blank class="btn no-bg">Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Kubewarden reaches 1.0.0 release 🎉</h1><p>Author: <author>Flavio Castelli</author></p><p>Published: <time>22 Jun 2022</time></p><div id=blog-post-content><p>Kubewarden is a policy engine for Kubernetes that is part of CNCF Sandbox.</p><p>Never heard of Kubewarden before? Do you want to know what makes Kubewarden
+stand out among similar solutions?
+This is a high level overview of Kubewarden&rsquo;s unique points:</p><ul><li>Boost Policy Authors' productivity: write policies using your favorite
+programming language. Leverage your knowledge, skills and tools.</li><li>Policies are portable WebAssembly modules</li><li>Reuse your existing Open Policy Agent / Gatekeeper policies</li><li>Distribute policies using regular container registries</li><li>Secure supply chain, leverage Sigstore to sign and verify policies</li></ul><p>Today, a year and a half since its conception, we&rsquo;re thrilled to announce
+the release of Kubewarden v1.0.0! 🎊 🥳</p><p>Let&rsquo;s take a quick look at the major achievements of the project to see what <code>v1</code>
+brings both to Policy Authors and Operators.</p><h2 id=writing-policies>Writing policies</h2><p>Kubewarden v1 allows Policy Authors to write policies using either Go, Rust, or Swift.
+Each language features a rich SDK that simplifies the process of validating and
+mutating Kubernetes admission requests.</p><p>Creating a new policy can be done quickly by scaffolding one of our official
+policy templates projects. New policies created in this way will feature best
+practices such as: code linters, unit tests, end to end tests, policy signing
+and publishing. All of that is automated using GitHub Actions.</p><p>When writing code, being able to pick the right tool for the job is important.
+That&rsquo;s why Kubewarden, on top of the programming languages mentioned above,
+also supports the Rego query language.
+Due to this Kubewarden can execute Open Policy Agent and Gatekeeper
+policies without any change.
+This is great both for Policy Authors who prefer Rego and for Operators who can
+reuse the policies they have previously created or that they discover online.</p><h2 id=pod-security-policy-replacement>Pod Security Policy replacement</h2><p><a href=https://kubernetes.io/docs/concepts/security/pod-security-policy/>Kubernetes Pod Security Policies</a>
+have been deprecated starting from Kubernetes 1.21 and
+are going to be removed in the upcoming 1.25 release.</p><p>Some of the scenarios covered by Pod Security Policies can be reimplemented
+using the new built-in PodSecurity Admission Controller. However, not all the
+Pod Security Policies can be replaced in that way.</p><p>Luckily, the Kubewarden <a href=https://hub.kubewarden.io/>Policy Hub</a> features
+ready to use Kubewarden policies that replace each one of the former Pod
+Security Policies.</p><p>Checkout <a href=https://docs.kubewarden.io/tasksDir/psp-migration>our documentation</a>
+for more details about the migration process.</p><blockquote><p><strong>Note:</strong> keyless signing is still considered experimental by the Sigstore
+project. The Kubewarden 1.0.0 release is not able to handle keyless signatures
+created from May 2022 onward.</p><p>This regression has been introduced by a recent change done by the Sigstore
+project. This issue is going to be fixed with the next release of the
+Kubewarden stack.</p><p>In the meantime, regular key based signatures can be used.</p></blockquote><h2 id=observability>Observability</h2><p>All the Kubewarden stack components have <a href=https://opentelemetry.io/>OpenTelemetry</a>
+integration in place. This is used to emit trace events and expose monitoring data.</p><p>Thanks to that, policy metrics can be scraped by <a href=https://prometheus.io/>Prometheus</a>
+and then shown inside of <a href=https://grafana.com/>Grafana</a> dashboards, like
+<a href=https://grafana.com/grafana/dashboards/15314>this one</a>
+provided by the Kubewarden team.</p><p>Finally, Policy Authors can emit OpenTelemetry trace events straight from the policies.
+This functionality, like many others, is exposed by Kubewarden&rsquo;s SDKs.
+These trace events can then be collected and processed by OpenTelemetry. Finally
+the events can be inspected using tools like <a href=https://www.jaegertracing.io/>Jaeger</a>.</p><p>This allows both Policy Authors and Operators to have a consistent observability
+stack both for Cloud Native applications and Kubernetes policies.</p><h2 id=software-secure-supply-chains>Software Secure Supply Chains</h2><p>The topic of <a href=https://www.nist.gov/itl/executive-order-14028-improving-nations-cybersecurity/software-security-supply-chains>Software Secure Supply Chains</a>
+has been gaining momentum during 2021 and has become a high priority topic for
+many organizations.</p><p>Kubewarden wants to help Operators to address the challenges posed by Secure
+Supply Chains initiatives.</p><p>To do that, Kubewarden leverages the <a href=https://www.sigstore.dev/>Sigstore</a>
+project to implement software signing and verification.
+All the components of the Kubewarden stack are signed using Sigstore. This also includes
+all the Kubewarden policies maintained by the Kubewarden team.</p><p>Policy Authors can leverage Sigstore as a solution to sign and verify their
+own policies too. Finally, Operators can utilize the tight integration of Sigstore
+inside of our Policy Server to ensure only trusted policies are deployed on their
+Kubernetes clusters.</p><p>Sigstore verification primitives are available to Policy Authors via our official
+SDKs. They make it possible to write custom policies performing signature verification
+against any kind of object stored inside of an OCI registry.
+The Kubewarden team also offers a ready to use
+<a href=https://github.com/kubewarden/verify-image-signatures>Kubewarden policy</a>
+that ensures only trusted container images can run inside of a Kubernetes cluster.</p><h2 id=whats-coming-next>What&rsquo;s coming next</h2><p>WebAssembly adoption is blooming. Many programming languages are now targeting
+WebAssembly or have improved their pre-existing support of it. That means we
+will be able to offer more alternatives to our Policy Authors in the future.
+If you are a Policy Author and would like to write policies
+using a language that is not yet supported by Kubewarden, please reach out to us and
+tell us your story!</p><p>We also plan to improve our reporting capabilities and introduce the ability
+to generate compliance audit checks about the status of your Kubernetes
+cluster.</p><p>We want to improve our Secure Supply Chain story. We are already in the process
+of creating Software Bill Of Materials (SBOMs) for the different components
+of our stack.</p><p>These are just some of the topics we want to address. Don&rsquo;t forget that
+Kubewarden is developed in the open. You can checkout our GitHub project boards
+to know more about what is happening and what we have planned.
+<a href=https://github.com/orgs/kubewarden/projects/1>This project board</a> covers day-to-day
+activities, while <a href=https://github.com/orgs/kubewarden/projects/2>this other one</a>
+provides a higher level overview about our roadmap.</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2022 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
