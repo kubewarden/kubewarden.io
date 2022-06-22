@@ -72,5 +72,5 @@ home = ["HTML", "RSS", "Algolia"]
   [[menu.main]]
     identifier = "blog"
     name = "Blog"
-    url = "https://kubewarden.io/blog"
+    url = "/blog"
     weight = -70
