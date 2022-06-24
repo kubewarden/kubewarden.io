@@ -71,9 +71,9 @@ for more details about the migration process.
 >
 > ~~In the meantime, regular key based signatures can be used.~~
 > 
-> **Update:** This issue is fixed in the Kubewarden 1.0.1 release. Intermediate
+> **Update:** This issue is fixed in the Kubewarden 1.0.1 release. An intermediate
 > certificate CA was added in Fulcio, and we were verifying using the root
-> CAs. This intermediate certificate was added to our verification chain to fix
+> CAs. This intermediate certificate is now added to our verification chain to fix
 > this issue.
 > 
 
