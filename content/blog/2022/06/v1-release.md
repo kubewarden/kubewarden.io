@@ -3,6 +3,7 @@ title: Kubewarden reaches 1.0.0 release 🎉
 authors:
 - Flavio Castelli
 date: 2022-06-22
+lastmod: 2022-06-24
 ---
 
 Kubewarden is a policy engine for Kubernetes that is part of CNCF Sandbox.
@@ -60,15 +61,22 @@ Security Policies.
 Checkout [our documentation](https://docs.kubewarden.io/tasksDir/psp-migration)
 for more details about the migration process.
 
-> **Note:** keyless signing is still considered experimental by the Sigstore
-> project. The Kubewarden 1.0.0 release is not able to handle keyless signatures
-> created from May 2022 onward.
+> ~~**Note:** keyless signing is still considered experimental by the Sigstore~~
+> ~~project. The Kubewarden 1.0.0 release is not able to handle keyless signatures~~
+> ~~created from May 2022 onward.~~
 >
-> This regression has been introduced by a recent change done by the Sigstore
+> ~~This regression has been introduced by a recent change done by the Sigstore
 > project. This issue is going to be fixed with the next release of the
-> Kubewarden stack.
+> Kubewarden stack.~~
 >
-> In the meantime, regular key based signatures can be used.
+> ~~In the meantime, regular key based signatures can be used.~~
+> 
+> **Update:** This issue is fixed in the Kubewarden 1.0.1 release. An intermediate
+> certificate CA was added in Fulcio, and we were verifying using the root
+> CAs. This intermediate certificate is now added to our verification chain to fix
+> this issue.
+> 
+
 
 ## Observability
 
