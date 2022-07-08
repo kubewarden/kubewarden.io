@@ -22,5 +22,12 @@
         {{ .Render "summary" }}
       {{ end }}
     </section>
+
+    <section class="wrap">
+      <h2>More</h2>
+      <div class="nested-list-reset nested-links">
+        {{- template "_internal/pagination.html" . -}}
+      </div>
+    </section>
   </main>
 {{ end }}

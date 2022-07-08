@@ -39,7 +39,7 @@ section.wrap {
     display: block;
     padding-left: revert;
   }
-  
+
   li {
     display: list-item;
     border-bottom: none;
@@ -78,4 +78,61 @@ figure.floatleft {
   max-width: 30%;
   height: auto;
   float: left;
+}
+
+
+//[> Pagination <]
+
+.nested-list-reset ul,
+.nested-list-reset ol {
+  padding-left: 0;
+  margin-left: 0;
+  list-style-type: none;
+  flex-direction: row;
+  display: flex !important;
+}
+
+.nested-links a {
+  color: #0594cb;
+  text-decoration: none;
+}
+
+.nested-links a:hover,
+.nested-links a:focus {
+  color: #96ccff;
+  -webkit-transition: color .15s ease-in;
+  transition: color .15s ease-in;
+}
+
+.pagination {
+  margin: 3rem 0;
+}
+
+.pagination li {
+  display: inline-block;
+  margin-right: .375rem;
+  margin-bottom: 2.5em;
+}
+
+.pagination li a {
+  padding: .5rem .625rem;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  text-decoration: none;
+}
+
+.pagination li.disabled {
+  display: none;
+}
+
+.pagination li.active a {
+  border-color: #5b0700;
+}
+
+.pagination li.active a:link,
+.pagination li.active a:active,
+.pagination li.active a:visited {
+  background-color:#ddd;
 }
