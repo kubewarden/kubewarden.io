@@ -11,14 +11,14 @@ be removed in Kubernetes v1.25 due for release on 23rd August 2022.
 
 The Kubewarden team has written a script that leverages the migration tool written
 by [AppVia](https://github.com/appvia/psp-migration), to migrate PSP
-automatically. The tool is capable of reading PSPs YAML and generate the equivalent
-policies in many different policy engines. Therefore, our simple script will migrate
-your PSPs to the equivalent Kuberwarden policies.
+automatically. The tool is capable of reading PSPs YAML and can generate the equivalent
+policies in many different policy engines. Our simple script migrates
+your PSPs to their equivalent Kubewarden policies.
 
 The script is available in the [utils repository](https://github.com/kubewarden/utils/blob/main/scripts/psp-to-kubewarden)
 in the Kubewarden GitHub organization. It will download the
 migration tool in the working directory and run it over all your PSPs printing
-the equivalent Kuberwarden policies definition in the standard output. Therefore,
+the equivalent Kuberwarden policies' definitions in the standard output. Therefore,
 users can redirect the content to a file or to `kubectl` directly.
 
 The script will migrate the PSPs defined in `kubectl` default context.
@@ -95,7 +95,7 @@ clusteradmissionpolicy.policies.kubewarden.io/psp-defaultallowprivilegeescalatio
 ```
 
 If users want to inspect the policies before applying, it's possible to redirect
-the content to a file or review it directly in the console
+the content to a file or review it directly on the console.
 
 ```console
 $ ./psp-to-kubewarden > policies.yaml
