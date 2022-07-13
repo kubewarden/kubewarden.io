@@ -5,24 +5,25 @@ authors:
 date: 2022-07-13
 ---
 
-As announced in past [blog](https://www.kubewarden.io/blog/2022/01/mutating-policy-behave-as-validating/) [posts](https://www.kubewarden.io/blog/2022/05/psp-migration-docs/),
-Kubewarden has 100% coverage of the deprecated, and soon removed,
-Kuberernetes PSPs. If everything goes as expected the PSPs will
+As announced in past blog posts, Kubewarden has 100% coverage of the deprecated,
+and soon to be removed, Kuberernetes PSPs. If everything goes as expected the PSPs will
 be removed in Kubernetes v1.25 due for release on 23rd August 2022.
-With this in mind, the Kubewarden team has written a script that leverages the
-migration tool written by people from [AppVia](https://github.com/appvia/psp-migration),
-to migrate PSP automatically. With this script the PSP will be migrated for the
-equivalent Kuberwarden policies.
+
+The Kubewarden team has written a script that leverages the migration tool written
+by [AppVia](https://github.com/appvia/psp-migration), to migrate PSP
+automatically. The tool is capable of reading PSPs YAML and generate the equivalent
+policies in many different policy engines. Therefore, our simple script will migrate
+your PSPs to the equivalent Kuberwarden policies.
 
 The script is available in the [utils repository](https://github.com/kubewarden/utils/blob/main/scripts/psp-to-kubewarden)
-in the Kubewarden Github organization. It's quite simple. It will download the
+in the Kubewarden GitHub organization. It will download the
 migration tool in the working directory and run it over all your PSPs printing
 the equivalent Kuberwarden policies definition in the standard output. Therefore,
 users can redirect the content to a file or to `kubectl` directly.
 
 The script will migrate the PSPs defined in `kubectl` default context.
 The Kubewarden policies will be printed to stdout. Thus, the users can
-apply it directly or save it for further inspection.  Let's take a look at an example:
+apply it directly or save it for further inspection. Let's take a look at an example:
 
 In a cluster with this PSP applied:
 
@@ -299,5 +300,12 @@ spec:
 
 The Kubewarden team expects that this will help users migrate from PSPs as soon as possible.
 Let us know if you run into issues. We are happy to help!
+
+
+### References
+
+[Kubewarden policies cover all the Kubernetes Pod Security Policies](https://www.kubewarden.io/blog/2022/01/mutating-policy-behave-as-validating/)
+
+[Have you migrated your Kubernetes PodSecurityPolicy?](https://www.kubewarden.io/blog/2022/05/psp-migration-docs/)
 
 
