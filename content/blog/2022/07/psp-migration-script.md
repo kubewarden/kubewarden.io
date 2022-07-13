@@ -6,7 +6,7 @@ date: 2022-07-13
 ---
 
 As announced in past blog posts, Kubewarden has 100% coverage of the deprecated,
-and soon to be removed, Kuberernetes PSPs. If everything goes as expected the PSPs will
+and soon to be removed, Kubernetes PSPs. If everything goes as expected the PSPs will
 be removed in Kubernetes v1.25 due for release on 23rd August 2022.
 
 The Kubewarden team has written a script that leverages the migration tool written
