@@ -5,7 +5,7 @@ authors:
 date: 2022-07-14
 ---
 
-With the latest Kubewarden release v1.1.0 and the latest release of
+With the latest releases of Kubewarden v1.1.0 and
 the [verify-image-signatures](https://github.com/kubewarden/verify-image-signatures) policy, it's now possible to use
 `GithubActions` or `KeylessPrefix` for verifying images. Read our
 previous [blog post](https://www.kubewarden.io/blog/2022/05/verifying-image-signatures/) if you want to learn more about
@@ -92,4 +92,4 @@ This policy verifies all containers with an image that is `ghcr.io/raulcabello/a
 containers whose signatures subjects start
 with `https://github.com/raulcabello/app-example/.github/workflows/ci.yml@refs/tags/`.
 
-Check it out and let us know if you have any question! Stay tuned for more blogs on how to secure your supply chain with Kubewarden!
+Check it out and let us know if you have any questions! Stay tuned for more blogs on how to secure your supply chain with Kubewarden!
