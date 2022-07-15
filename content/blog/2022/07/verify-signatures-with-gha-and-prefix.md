@@ -13,27 +13,19 @@ how to verify container images with Sigstore using Kubewarden.
 
 ## Let's see it in action!
 
-We want to verify the image `ghcr.io/raulcabello/app-example` which was signed inside a GitHub action. Let's run the
-following command to see the issuer and subject:
+We want to verify the image `ghcr.io/raulcabello/app-example` which was built and signed inside a GitHub action
+using this [GitHub Action](https://github.com/raulcabello/app-example/blob/master/.github/workflows/ci.yml).
 
-```
-COSIGN_EXPERIMENTAL=1 cosign verify ghcr.io/raulcabello/app-example:v0.4.0
-```
+Out of the box, GitHub Actions have a specially crafted environment that makes Sigstore keyless signing work in
+a non-interactive way.
+The signatures produced in this way contain unique secure information that allow us to identify the GitHub owner
+(be it an individual or an organization) and the GitHub repository inside of which the GitHub Action has been
+executed.
 
-The output is:
-
-```json 
-{
-  ....
-  "Issuer": "https://token.actions.githubusercontent.com",
-  "Subject": "https://github.com/raulcabello/app-example/.github/workflows/ci.yml@refs/tags/v0.4.0"
-}
-```
+Starting from today, Kubewarden provides a convenient way to check signatures produced by GitHub actions.
 
 For this example, a Kubernetes cluster with Kubewarden already installed is required. The installation process is
 described in the [quick start guide](https://docs.kubewarden.io/quick-start).
-
-Let's verify this image with the new signature types: GitHubAction and KeylessPrefix
 
 ### GitHubAction
 
@@ -41,23 +33,23 @@ Let's verify this image with the new signature types: GitHubAction and KeylessPr
 apiVersion: policies.kubewarden.io/v1
 kind: ClusterAdmissionPolicy
 metadata:
-name: verify-image-signatures-policy
+  name: verify-image-signatures-policy
 spec:
-module: registry://ghcr.io/kubewarden/policies/verify-image-signatures:v0.1.4
-rules:
-- apiGroups: [""]
-  apiVersions: ["v1"]
-  resources: ["pods"]
-  operations:
+  module: registry://ghcr.io/kubewarden/policies/verify-image-signatures:v0.1.4
+  rules:
+  - apiGroups: [""]
+    apiVersions: ["v1"]
+    resources: ["pods"]
+    operations:
     - CREATE
     - UPDATE
-      mutating: true
-      settings:
-      signatures:
-        - image: "ghcr.io/raulcabello/app-example:*" # match all tags 
-          github_actions:
-            - owner: "raulcabello"
-              repo: "app-example" #optional. if omited all apps from the owner will ve valid.
+  mutating: true
+  settings:
+    signatures:
+      - image: "ghcr.io/raulcabello/app-example:*" # match all tags 
+        github_actions:
+        - owner: "raulcabello"
+          repo: "app-example" #optional. if omited all apps from the owner will ve valid.
 ```
 
 This policy verifies all containers with an image that is `ghcr.io/raulcabello/app-example`. It will accept
@@ -65,31 +57,40 @@ containers that were signed inside a GitHub action for the owner `raulcabello` a
 
 ### KeylessPrefix
 
-```yaml 
+`KeylessPrefix` is similar to the existing keyless verification , the only difference is that it will validate the 
+subject based on a prefix instead of an exact match. 
+
+``` yaml
 apiVersion: policies.kubewarden.io/v1
 kind: ClusterAdmissionPolicy
 metadata:
-name: verify-image-signatures-policy
+  name: verify-image-signatures-policy
 spec:
-module: registry://ghcr.io/kubewarden/policies/verify-image-signatures:v0.1.4
-rules:
-- apiGroups: [""]
-  apiVersions: ["v1"]
-  resources: ["pods"]
-  operations:
+  module: registry://ghcr.io/kubewarden/policies/verify-image-signatures:v0.1.4
+  rules:
+  - apiGroups: [""]
+    apiVersions: ["v1"]
+    resources: ["pods"]
+    operations:
     - CREATE
     - UPDATE
-      mutating: true
-      settings:
-      signatures:
-        - image: "ghcr.io/raulcabello/app-example:*" # match all tags 
-          keyless_prefix:
-            - issuer: "https://token.actions.githubusercontent.com"
-              subject: "https://github.com/raulcabello/app-example/.github/workflows/ci.yml@refs/tags/" # match all tags
-```
+  mutating: true
+  settings:
+    signatures:
+      - image: "ghcr.io/raulcabello/app-example:*" # match all tags 
+        keyless_prefix:
+          - issuer: "https://token.actions.githubusercontent.com"
+            subject: "https://github.com/raulcabello/app-example/.github/workflows/ci.yml@refs/tags/" # match all tags
+``` 
 
-This policy verifies all containers with an image that is `ghcr.io/raulcabello/app-example`. It will accept
-containers whose signatures subjects start
-with `https://github.com/raulcabello/app-example/.github/workflows/ci.yml@refs/tags/`.
+This will accept containers whose signature contains the issuer `https://token.actions.githubusercontent.com` and the 
+subject starts with `https://github.com/raulcabello/app-example/.github/workflows/ci.yml@refs/tags/`. 
+
+Like in the previous example this will accept the image `ghcr.io/raulcabello/app-example`, however we **don't** recommend using 
+`KeylessPrefix` for GitHub actions validation. The reason is that `KeylessPrefix` will validate using just the subject, 
+on the other hand `GithubActions` validates using the `github_workflow_repository` extension in the signature certificate. 
+We found out when signing our policies in a [shared workflow](https://github.com/kubewarden/github-actions/blob/v1/policy-release/action.yaml#L43) 
+that you can create a fork, then use the shared workflow in this fork and the subject will be the url from the shared workflow.
+That's not the case with the `github_workflow_repository` extension that is used by `GithubActions`.
 
 Check it out and let us know if you have any questions! Stay tuned for more blogs on how to secure your supply chain with Kubewarden!
