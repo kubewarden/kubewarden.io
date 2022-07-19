@@ -1,5 +1,5 @@
 ---
-title: Verify image signatures with GithubActions and KeylessPrefix 
+title: Verify image signatures with GitHub Actions and KeylessPrefix 
 authors:
 - Raul Cabello Martin 
 date: 2022-07-14
@@ -27,7 +27,7 @@ Starting from today, Kubewarden provides a convenient way to check signatures pr
 For this example, a Kubernetes cluster with Kubewarden already installed is required. The installation process is
 described in the [quick start guide](https://docs.kubewarden.io/quick-start).
 
-### GitHubAction
+### GitHub Actions
 
 ```yaml 
 apiVersion: policies.kubewarden.io/v1
@@ -49,11 +49,11 @@ spec:
       - image: "ghcr.io/raulcabello/app-example:*" # match all tags 
         github_actions:
         - owner: "raulcabello"
-          repo: "app-example" #optional. if omited all apps from the owner will ve valid.
+          repo: "app-example" #optional. if omited all signatures performed in repos from the owner will be valid.
 ```
 
 This policy verifies all containers with an image that is `ghcr.io/raulcabello/app-example`. It will accept
-containers that were signed inside a GitHub action for the owner `raulcabello` and the app `app-example`.
+containers that were signed inside a GitHub Action job, run under the owner `raulcabello` and the repo `app-example`.
 
 ### KeylessPrefix
 
