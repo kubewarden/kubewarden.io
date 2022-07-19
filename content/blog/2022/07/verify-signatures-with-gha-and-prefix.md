@@ -87,10 +87,10 @@ This will accept containers whose signature contains the issuer `https://token.a
 subject starts with `https://github.com/raulcabello/app-example/.github/workflows/ci.yml@refs/tags/`. 
 
 Like in the previous example this will accept the image `ghcr.io/raulcabello/app-example`, however we **don't** recommend using 
-`KeylessPrefix` for GitHub actions validation. The reason is that `KeylessPrefix` will validate using just the subject, 
-on the other hand `GithubActions` validates using the `github_workflow_repository` extension in the signature certificate. 
-We found out when signing our policies in a [shared workflow](https://github.com/kubewarden/github-actions/blob/v1/policy-release/action.yaml#L43) 
-that you can create a fork, then use the shared workflow in this fork and the subject will be the url from the shared workflow.
-That's not the case with the `github_workflow_repository` extension that is used by `GithubActions`.
+`KeylessPrefix` for GitHub actions validation. When GitHub creates the OIDC token used for the signatures, it sets subject as 
+the URL containing the GHA workflow code, which doesn't necessarily match where it has run in the case of reusable workflows. 
+This is by design. If one wants to check for the repo where the job was run, corresponding to that workflow code, GitHub has added a x509
+certificate extension `github_workflow_repository` that contains it. In future releases `KeylessPrefix` validation that has`
+https://token.actions.githubusercontent.com` as issuer will fail.
 
 Check it out and let us know if you have any questions! Stay tuned for more blogs on how to secure your supply chain with Kubewarden!
