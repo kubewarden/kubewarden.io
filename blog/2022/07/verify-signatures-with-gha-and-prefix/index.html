@@ -1,0 +1,69 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Verify image signatures with GitHub Actions and KeylessPrefix</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1658393547><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href=https://hub.kubewarden.io/ target=_blank class="btn no-bg">Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Verify image signatures with GitHub Actions and KeylessPrefix</h1><p>Author: <author>Raul Cabello Martin</author></p><p>Published: <time>21 Jul 2022</time></p><div id=blog-post-content><p>With the latest releases of Kubewarden v1.1.0 and
+the <a href=https://github.com/kubewarden/verify-image-signatures>verify-image-signatures</a> policy, it&rsquo;s now possible to use
+<code>GithubActions</code> or <code>KeylessPrefix</code> for verifying images. Read our
+previous <a href=https://www.kubewarden.io/blog/2022/05/verifying-image-signatures/>blog post</a> if you want to learn more about
+how to verify container images with Sigstore using Kubewarden.</p><h2 id=lets-see-it-in-action>Let&rsquo;s see it in action!</h2><p>We want to verify the image <code>ghcr.io/raulcabello/app-example</code> which was built and signed inside a GitHub action
+using this <a href=https://github.com/raulcabello/app-example/blob/master/.github/workflows/ci.yml>GitHub Action</a>.</p><p>Out of the box, GitHub Actions have a specially crafted environment that makes Sigstore keyless signing work in
+a non-interactive way.
+The signatures produced in this way contain unique secure information that allow us to identify the GitHub owner
+(be it an individual or an organization) and the GitHub repository inside of which the GitHub Action has been
+executed.</p><p>Starting from today, Kubewarden provides a convenient way to check signatures produced by GitHub actions.</p><p>For this example, a Kubernetes cluster with Kubewarden already installed is required. The installation process is
+described in the <a href=https://docs.kubewarden.io/quick-start>quick start guide</a>.</p><h3 id=github-actions>GitHub Actions</h3><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>policies.kubewarden.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterAdmissionPolicy</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>verify-image-signatures-policy</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>module</span>: <span style=color:#ae81ff>registry://ghcr.io/kubewarden/policies/verify-image-signatures:v0.1.4</span>
+  <span style=color:#f92672>rules</span>:
+  - <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;&#34;</span>]
+    <span style=color:#f92672>apiVersions</span>: [<span style=color:#e6db74>&#34;v1&#34;</span>]
+    <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;pods&#34;</span>]
+    <span style=color:#f92672>operations</span>:
+    - <span style=color:#ae81ff>CREATE</span>
+    - <span style=color:#ae81ff>UPDATE</span>
+  <span style=color:#f92672>mutating</span>: <span style=color:#66d9ef>true</span>
+  <span style=color:#f92672>settings</span>:
+    <span style=color:#f92672>signatures</span>:
+      - <span style=color:#f92672>image</span>: <span style=color:#e6db74>&#34;ghcr.io/raulcabello/app-example:*&#34;</span> <span style=color:#75715e># match all tags </span>
+        <span style=color:#f92672>github_actions</span>:
+        - <span style=color:#f92672>owner</span>: <span style=color:#e6db74>&#34;raulcabello&#34;</span>
+          <span style=color:#f92672>repo</span>: <span style=color:#e6db74>&#34;app-example&#34;</span> <span style=color:#75715e>#optional. if omited all signatures performed in repos from the owner will be valid.</span>
+</code></pre></div><p>This policy verifies all containers with an image that is <code>ghcr.io/raulcabello/app-example</code>. It will accept
+containers that were signed inside a GitHub Action job, run under the owner <code>raulcabello</code> and the repo <code>app-example</code>.</p><h3 id=keylessprefix>KeylessPrefix</h3><p><code>KeylessPrefix</code> is similar to the existing keyless verification , the only difference is that it will validate the
+subject based on a prefix instead of an exact match.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>policies.kubewarden.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterAdmissionPolicy</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>verify-image-signatures-policy</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>module</span>: <span style=color:#ae81ff>registry://ghcr.io/kubewarden/policies/verify-image-signatures:v0.1.4</span>
+  <span style=color:#f92672>rules</span>:
+  - <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;&#34;</span>]
+    <span style=color:#f92672>apiVersions</span>: [<span style=color:#e6db74>&#34;v1&#34;</span>]
+    <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;pods&#34;</span>]
+    <span style=color:#f92672>operations</span>:
+    - <span style=color:#ae81ff>CREATE</span>
+    - <span style=color:#ae81ff>UPDATE</span>
+  <span style=color:#f92672>mutating</span>: <span style=color:#66d9ef>true</span>
+  <span style=color:#f92672>settings</span>:
+    <span style=color:#f92672>signatures</span>:
+      - <span style=color:#f92672>image</span>: <span style=color:#e6db74>&#34;ghcr.io/raulcabello/app-example:*&#34;</span> <span style=color:#75715e># match all tags </span>
+        <span style=color:#f92672>keyless_prefix</span>:
+          - <span style=color:#f92672>issuer</span>: <span style=color:#e6db74>&#34;https://token.actions.githubusercontent.com&#34;</span>
+            <span style=color:#f92672>subject</span>: <span style=color:#e6db74>&#34;https://github.com/raulcabello/app-example/.github/workflows/ci.yml@refs/tags/&#34;</span> <span style=color:#75715e># match all tags</span>
+</code></pre></div><p>This will accept containers whose signature contains the issuer <code>https://token.actions.githubusercontent.com</code> and the
+subject starts with <code>https://github.com/raulcabello/app-example/.github/workflows/ci.yml@refs/tags/</code>.</p><p>Like in the previous example this will accept the image <code>ghcr.io/raulcabello/app-example</code>, however we <strong>don&rsquo;t</strong> recommend using
+<code>KeylessPrefix</code> for GitHub actions validation. When GitHub creates the OIDC token used for the signatures, it sets subject as
+the URL containing the GHA workflow code, which doesn&rsquo;t necessarily match where it has run in the case of reusable workflows.
+This is by design. If one wants to check for the repo where the job was run, corresponding to that workflow code, GitHub has added a x509
+certificate extension <code>github_workflow_repository</code> that contains it. In future releases <code>KeylessPrefix</code> validation that has
+<code>https://token.actions.githubusercontent.com</code> as issuer will fail.</p><p>Check it out and let us know if you have any questions! Stay tuned for more blogs on how to secure your supply chain with Kubewarden!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2022 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
