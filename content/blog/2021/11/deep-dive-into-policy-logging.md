@@ -20,9 +20,9 @@ internally.
 
 Kubewarden has defined  a contract between policies (guests) and the host (Kubewarden) for
 performing [policy settings
-validation](https://docs.kubewarden.io/writing-policies/spec/02-settings.html), [policy
-validation](https://docs.kubewarden.io/writing-policies/spec/03-validating-policies.html), [policy
-mutation](https://docs.kubewarden.io/writing-policies/spec/04-mutating-policies.html) and now,
+validation](https://docs.kubewarden.io/writing-policies/spec/settings.html), [policy
+validation](https://docs.kubewarden.io/writing-policies/spec/validating-policies.html), [policy
+mutation](https://docs.kubewarden.io/writing-policies/spec/mutating-policies.html) and now,
 logging.
 
 The waPC interface used for logging is therefore a contract, because once you have built a policy,
@@ -220,6 +220,6 @@ This functionality closes the gap on logging/tracing, given the freedom that the
 collector provides to us in terms of flexibility of what to do with this logs and traces.
 
 You can read more about Kubewarden's integration with OpenTelemetry in [our
-documentation](https://docs.kubewarden.io/operator-manual/telemetry/opentelemetry/01-quickstart.html).
+documentation](https://docs.kubewarden.io/operator-manual/telemetry/opentelemetry/quickstart.html).
 
 But this is a big enough topic on its own worth a future blog post. Stay logged!

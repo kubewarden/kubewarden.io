@@ -122,7 +122,7 @@ the `kwctl run` command.
 If you are already familiar with Kubewarden, you will notice the developer
 workflow stays the same, regardless of the programming language used.
 
-All these steps are described in detail inside of our [documentation](https://docs.kubewarden.io/writing-policies/rego/01-intro.html).
+All these steps are described in detail inside of our [documentation](https://docs.kubewarden.io/writing-policies/rego/intro.html).
 
 ## Enforcing a Rego Policy
 
