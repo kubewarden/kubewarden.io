@@ -64,7 +64,7 @@ about the consequences deploying new policies will have on their
 existing operations.
 
 You can read more about the Monitor mode in [our
-documentation](https://docs.kubewarden.io/operator-manual/monitor-mode/01-intro.html).
+documentation](https://docs.kubewarden.io/operator-manual/monitor-mode/intro.html).
 
 Stay tuned for more and thrilling features in the UX side of
 Kubewarden!
