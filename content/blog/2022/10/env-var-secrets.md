@@ -6,10 +6,10 @@ date: 2022-10-17
 ---
 
 We are thrilled to announce you can now scan your environment variables for secrets with the new
-[env-variable-secrets-scanner-policy](https://github.com/kubewarden/env-variable-secrets-scanner-policy) ! This policy rejects a `Pod`
-or [workload resources](https://kubernetes.io/docs/concepts/workloads/) (`Deployments`, `ReplicaSets`, `DaemonSets`
-, `ReplicationControllers`, `Jobs`, `CronJobs`) if a secret is found in any environment variable
-in a container, init container or ephemeral container.
+[env-variable-secrets-scanner-policy](https://github.com/kubewarden/env-variable-secrets-scanner-policy)! This policy rejects a `Pod`
+or [workload resources](https://kubernetes.io/docs/concepts/workloads/) such as `Deployments`, `ReplicaSets`, `DaemonSets`
+, `ReplicationControllers`, `Jobs`, `CronJobs` etc. if a secret is found in the environment variable
+within a container, init container, or ephemeral container.
 
 This policy uses [rusty hog](https://github.com/newrelic/rusty-hog), an open source secret scanner from New Relic. The
 policy looks for the following secrets being leaked: RSA private keys, SSH private keys and API tokens for different
