@@ -11,7 +11,7 @@ It inspects containers, init containers, and ephemeral containers, and restricts
 their usage of volumes by checking the volume name being used in
 the containers' `volumeMounts[*].name`.
 
-You can find it [published in ArtifactHub.io](https://artifacthub.io/packages/kubewarden/volumemounts-policy/volumemounts).
+You can find it [published in Artifact Hub](https://artifacthub.io/packages/kubewarden/volumemounts-policy/volumemounts).
 As usual, its artifact is signed with Sigstore in keyless mode, and if you are
 curious, you can peek into the policy's
 [implementation in Rust here](https://github.com/kubewarden/volumemounts-policy).
