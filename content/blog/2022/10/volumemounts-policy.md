@@ -71,7 +71,7 @@ controlling creation of Volumes in the cluster. Let's see them:
 Just instantiate an `AdmissionPolicy` or cluster-wide `ClusterAdmissionPolicy`
 with the policy module and settings. Here's a definition of a policy that
 rejects any workload resource (Pods, Deployments, Cronjobs..) that doesn't
-adhere to the `volumeMounts` allowlist:
+adhere to the provided `volumeMounts` allowlist:
 
 ```yaml
 kubectl apply -f - <<EOF
@@ -80,7 +80,7 @@ kind: ClusterAdmissionPolicy
 metadata:
   name: volumemounts-policy
 spec:
-  module: ghcr.io/kubewarden/policies/volumemounts-policy:v0.1.0
+  module: ghcr.io/kubewarden/policies/volumemounts:v0.1.2
   mutating: false
   rules:
   - apiGroups: [""]
@@ -91,14 +91,43 @@ spec:
     - UPDATE
   settings:
     reject: anyNotIn # as an allowlist
-    volumeMounts:
+    volumeMountsNames:
     - my-volume
     - my-volume2
+
 EOF
 ```
 
+Let's instantiate a Pod that uses a Volume with a name not in the allowlist:
 
-Try it out!
+```
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pd
+spec:
+  containers:
+  - image: registry.k8s.io/test-webserver
+    name: test-container
+    volumeMountsNames:
+    - mountPath: /cache
+      name: cache-volume
+  volumes:
+  - name: cache-volume
+    emptyDir: {}
+EOF
+```
+
+As expected, the Pod is rejected:
+```
+Error from server: error when creating "STDIN":
+admission webhook "clusterwide-volumemounts-policy.kubewarden.admission" denied the request:
+container test-container is invalid: volumeMount names not allowed: ["cache-volume"]
+```
+
+Try the policy for yourself!
+
 As usual, we look forward to your feedback :). Have ideas for new policies?
 Would you like more features on existing ones?
 Drop us a line at [#kubewarden on Slack](https://kubernetes.slack.com/archives/C01T3GTC3L7)!
