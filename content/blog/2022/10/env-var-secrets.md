@@ -39,7 +39,7 @@ kind: ClusterAdmissionPolicy
 metadata:
   name: env-variable-secrets
 spec:
-  module: ghcr.io/kubewarden/policies/env-variable-secrets-scanner-policy:v0.1.0
+  module: ghcr.io/kubewarden/policies/env-variable-secrets-scanner:v0.1.1
   mutating: false
   rules:
   - apiGroups: [""]
