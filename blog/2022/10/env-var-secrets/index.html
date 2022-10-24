@@ -1,0 +1,55 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Scanning secrets in environment variables</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1666608531><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href=https://hub.kubewarden.io/ target=_blank class="btn no-bg">Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Scanning secrets in environment variables</h1><p>Author: <author>Raul Cabello Martin</author></p><p>Published: <time>24 Oct 2022</time></p><div id=blog-post-content><p>We are thrilled to announce you can now scan your environment variables for secrets with the new
+<a href=https://github.com/kubewarden/env-variable-secrets-scanner-policy>env-variable-secrets-scanner-policy</a>! This policy rejects a <code>Pod</code>
+or <a href=https://kubernetes.io/docs/concepts/workloads/>workload resources</a> such as <code>Deployments</code>, <code>ReplicaSets</code>, <code>DaemonSets</code>
+, <code>ReplicationControllers</code>, <code>Jobs</code>, <code>CronJobs</code> etc. if a secret is found in the environment variable
+within a container, init container, or ephemeral container. Secrets that are leaked in plain text or
+in base64 encoded variables are detected.</p><p>This policy uses <a href=https://github.com/newrelic/rusty-hog>rusty hog</a>, an open source secret scanner from New Relic. The
+policy looks for the following secrets being leaked: RSA private keys, SSH private keys and API tokens for different
+services like Slack, Facebook tokens, AWS, Google, New Relic Keys, etc</p><p>This is a perfect example of the real power of <code>Kubewarden</code> and <code>WebAssembly</code>! We didn&rsquo;t have to write all the complex
+code and regular expressions for scanning secrets. Instead, we used an existing open source library that already
+does this job. We can do this because <code>Kubewarden</code> <a href=https://docs.kubewarden.io/writing-policies>policies</a> are delivered
+as <code>WebAssembly</code> binaries.</p><p>Have an idea for a new <code>Kubewarden</code> policy? You don&rsquo;t need to write all the code from scratch! You can use
+your favourite libraries in any of the <a href=https://docs.kubewarden.io/writing-policies>supported programming languages</a>, as long
+as they can be compiled to <code>WebAssembly</code>.</p><h2 id=lets-see-it-in-action>Let&rsquo;s see it in action!</h2><p>For this example, a Kubernetes cluster with Kubewarden already installed is required. The installation process is
+described in the <a href=https://docs.kubewarden.io/quick-start>quick start guide</a>.</p><p>Let&rsquo;s create a <code>ClusterAdmissionPolicy</code> that will scan all pods for secrets in their environment variables:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>kubectl apply -f - &lt;&lt;EOF
+apiVersion: policies.kubewarden.io/v1
+kind: ClusterAdmissionPolicy
+metadata:
+  name: env-variable-secrets
+spec:
+  module: ghcr.io/kubewarden/policies/env-variable-secrets-scanner:v0.1.2
+  mutating: false
+  rules:
+  - apiGroups: [&#34;&#34;]
+    apiVersions: [&#34;v1&#34;]
+    resources: [&#34;pods&#34;, &#34;deployments&#34;, &#34;replicasets&#34;, &#34;daemonsets&#34;, &#34;replicationcontrollers&#34;, &#34;jobs&#34;, &#34;cronjobs&#34;]
+    operations:
+    - CREATE
+    - UPDATE
+EOF
+</code></pre></div><p>Verify we are not allowed to create a Pod with an RSA private key</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>kubectl apply -f - &lt;&lt;EOF                                                                  
+apiVersion: v1     
+kind: Pod
+metadata:
+  name: secret
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      env:
+        - name: rsa
+          value: &#34;-----BEGIN RSA PRIVATE KEY-----\nMIICWwIBAAKBgHnGVTJSU+8m8JHzJ4j1/oJxc/FwZakIIhCpIzDL3sccOjyAKO37\nVCVwKCXz871Uo+LBWhFoMVnJCEoPgZVJFPa+Om3693gdachdQpGXuMp6fmU8KHG5\nMfRxoc0tcFhLshg7luhUqu37hAp82pIySp+CnwrOPeHcpHgTbwkk+dufAgMBAAEC\ngYBXdoM0rHsKlx5MxadMsNqHGDOdYwwxVt0YuFLFNnig6/5L/ATpwQ1UAnVjpQ8Y\nmlVHhXZKcFqZ0VE52F9LOP1rnWUfAu90ainLC62X/aKvC1HtOMY5zf8p+Xq4WTeG\nmP4KxJakEZmk8GNaWvwp/bn480jxi9AkCglJzkDKMUt0MQJBAPFMBBxD0D5Um07v\nnffYrU2gKpjcTIZJEEcvbHZV3TRXb4sI4WznOk3WqW/VUo9N83T4BAeKp7QY5P5M\ntVbznhcCQQCBMeS2C7ctfWI8xYXZyCtp2ecFaaQeO3zCIuCcCqv+AyMQwX6GnzNW\nnVvAeDAcLkjhEqg6QW5NehcfilJbj2u5AkEA5Mk5oH8f5OmdtHN36Tb14wM5QGSo\n3i5Kk+RAR9dT/LvmlAJgkzyOyJz/XHz8Ycn8S2yZjXkHV7i+7utWiVJGEwJAOhXN\nh0+DHs+lkD8aK80EP8X5SQSzBeim8b2ukFl39G9Cn7DvCuWetk1vR/yBXNouaAr0\nWaS7S9gdd0/AMWws+QJAGjYTz7Ab9tLGT7zCTSHPzwk8m+gm4wMfChN4yAyr1kac\nTLzJZaNLjNmAfUu5azZTJ2LG9HR0B7jUyQm4aJ68hA==\n-----END RSA PRIVATE KEY-----&#34;
+EOF
+</code></pre></div><p>This will produce the following output:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Error from server: error when creating &#34;STDIN&#34;: admission webhook &#34;clusterwide-env-variable-secrets.kubewarden.admission&#34; denied
+the request: The following secrets were found in environment variables -&gt; container: nginx, key: rsa, reason: RSA private key. 
+</code></pre></div><p>Check it out and let us know if you have any questions! Stay tuned for more blogs on new Kubewarden policies!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2022 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
