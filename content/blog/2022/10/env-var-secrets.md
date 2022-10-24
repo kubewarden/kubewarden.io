@@ -2,7 +2,7 @@
 title: "Scanning secrets in environment variables"
 authors:
 - Raul Cabello Martin
-date: 2022-10-17
+date: 2022-10-24
 ---
 
 We are thrilled to announce you can now scan your environment variables for secrets with the new
@@ -39,7 +39,7 @@ kind: ClusterAdmissionPolicy
 metadata:
   name: env-variable-secrets
 spec:
-  module: ghcr.io/kubewarden/policies/env-variable-secrets-scanner:v0.1.1
+  module: ghcr.io/kubewarden/policies/env-variable-secrets-scanner:v0.1.2
   mutating: false
   rules:
   - apiGroups: [""]
