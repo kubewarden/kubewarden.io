@@ -62,7 +62,7 @@ to offer policies capable of
 [verifying image signatures](https://artifacthub.io/packages/kubewarden/verify-image-signatures/verify-image-signatures).
 
 Starting from the 1.3.0 release, Kubewarden can handle Sigstore signatures
-produced using a PKCS11 tokens, like hardware security modules (HSM) and smart
+produced using a PKCS11 token, like hardware security modules (HSM) and smart
 cards.
 
 This has been made possible by the work done by members of the Kubewarden team
