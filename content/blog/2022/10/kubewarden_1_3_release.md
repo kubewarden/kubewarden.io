@@ -30,26 +30,8 @@ on the CLOMonitor website.
 
 We have reduced the startup time of Policy Server, the component in charge of
 running all our WebAssembly policies.
-The difference is quite significant when multiple policies are enforced by the
-same `PolicyServer` Kubernetes resource.
-
-To achieve that, we had to perform some refactoring of the internal architecture
-of Policy Server. The good news is that this work paves the way for a feature
-we will deliver shortly: being able to put a constraint on the evaluation
-time of each policy.
-
-Kubewarden policies can be developed using [Turing complete](https://en.wikipedia.org/wiki/Turing_completeness)
-programming languages. This has benefits, but also drawbacks. Including the risk
-of having a policy enter an endless loop.
-
-The feature mentioned before is going to protect Kubewarden from this kind of
-situations.
-
-> **Tip:** do you know you can write Kubewarden policies using Rego, a non-turing
-> complete language used also by Open Policy Agent and Gatekeeper?
->
-> Kubewarden gives you the freedom to pick the right tool to implement your
-> solutions.
+Now, starting a Policy Server with multiple policies defined is an order of
+magnitude faster.
 
 ## Better Sigstore integration
 
