@@ -38,7 +38,7 @@ of Policy Server. The good news is that this work paves the way for a feature
 we will deliver shortly: being able to put a constraint on the evaluation
 time of each policy.
 
-Kubewardene policies can be developed using [Turing complete](https://en.wikipedia.org/wiki/Turing_completeness)
+Kubewarden policies can be developed using [Turing complete](https://en.wikipedia.org/wiki/Turing_completeness)
 programming languages. This has benefits, but also drawbacks. Including the risk
 of having a policy enter an endless loop.
 
