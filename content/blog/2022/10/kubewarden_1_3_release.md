@@ -2,7 +2,7 @@
 title: "Kubewarden 1.3 is out!"
 authors:
 - Flavio Castelli
-date: 2022-10-26
+date: 2022-10-27
 ---
 
 The Kubewarden development team is happy to announce the release of the Kubewarden 1.3 stack.
