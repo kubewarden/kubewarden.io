@@ -92,7 +92,7 @@ dedicated to the
 [environment variable secret scanner](https://artifacthub.io/packages/kubewarden/env-variable-secrets-scanner/env-variable-secrets-scanner)
 policy.
 In next weeks we will publish other posts dedicated to the
-[volumeMount](https://artifacthub.io/packages/kubewarden/volumemounts-policy/volumemounts)
+[volumeMounts](https://artifacthub.io/packages/kubewarden/volumemounts-policy/volumemounts)
 and to the
 [environment variable compliance](https://artifacthub.io/packages/kubewarden/environment-variable-policy/environment-variable-policy)
 policies.
