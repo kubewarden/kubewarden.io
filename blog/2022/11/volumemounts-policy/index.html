@@ -1,0 +1,92 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Securing the usage of volumeMounts</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1667493716><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href=https://hub.kubewarden.io/ target=_blank class="btn no-bg">Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Securing the usage of volumeMounts</h1><p>Author: <author>Víctor Cuadrado Juan</author></p><p>Published: <time>03 Nov 2022</time></p><div id=blog-post-content><p>We present to you the new
+<a href=https://artifacthub.io/packages/kubewarden/volumemounts-policy/volumemounts>volumeMounts Policy</a>:
+It inspects containers, init containers, and ephemeral containers, and restricts
+their usage of volumes by checking the volume name being used in
+the containers' <code>volumeMounts[*].name</code>.</p><p>You can find it <a href=https://artifacthub.io/packages/kubewarden/volumemounts-policy/volumemounts>published in Artifact Hub</a>.
+As usual, its artifact is signed with Sigstore in keyless mode, and if you are
+curious, you can peek into the policy&rsquo;s
+<a href=https://github.com/kubewarden/volumemounts-policy>implementation in Rust here</a>.</p><p>This new policy joins the already existing
+<a href=https://artifacthub.io/packages/kubewarden/volumes-psp/volumes-psp>volumes-psp policy</a>,
+which provides an allowlist of volume types, and
+<a href=https://artifacthub.io/packages/kubewarden/hostpaths-psp/hostpaths-psp>hostpaths-psp policy</a>,
+with an allowlist of hostPath volumes.</p><h3 id=what-is-so-useful-about-the-new-volumemounts-policy>What is so useful about the new volumeMounts policy?</h3><p>The existing PSP policies restricted usage of volumes, as a cluster admin. The
+new volumeMounts policy has settings with 4 operators that enable you to check
+for compliance and migration usecases, even if you don&rsquo;t have access to
+controlling creation of Volumes in the cluster. Let&rsquo;s see them:</p><ul><li><p><code>reject: anyIn</code>: Works as a denylist of your usage of volumes.
+Since we are checking volume names, we can also filter
+<a href=https://kubernetes.io/docs/concepts/storage/volumes/#out-of-tree-volume-plugins>Out-Of-Tree volumes</a>:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>reject</span>: <span style=color:#ae81ff>anyIn</span>
+<span style=color:#f92672>volumeMountsNames</span>:
+- <span style=color:#ae81ff>my-secure-hostpath-volume</span>
+- <span style=color:#ae81ff>my-cache-volume</span>
+- <span style=color:#ae81ff>my-out-of-tree-volume</span>
+</code></pre></div></li><li><p><code>reject: anyNotIn</code>: Works as an allowlist.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>reject</span>: <span style=color:#ae81ff>anyNotIn</span>
+<span style=color:#f92672>volumeMountsNames</span>:
+- <span style=color:#ae81ff>my-secrets-volume</span>
+- <span style=color:#ae81ff>my-volume2</span>
+</code></pre></div></li><li><p><code>reject: allAreUsed</code>: The container cannot use all listed volumes at once.
+Helpful for enforcing migration between volumes, for example:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>reject</span>: <span style=color:#ae81ff>allAreUsed</span>
+<span style=color:#f92672>volumeMountsNames</span>:
+- <span style=color:#ae81ff>old-deprecated-volume</span>
+- <span style=color:#ae81ff>new-supported-volume</span>
+</code></pre></div></li><li><p><code>reject: notAllAreUsed</code>: The container can use all listed volumes at once, but only one of them.
+Helpful for enforcing backup operations, for example:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>reject</span>: <span style=color:#ae81ff>notAllAreUsed</span>
+<span style=color:#f92672>volumeMountsNames</span>:
+- <span style=color:#ae81ff>work-volume</span>
+- <span style=color:#ae81ff>backup-volume</span>
+</code></pre></div></li></ul><h3 id=in-action>In action</h3><p>Just instantiate an <code>AdmissionPolicy</code> or cluster-wide <code>ClusterAdmissionPolicy</code>
+with the policy module and settings. Here&rsquo;s a definition of a policy that
+rejects any workload resource (Pods, Deployments, Cronjobs..) that doesn&rsquo;t
+adhere to the provided <code>volumeMounts</code> allowlist:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#ae81ff>kubectl apply -f - &lt;&lt;EOF</span>
+<span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>policies.kubewarden.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterAdmissionPolicy</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>volumemounts-policy</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>module</span>: <span style=color:#ae81ff>ghcr.io/kubewarden/policies/volumemounts:v0.1.2</span>
+  <span style=color:#f92672>mutating</span>: <span style=color:#66d9ef>false</span>
+  <span style=color:#f92672>rules</span>:
+  - <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;&#34;</span>]
+    <span style=color:#f92672>apiVersions</span>: [<span style=color:#e6db74>&#34;v1&#34;</span>]
+    <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;pods&#34;</span>, <span style=color:#e6db74>&#34;deployments&#34;</span>, <span style=color:#e6db74>&#34;replicasets&#34;</span>, <span style=color:#e6db74>&#34;daemonsets&#34;</span>, <span style=color:#e6db74>&#34;replicationcontrollers&#34;</span>, <span style=color:#e6db74>&#34;jobs&#34;</span>, <span style=color:#e6db74>&#34;cronjobs&#34;</span>]
+    <span style=color:#f92672>operations</span>:
+    - <span style=color:#ae81ff>CREATE</span>
+    - <span style=color:#ae81ff>UPDATE</span>
+  <span style=color:#f92672>settings</span>:
+    <span style=color:#f92672>reject</span>: <span style=color:#ae81ff>anyNotIn</span> <span style=color:#75715e># as an allowlist</span>
+    <span style=color:#f92672>volumeMountsNames</span>:
+    - <span style=color:#ae81ff>my-volume</span>
+    - <span style=color:#ae81ff>my-volume2</span>
+
+<span style=color:#ae81ff>EOF</span>
+</code></pre></div><p>Let&rsquo;s instantiate a Pod that uses a Volume with a name not in the allowlist:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>kubectl apply -f - &lt;&lt;EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pd
+spec:
+  containers:
+  - image: registry.k8s.io/test-webserver
+    name: test-container
+    volumeMountsNames:
+    - mountPath: /cache
+      name: cache-volume
+  volumes:
+  - name: cache-volume
+    emptyDir: {}
+EOF
+</code></pre></div><p>As expected, the Pod is rejected:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Error from server: error when creating &#34;STDIN&#34;:
+admission webhook &#34;clusterwide-volumemounts-policy.kubewarden.admission&#34; denied the request:
+container test-container is invalid: volumeMount names not allowed: [&#34;cache-volume&#34;]
+</code></pre></div><p>Try the policy for yourself!</p><p>As usual, we look forward to your feedback :). Have ideas for new policies?
+Would you like more features on existing ones?
+Drop us a line at <a href=https://kubernetes.slack.com/archives/C01T3GTC3L7>#kubewarden on Slack</a>!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2022 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
