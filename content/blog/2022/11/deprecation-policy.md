@@ -20,7 +20,7 @@ or removed from the Kubernetes API.
 The policy has two settings:
 
 - `kubernetes_version`: The starting version from where to detect deprecated or
-  removed Kubernetes resources.
+  removed Kubernetes resources. This setting is mandatory.
 - `deny_on_deprecation:` If true, it will deny the operation on a resource
   that has been deprecated but not yet removed from the Kubernetes version
   specified by `kubernetes_version`. This setting is optional, it is set to `true` by default.
