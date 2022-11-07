@@ -99,6 +99,8 @@ EOF
 [metadata.yaml](https://github.com/kubewarden/deprecated-api-versions-policy/blob/b26633515de367cf77b79fb909461a4df6e0e2aa/metadata.yml)
 > comes with long and complete, machine-generated `spec.rules` that covers just
 > the resources that are deprecated.
+>
+> You can obtain the right rules by using the `kwctl scaffold` command.
 
 Our cluster is on version `1.24.0`, so for example, without the policy we could
 still instantiate an `autoscaling/v2beta2/HorizontalPodAutoscaler`, even if it
