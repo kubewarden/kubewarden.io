@@ -21,9 +21,9 @@ The policy has two settings:
 
 - `kubernetes_version`: The starting version from where to detect deprecated or
   removed Kubernetes resources.
-- `deny_on_deprecation:` If true, it will deny the operation on the resource
-  (normally its creation). If false, it will just log about it. Defaults to
-  true.
+- `deny_on_deprecation:` If true, it will deny the operation on a resource
+  that has been deprecated but not yet removed from the Kubernetes version
+  specified by `kubernetes_version`. This setting is optional, it is set to `true` by default.
 
 As an example, `extensions/v1beta1/Ingress` was deprecated in Kubernetes
 `1.14.0`, and removed in `v1.22.0`.
