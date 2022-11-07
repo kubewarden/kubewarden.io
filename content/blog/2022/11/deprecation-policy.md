@@ -15,7 +15,7 @@ the [deprecated-api-versions policy](https://github.com/kubewarden/deprecated-ap
 ### A look at the deprecated-api-versions policy
 
 This policy detects the usage of Kubernetes resources that have been deprecated
-or removed in the API.
+or removed from the Kubernetes API.
 
 It has 2 settings:
 
