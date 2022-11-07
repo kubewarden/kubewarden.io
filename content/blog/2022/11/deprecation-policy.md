@@ -5,8 +5,8 @@ authors:
 date: 2022-11-04
 ---
 
-It's fact of life: As the Kubernetes API evolves, it's periodically reorganized
-or upgraded. This means the old API is [deprecated and later removed](https://kubernetes.io/docs/reference/using-api/deprecation-policy/#deprecating-parts-of-the-api).
+It's fact of life: as the Kubernetes API evolves, it's periodically reorganized
+or upgraded. This means some Kubernetes resources can be [deprecated and later removed](https://kubernetes.io/docs/reference/using-api/deprecation-policy/#deprecating-parts-of-the-api).
 
 We deserve to easily keep track of those deprecations and removals. For that, we
 have just released
