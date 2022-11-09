@@ -2,7 +2,7 @@
 title:  Keeping track of Kubernetes deprecated resources
 authors:
 - Víctor Cuadrado Juan
-date: 2022-11-04
+date: 2022-11-09
 ---
 
 It's fact of life: as the Kubernetes API evolves, it's periodically reorganized
