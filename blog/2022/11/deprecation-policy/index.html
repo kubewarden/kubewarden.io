@@ -1,0 +1,80 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Keeping track of Kubernetes deprecated resources</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1667998470><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href=https://hub.kubewarden.io/ target=_blank class="btn no-bg">Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Keeping track of Kubernetes deprecated resources</h1><p>Author: <author>Víctor Cuadrado Juan</author></p><p>Published: <time>09 Nov 2022</time></p><div id=blog-post-content><p>It&rsquo;s fact of life: as the Kubernetes API evolves, it&rsquo;s periodically reorganized
+or upgraded. This means some Kubernetes resources can be <a href=https://kubernetes.io/docs/reference/using-api/deprecation-policy/#deprecating-parts-of-the-api>deprecated and later removed</a>.</p><p>We deserve to easily keep track of those deprecations and removals. For that, we
+have just released
+the <a href=https://github.com/kubewarden/deprecated-api-versions-policy/>deprecated-api-versions policy</a>.</p><h3 id=a-look-at-the-deprecated-api-versions-policy>A look at the deprecated-api-versions policy</h3><p>This policy detects the usage of Kubernetes resources that have been deprecated
+or removed from the Kubernetes API.</p><p>The policy has two settings:</p><ul><li><code>kubernetes_version</code>: The starting version from where to detect deprecated or
+removed Kubernetes resources. This setting is mandatory.</li><li><code>deny_on_deprecation:</code> If true, it will deny the operation on a resource
+that has been deprecated but not yet removed from the Kubernetes version
+specified by <code>kubernetes_version</code>. This setting is optional, it is set to <code>true</code> by default.</li></ul><p>As an example, <code>extensions/v1beta1/Ingress</code> was deprecated in Kubernetes
+<code>1.14.0</code>, and removed in <code>v1.22.0</code>.</p><p>With the following policy settings, an <code>extensions/v1beta1/Ingress</code> will be
+accepted in the cluster yet the policy would log its result:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>kubernetes_version</span>: <span style=color:#e6db74>&#34;1.19.0&#34;</span>
+<span style=color:#f92672>deny_on_deprecation</span>: <span style=color:#66d9ef>false</span>
+</code></pre></div><p>In contrast, with these other settings, the Ingress object would be blocked:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>kubernetes_version</span>: <span style=color:#e6db74>&#34;1.19.0&#34;</span>
+<span style=color:#f92672>deny_on_deprecation</span>: <span style=color:#66d9ef>true</span> <span style=color:#75715e># (the default)</span>
+</code></pre></div><h3 id=dont-live-in-the-past>Don&rsquo;t live in the past</h3><p>Kubernetes deprecations evolve; as soon as there are new deprecations, the
+policy will be updated.</p><p>The policy versioning scheme tells you up to what version of Kubernetes the
+policy knows about, e.g. <code>0.1.0-k8sv1.26.0</code> means that the policy knows about
+deprecations up to Kubernetes <code>v1.26.0</code>.</p><h3 id=back-to-the-future>Back to the future</h3><p>You are updating your cluster&rsquo;s Kubernetes version, and want to know if you will
+be in trouble because of deprecated or removed resources in the new version?</p><p>Check before updating! Just instantiate the deprecated-api-versions policy with
+the targetted Kubernetes version and <code>deny_on_deprecation</code> set to false, and get
+an overview of future-you problems.</p><h3 id=in-action>In action</h3><p>As usual, instantiate a <code>ClusterAdmissionPolicy</code> (cluster-wide) or
+<code>AdmissionPolicy</code> (namespaced) that makes use of the policy.</p><p>For this example, let&rsquo;s work in a k8s cluster of version <code>1.24.0</code>.</p><p>Here&rsquo;s a definition of a cluster-wide policy that rejects resources that were
+deprecated or removed in Kubernetes version <code>1.23.0</code> and earlier:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#ae81ff>kubectl apply -f - &lt;&lt;EOF</span>
+<span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>policies.kubewarden.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterAdmissionPolicy</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>my-deprecated-api-versions-policy</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>module</span>: <span style=color:#ae81ff>ghcr.io/kubewarden/policies/deprecated-api-versions:v0.1.0-k8sv1.26.0</span>
+  <span style=color:#f92672>mutating</span>: <span style=color:#66d9ef>false</span>
+  <span style=color:#f92672>rules</span>:
+  - <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;*&#34;</span>]
+    <span style=color:#f92672>apiVersions</span>: [<span style=color:#e6db74>&#34;*&#34;</span>]
+    <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;*&#34;</span>]
+    <span style=color:#f92672>operations</span>:
+    - <span style=color:#ae81ff>CREATE</span>
+    - <span style=color:#ae81ff>UPDATE</span>
+  <span style=color:#f92672>settings</span>:
+    <span style=color:#f92672>kubernetes_version</span>: <span style=color:#e6db74>&#34;1.23.0&#34;</span>
+    <span style=color:#f92672>deny_on_deprecation</span>: <span style=color:#66d9ef>true</span>
+<span style=color:#ae81ff>EOF</span>
+</code></pre></div><blockquote><p><strong>Info:</strong> In <code>spec.rules</code> we are checking every resource in every
+apiGroup and apiVersions. We are doing it for simplicity in this example, yet
+the policy
+<a href=https://github.com/kubewarden/deprecated-api-versions-policy/blob/b26633515de367cf77b79fb909461a4df6e0e2aa/metadata.yml>metadata.yaml</a>
+comes with long and complete, machine-generated <code>spec.rules</code> that covers just
+the resources that are deprecated.</p><p>You can obtain the right rules by using the <code>kwctl scaffold</code> command.</p></blockquote><p>Our cluster is on version <code>1.24.0</code>, so for example, without the policy we could
+still instantiate an <code>autoscaling/v2beta2/HorizontalPodAutoscaler</code>, even if it
+is deprecated since <code>1.23.0</code> (and will be removed in <code>1.26.0</code>).</p><p>Now with the policy, trying to instantiate an
+<code>autoscaling/v2beta2/HorizontalPodAutoscaler</code> resource that is already
+deprecated will result in its rejection:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>kubectl apply -f - &lt;&lt;EOF
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: php-apache
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: php-apache
+  minReplicas: 1
+  maxReplicas: 10
+EOF
+
+Warning: autoscaling/v2beta2 HorizontalPodAutoscaler is deprecated in v1.23+, unavailable in v1.26+; use autoscaling/v2 HorizontalPodAutoscaler
+Error from server: error when creating &#34;STDIN&#34;:
+admission webhook &#34;clusterwide-my-deprecated-api-versions-policy.kubewarden.admission&#34; denied the request:
+autoscaling/v2beta2 HorizontalPodAutoscaler cannot be used. It has been deprecated starting from 1.23.0. It has been removed starting from 1.26.0. It has been replaced by autoscaling/v2.
+</code></pre></div><p>We look forward to your feedback :). Have ideas for new policies?
+Would you like more features on existing ones?
+Drop us a line at <a href=https://kubernetes.slack.com/archives/C01T3GTC3L7>#kubewarden on Slack</a>!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2022 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
