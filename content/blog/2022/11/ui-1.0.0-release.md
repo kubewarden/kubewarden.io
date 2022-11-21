@@ -7,38 +7,48 @@ date: 2022-11-01 # TODO: Update date before publishing
 
 We are excited to announce that the Kubewarden UI 1.0.0 has been released!
 
-The UI is an Extension for [Rancher Manager](https://github.com/rancher/rancher/), now you will be able to enable Kubewarden policies for your Kubernetes clusters with a streamlined user experience.
+The UI is an Extension for [Rancher Manager](https://github.com/rancher/rancher/), now you will be able to enable Kubewarden policies for your Kubernetes clusters with a streamlined user experience. Take a look at the [release](https://github.com/kubewarden/ui/releases/) yourself.
 
-Let's take a look at what is achievable from the UI as a Cluster Admin.
+Let's see what is achievable from the UI as a Cluster Admin.
+
+## Installing Kubewarden
+
+Documentation to install the extension can be found [here](https://docs.kubewarden.io/operator-manual//ui-extension/install). 
+
+We provide a structured installation of Kubewarden and the prerequisites through the UI:
+
+{{<video src="/images/ui/ui-install.mp4" type="video/mp4">}}
 
 ## Manage Policy Servers
 
-All of your Policy Servers are listed in an overview page with readily available details of each resource including the status of related policies.
+All of your Policy Servers are listed in an overview page with readily available details of each resource including the status of related policies:
 
 {{<figure src="/images/ui/policyserver-list.png" alt="policy servers list view">}}
 
 Click through one of your Policy Servers to get a detailed view of:
 
-- Related policies with their type of policy, current mode, and their statuses   
+- Related policies with their type of policy, current mode, and their statuses
 - Tracing logs for policy evaluations on their respective resources
 - Metrics dashboard powered by Grafana
 - Configuration of the Policy Server
 
 {{<figure src="/images/ui/policyserver-detail.png" alt="policy server detail view">}}
 
-Create a new PolicyServer or edit the configuration of an existing one with the ability to use the UI inputs or edit the Yaml directly.
+Create a new PolicyServer or edit the configuration of an existing one with the ability to use the UI inputs or edit the Yaml directly:
 
 {{<figure src="/images/ui/policyserver-create.png" alt="policy server configuration">}}
 
-## Create/Edit Policies
+## Monitor Policies
 
-Manage both ClusterAdmissionPolicies and AdmissionPolicies with detailed views for each. View the rules that are configured for each policy along with their specific tracing logs.
+Manage both ClusterAdmissionPolicies and AdmissionPolicies with detailed views for each. View the rules that are configured for each policy along with their specific tracing logs:
 
 {{<figure src="/images/ui/policy-detail.png" alt="admission policy detail view">}}
 
-Adding policies is as simple as choosing from a list of policies that are hosted on [artifacthub.io](https://artifacthub.io/packages/search?kind=13) or using your own pre-configured policy.
+## Create/Edit Policies
 
-{{<figure src="/images/ui/policy-create.png" alt="create a policy">}}
+Adding policies is as simple as choosing from a list of policies that are hosted on [artifacthub.io](https://artifacthub.io/packages/search?kind=13) or using your own pre-configured policy:
+
+{{<video src="/images/ui/ui-create-policy.mp4" type="video/mp4">}}
 
 ## What's next?
 
