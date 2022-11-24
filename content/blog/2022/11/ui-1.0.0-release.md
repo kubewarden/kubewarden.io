@@ -7,13 +7,19 @@ date: 2022-11-01 # TODO: Update date before publishing
 
 We are excited to announce that the Kubewarden UI 1.0.0 has been released!
 
-The UI is an Extension for [Rancher Manager](https://github.com/rancher/rancher/), now you will be able to enable Kubewarden policies for your Kubernetes clusters with a streamlined user experience. Take a look at the [release](https://github.com/kubewarden/ui/releases/) yourself.
+The UI is an Extension for [Rancher Manager](https://github.com/rancher/rancher/), now you will be able to enable Kubewarden policies for your Kubernetes clusters with a streamlined user experience. You can find the latests releases of the extension Helm chart [here](https://github.com/kubewarden/ui/releases/).
+
+Currently Rancher is required to run this extension, however, in the future it will be possible to deploy the same UI as a stand-alone platform.
+
+> **Note:** This requires a Rancher version of `v2.7` or greater
 
 Let's see what is achievable from the UI as a Cluster Admin.
 
 ## Installing Kubewarden
 
-Documentation to install the extension can be found [here](https://docs.kubewarden.io/operator-manual//ui-extension/install). 
+With Extensions enabled in Rancher Dashboard, you will need to add the UI Helm chart as a repository, you can use `https://kubewarden.github.io/ui` as the Index URL. Once this repository is set you will be able to install the Kubewarden Extension, this will add a "Kubewarden" menu item within your cluster. Click on this item and a walkthrough will guide you through the installation of the `kubewarden-controller`. 
+
+Documentation to install the extension can be found [here](https://docs.kubewarden.io/operator-manual/ui-extension/install). 
 
 We provide a structured installation of Kubewarden and the prerequisites through the UI:
 
@@ -28,27 +34,27 @@ All of your Policy Servers are listed in an overview page with readily available
 Click through one of your Policy Servers to get a detailed view of:
 
 - Related policies with their type of policy, current mode, and their statuses
-- Tracing logs for policy evaluations on their respective resources
-- Metrics dashboard powered by Grafana
+- Tracing logs for policy evaluations on their respective resources - powered by OpenTelemetry and Jaeger
+- Metrics dashboard - powered by Grafana
 - Configuration of the Policy Server
 
 {{<figure src="/images/ui/policyserver-detail.png" alt="policy server detail view">}}
 
-Create a new PolicyServer or edit the configuration of an existing one with the ability to use the UI inputs or edit the Yaml directly:
+Create a new Policy Server or edit the configuration of an existing one with the ability to use the UI inputs or edit the Yaml directly:
 
 {{<figure src="/images/ui/policyserver-create.png" alt="policy server configuration">}}
-
-## Monitor Policies
-
-Manage both ClusterAdmissionPolicies and AdmissionPolicies with detailed views for each. View the rules that are configured for each policy along with their specific tracing logs:
-
-{{<figure src="/images/ui/policy-detail.png" alt="admission policy detail view">}}
 
 ## Create/Edit Policies
 
 Adding policies is as simple as choosing from a list of policies that are hosted on [artifacthub.io](https://artifacthub.io/packages/search?kind=13) or using your own pre-configured policy:
 
 {{<video src="/images/ui/ui-create-policy.mp4" type="video/mp4">}}
+
+## Monitor Policies
+
+Manage both ClusterAdmissionPolicies and AdmissionPolicies with detailed views for each. View the rules that are configured for each policy along with their specific tracing logs:
+
+{{<figure src="/images/ui/policy-detail.png" alt="admission policy detail view">}}
 
 ## What's next?
 
