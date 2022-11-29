@@ -2,7 +2,7 @@
 title: Installing and Running Kubewarden In Air-Gapped Environments
 authors:
 - Raul Cabello Martin
-date: 2022-11-28
+date: 2022-11-29
 ---
 
 We are glad to announce that deploying Kubewarden in air gap environments has been simplified and documented! For that, you will need a 
