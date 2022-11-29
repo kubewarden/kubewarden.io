@@ -16,7 +16,7 @@ We have added new commands to `kwctl` [v1.3.1](https://github.com/kubewarden/kwc
 - `save`: saves a list of Kubewarden policies provided as input in a tar.gz file.
 - `load`: loads Kubewarden policies from a tar.gz file into an OCI registry.
 
-There are helpers scripts that make easier the air gap installation. You can find them in our [utils repository](https://github.com/kubewarden/utils/tree/main/scripts):
+There are helpers' scripts that make easier the air gap installation. You can find them in our [utils repository](https://github.com/kubewarden/utils/tree/main/scripts):
 - `kubewarden-save-images.sh` and `kubewarden-load-images.sh`, which take a text file with all the container images as input.
 - `kubewarden-save-policies.sh` and `kubewarden-load-policies.sh`, which take a text file with all the policies as input.
 
