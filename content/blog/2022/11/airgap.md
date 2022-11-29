@@ -21,8 +21,8 @@ There are helpers' scripts that make easier the air gap installation. You can fi
 - `kubewarden-save-policies.sh` and `kubewarden-load-policies.sh`, which take a text file with all the policies as input.
 
 From now on all Kubewarden [releases](https://github.com/kubewarden/helm-charts/releases) will contain a text file with  
-all the container images required to use Kubewarden and another text file with the default policies. These files contain 
-the version of all the Kubewarden components in the name in order to make easier the air gap installation of a specific 
+all the container images required to use Kubewarden and another one with the default policies being referenced by the `kubewarden-defaults` chart. These
+files can be used to perform the air gap installation of a specific 
 Kubewarden version.
 
 Give it a try and [reach out to us](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) if you have any questions 
