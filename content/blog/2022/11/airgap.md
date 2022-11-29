@@ -1,5 +1,5 @@
 ---
-title: Air gap
+title: Installing and Running Kubewarden In Air-Gapped Environments
 authors:
 - Raul Cabello Martin
 date: 2022-11-28
