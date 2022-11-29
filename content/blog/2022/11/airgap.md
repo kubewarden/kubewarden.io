@@ -5,7 +5,7 @@ authors:
 date: 2022-11-28
 ---
 
-We are glad to announce that deploying Kubewarden in air-gapped environments has been simplified and documented! For that, you will need a 
+We are glad to announce that deploying Kubewarden in air gap environments has been simplified and documented! For that, you will need a 
 private OCI registry accessible by your Kubernetes cluster. Kubewarden policies are WebAssembly modules; therefore
 they can be stored inside an OCI-compliant registry as OCI artifacts. 
 For an air gap installation you need to download all the Kubewarden container images and policies in your workstation, 
