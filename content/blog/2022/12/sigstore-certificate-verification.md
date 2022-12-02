@@ -2,7 +2,7 @@
 title: Support for sigstore certificate signing
 authors:
 - Flavio Castelli
-date: 2022-11-30
+date: 2022-12-2
 ---
 
 Secure supply chain is one of the hottest topics right now. Many organizations
@@ -35,9 +35,9 @@ ways.
 
 Certificate based verification is available starting from these releases:
 
-* kwctl: TODO
-* Policy Server: TODO
-* "verify-image-signatures" policy: TODO
+* Kubewarden stack: version 1.4.0 or later
+* [verify-image-signatures](https://artifacthub.io/packages/kubewarden/verify-image-signatures/verify-image-signatures)
+policy: version 0.2.0 or later
 
 ## Certificate verification in action
 
@@ -105,4 +105,9 @@ This means the following configuration keys changed their ID:
   * `url_prefix` &rarr; `urlPrefix`
   * `keyless_prefix` &rarr; `keylessPrefix`
 
+## Call for action
 
+That's all for today, it's time to give these changes a try!
+
+Feel free to [reach out to us](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden)
+if you have any questions or want to share your feedback!
