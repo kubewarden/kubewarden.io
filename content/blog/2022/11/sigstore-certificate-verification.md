@@ -28,7 +28,7 @@ produced with user-defined certificates. At signature time, these certificates
 can be read from the local file system or, more interestingly, could be used by
 a hardware token (like a Yubikey) or by a KMS.
 
-With this addition, Kubewarden can verify these the signatures produced in these
+With this addition, Kubewarden can verify these the signatures produced in those
 ways.
 
 ## Required versions
