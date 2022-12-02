@@ -18,7 +18,7 @@ It's no secret we are Sigstore enthusiasts.
 We are using Sigstore to sign and verify our whole
 software stack, we are maintainers of the official [Rust SDK](https://github.com/sigstore/sigstore-rs),
 we are [exposing its capabilities to policy authors](https://docs.kubewarden.io/writing-policies/spec/host-capabilities/signature-verifier-policies)
-and, finally, we are providing a
+and, finally, we have been providing a
 [Kubewarden policy](https://github.com/kubewarden/verify-image-signatures/) that
 can be used to verify the container images allowed into a Kubernetes cluster.
 
