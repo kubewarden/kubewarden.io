@@ -2,7 +2,7 @@
 title: Kubewarden 1.4.0 release
 authors:
 - Flavio Castelli
-date: 2022-12-02
+date: 2022-12-05
 ---
 
 Today we're pleased to announce the availability of Kubewarden 1.4.0.
@@ -19,7 +19,7 @@ produced with certificates.
 This can be useful to organizations that are using hardware tokens and KMS solutions
 to sign their container images via Sigstore.
 
-Take a look at [this](https://example.org) dedicated blog post to learn more
+Take a look at [this](/blog/2022/12/sigstore-certificate-verification/) dedicated blog post to learn more
 about this feature.
 
 ## Policy benchmarking
