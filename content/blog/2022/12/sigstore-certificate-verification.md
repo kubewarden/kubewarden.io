@@ -94,7 +94,7 @@ by Alice and Bob.
 
 ## Breaking changes to the "`verify-image-signature`" policy
 
-Starting from version TODO of the "`verify-image-signature`", all the policy settings
+Starting from version `v0.2.0` of the "`verify-image-signature`", all the policy settings
 are going to use the [`camelCase`](https://en.wikipedia.org/wiki/Camel_case)
 naming convention.
 
