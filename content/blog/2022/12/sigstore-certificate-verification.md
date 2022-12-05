@@ -2,7 +2,7 @@
 title: Support for sigstore certificate signing
 authors:
 - Flavio Castelli
-date: 2022-12-2
+date: 2022-12-05
 ---
 
 Secure supply chain is one of the hottest topics right now. Many organizations
