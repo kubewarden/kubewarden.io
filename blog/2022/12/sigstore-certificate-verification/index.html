@@ -1,0 +1,73 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Support for sigstore certificate signing</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1670249604><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href=https://hub.kubewarden.io/ target=_blank class="btn no-bg">Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Support for sigstore certificate signing</h1><p>Author: <author>Flavio Castelli</author></p><p>Published: <time>05 Dec 2022</time></p><div id=blog-post-content><p>Secure supply chain is one of the hottest topics right now. Many organizations
+are implementing strategies to verify the provenance of their software starting from
+the development phase up to the deployment in production.</p><p><a href=https://sigstore.dev/>Sigstore</a> is an open source project that makes incredibly
+easy to sign and verify assets. Lots of open source projects and organizations
+are using it to sign and verify their container images, system packages and any kind
+of binary artifact.
+It&rsquo;s no secret we are Sigstore enthusiasts.</p><p>We are using Sigstore to sign and verify our whole
+software stack, we are maintainers of the official <a href=https://github.com/sigstore/sigstore-rs>Rust SDK</a>,
+we are <a href=https://docs.kubewarden.io/writing-policies/spec/host-capabilities/signature-verifier-policies>exposing its capabilities to policy authors</a>
+and, finally, we have been providing a
+<a href=https://github.com/kubewarden/verify-image-signatures/>Kubewarden policy</a> that
+can be used to verify the container images allowed into a Kubernetes cluster.</p><p>Sigstore supports different signing mechanisms. Today we&rsquo;re happy to announce
+that Kubewarden is now exposing all the primitives required to verify signatures
+produced with user-defined certificates. At signature time, these certificates
+can be read from the local file system or, more interestingly, could be used by
+a hardware token (like a Yubikey) or by a KMS.</p><p>With this addition, Kubewarden can verify these the signatures produced in those
+ways.</p><h2 id=required-versions>Required versions</h2><p>Certificate based verification is available starting from these releases:</p><ul><li>Kubewarden stack: version 1.4.0 or later</li><li><a href=https://artifacthub.io/packages/kubewarden/verify-image-signatures/verify-image-signatures>verify-image-signatures</a>
+policy: version 0.2.0 or later</li></ul><h2 id=certificate-verification-in-action>Certificate verification in action</h2><p>Certificate based verification is now available to all our policy authors. However
+there&rsquo;s no need to write any code, since we&rsquo;ve extended our
+<a href=https://github.com/kubewarden/verify-image-signatures/><code>verify-image-signatures</code> policy</a>
+to support this new type of verification.</p><p>The following snippet shows how to ensure that all the container images coming
+from <code>registry.example.org/project-safety</code> have been signed by both Alice and Bob:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>policies.kubewarden.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterAdmissionPolicy</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>verify-image-signatures</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>module</span>: <span style=color:#ae81ff>ghcr.io/kubewarden/policies/verify-image-signatures:v0.1.7</span>
+  <span style=color:#f92672>rules</span>:
+  - <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;&#34;</span>, <span style=color:#e6db74>&#34;apps&#34;</span>, <span style=color:#e6db74>&#34;batch&#34;</span>]
+    <span style=color:#f92672>apiVersions</span>: [<span style=color:#e6db74>&#34;v1&#34;</span>]
+    <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;pods&#34;</span>, <span style=color:#e6db74>&#34;deployments&#34;</span>, <span style=color:#e6db74>&#34;statefulsets&#34;</span>, <span style=color:#e6db74>&#34;replicationcontrollers&#34;</span>, <span style=color:#e6db74>&#34;jobs&#34;</span>, <span style=color:#e6db74>&#34;cronjobs&#34;</span>]
+    <span style=color:#f92672>operations</span>:
+    - <span style=color:#ae81ff>CREATE</span>
+    - <span style=color:#ae81ff>UPDATE</span>
+  <span style=color:#f92672>mutating</span>: <span style=color:#66d9ef>true</span>
+  <span style=color:#f92672>settings</span>:
+    <span style=color:#f92672>signatures</span>:
+    - <span style=color:#f92672>image</span>: <span style=color:#e6db74>&#34;registry.example.org/project-safety/*&#34;</span>
+      <span style=color:#f92672>certificate</span>:
+      - |<span style=color:#e6db74>
+</span><span style=color:#e6db74>        -----BEGIN CERTIFICATE-----
+</span><span style=color:#e6db74>        Alice&#39;s cert
+</span><span style=color:#e6db74>        -----END CERTIFICATE-----</span>        
+      - |<span style=color:#e6db74>
+</span><span style=color:#e6db74>        -----BEGIN CERTIFICATE-----
+</span><span style=color:#e6db74>        Bob&#39;s cert
+</span><span style=color:#e6db74>        -----END CERTIFICATE-----</span>        
+      <span style=color:#f92672>certificateChain</span>:
+      - |<span style=color:#e6db74>
+</span><span style=color:#e6db74>        -----BEGIN CERTIFICATE-----
+</span><span style=color:#e6db74>        &lt;intermediate cert&gt;
+</span><span style=color:#e6db74>        -----END CERTIFICATE-----</span>        
+      - |<span style=color:#e6db74>
+</span><span style=color:#e6db74>        -----BEGIN CERTIFICATE-----
+</span><span style=color:#e6db74>        &lt;root CA&gt;
+</span><span style=color:#e6db74>        -----END CERTIFICATE-----</span>        
+      <span style=color:#f92672>requireRekorBundle</span>: <span style=color:#66d9ef>true</span>
+</code></pre></div><p>This will make sure that images like <code>registry.example.org/project-safety/micro-svc-shopping-cart:v1.0.0</code>
+and <code>registry.example.org/project-safety/micro-svc-search:v1.2.0</code> are signed
+by Alice and Bob.</p><h2 id=breaking-changes-to-the-verify-image-signature-policy>Breaking changes to the &ldquo;<code>verify-image-signature</code>&rdquo; policy</h2><p>Starting from version TODO of the &ldquo;<code>verify-image-signature</code>&rdquo;, all the policy settings
+are going to use the <a href=https://en.wikipedia.org/wiki/Camel_case><code>camelCase</code></a>
+naming convention.</p><p>This means the following configuration keys changed their ID:</p><ul><li>Keyless verification produced by GitHub: <code>github_actions</code> → <code>githubActions</code></li><li>Keyless verification using a subject prefix:<ul><li><code>url_prefix</code> → <code>urlPrefix</code></li><li><code>keyless_prefix</code> → <code>keylessPrefix</code></li></ul></li></ul><h2 id=call-for-action>Call for action</h2><p>That&rsquo;s all for today, it&rsquo;s time to give these changes a try!</p><p>Feel free to <a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden">reach out to us</a>
+if you have any questions or want to share your feedback!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2022 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
