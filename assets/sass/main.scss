@@ -11,6 +11,17 @@
     color: var(--light);
 }
 
+.bg-background {
+  background-color: #000000;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23000000' stroke-width='65.1' stroke-opacity='0.06' %3E%3Ccircle fill='%23000000' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%23500000' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%23560000' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%235d0000' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%23640000' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%236b0000' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%23720003' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%237a000c' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%23810013' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%23890018' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%2391001c' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%23980021' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%23a00026' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%23a8002b' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%23b00031' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%23b70036' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%23bf003b' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%23C70A41' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.github {
+  background: var(--primary-color) !important;
+}
+
 a.btn {
   &.no-bg {
     color: var(--light) !important;
@@ -85,7 +96,7 @@ section.wrap p {
   .main-menu .menu-close {
     display: none;
   }
-  
+
   /* Undo positioning of off-canvas menu */
   .main-menu {
     position: relative;
@@ -95,10 +106,10 @@ section.wrap p {
     display: block;
     overflow: hidden;
   }
-  
+
   .main-menu ul {
     display: flex; /* allows for full height of menu */
-    
+
     /* Undo off-canvas styling */
     -webkit-box-shadow: none;
        -moz-box-shadow: none;
@@ -116,7 +127,7 @@ section.wrap p {
       padding: 0;
       margin: 0;
       border: none;
-  
+
       &:last-child {
         padding-right: 0;
       }
@@ -129,7 +140,7 @@ section.wrap p {
 
     a.btn {
       &.no-bg {
-        color: var(--secondary-color) !important;
+        color: var(--light) !important;
       }
     }
   }
@@ -138,7 +149,7 @@ section.wrap p {
     color: var(--secondary-color);
     border: 0 !important; /* Remove borders from off-canvas styling */
   }
-  
+
   .main-menu a:hover,
   .main-menu a:focus {
     background: none; /* Remove background from off-canvas styling */
