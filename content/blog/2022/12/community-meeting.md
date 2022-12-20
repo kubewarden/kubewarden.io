@@ -1,5 +1,5 @@
 ---
-title: Community meeting is coming
+title: Community meeting is coming!
 authors:
 - Olivier Vernin
 date: 2022-12-21
