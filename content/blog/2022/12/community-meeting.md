@@ -6,7 +6,7 @@ date: 2022-12-21
 ---
 
 Community meetings have been a recurring demand from different sides and with the new year approaching,
-It's time to take our first good resolution.
+it's time to make our first good resolution.
 
 To improve community feedback, The Kubewarden project decided to organize a monthly community meeting.
 The first community meeting to be held is scheduled for January 12th, 2023 at 4 PM UTC.
