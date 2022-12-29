@@ -1,0 +1,67 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Kubewarden 2022 Wrapped</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1672323235><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href=https://hub.kubewarden.io/ target=_blank class="btn no-bg">Policy Hub</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Kubewarden 2022 Wrapped</h1><p>Author: <author>Flavio Castelli</author></p><p>Published: <time>29 Dec 2022</time></p><div id=blog-post-content><p>With 2022 almost over, it&rsquo;s time to look back at what happened within
+the Kubewarden project during the last year.</p><h2 id=the-10-release>The 1.0 release</h2><p>A significant milestone for the project in 2022 was
+the <a href=/blog/2022/06/v1-release/>release of Kubewarden v1.0.0</a> during the month of June.</p><p>With this release, the Kubewarden team committed to the stability of all the
+public interfaces of the project and all its Kubernetes Custom Resource Definitions.</p><p>Moreover, the project was considered ready to be used in production environments.</p><h2 id=cncf-inclusion>CNCF inclusion</h2><p>Another exciting event took place during the month of June. That&rsquo;s when
+[Kubewarden&rsquo;s inclusion in the CNCF sandbox]((/blog/2022/06/cncf-sandbox-inclusion/)
+took place.</p><p>On top of being a great recognition of the quality and potential of the project, the
+acceptance into CNCF led to an exciting integration with
+<a href=/blog/2022/07/artifact-hub-supports-kubewarden/>ArtifactHub</a>.
+This proved to be a great improvement not just for policy authors, but also
+for Kubewarden users who can now find all the existing policies
+on the <a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1">familiar ArtifactHub interface</a>.</p><p>By being part of CNCF, Kubewarden also got access to another CNCF project,
+<a href=https://clomonitor.io/projects/cncf/kubewarden>CLOMonitor</a>.
+Thanks to CLOMonitor, Kubewarden&rsquo;s users have a clear picture of the project health
+and can assess its development and security practices.</p><h2 id=pod-security-policy-replacement>Pod Security Policy replacement</h2><p>During the month of August, Kubernetes 1.25 release finally removed
+<a href=https://kubernetes.io/docs/concepts/security/pod-security-policy/>Pod Security Policies</a>.</p><p>This event was planned and advertised for a long time. Due to this,
+the Kubewarden developers were able to provide
+<a href=https://docs.kubewarden.io/tasksDir/psp-migration>tooling, policies, and documentation</a>
+to smoothen the migration process from Kubernetes Pod Security Policies to
+Kubewarden policies.</p><h2 id=secure-supply-chain>Secure supply chain</h2><p>The topic of secure supply chain started to emerge near the end of 2021, but it
+was during this year that many projects and organizations tackled it.</p><p>The <a href=https://sigstore.dev>sigstore</a> project proved to be one of the pillars of
+these initiatives.
+Kubewarden invested early in the Sigstore project, with some of our maintainers being
+active also within the Sigstore community.</p><p>During the last year Kubewarden embraced Sigstore to
+<a href=/blog/2022/04/securing-kubewarden-policies/>securely distribute its own assets</a>,
+like container images, policies, helm charts and cli utilities.
+Moreover, we exposed Sigstore capabilities to our policy authors and provided
+a <a href=https://artifacthub.io/packages/kubewarden/verify-image-signatures/verify-image-signatures>ready to use policy</a>
+that can be used to vet the container images used by Kubernetes workloads.</p><p>Sigstore provides different ways to sign artifacts: with
+traditional keys,
+<a href=/blog/2022/05/verifying-image-signatures/>keyless mode</a>,
+<a href=/blog/2022/07/verify-signatures-with-gha-and-prefix/>keyless mode from a GitHub Action workflow</a> or
+by using <a href=/blog/2022/12/sigstore-certificate-verification/>self-signed certificates</a>
+stored on a physical token or provided by a KMS.
+During the last year we kept extending Kubewarden to ensure all these scenarios would be
+available also to our users.</p><h2 id=other-notable-features>Other notable features</h2><p>A stream of improvements have been made to the Kubewarden project during the last
+year.</p><p>The Kubernetes integration was further expanded by introducing the new
+<a href=/blog/2022/03/admission-policy/><code>AdmissionPolicy</code></a> Custom Resource. This allows
+regular Kubernetes users to define policies that are scoped to a specific
+Namespace.</p><p>Next, we introduced a new operating mode for all our policies: the
+<a href=/blog/2022/05/monitor-mode/>&ldquo;monitor&rdquo;</a> mode. This allows Kubernetes administrators
+to better understand how a policy would impact their existing clusters once it was
+enforced.</p><p>More recently, the Kubewarden developers simplified the process of deploying
+Kubewarden inside of <a href=/blog/2022/11/airgap/>air gapped</a> environments. This
+has been achieved by providing small helpers, writing documentation and, most
+important of all, dedicated QA efforts.</p><h2 id=new-policies>New policies</h2><p>During the last months we created many ready-to-use policies.
+Some of them are:</p><ul><li><a href=https://artifacthub.io/packages/kubewarden/verify-image-signatures/verify-image-signatures>Verify image signatures</a>: this
+policy leverages Sigstore capabilities to ensure only trusted workloads are
+admitted inside of your clusters</li><li><a href=/blog/2022/10/env-var-secrets/>Environment variables secret scanner</a>: this policy finds
+secrets, like private keys and API tokens, that are being leaked via environment
+variables</li><li><a href=/blog/2022/11/deprecation-policy/>Deprecated resources</a>: this policy can be
+used to prevent the creation of resources that are deprecated by Kubernetes</li></ul><h2 id=see-you-in-2023>See you in 2023!</h2><p>One of the major changes in 2023 will be the introduction of
+<a href=/blog/2022/12/community-meeting/>community meetings</a>.
+The first meeting will be held on
+<a href="https://www.timeanddate.com/worldclock/converter.html?iso=20230112T160000&p1=1440">January 12th, 2023 at 4 PM UTC</a>.</p><p>We look forward to having you join these meetings and interacting with the rest of the
+Kubewarden community. Not only will you learn about the latest happenings within
+the project, but you will also be able to share your feedback and Kubewarden stories
+with everybody else.</p><p>In the meantime, on behalf of the Kubewarden project, I&rsquo;d like to wish all our users a Happy New Year! 🍾 🎆 🎉</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2022 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
