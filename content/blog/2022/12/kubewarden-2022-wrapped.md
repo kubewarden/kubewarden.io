@@ -21,7 +21,7 @@ Moreover, the project was considered ready to be used in production environments
 ## CNCF inclusion
 
 Another exciting event took place during the month of June. That's when
-[Kubewarden's inclusion in the CNCF sandbox]((/blog/2022/06/cncf-sandbox-inclusion/)
+[Kubewarden's inclusion in the CNCF sandbox](/blog/2022/06/cncf-sandbox-inclusion/)
 took place.
 
 On top of being a great recognition of the quality and potential of the project, the
