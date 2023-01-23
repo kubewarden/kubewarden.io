@@ -25,7 +25,7 @@ to get more information about this new feature.
 
 ## Changes to kwctl
 
-`kwctl` now imports the trusted certificate authorities from from the host system. Thus, `kwctl`
+`kwctl` now imports the trusted certificate authorities from the host system. Thus, `kwctl`
 interactions with registries secured by certificates issued by 3rd party certificate authorities
 becomes simpler.
 
