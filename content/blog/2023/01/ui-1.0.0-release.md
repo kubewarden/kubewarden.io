@@ -2,7 +2,7 @@
 title: Kubewarden UI 1.0.0 is released!
 authors:
 - Jordon Leach 
-date: 2022-11-01 # TODO: Update date before publishing
+date: 2023-01-25 # TODO: Update date before publishing
 ---
 
 We are excited to announce that the Kubewarden UI 1.0.0 has been released!
@@ -17,7 +17,7 @@ Let's see what is achievable from the UI as a Cluster Admin.
 
 ## Installing Kubewarden
 
-With Extensions enabled in Rancher Dashboard, you will need to add the UI Helm chart as a repository, you can use `https://kubewarden.github.io/ui` as the Index URL. Once this repository is set you will be able to install the Kubewarden Extension, this will add a "Kubewarden" menu item within your cluster. Click on this item and a walkthrough will guide you through the installation of the `kubewarden-controller`. 
+With Extensions enabled in Rancher Dashboard and the option to add the Rancher Extensions Repository enabled, the "Kubewarden" menu item will appear automatically. Click on this item to install the extension. Once installed there will be a new side-navigation item within your cluster for Kubewarden, which provides a walkthrough to guide you through the installation of the `kubewarden-controller`.
 
 Documentation to install the extension can be found [here](https://docs.kubewarden.io/operator-manual/ui-extension/install). 
 
