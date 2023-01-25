@@ -41,8 +41,8 @@ home = ["HTML", "RSS", "Algolia"]
 
   [[menu.main]]
     identifier = "hub"
-    name = "Policy Hub"
-    url = "https://hub.kubewarden.io/"
+    name = "Policies"
+    url = "https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1"
     weight = -130
 
   [[menu.main]]
