@@ -2,7 +2,7 @@
 title: Kubewarden UI 1.0.0 is released!
 authors:
 - Jordon Leach 
-date: 2023-01-25 # TODO: Update date before publishing
+date: 2023-02-09
 ---
 
 We are excited to announce that the Kubewarden UI 1.0.0 has been released!
