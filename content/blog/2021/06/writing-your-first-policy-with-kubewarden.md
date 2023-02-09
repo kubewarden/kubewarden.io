@@ -58,10 +58,10 @@ following requirements:
           Africa).
 
 The policy won't allow the creation of new namespaces that don't
-follow any of this rules.
+follow any of these rules.
 
 That's it for now. I am sure you already have in mind several ways to
-enrichen, improve and secure this simple policy.
+enrich, improve and secure this simple policy.
 
 ## The language
 
@@ -134,7 +134,7 @@ Looks about right! Now, let's go ahead and write our policy!
 
 ### Policy first go
 
-Let's start by editing the `main.go` file. For the sake blog post
+Let's start by editing the `main.go` file. For the sake of blog post
 brevity, I'll keep the code on the `main.go` file, so it's
 straightforward to follow. Also, I'll be skipping some other best
 practices, like TDD or even having unit tests, again for the sake of
@@ -527,7 +527,7 @@ are some bits and pieces we are still missing. The main questions at
 this point are:
 
 - How to safely make the policy easy to distribute
-    - Kubewarden has focused on you reusing your existing knowledge
+    - Kubewarden has focused on reusing your existing knowledge
       and tools, so policies can either be distributed using an HTTPS
       server, or preferrably, an OCI registry.
 - How to deploy the policy to a Kubernetes cluster
