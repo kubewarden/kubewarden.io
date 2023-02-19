@@ -58,7 +58,7 @@ considered valid if used outside of the limited lifetime of the certificate.
 
 Nobody - developers, project leads, or sponsors, needs to have access to
 keys and Sigstore never obtains your private key. Hence the term keyless. 
-Additionaly, one doesn't need expensive infra for creating and validating 
+Additionally, one doesn't need expensive infra for creating and validating 
 signatures.
 
 Since there's no need for key secrets and the like in Keyless mode, it is easily
