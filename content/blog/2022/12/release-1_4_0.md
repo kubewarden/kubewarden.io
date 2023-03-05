@@ -24,7 +24,7 @@ about this feature.
 
 ## Policy benchmarking
 
-Staring from this release, [kwctl](https://github.com/kubewarden/kwctl/) gains
+Starting from this release, [kwctl](https://github.com/kubewarden/kwctl/) gains
 a new command called `bench`.
 
 This command benchmarks the execution times of the
