@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta http-equiv="Content-Security-Policy" content="frame-src 'self'">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';base-uri 'self';form-action 'self'">
 	<title>{{ .Title }}</title>
   {{ if and (.Site.Params.gtm_id) (templates.Exists "partials/gtm.html") }}{{- partial "gtm.html" . }}{{ end }}
 
