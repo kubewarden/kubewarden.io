@@ -38,7 +38,7 @@ Kubernetes API server.
 
 On the opposite, a Context Aware Policy requires access to Kubernetes-related
 informations. For example, a Context Aware Policy that monitors the creation
-of Ingress objects could requests the list of already existing Ingresses
+of Ingress objects could request the list of already existing Ingresses
 during its evaluation time. Based on this data, the policy would be able to
 understand whether the soon-to-be-created Ingress object would conflict with
 any of the already existing Ingresses or not.
