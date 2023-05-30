@@ -2,11 +2,10 @@
 title: My Experience in the LFX Mentorship Program with the Linux Foundation
 authors:
 - Khaled Emara
-date: 2023-05-26
+date: 2023-05-30
 ---
 
 > This text was originally written by Khaled Emara on his [blog](https://blog.khaledemara.dev/my-experience-in-the-lfx-mentorship-program-with-the-linux-foundation?showSharer=true).
-> Kubewarden team is just reproducing it here.
 
 Hi, I'm Khaled Emara, a software developer with a background in Go and Rust programming.
 In this blog post, I'm excited to share my experience in the LFX mentorship program
@@ -47,7 +46,7 @@ I learned a lot while implementing the SDK APIs. A great portion of them was abo
 container signing to make sure the containers are from a known source.  These were
 implemented using the Sigstore project.
 
-The Sigstore project is an open-source project that aims to make software signing
+The [Sigstore project](https://www.sigstore.dev/) is an open-source project that aims to make software signing
 and verification more transparent and accessible. By providing a secure and easy-to-use
 signing platform, the sigstore project helps developers ensure the security and integrity
 of their software. By using cryptographic signatures, developers can ensure that their
@@ -86,7 +85,7 @@ code in isolation, creating mock objects that accurately simulate real-world sce
 and integrating mock testing into your overall testing suite.
 
 There are also several tools and libraries available to help with Go mock testing,
-such as the "gomock" package and the "testify" library.
+such as the [`gomock`](https://github.com/golang/mock) package and the [`testify`](https://github.com/stretchr/testify) library.
 
 Go mock testing can help catch bugs earlier in the development process, improve the
 reliability and maintainability of code, and enhance the overall quality of software.
