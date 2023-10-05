@@ -33,7 +33,7 @@ It then iterates through the tuples, sending to the respective PolicyServers the
 `policy` and `synthetic_admission_request` to evaluate.
 
 Notice how the `synthetic_policy_requests` don't hit the Kubernetes API server;
-there's no need, as no resource is truly being CREATEd, UPDATEd, or DELETEd.
+there's no need, as no resource is actually being CREATEd, UPDATEd, or DELETEd.
 Instead, the `synthetic_policy_request` is consumed by the PolicyServer. But
 not on its usual `validate/` HTTP endpoint, but in a different `audit/`
 endpoint, exclusive for audit requests. This `audit/` endpoint evaluates the
