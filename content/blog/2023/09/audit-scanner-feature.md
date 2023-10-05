@@ -30,7 +30,7 @@ cluster resources are involved. It builds tuples of `(policy,
 synthetic_admission_request)` that match those audited resources, simulating
 operations to the resources.
 It then iterates through the tuples, sending to the respective PolicyServers the
-`policy` and `syntethic_admission_request` to evaluate.
+`policy` and `synthetic_admission_request` to evaluate.
 
 Notice how the `synthetic_policy_requests` don't hit the Kubernetes API server;
 there's no need, as no resource is truly being CREATEd, UPDATEd, or DELETEd.
