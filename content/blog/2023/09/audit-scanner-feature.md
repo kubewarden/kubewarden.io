@@ -89,7 +89,7 @@ No :).
 With `1.7.0`, the Audit Scanner is enabled by default. You will notice a new
 `audit-scanner` Cronjob that runs and creates the `(Cluster)PolicyReports`.
 
-If you wish, you can configure its behaviour: have a look at the
+If you wish, you can configure its behavior: have a look at the
 `kubewarden-controller` values.yaml, under the `auditScanner` key.
 
 The Audit Scanner needs a default `ServiceAccount` to gather the resources for
