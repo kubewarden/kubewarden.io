@@ -56,8 +56,7 @@ exactly which part of the resource needs to be changed in a meaningful way.
 Also, the DELETE requests will be synthesized in the future. Read the
 [limitations](https://docs.kubewarden.io/explanations/audit-scanner/limitations)
 doc for an expanded explanation. The full [explanation docs
-page](https://docs.kubewarden.io/explanations/audit-scanner) has a more
-in-depth explanation.
+page](https://docs.kubewarden.io/explanations/audit-scanner) has further explanation.
 
 The new Audit Scanner brings all this functionality keeping in line with the
 modular architecture of Kubewarden. It allows operators to scale it as needed,
