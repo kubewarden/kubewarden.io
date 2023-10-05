@@ -10,7 +10,7 @@ the Audit Scanner!
 
 ## Audit Scanner?
 
-Up until the Audit Scanner, Kubewarden was strictly a Dynamic Admission
+Up until the release of Audit Scanner, Kubewarden was strictly a Dynamic Admission
 Controller, checking requests made against the Kubernetes API server with the
 deployed policies.
 
