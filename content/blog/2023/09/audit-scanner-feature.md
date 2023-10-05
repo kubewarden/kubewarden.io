@@ -133,7 +133,7 @@ configure its periodity, its monitoring and tracing, and make sure it doesn't
 influence the PolicyServers in a bad way. We look forward to new policies that
 take advantage of it!
 
-As always, we are curious of what features you would like next and how you are
+As always, we are curious as to which features you would like next and how you are
 enjoying Kubewarden. Reach out to us on [slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden)
 or join our [monthly community meeting](https://teamup.com/ks2bj74dvw132mhjtj?view=a&showProfileAndInfo=0&showSidepanel=1&disableSidepanel=1&showMenu=1&showAgendaHeader=1&showAgendaDetails=0&showYearViewHeader=1)
 to talk more about Kubewarden!
