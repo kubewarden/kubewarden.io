@@ -58,7 +58,7 @@ Also, the DELETE requests will be synthesized in the future. Read the
 doc for an expanded explanation. The full [explanation docs
 page](https://docs.kubewarden.io/explanations/audit-scanner) has further explanation.
 
-The new Audit Scanner brings all this functionality keeping in line with the
+The new Audit Scanner brings all this functionality while keeping in line with the
 modular architecture of Kubewarden. It allows operators to scale it as needed,
 configure its periodicity, monitoring and tracing, and making sure it doesn't
 influence the PolicyServers in a bad way.
