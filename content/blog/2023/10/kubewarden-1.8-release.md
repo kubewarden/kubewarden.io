@@ -29,10 +29,10 @@ tune the deployment to fit their stacks.
 With 1.8.0, the Kubewarden Controller now separately reconciles the configuration of both
 tracing and metrics for Policy Server instances. In the past, enabling metrics in
 Kubewarden meant enabling both, and now users can decide to enable each separately, as we
-have realized from the requests raised in GitHub.
+have realized from the requests raised by the community.
 
 We have made the concious decision to make this a breaking change in the helm
-chart `values.yaml`, which we never do.
+chart `values.yaml`, which it is uncommon.
 We think it simplifies the adoption of OTLP changes in the future.
 
 The change is the following:
@@ -91,8 +91,8 @@ telemetry:
 
 ## Configuring OpenTelemetry manually
 
-As always, users can decide instead to configure metrics and/or tracing support on
-their own. For example in case that they want only some of the Kubewarden
+As always, users may still configure metrics and/or tracing support themselves,
+as desired. For example in case that they want only some of the Kubewarden
 workloads with telemetry, or more exotic configurations.
 
 This would mean leaving the default values.yaml, and performing the following
