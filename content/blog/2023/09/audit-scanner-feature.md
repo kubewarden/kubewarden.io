@@ -115,7 +115,7 @@ no-privileged-pod           default         false      true              monitor
                                                         new spec.backgroundAudit
 ```
 
-If you want to skp a policy evaluation, you should set `spec.backgroundAudit`
+If you want to skip a policy evaluation, you should set `spec.backgroundAudit`
 to `false`.
 
 And if you want to provide more metadata, you can 2 new special annotations:
