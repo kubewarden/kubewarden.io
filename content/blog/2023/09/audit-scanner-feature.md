@@ -118,7 +118,7 @@ no-privileged-pod           default         false      true              monitor
 If you want to skip a policy evaluation, you should set `spec.backgroundAudit`
 to `false`.
 
-And if you want to provide more metadata, you can 2 new special annotations:
+And if you want to provide more metadata, you can use two new special annotations:
 `io.kubewarden.policy.severity` and `io.kubewarden.policy.category`. Have a
 look at [the
 docs](https://docs.kubewarden.io/explanations/audit-scanner#policies) for their
