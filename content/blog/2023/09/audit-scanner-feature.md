@@ -127,7 +127,7 @@ values.
 ## tl:dr;
 
 The new Audit Scanner allows administrators to quickly asses the compliance
-level of their clusters with Kubewarden. It does so by keeping in line with
+level of their clusters with Kubewarden. It does so while keeping in line with
 the existing modular architecture. It allows operators to scale it as needed,
 configure its periodity, its monitoring and tracing, and make sure it doesn't
 influence the PolicyServers in a bad way. We look forward to new policies that
