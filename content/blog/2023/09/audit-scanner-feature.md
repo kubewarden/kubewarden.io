@@ -53,7 +53,7 @@ creates one `ClusterPolicyReport` object per cluster.
 There are some resources that the Audit Scanner cannot audit in this first
 implementation. For example, it cannot simulate UPDATE requests, as it doesn't know
 exactly which part of the resource needs to be changed in a meaningful way.
-Also, the DELETE requests will be synthetised in the future. Read the
+Also, the DELETE requests will be synthesized in the future. Read the
 [limitations](https://docs.kubewarden.io/explanations/audit-scanner/limitations)
 doc for an expanded explanation. The full [explanation docs
 page](https://docs.kubewarden.io/explanations/audit-scanner) has a more
