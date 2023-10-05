@@ -36,7 +36,7 @@ Notice how the `synthetic_policy_requests` don't hit the Kubernetes API server;
 there's no need, as no resource is actually being CREATEd, UPDATEd, or DELETEd.
 Instead, the `synthetic_policy_request` is consumed by the PolicyServer. But
 not on its usual `validate/` HTTP endpoint, but in a different `audit/`
-endpoint, exclusive for audit requests. This `audit/` endpoint evaluates the
+endpoint, exclusively for audit requests. This `audit/` endpoint evaluates the
 policy exactly the same way as the `validate/` one, and is instrumented as
 well, which provides separation of concerns from the normal validation of
 policies.
