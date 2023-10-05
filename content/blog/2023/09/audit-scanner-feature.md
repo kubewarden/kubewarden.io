@@ -67,7 +67,7 @@ influence the PolicyServers in a bad way.
 
 Reading `(Cluster)PolicyReports` sounds cumbersome?
 
-No fret, the community has created the nice [Policy Reporter UI
+Don't worry, the community has created the nice [Policy Reporter UI
 project](https://kyverno.github.io/policy-reporter), which provides a view on
 the reports and ways to filter them. `Screenshot >= 1000*word`:
 
