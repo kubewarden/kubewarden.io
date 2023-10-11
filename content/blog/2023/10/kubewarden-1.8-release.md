@@ -17,7 +17,7 @@ SDK](https://opentelemetry.io/blog/2023/otel-go-metrics-sdk-stable/) or the
 [.NET Automatic
 Instrumentation](https://opentelemetry.io/blog/2023/otel-dotnet-auto-instrumentation/).
 
-Still, the OTLP stack is not yet stable, and unannounced backwards-incompatible
+Still, the OpenTelemetry stack is not yet stable, and unannounced backwards-incompatible
 changes still happen. You can have a look at the status of each of their
 libraries and protocols [here](https://opentelemetry.io/status).
 
