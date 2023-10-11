@@ -84,7 +84,7 @@ which is great for the community and the policy engines.
 
 ## Do I need to change anything?
 
-No :).
+No 🙂.
 
 With `1.7.0`, the Audit Scanner is enabled by default. You will notice a new
 `audit-scanner` Cronjob that runs and creates the `(Cluster)PolicyReports`.
