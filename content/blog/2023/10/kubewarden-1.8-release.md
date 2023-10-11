@@ -32,7 +32,7 @@ Kubewarden meant enabling both, and now users can decide to enable each separate
 have realized from the requests raised by the community.
 
 We have made the concious decision to make this a breaking change in the helm
-chart `values.yaml`, which it is uncommon.
+chart `values.yaml`, which is uncommon.
 We think it simplifies the adoption of OTLP changes in the future.
 
 The change is the following:
