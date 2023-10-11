@@ -27,7 +27,7 @@ tune the deployment to fit their stacks.
 ## Changes
 
 With 1.8.0, the Kubewarden Controller now separately reconciles the configuration of both
-tracing and metrics for PolicyServers. In the past, enabling metrics in
+tracing and metrics for Policy Server instances. In the past, enabling metrics in
 Kubewarden meant enabling both, and now users can decide to enable each separately, as we
 have realized from the requests raised in GitHub.
 
