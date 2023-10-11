@@ -35,6 +35,16 @@ We have made the concious decision to make this a breaking change in the helm
 chart `values.yaml`, which is uncommon.
 We think it simplifies the adoption of OTLP changes in the future.
 
+In addition, since `v0.85.0` OpenTelemetry Collector no longer includes
+exporters for the native Jaeger format. This change was
+prompted because Jaeger has support for OTLP. See the [announcement
+here](https://opentelemetry.io/blog/2023/jaeger-exporter-collector-migration).
+
+Hence we now take care of setting `exporters.otlp/jaeger` instead of
+`exporters.jaeger` the OpenTelemetryCollector CR we create. For the user, this
+means a change in the port of the endpoint, from `14250` (native Jaeger format)
+to `4317` (OTLP/jaeger).
+
 The change is the following:
 
 ```diff
@@ -49,7 +59,8 @@ telemetry:
 +   enabled: False
     jaeger: {}
     # OTLP/Jaeger endpoint to send traces to
-    # endpoint: "all-in-one-collector.jaeger.svc.cluster.local:4317"
+-    # endpoint: "all-in-one-collector.jaeger.svc.cluster.local:14250"
++    # endpoint: "all-in-one-collector.jaeger.svc.cluster.local:4317"
 ```
 
 #### Example
