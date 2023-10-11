@@ -89,7 +89,7 @@ telemetry:
         insecure: true
 ```
 
-## Configuring OTLP manually
+## Configuring OpenTelemetry manually
 
 As always, users can decide instead to configure metrics and/or tracing support on
 their own. For example in case that they want only some of the Kubewarden
