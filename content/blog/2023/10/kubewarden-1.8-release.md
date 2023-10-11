@@ -11,7 +11,7 @@ This is a small release, focused on [OpenTelemetry](https://opentelemetry.io/).
 
 The OpenTelemetry Protocol (OTLP) got its [first 1.0.0
 version](https://github.com/open-telemetry/opentelemetry-proto/releases/tag/v1.0.0)
-in July 2023, and the OpenTelemetry stack is becoming more stable; several
+in July 2023; several
 libraries got their first 1.0.0 release, such as the [Go metric
 SDK](https://opentelemetry.io/blog/2023/otel-go-metrics-sdk-stable/) or the
 [.NET Automatic
