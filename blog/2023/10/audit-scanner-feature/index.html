@@ -1,0 +1,80 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Welcoming the Audit Scanner</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1697030255><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1" target=_blank class="btn no-bg">Policies</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Welcoming the Audit Scanner</h1><p>Author: <author>Víctor Cuadrado</author></p><p>Published: <time>11 Oct 2023</time></p><div id=blog-post-content><p>Fresh in the already released Kubewarden <code>v1.7.0</code> stack, we welcome a new module:
+the Audit Scanner!</p><h2 id=audit-scanner>Audit Scanner?</h2><p>Up until the release of Audit Scanner, Kubewarden was strictly a Dynamic Admission
+Controller, checking requests made against the Kubernetes API server with the
+deployed policies.</p><p>Yet policies evolve over time; new ones are deployed, and existing ones are
+updated. This can mean that resources that are inside the cluster are no longer
+compliant. A resource that was compliant some weeks ago, today may not be valid
+since the introduction of a new policy.</p><p>Now with the new Audit Scanner, Kubewarden provides continous verification on
+the compliance of cluster resources. The new Audit Scanner module is called via a
+Kubernetes <code>Cronjob</code>, which spawns the jobs that audit the cluster resources.</p><h4 id=ok-but-how-does-it-work>Ok, but how does it work?</h4><p>The Audit Scanner looks at all the deployed policies, and for each, at which
+cluster resources are involved. It builds tuples of <code>(policy, synthetic_admission_request)</code> that match those audited resources, simulating
+operations to the resources.
+It then iterates through the tuples, sending to the respective PolicyServers the
+<code>policy</code> and <code>synthetic_admission_request</code> to evaluate.</p><p>Notice how the <code>synthetic_policy_requests</code> don&rsquo;t hit the Kubernetes API server;
+there&rsquo;s no need, as no resource is actually being CREATEd, UPDATEd, or DELETEd.
+Instead, the <code>synthetic_policy_request</code> is consumed by the PolicyServer. But
+not on its usual <code>validate/</code> HTTP endpoint, but in a different <code>audit/</code>
+endpoint, exclusively for audit requests. This <code>audit/</code> endpoint evaluates the
+policy in exactly the same way as the <code>validate/</code> one, and is instrumented as
+well, which provides separation of concerns from the normal validation of
+policies.</p><p>Once the Audit Scanner has the audited results, it writes its findings using
+two new types of Kubernetes Custom Resources: <code>PolicyReport</code> and
+<code>ClusterPolicyReport</code>, <a href=https://github.com/kubernetes-sigs/wg-policy-prototypes/tree/master/policy-report>from the K8s Policy Working Group</a>.</p><p>Each Kubernetes Namespace inspected by the Audit Scanner will feature one
+<code>PolicyReport</code> object that contains the results of the audit. For cluster-wide
+resources (like Namespace, PersistentVolume, …) the Audit Scanner
+creates one <code>ClusterPolicyReport</code> object per cluster.</p><p>There are some resources that the Audit Scanner cannot audit in this first
+implementation. For example, it cannot simulate UPDATE requests, as it doesn&rsquo;t know
+exactly which part of the resource needs to be changed in a meaningful way.
+Also, the DELETE requests will be synthesized in the future. Read the
+<a href=https://docs.kubewarden.io/explanations/audit-scanner/limitations>limitations</a>
+doc for an expanded explanation. The full <a href=https://docs.kubewarden.io/explanations/audit-scanner>explanation docs
+page</a> has further explanation.</p><p>The new Audit Scanner brings all this functionality while keeping in line with the
+modular architecture of Kubewarden. It allows operators to scale it as needed,
+configure its periodicity, monitoring and tracing, and making sure it doesn&rsquo;t
+influence the PolicyServers in a bad way.</p><h4 id=fine-but-what-about-a-ui>Fine, but what about a UI?</h4><p>Reading <code>(Cluster)PolicyReports</code> sounds cumbersome?</p><p>Don&rsquo;t worry, the community has created the nice <a href=https://kyverno.github.io/policy-reporter>Policy Reporter UI
+project</a>, which provides a view on
+the reports and ways to filter them. <code>Screenshot >= 1000*word</code>:</p><figure><img src=/images/audit-scanner/policy-reporter-ui.png alt="policy-reporter-ui view"></figure><p>We have elected to include the <code>policy-reporter-ui</code> chart in our
+<code>kubewarden-controller</code> chart as a subchart. It is disabled by default, have a
+look at our <a href=https://docs.kubewarden.io/howtos/audit-scanner>Audit Scanner install
+docs</a> to see how to enable it.</p><p>Policy Reporter UI is not the only tool that can consume results from the
+PolicyReports. More and more tools are consuming PolicyReports themselves,
+which is great for the community and the policy engines.</p><h2 id=do-i-need-to-change-anything>Do I need to change anything?</h2><p>No 🙂.</p><p>With <code>1.7.0</code>, the Audit Scanner is enabled by default. You will notice a new
+<code>audit-scanner</code> Cronjob that runs and creates the <code>(Cluster)PolicyReports</code>.</p><p>If you wish, you can configure its behavior: have a look at the
+<code>kubewarden-controller</code> values.yaml, under the <code>auditScanner</code> key.</p><p>The Audit Scanner needs a default <code>ServiceAccount</code> to gather the resources for
+scan, and by default we provide one bound to the <code>view</code> <code>ClusterRole</code> provided
+by Kubernetes, which allows read-only access to resources. You can fine-tune
+and <a href=https://docs.kubewarden.io/explanations/audit-scanner#permissions-and-serviceaccounts>provide yours</a>.</p><h2 id=what-about-the-policies>What about the policies?</h2><p>Every policy has now a new <code>spec.backgroundAudit</code> that is <code>true</code> by default, and
+get evaluated by the Audit Scanner:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ kubectl get clusteradmissionpolicies
+NAME                        POLICY SERVER   MUTATING   BACKGROUNDAUDIT   MODE      OBSERVED MODE   STATUS   AGE
+do-not-run-as-root          default         true       true              monitor   monitor         active   99s
+do-not-share-host-paths     default         false      true              monitor   monitor         active   99s
+drop-capabilities           default         true       true              monitor   monitor         active   99s
+no-host-namespace-sharing   default         false      true              monitor   monitor         active   99s
+no-privilege-escalation     default         true       true              monitor   monitor         active   99s
+no-privileged-pod           default         false      true              monitor   monitor         active   99s
+                                                        🠉
+                                                        new spec.backgroundAudit
+</code></pre></div><p>If you want to skip a policy evaluation, you should set <code>spec.backgroundAudit</code>
+to <code>false</code>.</p><p>And if you want to provide more metadata, you can use two new special annotations:
+<code>io.kubewarden.policy.severity</code> and <code>io.kubewarden.policy.category</code>. Have a
+look at <a href=https://docs.kubewarden.io/explanations/audit-scanner#policies>the
+docs</a> for their
+values.</p><h2 id=tldr>tl:dr;</h2><p>The new Audit Scanner allows administrators to quickly asses the compliance
+level of their clusters with Kubewarden. It does so while keeping in line with
+the existing modular architecture. It allows operators to scale it as needed,
+configure its periodity, its monitoring and tracing, and make sure it doesn&rsquo;t
+influence the PolicyServers in a bad way. We look forward to new policies that
+take advantage of it!</p><p>As always, we are curious as to which features you would like next and how you are
+enjoying Kubewarden. Reach out to us on <a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden">slack</a>
+or join our <a href="https://teamup.com/ks2bj74dvw132mhjtj?view=a&showProfileAndInfo=0&showSidepanel=1&disableSidepanel=1&showMenu=1&showAgendaHeader=1&showAgendaDetails=0&showYearViewHeader=1">monthly community meeting</a>
+to talk more about Kubewarden!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2023 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
