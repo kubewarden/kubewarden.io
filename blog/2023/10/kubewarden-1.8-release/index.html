@@ -1,0 +1,76 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Kubewarden 1.8.0 release</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1697473516><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1" target=_blank class="btn no-bg">Policies</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Kubewarden 1.8.0 release</h1><p>Author: <author>Víctor Cuadrado</author></p><p>Published: <time>11 Oct 2023</time></p><p>Updated: <time>16 Oct 2023</time></p><div id=blog-post-content><p>Today we are happy to announce the release of Kubewarden 1.8.0! 🎉🥳</p><p>This is a small release, focused on <a href=https://opentelemetry.io/>OpenTelemetry</a>.</p><p>The OpenTelemetry Protocol (OTLP) got its <a href=https://github.com/open-telemetry/opentelemetry-proto/releases/tag/v1.0.0>first 1.0.0
+version</a>
+in July 2023; several
+libraries got their first 1.0.0 release, such as the <a href=https://opentelemetry.io/blog/2023/otel-go-metrics-sdk-stable/>Go metric
+SDK</a> or the
+<a href=https://opentelemetry.io/blog/2023/otel-dotnet-auto-instrumentation/>.NET Automatic
+Instrumentation</a>.</p><p>Still, the OpenTelemetry stack is not yet stable, and unannounced backwards-incompatible
+changes still happen. You can have a look at the status of each of their
+libraries and protocols <a href=https://opentelemetry.io/status>here</a>.</p><p>For Kubewarden, this means we should expect more users to configure and fine
+tune the deployment to fit their stacks.</p><h2 id=changes>Changes</h2><p>With 1.8.0, the Kubewarden Controller now separately reconciles the configuration of both
+tracing and metrics for Policy Server instances. In the past, enabling metrics in
+Kubewarden meant enabling both, and now users can decide to enable each separately, as we
+have realized from the requests raised by the community.</p><p>We have made the concious decision to make this a breaking change in the helm
+chart <code>values.yaml</code>, which is uncommon.
+We think it simplifies the adoption of OTLP changes in the future.</p><p>In addition, since <code>v0.85.0</code> OpenTelemetry Collector no longer includes
+exporters for the native Jaeger format. This change was
+prompted because Jaeger has support for OTLP. See the <a href=https://opentelemetry.io/blog/2023/jaeger-exporter-collector-migration>announcement
+here</a>.</p><p>Now the OpenTelemetryCollector resource created by the helm chart is configured
+to use <code>exporters.otlp/jaeger</code> instead of <code>exporters.jaeger</code>. For the user, this
+means a change in the port of the endpoint, from <code>14250</code> (native Jaeger format)
+to <code>4317</code> (OTLP/jaeger).</p><p>The change is the following:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-diff data-lang=diff># values.yaml
+# open-telemetry options
+telemetry:
+<span style=color:#f92672>- enabled: False
+</span><span style=color:#f92672></span>  metrics:
+<span style=color:#a6e22e>+   enabled: False
+</span><span style=color:#a6e22e></span>    port: 8080
+  tracing:
+<span style=color:#a6e22e>+   enabled: False
+</span><span style=color:#a6e22e></span>    jaeger: {}
+    # OTLP/Jaeger endpoint to send traces to
+<span style=color:#f92672>-    # endpoint: &#34;all-in-one-collector.jaeger.svc.cluster.local:14250&#34;
+</span><span style=color:#f92672></span><span style=color:#a6e22e>+    # endpoint: &#34;all-in-one-collector.jaeger.svc.cluster.local:4317&#34;
+</span></code></pre></div><h4 id=example>Example</h4><p>Up until 1.7.x inclusive we had:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml>---
+<span style=color:#75715e># values.yaml</span>
+<span style=color:#75715e># Up until 1.7.x inclusive</span>
+<span style=color:#f92672>telemetry</span>:
+  <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>True</span>
+  <span style=color:#f92672>metrics</span>:
+    <span style=color:#f92672>port</span>: <span style=color:#ae81ff>8080</span>
+  <span style=color:#f92672>tracing</span>:
+    <span style=color:#f92672>jaeger</span>:
+      <span style=color:#f92672>endpoint</span>: <span style=color:#e6db74>&#34;my-open-telemetry-collector.jaeger.svc.cluster.local:14250&#34;</span>
+      <span style=color:#f92672>tls</span>:
+        <span style=color:#f92672>insecure</span>: <span style=color:#66d9ef>true</span>
+</code></pre></div><p>Starting with 1.8.0 we have:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml>---
+<span style=color:#75715e># values.yaml</span>
+<span style=color:#75715e># Starting with 1.8.0:</span>
+<span style=color:#f92672>telemetry</span>:
+  <span style=color:#f92672>metrics</span>:
+    <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>True</span>
+    <span style=color:#f92672>port</span>: <span style=color:#ae81ff>8080</span>
+  <span style=color:#f92672>tracing</span>:
+    <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>True</span>
+    <span style=color:#f92672>jaeger</span>:
+      <span style=color:#f92672>endpoint</span>: <span style=color:#e6db74>&#34;my-open-telemetry-collector.jaeger.svc.cluster.local:4317&#34;</span>
+      <span style=color:#f92672>tls</span>:
+        <span style=color:#f92672>insecure</span>: <span style=color:#66d9ef>true</span>
+</code></pre></div><h2 id=configuring-opentelemetry-manually>Configuring OpenTelemetry manually</h2><p>As always, users may still configure metrics and/or tracing support themselves,
+as desired. For example in case that they want only some of the Kubewarden
+workloads with telemetry, or more exotic configurations.</p><p>This would mean leaving the default values.yaml, and performing the following
+by hand:</p><ol><li>Instantiating their own <code>OpenTelemetryCollector</code>.</li><li>Making sure the OTLP collector can consume data from Kubewarden workloads. For example by using a sidecar, and adding the
+&ldquo;sidecar.opentelemetry.io/inject&rdquo;: &ldquo;true&rdquo; annotations to the kubewarden-controller and PolicyServers.</li><li>Configuring kubewarden-controller and PolicyServers binaries to enable metrics and tracing via their env vars.</li></ol><h2 id=see-you-around>See you around!</h2><p>As always, we are curious of what features you would like next and how you are
+enjoying Kubewarden. Reach out to us on <a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden">slack</a>
+or join our <a href="https://teamup.com/ks2bj74dvw132mhjtj?view=a&showProfileAndInfo=0&showSidepanel=1&disableSidepanel=1&showMenu=1&showAgendaHeader=1&showAgendaDetails=0&showYearViewHeader=1">monthly community meeting</a>
+to talk more about Kubewarden!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2023 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
