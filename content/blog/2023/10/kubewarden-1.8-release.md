@@ -40,8 +40,8 @@ exporters for the native Jaeger format. This change was
 prompted because Jaeger has support for OTLP. See the [announcement
 here](https://opentelemetry.io/blog/2023/jaeger-exporter-collector-migration).
 
-Hence we now take care of setting `exporters.otlp/jaeger` instead of
-`exporters.jaeger` the OpenTelemetryCollector CR we create. For the user, this
+Now the OpenTelemetryCollector resource created by the helm chart is configured
+to use  `exporters.otlp/jaeger` instead of `exporters.jaeger`. For the user, this
 means a change in the port of the endpoint, from `14250` (native Jaeger format)
 to `4317` (OTLP/jaeger).
 
