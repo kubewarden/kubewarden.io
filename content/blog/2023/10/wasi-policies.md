@@ -70,6 +70,6 @@ Using WASI policies has [several limitations](https://docs.kubewarden.io/writing
 Let us know what you think about this new policy type.
 We are especially interested to know what you're building with it.
 
-If you would like to write Kubarden policies using a programming language that we don't yet support,
+If you would like to write Kubewarden policies using a programming language that we don't yet support,
 please [reach out to us](https://kubernetes.slack.com/archives/kubewarden).
 We would be happy to look at implementing this feature with you.
