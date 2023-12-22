@@ -174,3 +174,19 @@ footer .project-icons a img {
     background: #fff;
   }
 }
+
+// Survey banner
+
+.survey-container {
+  background-color: var(--dark);
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+}
+
+.survey-content {
+  display: block;
+  color: var(--light);
+  font-size: 1.6rem;
+  width: 100%;
+}
