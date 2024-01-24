@@ -95,7 +95,8 @@ against attacks that delete or modify policy webhooks, preventing policies from 
 
 ## Audit Scanner changes
 
-Thanks to the community, the Audit Scanner can now be run with an in-memory store
+Thanks to the community contributions from Nuno Nelas and Bruno René Santos, the
+Audit Scanner can now be run with an in-memory store
 for policy reporting. By default, it keeps using Etcd and the PolicyReports CRDs.
 This paves the way to implementing more performant storage solutions for policy
 reporting, such as a relational database backend.
