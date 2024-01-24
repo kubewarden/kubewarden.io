@@ -114,6 +114,8 @@ can still obtain them using `kwctl inspect --show-signatures`. In addition,
 In addition to feature flags, bumps of dependencies, and policy versions, the
 kubewarden-defaults chart now can configure `securityContexts`
 for the default PolicyServer via the `--set securityContexts` value.
+Also, mutating policies shipped as part of kubewarden-defaults chart now target
+exclusively the lower type of resource (Pods).
 
 The Policy Reporter sub-chart is now configured to not show by default the
 "Logs" tab. You can configure it (and other related things) through the
