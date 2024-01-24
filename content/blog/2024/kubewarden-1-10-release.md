@@ -103,7 +103,7 @@ configuring it.
 
 When doing `kwctl inspect` we now hide signatures by default, for brevity. One
 can still obtain them using `kwctl inspect --show-signatures`. In addition,
-`kwctl inspect -o yaml` will produce sane YAML.
+`kwctl inspect -o yaml` now will produce correct YAML.
 
 ## General housekeeping
 
