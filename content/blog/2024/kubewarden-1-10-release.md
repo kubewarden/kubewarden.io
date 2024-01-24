@@ -80,10 +80,12 @@ Due to recent improvements in the official Go compiler, we have added
 context-aware capabilities, via WASI, to the Kubewarden Go SDK, so it is
 now possible to write context-aware Go WASI policies.
 
-For example, have a look at the
-[go-wasi-context-aware-test-policy](https://github.com/kubewarden/go-wasi-context-aware-test-policy).
+No divergence is needed when writing context-aware policies in WASI. Just use the Go SDK as usual,
+making use of its `capabilities` package (which exposes quering for kubernetes
+resources, OCI manifest digest, Sigstore signature verification, etc).
 
-See the WASI updated docs [here](TODO).
+As an example, have a look at the
+[go-wasi-context-aware-test-policy](https://github.com/kubewarden/go-wasi-context-aware-test-policy).
 
 ## Controller changes
 
