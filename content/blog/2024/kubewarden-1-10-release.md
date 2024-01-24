@@ -6,9 +6,10 @@ date: 2024-01-24
 ---
 
 We have the first release of 2024, Kubewarden 1.10.0! 🎉🥳
+
 And this one contains a nice bag of goodies, let's have a look!
 
-## Policy server has reduced memory usage and increased reliability
+## Reduced memory usage and increased reliability of Policy servers
 
 A nice graph is worth a thousand words!
 
@@ -84,13 +85,13 @@ For example, have a look at the
 
 See the WASI updated docs [here](TODO).
 
-## Controller
+## Controller changes
 
 The controller now reconciles divergences between `ClusterAdmissionPolicies`
 and `AdmissionPolicies` and their associated webhook objects. This helps mitigate
 against attacks that delete or modify policy webhooks, preventing policies from working correctly. RBAC rights already mitigate against these attacks.
 
-## Audit Scanner
+## Audit Scanner changes
 
 Thanks to the community, the Audit Scanner can now be run with an in-memory store
 for policy reporting. By default, it keeps using Etcd and the PolicyReports CRDs.
@@ -99,18 +100,13 @@ reporting, such as a relational database backend.
 See `--set auditScanner.store` in the kubewarden-controller chart for
 configuring it.
 
-## Kwctl
+## Kwctl changes
 
 When doing `kwctl inspect` we now hide signatures by default, for brevity. One
 can still obtain them using `kwctl inspect --show-signatures`. In addition,
 `kwctl inspect -o yaml` now will produce correct YAML.
 
-## General housekeeping
-
-As part of our ongoing efforts, we continuously refactor and expand the test coverage of the
-codebase. While not end-user actionable, the byproduct is more reliability.
-
-## Helm chart
+## Helm charts changes
 
 In addition to feature flags, bumps of dependencies, and policy versions, the
 kubewarden-defaults chart now can configure `securityContexts`
@@ -119,6 +115,12 @@ for the default PolicyServer via the `--set securityContexts` value.
 The Policy Reporter sub-chart is now configured to not show by default the
 "Logs" tab. You can configure it (and other related things) through the
 `policy-reporter` value of the kubewarden-controller chart.
+
+## General housekeeping
+
+Last but not least, as part of our ongoing efforts, we continuously refactor
+and expand the test coverage of the codebase. While not end-user actionable,
+the byproduct is more reliability.
 
 ## Stay tuned!
 
