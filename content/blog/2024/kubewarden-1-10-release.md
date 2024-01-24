@@ -12,7 +12,7 @@ And this one contains a nice bag of goodies, let's have a look!
 
 A nice graph is worth a thousand words!
 
-TODO add nice graph
+{{<figure src="/images/policy-server-optimization-1.10.png" alt="graph of the policy-server memory optimization"  >}}
 
 Note the slightly lower memory consumption, and unchanging consumption when
 scaling horizontally.
