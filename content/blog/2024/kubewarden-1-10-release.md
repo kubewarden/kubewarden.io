@@ -2,7 +2,7 @@
 title: Kubewarden 1.10 release
 authors:
   - Víctor Cuadrado
-date: 2024-1-24
+date: 2024-01-24
 ---
 
 We have the first release of 2024, Kubewarden 1.10.0! 🎉🥳
