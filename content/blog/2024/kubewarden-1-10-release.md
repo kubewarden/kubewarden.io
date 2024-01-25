@@ -54,11 +54,11 @@ policy-server.
 Before, there were long-running policy evaluators, ready to process policy requests.
 
 Now, policy evaluation mode happens on-demand: we receive a request, a fresh
-policy evaluator is created, used just for evaluation that request, and
+policy evaluator is created, used just for evaluating that request, and
 discarded.
 
 This is possible as we now leverage Wasmtime's pre-initialization, hence
-creation time of policy evaluators in greatly reduced.
+creation time of policy evaluators is greatly reduced.
 
 Using this on-demand approach to policy evaluators brings two main advantages:
 
