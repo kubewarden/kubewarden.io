@@ -41,7 +41,7 @@ threads available in the machine. This is achieved by only creating an instance
 of the policy evaluator per unique type of policy module.
 
 For example, if a user has the apparmor policy deployed 5 times (with different
-names, settings, etc), now only one instance of PolicyEvaluator will be
+names, settings, etc), now only one instance of policy evaluator will be
 allocated for all of those 5 deployments.
 
 In addition, we rely now on Wasmtime's pre-initialization of Wasm modules. This
