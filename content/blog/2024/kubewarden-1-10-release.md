@@ -25,7 +25,7 @@ containing 13 policies:
 - 5 of "pod-privileged"
 - 2 of "go-wasi-template" (a 20MB policy, WASI being experimental)
 - 1 Rego policy
-- 1 normal Rust policy
+- 1 ordinary Rust policy
 
 The policy-server was configured with one worker to start, progressing to eight. For each worker
 value, 10 samplings were taken.
