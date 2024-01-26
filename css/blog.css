@@ -47,6 +47,10 @@ main #blog-post-content {
     padding-top: 4em;
 }
 
+main #blog-post-content ul {
+    margin-bottom: 10px;
+}
+
 main pre {
     overflow-x: auto;
     white-space: pre;
