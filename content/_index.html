@@ -105,9 +105,10 @@ date: 2021-04-16T13:28:46+02:00
     <h2 class="text-center">Get Started</h2>
     <pre>
 <code>
+$ helm repo add jetstack https://charts.jetstack.io
+$ helm install --wait --namespace cert-manager --create-namespace --set installCRDs=true cert-manager jetstack/cert-manager
+
 $ helm repo add kubewarden https://charts.kubewarden.io
-$ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
-$ kubectl wait --for=condition=Available deployment --timeout=2m -n cert-manager --all
 $ helm install --create-namespace -n kubewarden kubewarden-crds kubewarden/kubewarden-crds
 $ helm install --wait -n kubewarden kubewarden-controller kubewarden/kubewarden-controller
 $ helm install --wait -n kubewarden kubewarden-defaults kubewarden/kubewarden-defaults
