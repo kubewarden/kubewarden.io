@@ -1,0 +1,74 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Retrieving OCI Image Manifests</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1711370240><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1" target=_blank class="btn no-bg">Policies</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Retrieving OCI Image Manifests</h1><p>Author: <author>José Guilherme Vanz</author></p><p>Published: <time>25 Mar 2024</time></p><div id=blog-post-content><p>Kubewarden&rsquo;s latest version 1.11.0 introduces a new feature enabling policies
+to retrieve OCI image manifests. This function, supported in both Rust and Go
+SDKs, enhances the policy enforcement capabilities within Kubernetes
+environments.</p><p>The update provides an additional layer of security inspection for
+containerized environments. Developers can now write policies using the updated
+SDKs to access OCI image manifests of container images. This access facilitates
+more detailed inspections and validations, aligning with security standards and
+organizational protocols.</p><p>A possible use case for this new capability is to allow policies to inspect the
+platform supported by the given container images. As well as inspecting annotations,
+user, environment variables and other information available inside the image
+manifests.</p><h3 id=getting-started>Getting Started</h3><p>To showcase this capability, let&rsquo;s image a policy which verifies container
+images annotations. This policy can have a function to check if the container
+image has the <a href=https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys>SPDX license
+annotation</a>.
+Consider this Rust validation code:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>has_license_specified</span>(image: <span style=color:#66d9ef>&amp;</span><span style=color:#66d9ef>str</span>) -&gt; Result<span style=color:#f92672>&lt;</span><span style=color:#66d9ef>bool</span><span style=color:#f92672>&gt;</span> {
+    <span style=color:#66d9ef>let</span> manifest <span style=color:#f92672>=</span> get_manifest(image)<span style=color:#f92672>?</span>;
+    <span style=color:#66d9ef>match</span> manifest {
+        OciManifestResponse::Image(image) <span style=color:#f92672>=&gt;</span> Ok(image.annotations().as_ref().map_or_else(
+            <span style=color:#f92672>||</span> <span style=color:#66d9ef>false</span>,
+            <span style=color:#f92672>|</span>a<span style=color:#f92672>|</span> a.contains_key(<span style=color:#e6db74>&#34;org.opencontainers.image.licenses&#34;</span>),
+        )),
+        OciManifestResponse::ImageIndex(index) <span style=color:#f92672>=&gt;</span> {
+            <span style=color:#75715e>// This is a simplification - we should also look into the
+</span><span style=color:#75715e></span>            <span style=color:#75715e>// referenced images
+</span><span style=color:#75715e></span>            Ok(index.annotations().as_ref().map_or_else(
+                <span style=color:#f92672>||</span> <span style=color:#66d9ef>false</span>,
+                <span style=color:#f92672>|</span>a<span style=color:#f92672>|</span> a.contains_key(<span style=color:#e6db74>&#34;org.opencontainers.image.licenses&#34;</span>),
+            ))
+        }
+    }
+}
+</code></pre></div><p>The Rust function <code>has_license_specified</code> checks whether a license is specified
+in the manifest of a given container image. It achieves this by retrieving the
+image&rsquo;s manifest and then examining its type, which can be either an image or
+an image index, as defined in the Open Container Initiative (OCI)
+specification. The function looks for a specific key
+(<code>org.opencontainers.image.licenses</code>) in the annotations of the manifest to
+determine if a license is present. It returns a boolean value indicating the
+presence or absence of this license or an error if it cannot fetch the
+manifest.</p><p>This code, with its new capabilities, enables policy authors to effectively
+verify container images. Specifically, they can reject requests for images that
+lack the required annotations. Policy authors can use external libraries to implement more
+sophisticated checks, such as utilizing available
+<a href=https://github.com/github/go-spdx>Go</a> or
+<a href=https://crates.io/crates/spdx>Rust</a> libraries to parse <a href=https://spdx.github.io/spdx-spec/v2.3/SPDX-license-expressions/>SPDX license
+expressions</a>.
+This capability significantly enhances the thoroughness of license validations
+in policies, ensuring a higher level of compliance and accuracy in managing
+container images. For example, it would be possible to write a policy that
+rejects all the container images that do not have a license specified, plus
+the ones that are distributed under a non OSI approved license.</p><p>Keep in mind that registries may return either the <a href=https://github.com/opencontainers/image-spec/blob/main/image-index.md>OCI Index
+manifest</a>
+or the <a href=https://github.com/opencontainers/image-spec/blob/main/manifest.md>OCI image
+manifest</a>,
+depending on the OCI URI sent. This variance is expected, and policies should
+be equipped to handle it. Policy authors now have the tools to create more
+comprehensive policies that inspect OCI images thoroughly before deployment in
+a cluster.</p><h2 id=conclusion>Conclusion</h2><p>To learn more about this and other host capabilities, refer to the <a href=https://docs.kubewarden.io/next/writing-policies/spec/host-capabilities/container-registry#oci-manifest>official
+documentation</a>.</p><p>We look forward to seeing how the community utilizes this new feature to
+develop innovative solutions. Share your ideas with us on our <a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden">Slack
+channel</a> or at
+our <a href="https://teamup.com/ks2bj74dvw132mhjtj?view=a&showProfileAndInfo=0&showSidepanel=1&disableSidepanel=1&showMenu=1&showAgendaHeader=1&showAgendaDetails=0&showYearViewHeader=1">monthly community
+meeting</a>.</p><p>Stay updated with further enhancements to Kubewarden for effective Kubernetes
+security management. Happy coding!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2024 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
