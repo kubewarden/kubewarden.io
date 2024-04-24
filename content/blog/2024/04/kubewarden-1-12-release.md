@@ -10,7 +10,7 @@ Today we're glad to announce the release of Kubewarden 1.12.
 This release focuses on optimizations and High-Availability, both oriented to
 production.
 
-## Optimizing Rego policies
+## Optimizing Gatekeeper policies
 
 On really big clusters (thousands of nodes), Gatekeeper policies that make use
 of context-aware data are markedly slower than those written in Go/Rust. This
@@ -45,9 +45,9 @@ in the cluster:
 
 - `spec.minAvailable` or `spec.maxUnavailable`: Configure the number of
   policy-server replicas available. The controller will create
-  PodDisruptionBudgets as needed for these settings.
-- `spec.affinity`: Affinity and anti-affinity rules of the policy-server Pods.
-- `spec.limits` and `spec.requests`: Set the resource limits and requests (cpu,
+  [PodDisruptionBudget](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/#pod-disruption-budgets) objects as needed for these settings.
+- `spec.affinity`: [Affinity and anti-affinity rules](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity) of the policy-server Pods.
+- `spec.limits` and `spec.requests`: Set the [resource limits and requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container) (cpu,
   memory, etc) of each container of the policy-server Pods.
 
 These new PolicyServer spec fields are now also available for the default
@@ -77,7 +77,7 @@ being:
   continue even on policy intialization errors. This provides users with a UX
   where they don't need to check policy-server error logs and each of the
   policies if some is failing (with misconfigured policy settings for example).
-  This is disabled by default, as it has security drawbacks. Users can set the
+  This feature is currently alpha as it needs more polishing. Because of that, this is disabled by default. Users can set the
   env var `KUBEWARDEN_CONTINUE_ON_ERRORS` for policy-server if they wish to
   enable this feature flag.
 - The `kubewarden-controller` chart now exposes a value for configuring the
