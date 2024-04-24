@@ -25,7 +25,7 @@ This is particularly noticeable on really big clusters (thousands of nodes), as
 Gatekeeper policies expect a serialized inventory of all Kubernetes objects
 they could access, under `data.inventory`.
 
-Gatekeeper policies in Kubewarden in addition have `spec.contextAwareResources`
+In addition, Gatekeeper policies in Kubewarden have `spec.contextAwareResources`
 which allows us to fine-tune the context-aware permissions per policy.
 Leveraging this feature allows us to provide greater cache granularity for each
 resource set shared between policies (e.g: "all Namespaces with a specific
@@ -39,11 +39,11 @@ spec](https://docs.kubewarden.io/next/reference/CRDs#policyserverspec) has
 additional fields to configure policy-server Deployment behavior in clusters:
 
 - `spec.minAvailable` or `spec.maxUnavailable`: Configure the number of
-  policy-server replicas available. The controller will create
+  policy-server replicas available. The controller creates
   [PodDisruptionBudget](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/#pod-disruption-budgets) objects as needed for these settings.
 - `spec.affinity`: [Affinity and anti-affinity rules](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity) of the policy-server Pods.
 - `spec.limits` and `spec.requests`: Set the [resource limits and requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container) (cpu,
-  memory, etc) of each container of the policy-server Pods.
+  memory, and other resources) of each container of the policy-server Pods.
 
 These new PolicyServer spec fields are now also available for the default
 PolicyServer installed via the `kubewarden-defaults` chart.
