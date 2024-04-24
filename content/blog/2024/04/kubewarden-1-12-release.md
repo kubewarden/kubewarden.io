@@ -21,15 +21,12 @@ The 1.12 release provides a further optimization for Gatekeeper policies that
 access Kubernetes resources. This optimization provides an extra 55%
 performance boost for these policies.
 
-This is particularly noticeable on really big clusters (thousands of nodes), as
-Gatekeeper policies expect a serialized inventory of all Kubernetes objects
-they could access, under `data.inventory`.
+The benefits of this optimization are particularly noticeable when a huge number
+of Kubernetes resources are accessed by a Gatekeeper policy.
 
-In addition, Gatekeeper policies in Kubewarden have `spec.contextAwareResources`
-which allows us to fine-tune the context-aware permissions per policy.
-Leveraging this feature allows us to provide greater cache granularity for each
-resource set shared between policies (e.g: "all Namespaces with a specific
-LabelSelector").
+For example, a policy that access Pod resources, will see a reduced evaluation time
+on big clusters where hundreds of Pod objects are defined.
+
 
 ## Increasing deployment reliability
 
