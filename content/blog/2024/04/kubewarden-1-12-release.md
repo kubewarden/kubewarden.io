@@ -65,7 +65,7 @@ being:
   verification failed: missing signatures" even if there were valid signatures.
   This is now solved.
 - Verifying policies from private registries with access credentials now works
-  in `kwctl` and `policy-server`. As usual, set your authenticatio data in a
+  in `kwctl` and `policy-server`. As usual, set your authentication data in a
   `~/docker/config.json` file for `kwctl`, and see [the
   docs](https://docs.kubewarden.io/howtos/policy-servers/private-registry) on
   creating the Secret for the PolicyServer.
