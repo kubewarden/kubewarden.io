@@ -172,6 +172,22 @@ pre {
   white-space: pre-wrap;
 }
 
+code {
+  // background: var(--dark);
+  // color: var(--light);
+  page-break-inside: avoid;
+  font-family: monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 1.6em;
+  max-width: 100%;
+  overflow: auto;
+  // padding: 0em 0.5em;
+  word-wrap: break-word;
+  border-radius: 3px;
+  white-space: pre-wrap;
+}
+
 /* elements */
 img, iframe, video {
   max-width: 100%;
