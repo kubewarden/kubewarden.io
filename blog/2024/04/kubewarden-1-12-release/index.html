@@ -1,0 +1,49 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Kubewarden 1.12 release</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1713967643><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1" target=_blank class="btn no-bg">Policies</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Kubewarden 1.12 release</h1><p>Author: <author>Víctor Cuadrado</author></p><p>Published: <time>24 Apr 2024</time></p><div id=blog-post-content><p>Today we&rsquo;re glad to announce the release of Kubewarden 1.12.</p><p>This release focuses on optimizations and high availability, both oriented to
+production.</p><h2 id=optimizing-gatekeeper-policies>Optimizing Gatekeeper policies</h2><p>The previous <a href=https://www.kubewarden.io/blog/2024/03/kubewarden-1-11-release/>1.11
+release</a>
+featured lots of optimizations for
+<a href=https://docs.kubewarden.io/next/reference/spec/context-aware-policies>context aware policies</a>.</p><p>The 1.12 release provides a further optimization for Gatekeeper policies that
+access Kubernetes resources. This optimization provides an extra 55%
+performance boost for these policies.</p><p>The benefits of this optimization are particularly noticeable when a huge number
+of Kubernetes resources are accessed by a Gatekeeper policy.</p><p>For example, a policy that access Pod resources, will see a reduced evaluation time
+on big clusters where hundreds of Pod objects are defined.</p><h2 id=increasing-deployment-reliability>Increasing deployment reliability</h2><p>Due to community requests for increasing deployment availability of
+Kubewarden, from 1.12 each <a href=https://docs.kubewarden.io/next/reference/CRDs#policyserverspec>PolicyServer
+spec</a> has
+additional fields to configure policy-server Deployment behavior in clusters:</p><ul><li><code>spec.minAvailable</code> or <code>spec.maxUnavailable</code>: Configure the number of
+policy-server replicas available. The controller creates
+<a href=https://kubernetes.io/docs/concepts/workloads/pods/disruptions/#pod-disruption-budgets>PodDisruptionBudget</a> objects as needed for these settings.</li><li><code>spec.affinity</code>: <a href=https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity>Affinity and anti-affinity rules</a> of the policy-server Pods.</li><li><code>spec.limits</code> and <code>spec.requests</code>: Set the <a href=https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container>resource limits and requests</a> (cpu,
+memory, and other resources) of each container of the policy-server Pods.</li></ul><p>These new PolicyServer spec fields are now also available for the default
+PolicyServer installed via the <code>kubewarden-defaults</code> chart.</p><p>Head over to <a href=https://docs.kubewarden.io/howtos/policy-servers/production-deployments>the docs
+page</a>
+for more information on the PolicyServer spec, and have a look at the new
+fields in the kubewarden-defaults chart.</p><h2 id=bug-fixes-and-small-features>Bug fixes and small features</h2><p>Several community-prompted bugfixes and features were tackled. The most notable
+being:</p><ul><li>Sigstore signature verification in <code>kwctl</code> and <code>policy-server</code> works again as
+usual. Previously, the Sigstore Rust crate had a regression introduced by the
+release of TUF spec v1.0.32, and Kubewarden failed-closed and reported &ldquo;Image
+verification failed: missing signatures&rdquo; even if there were valid signatures.
+This is now fixed.</li><li>Verifying policies from private registries with access credentials now works
+in <code>kwctl</code> and <code>policy-server</code>. As usual, set your authentication data in a
+<code>~/docker/config.json</code> file for <code>kwctl</code>, and see <a href=https://docs.kubewarden.io/howtos/policy-servers/private-registry>the
+docs</a> on
+creating the Secret for the PolicyServer.</li><li><code>policy-server</code> binaries now have a new feature flag that allows them to
+continue even on policy intialization errors. This provides users with a UX
+where they don&rsquo;t need to check policy-server error logs and each of the
+policies if some are failing (with misconfigured policy settings for example).
+This feature is currently alpha as it needs more polishing. Because of that, this is disabled by default. Users can set the
+env var <code>KUBEWARDEN_CONTINUE_ON_ERRORS</code> for policy-server if they wish to
+enable this feature flag.</li><li>The <code>kubewarden-controller</code> chart now exposes a value for configuring the
+controller log level.</li></ul><h2 id=documentation-improvements>Documentation improvements</h2><p>The architecture page now has an improved explanation and a more accurate graphic.
+Have a look <a href=https://docs.kubewarden.io/explanations/architecture>here</a>.</p><h2 id=stay-tuned>Stay tuned!</h2><p>As always, we are curious about what features you would like next and how you are
+enjoying Kubewarden. Reach out on <a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden">Slack</a>
+or join our <a href="https://teamup.com/ks2bj74dvw132mhjtj?view=a&showProfileAndInfo=0&showSidepanel=1&disableSidepanel=1&showMenu=1&showAgendaHeader=1&showAgendaDetails=0&showYearViewHeader=1">monthly community meeting</a>
+to talk all things Kubewarden.</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2024 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-56382716-13','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></body></html>
