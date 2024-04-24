@@ -12,28 +12,24 @@ production.
 
 ## Optimizing Gatekeeper policies
 
-On really big clusters (thousands of nodes), Gatekeeper policies that make use
-of context-aware data are markedly slower than those written in Go/Rust. This
-is because Gatekeeper policies expect a serialized inventory of all Kubernetes
-objects they could access under `data.inventory`, for which the policy-server
-must spent significant CPU cycles.
+The previous [1.11
+release](https://www.kubewarden.io/blog/2024/03/kubewarden-1-11-release/)
+featured lots of optimizations for
+[context aware policies](https://docs.kubewarden.io/next/reference/spec/context-aware-policies).
 
-Gatekeeper policies in Kubewarden in addition have
-`spec.contextAwareResources`, a Kubewarden feature that allows us to fine-tune
-the context-aware permissions per policy, and provide more security.
+The 1.12 release provides a further optimization for Gatekeeper policies that
+access Kubernetes resources. This optimization provides an extra 55%
+performance boost for these policies.
 
-Following requests from the community, for Kubewarden 1.12 we have elected to
-cache this `data.inventory` of Gatekeeper policies for performance. The cache,
-thanks to `spec.contextAwareResources`, has an increased granularity compared
-to vanilla Gatekeeper.
+This is particularly noticeable on really big clusters (thousands of nodes), as
+Gatekeeper policies expect a serialized inventory of all Kubernetes objects
+they could access, under `data.inventory`.
 
-The cache works with sets of resources as defined in the policy rules and
-`spec.contextAwareResources`. Hence policies that access the same set of
-resources (e.g: all Namespaces with a specific LabelSelector) will share the
-same inventory. That cache set is invalidated whenever a resource of that set
-changes.
-
-Stay tuned for more performance improvements on next releases!
+Gatekeeper policies in Kubewarden in addition have `spec.contextAwareResources`
+which allows us to fine-tune the context-aware permissions per policy.
+Leveraging this feature allows us to provide greater cache granularity for each
+resource set shared between policies (e.g: "all Namespaces with a specific
+LabelSelector").
 
 ## Increasing deployment reliability
 
