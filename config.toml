@@ -7,7 +7,7 @@ enableRobotsTXT = true
 pygmentsCodeFences = true
 pygmentsCodeFencesGuessSyntax = true
 enableGitInfo = true
-googleAnalytics = 'UA-56382716-13'
+googleAnalytics = 'G-PSW07XK7TM'
 
 [blackfriday]
 fractions = false
