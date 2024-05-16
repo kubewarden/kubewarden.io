@@ -1,0 +1,5 @@
+# This configuration file exists to disable Google Analytics tracking in the
+# Netlify preview environment. It is not used in production.
+[privacy]
+  [privacy.googleAnalytics]
+    disable = true

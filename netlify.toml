@@ -1,0 +1,7 @@
+# Configuration file to customize the build process of the website when
+# previewing it on Netlify.
+[build]
+publish = "public"
+command = "hugo --config config.toml,config-netlify.toml"
+
+
