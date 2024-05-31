@@ -27,7 +27,7 @@ params = ["categories", "tags"]
   github = "https://github.com/kubewarden"
 
 [outputs]
-home = ["HTML", "RSS", "Algolia"]
+home = ["HTML", "RSS"]
 
 [privacy]
   [privacy.googleAnalytics]
