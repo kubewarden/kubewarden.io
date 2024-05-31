@@ -1,3 +1,5 @@
+[![Stable](https://img.shields.io/badge/status-stable-brightgreen?style=for-the-badge)](https://github.com/kubewarden/community/blob/main/REPOSITORIES.md#stable)
+
 # Kubewarden.io website source
 
 This is the source repository for the https://www.kubewarden.io website.
