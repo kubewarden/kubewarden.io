@@ -1,0 +1,11 @@
+# Following policies are designed to work on GitHub action and therefor needs the two following 
+# environment variables
+# * GITHUB_TOKEN
+# * GITHUB_ACTOR
+#
+# Once available you can run the command `updatecli compose diff --experimental` to see what would change.
+
+policies:
+  - name: Kubewarden specific policies
+    config: 
+      - updatecli/updatecli.d/

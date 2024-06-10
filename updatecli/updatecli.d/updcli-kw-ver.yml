@@ -1,0 +1,59 @@
+name: 'docs: update Kubewarden version on frontpage of kubewarden.io'
+pipelineid: kubewarden-controller/latest
+
+actions:
+  default:
+    title: 'updatecli: docs: update Kubewarden version to {{ source "kwc-version" }} on front page of kubewarden.io'
+    kind: github/pullrequest
+    scmid: default
+    spec:
+      automerge: false
+      mergemethod: squash
+      labels:
+        - chore
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: "UPDATECLI_GITHUB_OWNER"
+      email: kubewarden@suse.de
+      owner: "UPDATECLI_GITHUB_OWNER"
+      author: "Kubewarden bot"
+      repository: kubewarden.io
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
+      branch: main
+      commitmessage:
+        type: "chore"
+        title: 'docs: update Kubewarden version to {{ source "kwc-version" }} on kubewarden.io front page'
+
+sources:
+  kwc-version:
+    name: Get the latest Kubewarden controller version
+    kind: githubrelease
+    spec:
+      owner: kubewarden
+      repository: kubewarden-controller
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
+      versionfilter:
+        kind: semver
+        pattern: ">0.1"
+    transformers:
+      - trimprefix: "v"
+      - trimsuffix: ".0"
+
+
+targets:
+  kwc-update-vno:
+    name: 'docs: update Kubewarden with version {{ source "kwc-version" }}'
+    kind: file
+    sourceid: kwc-version
+    spec:
+      files:
+        - content/_index.html
+      matchpattern: '<a href="#get-started">(.*)</a>'
+      replacepattern: '<a href="#get-started">{{ source "kwc-version" }}</a>'
+    scmid: default
+
