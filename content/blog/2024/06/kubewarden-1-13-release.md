@@ -79,7 +79,7 @@ We plan more work in this area during future releases.
 
 Finally, by addressing the technical debt we have also been able to improve the code coverage rate of the Kubewarden Controller's codebase.
 
-## A new exiting policy coming soon
+## A new exciting policy coming soon
 
 During the 1.13 development cycle, we have been working on a new policy that will be released soon. This policy is worth a dedicated blog post,
 so stay tuned!
