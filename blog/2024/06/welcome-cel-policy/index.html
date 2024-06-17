@@ -1,0 +1,103 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Introducing the CEL policy</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1718618932><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1" target=_blank class="btn no-bg">Policies</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Introducing the CEL policy</h1><p>Author: <author>Victor Cuadrado Juan</author></p><p>Published: <time>17 Jun 2024</time></p><div id=blog-post-content><p>We are pleased to announce a new policy by the Kubewarden team: <strong><a href=https://github.com/kubewarden/cel-policy>cel-policy</a></strong>.</p><p>This new policy uses the <a href=https://cel.dev>Common Expression Language (CEL)</a>.
+For those new to CEL, it is a general-purpose expression language designed to
+be fast, portable, and safe to execute. CEL as a language is memory-safe,
+side-effect free, terminating (as in &ldquo;programs cannot loop forever&rdquo;), and strong &
+dynamically typed.</p><p>CEL is a perfect candidate for extending the Kubernetes API, as CEL expressions
+can be easily inlined into CRD schemas, and compiled and type-checked
+&ldquo;ahead-of-time&rdquo; (when CRDs are created and updated). With Kubernetes 1.30, CEL features such as
+<a href=https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy>ValidatingAdmissionPolicies</a>
+and other validation rules are now marked as stable.</p><h2 id=cel-policy-whats-inside>cel-policy: What&rsquo;s inside</h2><p>For including CEL functionality, Kubernetes API server uses the upstream
+<a href=https://pkg.go.dev/github.com/google/cel-go>cel-go</a>. In addition, Kubernetes
+also provides different CEL libraries that live in <code>apiextensions-apiserver</code>
+and enrich the CEL experience. These range from standard functions and macros,
+to supplemental functions for strings, lists, regex, URls, etcetera.</p><p>In Kubewarden, policies are Wasm modules. And in particular, we have <a href=https://www.kubewarden.io/blog/2023/10/wasi-policies/>WASI
+policies</a>. Hence with all the
+pieces falling in place, it is only logical that we compile both the usptream CEL Go interpreter
+Go and the additional Kubernetes CEL libraries, and ship it as a Go WASI
+policy: cel-policy. You can find it as always in
+<a href=https://artifacthub.io/packages/kubewarden/cel-policy/cel-policy>artifacthub.io</a>.</p><h2 id=a-cel-superset-backwards-compatible>A CEL superset, backwards-compatible</h2><p>The new <code>cel-policy</code> provides a new DSL approach to Kubewarden, and thanks to
+reusing the exact same codebase, has backwards-compatibility for CEL Kubernetes
+code such as the one used in <a href=https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy>ValidatingAdmissionPolicies</a>
+and <a href=https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/#matching-requests-matchconditions>matchConditions</a>.</p><p>But this is not all. In addition, <code>cel-policy</code> bundles a <strong>Kubewarden CEL extension library</strong> that exposes
+Kubewarden&rsquo;s <a href="https://github.com/kubewarden/cel-policy?tab=readme-ov-file#host-capabilities">host capabilities as native
+CEL</a>. This includes:</p><ul><li>Sigstore verification</li><li>OCI interaction</li><li>Cryptographic functions</li><li>Network operations</li><li>Access to Kubernetes resources</li></ul><h2 id=what-does-this-mean-for-me>What does this mean for me?</h2><p>As a Kubewarden policy user, you now have a new DSL that is backwards
+compatible with CEL Kubernetes code. This policy doesn&rsquo;t need to be compiled,
+and can be used with different CEL code by instantiating it with different
+<code>spec.settings</code>.</p><p>And since it is a Kubewarden policy, we get all the Kubewarden features:</p><ul><li>Information about resources already in-cluster via Audit Scanner, and not
+only about CREATE/UPDATE/DELETE requests.</li><li>Deployed as (Cluster)AdmissionPolicy, with PolicyServer segregations.</li><li>Benefits from Kubewarden&rsquo;s tracing and telemetry on policies.</li><li>Can be developed and tested out-of-cluster thanks to kwctl.</li><li>And more.</li></ul><p>If you would like to see examples of Kubewarden-only functionality with the
+<code>cel-policy</code>, have a <a href=https://docs.kubewarden.io/tutorials/writing-policies/CEL/intro-cel>look at our docs</a>.</p><h2 id=reusing-a-validatingadmissionpolicy>Reusing a ValidatingAdmissionPolicy</h2><p>An example is worth a thousand self-written YAML lines. Let&rsquo;s reuse the following
+ValidatingAdmissionPolicy that checks for the amount of replicas in a
+Deployment:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>admissionregistration.k8s.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ValidatingAdmissionPolicy</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#e6db74>&#34;replicalimit-policy.example.com&#34;</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>failurePolicy</span>: <span style=color:#ae81ff>Fail</span>
+  <span style=color:#f92672>matchConstraints</span>: <span style=color:#75715e># (1)</span>
+    <span style=color:#f92672>resourceRules</span>:
+      - <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;apps&#34;</span>]
+        <span style=color:#f92672>apiVersions</span>: [<span style=color:#e6db74>&#34;v1&#34;</span>]
+        <span style=color:#f92672>operations</span>: [<span style=color:#e6db74>&#34;CREATE&#34;</span>, <span style=color:#e6db74>&#34;UPDATE&#34;</span>]
+        <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;deployments&#34;</span>]
+  <span style=color:#f92672>variables</span>: <span style=color:#75715e># (2)</span>
+    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>maxreplicas</span>
+      <span style=color:#f92672>expression</span>: <span style=color:#ae81ff>int(5)</span>
+  <span style=color:#f92672>validations</span>: <span style=color:#75715e># (3)</span>
+    - <span style=color:#f92672>expression</span>: <span style=color:#e6db74>&#34;object.spec.replicas &lt;= variables.maxreplicas&#34;</span>
+      <span style=color:#f92672>messageExpression</span>: <span style=color:#e6db74>&#34;&#39;the number of replicast must be less than or equal to &#39; + string(variables.maxreplicas)&#34;</span>
+---
+<span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>admissionregistration.k8s.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ValidatingAdmissionPolicyBinding</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#e6db74>&#34;replicalimit-binding-test.example.com&#34;</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>policyName</span>: <span style=color:#e6db74>&#34;replicalimit-policy.example.com&#34;</span>
+  <span style=color:#f92672>validationActions</span>: [<span style=color:#ae81ff>Deny]</span>
+  <span style=color:#f92672>matchResources</span>:
+    <span style=color:#f92672>namespaceSelector</span>: <span style=color:#75715e># (4)</span>
+      <span style=color:#f92672>matchLabels</span>:
+        <span style=color:#f92672>environment</span>: <span style=color:#ae81ff>test</span>
+</code></pre></div><p>Let&rsquo;s write an equivalent Kubewarden policy. You can notice that <code>rules</code>
+(1), <code>settings.variables</code> (2), <code>settings.validations</code> (3), and
+<code>namespaceSelector</code> (4) are directly lifted and copy-pasted from the VAP
+counterpart:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>policies.kubewarden.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterAdmissionPolicy</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>annotations</span>:
+    <span style=color:#f92672>io.kubewarden.policy.category</span>: <span style=color:#ae81ff>Resource validation</span>
+    <span style=color:#f92672>io.kubewarden.policy.severity</span>: <span style=color:#ae81ff>low</span>
+  <span style=color:#f92672>name</span>: <span style=color:#e6db74>&#34;cel-policy-replica-example&#34;</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>module</span>: <span style=color:#ae81ff>registry://ghcr.io/kubewarden/policies/cel-policy:v1.0.0</span>
+  <span style=color:#f92672>failurePolicy</span>: <span style=color:#ae81ff>Fail</span>
+  <span style=color:#f92672>mode</span>: <span style=color:#ae81ff>protect</span>
+  <span style=color:#f92672>rules</span>: <span style=color:#75715e># (1)</span>
+    - <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;apps&#34;</span>]
+      <span style=color:#f92672>apiVersions</span>: [<span style=color:#e6db74>&#34;v1&#34;</span>]
+      <span style=color:#f92672>operations</span>: [<span style=color:#e6db74>&#34;CREATE&#34;</span>, <span style=color:#e6db74>&#34;UPDATE&#34;</span>]
+      <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;deployments&#34;</span>]
+  <span style=color:#f92672>settings</span>:
+    <span style=color:#f92672>variables</span>: <span style=color:#75715e># (2)</span>
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>maxreplicas</span>
+        <span style=color:#f92672>expression</span>: <span style=color:#ae81ff>int(5)</span>
+    <span style=color:#f92672>validations</span>: <span style=color:#75715e># (3)</span>
+      - <span style=color:#f92672>expression</span>: <span style=color:#e6db74>&#34;object.spec.replicas &lt;= variables.maxreplicas&#34;</span>
+        <span style=color:#f92672>messageExpression</span>: <span style=color:#e6db74>&#34;&#39;the number of replicast must be less than or equal to &#39; + string(variables.maxreplicas)&#34;</span>
+  <span style=color:#f92672>backgroundAudit</span>: <span style=color:#66d9ef>true</span>
+  <span style=color:#f92672>namespaceSelector</span>: <span style=color:#75715e># (4)</span>
+    <span style=color:#f92672>matchLabels</span>:
+      <span style=color:#f92672>environment</span>: <span style=color:#ae81ff>test</span>
+</code></pre></div><p>To see a full-featured comparison, <a href=https://docs.kubewarden.io/tutorials/writing-policies/CEL/reusing-vap>head to our docs</a>.</p><h2 id=lets-stay-in-touch>Let&rsquo;s stay in touch!</h2><p>We hope you are as excited as we are about this new policy!</p><p>As always, we are curious about what features you would like next and how you are
+enjoying Kubewarden. Reach out on <a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden">Slack</a>
+or join our <a href="https://teamup.com/ks2bj74dvw132mhjtj?view=a&showProfileAndInfo=0&showSidepanel=1&disableSidepanel=1&showMenu=1&showAgendaHeader=1&showAgendaDetails=0&showYearViewHeader=1">monthly community meeting</a>
+to talk all things Kubewarden.</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2024 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script async src="https://www.googletagmanager.com/gtag/js?id=G-PSW07XK7TM"></script><script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-PSW07XK7TM',{anonymize_ip:!0})}</script></body></html>
