@@ -2,10 +2,10 @@
 title: Introducing the CEL policy
 authors:
   - Victor Cuadrado Juan
-date: 2024-06-14
+date: 2024-06-17
 ---
 
-We are pleased to announce a new policy by the Kubewarden team: **cel-policy**.
+We are pleased to announce a new policy by the Kubewarden team: **[cel-policy](https://github.com/kubewarden/cel-policy)**.
 
 This new policy uses the [Common Expression Language (CEL)](https://cel.dev).
 For those new to CEL, it is a general-purpose expression language designed to
@@ -32,9 +32,7 @@ policies](https://github.com/kubewarden/docs/pull/414). Hence with all the
 pieces falling in place, it is only logical that we compile both the usptream CEL Go interpreter
 Go and the additional Kubernetes CEL libraries, and ship it as a Go WASI
 policy: cel-policy. You can find it as always in
-[artifacthub.io](https://artifacthub.io/packages/kubewarden/cel-policy/cel-policy):
-
-TODO artifacthub widget
+[artifacthub.io](https://artifacthub.io/packages/kubewarden/cel-policy/cel-policy).
 
 ## A CEL superset, backwards-compatible
 
