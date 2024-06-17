@@ -28,7 +28,7 @@ and enrich the CEL experience. These range from standard functions and macros,
 to supplemental functions for strings, lists, regex, URls, etcetera.
 
 In Kubewarden, policies are Wasm modules. And in particular, we have [WASI
-policies](https://github.com/kubewarden/docs/pull/414). Hence with all the
+policies](https://www.kubewarden.io/blog/2023/10/wasi-policies/). Hence with all the
 pieces falling in place, it is only logical that we compile both the usptream CEL Go interpreter
 Go and the additional Kubernetes CEL libraries, and ship it as a Go WASI
 policy: cel-policy. You can find it as always in
