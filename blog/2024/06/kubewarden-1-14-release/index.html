@@ -1,0 +1,73 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Kubewarden 1.14 release</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1719326116><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1" target=_blank class="btn no-bg">Policies</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Kubewarden 1.14 release</h1><p>Author: <author>Jose Guilherme Vanz</author></p><p>Published: <time>25 Jun 2024</time></p><div id=blog-post-content><h1 id=kubewarden-v1140-release>Kubewarden v1.14.0 release</h1><p>We are thrilled to announce the release of Kubewarden v1.14.0! This version
+comes packed with new capabilities, enhancements, and fixes that make
+Kubewarden even more robust and user-friendly.</p><h2 id=new-host-capability-for-container-image-configuration>New Host Capability for Container Image Configuration</h2><p>One of the significant updates in this release is the introduction of a new
+host capability that allows policies to fetch the container image
+configuration. This update stems from a <a href=https://github.com/kubewarden/user-group-psp-policy/issues/75>user
+request</a> to
+enhance the <code>user-group-psp-policy</code> policy by enabling it to check the user
+defined to run the container in the image configuration. Previously, this
+information was not accessible through the available host capabilities, as it
+was not included in the image manifest. Thanks to the functionality provided by
+the <code>oci-distribution</code> crate, which already has a method to fetch this
+information, we were able to extend our policy evaluator and SDKs to expose
+this capability.</p><h2 id=new-cel-policy-on-artifact-hub>New CEL Policy on Artifact Hub</h2><p>Recently we&rsquo;ve released our new meta-policy policy that allows to
+run <a href=https://cel.dev/>CEL</a> expressions against
+Kubernetes resources. It&rsquo;s now available on <a href=https://artifacthub.io>Artifact
+Hub</a>. For more insights into this policy and its
+applications, refer to our recent <a href=https://www.kubewarden.io/blog/2024/06/welcome-cel-policy/>blog
+post</a>.</p><h2 id=introducing-kwctl-scaffold-vap-command>Introducing &ldquo;kwctl scaffold vap&rdquo; Command</h2><p>With Kubernetes v1.26, the
+<a href=https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/>ValidatingAdmissionPolicy</a>
+(VAP) was introduced, providing a way to write custom admission policies using
+the <a href=https://cel.dev/>Common Expression Language (CEL)</a>, extended with
+Kubernetes-specific functionalities. This feature reached stability in
+Kubernetes v1.30.</p><p>Kubewarden now offers a CEL policy capable of running Kubernetes VAP policies
+without any modifications. The new <code>kwctl scaffold vap</code> command simplifies the
+migration of VAP policies to Kubewarden, enabling users to leverage the
+benefits of running these policies within the Kubewarden framework. For a
+detailed guide on how to use this new feature, check out
+<a href=https://docs.kubewarden.io/howtos/vap-migration>this section of our documentation</a>.</p><h2 id=policy-fixes>Policy Fixes</h2><p>In this release, we have addressed two issues in our existing policies:</p><ol><li><p><strong><a href=https://artifacthub.io/packages/kubewarden/environment-variable-policy/environment-variable-policy>Environment Variable
+Policy</a></strong>:
+Previously, variables with values were not blocked if only the name was
+specified in the settings. We have updated the validation code to ensure
+that the policy will validate the names even when the user does not define
+the envvar value in the rule. The problem was describe in depth by <a href=https://github.com/kubewarden/environment-variable-policy/issues/13>this issue</a>.</p></li><li><p><strong><a href=https://artifacthub.io/packages/kubewarden/container-resources/container-resources>Container Resources
+Policy</a></strong>:
+Users faced issues when trying to create policies with only CPU settings
+empty memory values. The policy settings were sent with empty values,
+causing validation errors. We have fixed this by allowing a single resource
+setting to be empty, resolving the issue without breaking policy usage. The problem was describe in depth by <a href=https://github.com/kubewarden/container-resources-policy/issues/33>this issue</a>.</p></li></ol><h2 id=best-practices-domain-qualified-finalizers>Best Practices: Domain-Qualified Finalizers</h2><p>The Kubewarden controller now follows best practices by using domain-qualified
+finalizers. Users must be aware that if they downgrade a Kubewarden
+installation, the old controller will not be able to identify the new
+finalizer. Leaving the cluster in a state where the resource could not be
+removed and therefore requiring manual intervention.</p><p>NOTE: Downgrade procedures are not supported by Kubewarden project. See the
+<a href=https://docs.kubewarden.io/reference/upgrade-path#downgrades>documentation</a>
+to learn more about that.</p><h2 id=kcd-italy-cel-for-cluster-security>KCD Italy: CEL for Cluster Security</h2><p>One of the Kubewarden maintainers, <a href=https://github.com/flavio/>Flavio
+Castelli</a>, delivered an insightful talk at <a href=https://community.cncf.io/events/details/cncf-kcd-italy-presents-kcd-italy-2024/>KCD
+Italy</a>
+on &ldquo;How to leverage and extend CEL for your cluster security.&rdquo; He explored the
+capabilities and trade-offs of the CEL-based admission controller introduced in
+Kubernetes 1.28 and discussed how to use CEL with other dynamic admission
+controllers. This talk highlighted the practical applications and advantages of
+using CEL for cluster security.</p><p>While the talk has been delivered in Italian, the slides are written in English and can be found <a href=https://flavio.castelli.me/2024/06/25/kcd-italy---cel-kubernetes-validatingadmissionpolicy-and-kubewarden/>here</a>.</p><h2 id=known-bugs-and-future-plans>Known Bugs and Future Plans</h2><p>During the release process, we identified a bug related to the policy server
+certificate rotation. While the Root CA is set to expire in 10 years, each
+policy-server cert secret has a one-year expiry. But the controller is
+currently unable to renew them automatically. In this release, we will ensure
+that policy-server secrets are created with a 10-year expiry. And in future
+releases we plan to properly implement an automated renewal process. For now,
+users can manually delete the expired cert secret (<code>policy-server-default</code>) and
+trigger the controller reconciliation by adding/removing/updating a policy or by adjusting the number of replicas of a <code>PolicyServer</code>.</p><h2 id=lets-stay-in-touch>Let&rsquo;s stay in touch!</h2><p>As always, we are curious about what features you would like next and how you
+are enjoying Kubewarden. Reach out on
+<a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden">Slack</a> or join
+our <a href="https://teamup.com/ks2bj74dvw132mhjtj?view=a&showProfileAndInfo=0&showSidepanel=1&disableSidepanel=1&showMenu=1&showAgendaHeader=1&showAgendaDetails=0&showYearViewHeader=1">monthly community
+meeting</a> to
+talk all things Kubewarden.</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2024 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script async src="https://www.googletagmanager.com/gtag/js?id=G-PSW07XK7TM"></script><script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-PSW07XK7TM',{anonymize_ip:!0})}</script></body></html>
