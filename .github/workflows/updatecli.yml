@@ -5,9 +5,7 @@ on:
   workflow_dispatch:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron: '15 */2 * * *'
-  repository_dispatch:
-    types: [kubewarden-controller-release]
+    - cron: '15 3 * * *'
 
 permissions:
   contents: write
@@ -20,19 +18,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      #   cache: yarn
-
-      #  https://github.com/actions/setup-node/issues/490
-      - name: Repair NPM  # Update to latest npm and yarn
-        run: "npm install -g npm yarn"
-
-      - name: Install Dependencies
-        run: "yarn install --frozen-lockfile"
 
       - name: Install Updatecli Binary
         uses: updatecli/updatecli-action@v2
