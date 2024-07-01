@@ -16,9 +16,9 @@ scms:
   default:
     kind: github
     spec:
-      user: "UPDATECLI_GITHUB_OWNER"
+      user: "GITHUB_OWNER"
       email: kubewarden@suse.de
-      owner: "UPDATECLI_GITHUB_OWNER"
+      owner: "GITHUB_OWNER"
       author: "Kubewarden bot"
       repository: kubewarden.io
       token: '{{ requiredEnv "GITHUB_TOKEN" }}'
