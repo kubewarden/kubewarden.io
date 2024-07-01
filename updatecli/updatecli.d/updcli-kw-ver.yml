@@ -10,7 +10,8 @@ actions:
       automerge: false
       mergemethod: squash
       labels:
-        - chore
+        - "kind/chore"
+        - "area/documentation"
 
 scms:
   default:
