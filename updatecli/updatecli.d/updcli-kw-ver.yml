@@ -16,9 +16,9 @@ scms:
   default:
     kind: github
     spec:
-      user: '{{ requiredEnv "GITHUB_OWNER"}}'
+      user: "kubewarden"
       email: kubewarden@suse.de
-      owner: '{{ requiredEnv "GITHUB_OWNER"}}'
+      owner: "kubewarden"
       repository: kubewarden.io
       token: '{{ requiredEnv "GITHUB_TOKEN" }}'
       username: '{{ requiredEnv "GITHUB_ACTOR" }}'
