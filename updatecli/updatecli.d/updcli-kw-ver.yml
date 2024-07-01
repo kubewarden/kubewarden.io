@@ -21,7 +21,7 @@ scms:
       owner: "UPDATECLI_GITHUB_OWNER"
       author: "Kubewarden bot"
       repository: kubewarden.io
-      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
       username: '{{ requiredEnv "GITHUB_ACTOR" }}'
       branch: main
       commitmessage:
