@@ -1,0 +1,72 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Kubewarden 1.15 release</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1722352111><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1" target=_blank class="btn no-bg">Policies</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Kubewarden 1.15 release</h1><p>Author: <author>Jose Guilherme Vanz</author></p><p>Published: <time>30 Jul 2024</time></p><div id=blog-post-content><h1 id=kubewarden-v1150-release>Kubewarden v1.15.0 release</h1><p>We are thrilled to announce the release of Kubewarden v1.15.0! This version
+comes packed with CEL policy updates, controller enhancements, and fixes that
+make Kubewarden even more robust and user-friendly.</p><h2 id=enhanced-policyserver-crd-with-tolerations>Enhanced PolicyServer CRD with Tolerations</h2><p>One of the standout features of Kubewarden v1.15 is the extension of the
+<code>PolicyServer</code> Custom Resource Definition (CRD) to include a list of
+<a href=https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/><code>Toleration</code> objects</a>
+to be used in the deployment created for the Policy Server. This
+enhancement allows users to specify tolerations directly within the
+<code>PolicyServer</code> CRD, simplifying the management of taints and tolerations across
+your Kubernetes cluster. By integrating this directly into the CRD, Kubewarden
+ensures a more streamlined and consistent approach to handling node
+tolerations, making it easier to deploy policies in diverse and dynamic
+environments.</p><h2 id=centralized-management-of-tolerations-affinity-and-anti-affinity>Centralized Management of Tolerations, Affinity, and Anti-Affinity</h2><p>In line with making the deployment process more efficient, Kubewarden v1.15
+introduces a central place where tolerations, affinity, and anti-affinity rules
+are specified and enforced across all components of the stack (controller deployment,
+audit scanner cronjob and default Policy Server). This centralized management
+approach not only simplifies the configuration process but also ensures
+consistency and reduces the chances of configuration drift. By defining these
+rules once and applying them universally, users can achieve a more reliable and
+predictable policy enforcement setup.</p><blockquote><p>⚠️ <strong>Warning</strong> ⚠️
+The affinity configuration previously present in the default policy server values
+has been removed. Then, if you were using it, you need to migrate your configuration</p></blockquote><h2 id=technical-debt-reduction-in-kubewarden-controller>Technical Debt Reduction in Kubewarden Controller</h2><p>For v1.15, significant efforts were made to reduce technical debt in the
+Kubewarden controller, ensuring better performance, easier maintenance, and a
+more robust foundation. Key changes include:</p><ul><li><strong>Updated Golang Linter</strong>: The stricter linter catches potential issues
+early, ensuring higher code quality.</li><li><strong>Removed &ndash;default-policy-server CLI Flag</strong>: The default policy server name
+is now always <code>default</code>, simplifying configuration.</li><li><strong>Updated to Kubebuilder 4.0.0</strong>: The controller code now uses Kubebuilder
+4.0.0.</li><li><strong>Refactored Reconciler Code</strong>: The code is split into multiple
+subreconcilers following the Subreconciler pattern, enhancing manageability
+and modularity.</li><li><strong>File/Package Renaming</strong>: Files and packages have been renamed for better
+readability and navigation.</li></ul><p>These changes improve functionality and set the stage for more streamlined
+development and maintenance, reflecting a commitment to maintaining a
+high-quality codebase.</p><h2 id=performance-improvements>Performance improvements</h2><p>During the controller refactoring, we removed unnecessary Kubernetes clients,
+including one that wasn&rsquo;t using a cache. With this client now eliminated, we&rsquo;ve
+reduced the load on the API server.</p><h2 id=policy-grouping-code-implementation>Policy Grouping Code Implementation</h2><p>The v1.15 release marks the beginning of implementing <a href=https://github.com/kubewarden/rfc/blob/main/rfc/0020-policy-group.md>RFC 0020: Policy
+Group</a>,
+starting with changes to the policy server. This feature allows users to create
+complex policies by combining simpler ones and using existing policies to
+avoid custom builds from scratch. The motivation is to increase reusability,
+reduce cognitive load, and enable the creation of custom policies through a
+DSL-like configuration, thus improving policy management efficiency and
+flexibility.</p><p>This feature is not yet available to Kubernetes users, since we&rsquo;ve not yet introduced
+the set of new Custom Resource Definition that are required to manage policy groups.
+This will be part of the next release of Kubewarden.</p><p>In the meantime, users running Kubewarden Policy Server in stand-alone mode, can
+can already use this feature.</p><blockquote><p><strong>Note:</strong> in case you have missed, it&rsquo;s possible to use Kubewarden&rsquo;s Policy Server
+to validate any kind of JSON payload. See <a href=https://docs.kubewarden.io/howtos/raw-policies>this section</a>
+of our documentation.</p></blockquote><h2 id=cel-policy-enhancements>CEL Policy Enhancements</h2><p>The Common Expression Language (CEL) policies in Kubewarden have received two
+notable enhancements:</p><ul><li><strong>OCI Capability for Fetching Configs</strong>: Now includes an OCI capability to
+fetch container image configurations, making it easier to retrieve and apply
+policy configurations from OCI-compliant registries.</li><li><strong>Lazy Variable Evaluation</strong>: Introduces lazy variable evaluation, deferring
+variable evaluation until needed, thus improving performance and efficiency
+by reducing unnecessary computations.</li></ul><h2 id=extended-policies-crds-with-matchconditions>Extended policies CRDs with MatchConditions</h2><p>Lastly, the ClusterAdmissionPolicy and AdmissionPolicy CRDs have been extended
+to include <a href=https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-matchconditions><code>matchConditions</code></a>.
+This enhancement provides users with more
+granular control over policy enforcement by allowing them to specify conditions
+under which policies should be applied. Therefore, users can ensure that the
+right rules are enforced in the right scenarios.</p><p>The propagation of <code>matchConditions</code> can be done only on these
+versions of Kubernetes:</p><ul><li>1.26 or earlier: not available. The <code>matchConditions</code> are ignored</li><li>1.27, 1.28, 1.29: available only when the <code>AdmissionWebhookMatchConditions</code>
+<a href=https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/>feature gate</a> is enabled. Otherwise, the <code>matchConditions</code> are ignored</li><li>1.30 or later: always available, no action required</li></ul><h2 id=bye-and-lets-stay-in-touch>Bye and Let&rsquo;s stay in touch!</h2><p>Stay tuned for more updates, and happy policy writing!</p><p>As always, we are curious about what features you would like next and how you
+are enjoying Kubewarden. Reach out on
+<a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden">Slack</a> or join
+our <a href="https://teamup.com/ks2bj74dvw132mhjtj?view=a&showProfileAndInfo=0&showSidepanel=1&disableSidepanel=1&showMenu=1&showAgendaHeader=1&showAgendaDetails=0&showYearViewHeader=1">monthly community
+meeting</a> to
+talk all things Kubewarden.</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2024 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p><div class=project-icons><a href=https://k3s.io target=blank><img src=/images/icon-k3s.svg height=20></a>
+<a href=https://harvesterhci.io target=blank><img src=/images/icon-harvester.svg height=20></a>
+<a href=https://rancherdesktop.io target=blank><img src=/images/icon-rancher-desktop.svg height=20></a>
+<a href=https://epinio.io target=blank><img src=/images/icon-epinio.svg height=20></a>
+<a href=https://hypper.io target=blank><img src=/images/icon-hypper.svg height=20></a></div></footer><script async src="https://www.googletagmanager.com/gtag/js?id=G-PSW07XK7TM"></script><script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-PSW07XK7TM',{anonymize_ip:!0})}</script></body></html>
