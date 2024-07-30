@@ -2,7 +2,7 @@
 title: Kubewarden 1.15 release
 authors:
   - Jose Guilherme Vanz
-date: 2024-07-17
+date: 2024-07-30
 ---
 
 # Kubewarden v1.15.0 release
