@@ -42,7 +42,8 @@ sources:
         pattern: ">0.1"
     transformers:
       - trimprefix: "v"
-      - trimsuffix: ".0"
+      - findsubmatch:
+          pattern: '^(\d+\.)?(\*|\d+)'
 
 
 targets:
