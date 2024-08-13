@@ -70,7 +70,13 @@ home = ["HTML", "RSS"]
     weight = -80
 
   [[menu.main]]
+    identifier = "community"
+    name = "Community"
+    url = "/#get-in-touch"
+    weight = -70
+
+  [[menu.main]]
     identifier = "blog"
     name = "Blog"
     url = "/blog"
-    weight = -70
+    weight = -60
