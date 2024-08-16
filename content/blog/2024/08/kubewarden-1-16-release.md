@@ -51,6 +51,27 @@ can scaffold for CRDs deployed in that cluster.
 Currently, only the CREATE operation is supported, UPDATE and DELETE will be
 added in the future.
 
+## Policy updates
+
+Through this cycle, we have updated the following policies.
+
+### Container-resources policy
+
+This policy checks for resource limits on the containers, and mutates them to
+add limits if configured so.
+
+With its new release `v0.3.0`, the policy now will not mutate the resource
+with a limit that is less than the requested, but will reject the resource
+instead, to force the user to change the minimum request resource amount or
+adjust the policy configuration.
+
+### User-group-psp policy
+
+Starting with `v0.6.2`, if the container image validation is enabled (with
+`validate_container_image_configuration`), the policy will only check for it
+when the rule is "MustRunAs" or "MayRunAs"; "RunAsAny" does not check the
+container image.
+
 ## Maintenance updates
 
 As usual, we perform maintenance updates of our dependencies. Notably, in this
