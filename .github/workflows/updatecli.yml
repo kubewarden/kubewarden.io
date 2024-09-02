@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
       - name: Install Updatecli Binary
-        uses: updatecli/updatecli-action@eb158f6fd9e425b940a6750d6318f98e050ac390 # v2.6.1
+        uses: updatecli/updatecli-action@d0950ebbe80f4f80c3392b288d6a218fae872f69 # v2.66.0
 
       - name: Run Updatecli in enforce mode
         run: "updatecli compose apply"
