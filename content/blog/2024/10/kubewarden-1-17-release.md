@@ -111,32 +111,6 @@ docs for these resources.
 
 Stay tuned for a new deep dive blog post!
 
-## shortNames for our CRDs
-
-Kubernetes supports short names for CRDs, and with the new PolicyGroups
-feature, we think it's the perfect moment to include them. Short names simplify
-day-to-day operations. For example, to list ClusterAdmissionPolicies:
-
-```
-kubectl get cap
-NAME                        POLICY SERVER   MUTATING   BACKGROUNDAUDIT   MODE      OBSERVED MODE   STATUS   AGE
-do-not-run-as-root          default         true       true              monitor   monitor         active   3d
-do-not-share-host-paths     default         false      true              monitor   monitor         active   3d
-...
-```
-
-That's a lot better, right?
-
-Here's our shortened resource types:
-
-| Resource                     | shortName |
-| ---------------------------- | --------- |
-| AdmissionPolicies            | **ap**    |
-| ClusterAdmissionPolicies     | **cap**   |
-| AdmissionPolicyGroups        | **apg**   |
-| ClusterAdmissionPolicyGroups | **capg**  |
-| PolicyServers                | **ps**    |
-
 ## Policy updates
 
 During this development cycle, we have updated the following policies maintained by us.
