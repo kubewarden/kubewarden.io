@@ -59,7 +59,7 @@ policies using logical operators.
 
 This reuses existing policies, reducing the need for custom policy creation,
 and providing complex logic while at the same time reducing complexity (thanks
-to using existing policies, or for example using CEL via cel-policy).
+to using existing policies, or for example using CEL via the [cel-policy](https://artifacthub.io/packages/kubewarden/cel-policy/cel-policy)).
 
 However, while ordinary policies can include mutation logic to modify resources
 during admission, policy groups are limited to validation only.
