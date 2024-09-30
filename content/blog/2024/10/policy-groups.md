@@ -6,7 +6,7 @@ date: 2024-11-04
 ---
 
 With [v1.17](https://www.kubewarden.io/blog/2024/10/kubewarden-1-17-release/),
-we introduced a new powerful feature, Policy Groups, brought by 2 new Kubernetes
+we introduced a new powerful feature, Policy Groups, enabled by two new Kubernetes
 Custom Resources:
 
 - **AdmissionPolicyGroups**: Namespaced policy comprised of several policies.
@@ -18,13 +18,13 @@ policies using logical operators.
 
 Why are these useful? Because they reuse existing policies, reducing the need
 for custom policy creation. And they provide complex logic while at the same
-time reducing complexity as you have all the logic packed in 1 resource
+time reducing complexity as you have all the logic contained in one resource
 definition.
 
 ## Writing a Policy Group
 
 AdmissionPolicyGroups and ClusterAdmissionPolicyGroups are similar to the
-policies you already knew. Let's start writing a ClusterAdmissionPolicyGroup
+policies you already know. Let's start writing a ClusterAdmissionPolicyGroup
 that ensures Service selectors are unique, or assigned to a specific
 organization team.
 
@@ -45,7 +45,7 @@ spec:
 
 ### Policies field & context-aware
 
-Now, we define several policies and their settings. This is done in its
+Now, we define several policies and their settings. This is done in the
 `spec.policies` map:
 
 ```yaml
@@ -69,9 +69,9 @@ policies:
 In this map, you can see we have defined 2 policies. One that checks for
 Services to be unique, and another that checks for an annotation `owner:
 foo-team`. These policy entries in the map are named. And this allows us
-to write a boolean expresion with the boolean results of each policy.
+to write a boolean expression combining the results of each policy.
 
-If you look even closer, you will realize that the `unique_service_selector`
+If you look closer, you will see that the `unique_service_selector`
 policy is context-aware, as it defines its own `contextAwareResources`. That's
 true, Policy Groups support context-aware policies, and will evaluate them as
 usual, with their fine-grained defined permissions.
@@ -86,25 +86,24 @@ expression: "unique_service_selector() || (!unique_service_selector() && owned_b
 
 Which means that we expect the Service selector to be unique, or if it isn't,
 to be owned by the Quokkas team. The Quokkas team is awesome; they know how to
-have a clean house by themselves.
+keep a secure house.
 
 The `expression` is a boolean one, evaluating the known policy identifiers
 defined in the Policy Group. We can use `&&`, `||`, `!` for AND, OR, and NOT
 operations, as well as `(`,`)` for evaluation priorities.
 
-The expression evaluation has short-circuit and only evaluates those that are
+The expression evaluation has a short-circuit and only evaluates those that are
 needed; if one of the boolean results is true and nothing else is needed to
 accept or reject, the other evaluations are not performed to save resources.
 
-The short-circuit means that we don't support mutation for Policy Groups so
-far, which simplifies evaluation and mental load.
+The short-circuit means that we don't support mutation for Policy Groups, which simplifies evaluation and the conceptual load.
 
 ### Message field
 
-Ok, so we know how the policy gets evaluated into a rejection or acceptation.
-But how do we express that to the users? We do it by setting its
+Ok, so we know how the policy gets evaluated and rejected or accepted.
+But how do we express that to users? We do it by setting its
 `spec.message`, which gets returned as part of the AdmissionResponse as usual,
-to kubectl, or whomever expects it.
+to kubectl, or whoever expects it.
 
 In our case, we can write:
 
@@ -112,7 +111,7 @@ In our case, we can write:
 message: "the service selector is not unique or the service is not owned by the foo team"
 ```
 
-In addition, all the evaluation details of each the group policies are sent as part
+In addition, all the evaluation details of each of the group policies are sent as part
 of the AdmissionResponse `.status.details.causes` as we will see later.
 
 ## Hands-on: Instantiating
@@ -162,7 +161,7 @@ unique-service-selector   default                    true              protect  
 ```
 
 On Policy Group instantiation, both the `spec.expression` and each of the policies'
-settings get validated, and if any is incorrect, one would get an error as usual.
+settings get validated, and if any is incorrect, one gets an error as expected.
 
 Our policy is now active and ready. Let's try to create a Service:
 
@@ -250,7 +249,7 @@ Error from server: error when creating "second-service.yml": admission webhook "
 ### Audit scanner
 
 Another way of obtaining details on the state of the cluster is the [Audit
-Scanner](https://docs.kubewarden.io/next/explanations/audit-scanner) feature.
+Scanner](https://docs.kubewarden.io/next/explanations/audit-scanner).
 Policy Groups are fully supported in the Kubewarden stack, and their results
 get published to Policy Reports.
 
