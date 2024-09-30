@@ -134,7 +134,7 @@ additions:
 The [verify-image-signatures](https://artifacthub.io/packages/kubewarden/verify-image-signatures/verify-image-signatures)
 policy now allows mutation of all the workload resources associated with it.
 
-## trusted-repos-policy
+### trusted-repos-policy
 
 Quite the list of changes for this policy with a big refactor for maintenance.
 This includes:
