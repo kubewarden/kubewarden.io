@@ -255,7 +255,7 @@ get published to Policy Reports.
 
 ## Recap
 
-We have seen the 2 new Policy Groups Custom Resources: **\*AdmissionPolicyGroups** and
+We have seen the 2 new Policy Groups Custom Resources: **AdmissionPolicyGroups** and
 **ClusterAdmissionPolicyGroups**. They provide a way to define complex policies
 by including definitions of existing policies. They support context-aware
 policies, yet they don't perform mutations.
