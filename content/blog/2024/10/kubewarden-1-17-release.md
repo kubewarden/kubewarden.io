@@ -134,6 +134,18 @@ additions:
 The [verify-image-signatures](https://artifacthub.io/packages/kubewarden/verify-image-signatures/verify-image-signatures)
 policy now allows mutation of all the workload resources associated with it.
 
+## trusted-repos-policy
+
+Quite the list of changes for this policy with a big refactor for maintenance.
+This includes:
+
+- Added support for all workload resource types other than Pod.
+- Move to the `oci-spec` crate to parse OCI references and drop our custom
+  parsing. This also adds settings validation for images, registries, and tags
+  that are not compliant with the OCI spec.
+- Detect the implicit `latest` tag.
+- Increase test coverage to almost 100%, and introduce end-to-end tests.
+
 ## Getting in touch
 
 As always, you can contact us through [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) and
