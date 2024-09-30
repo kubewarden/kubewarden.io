@@ -2,7 +2,7 @@
 title: Kubewarden 1.17 release
 authors:
   - Víctor Cuadrado Juan
-date: 2024-09-27
+date: 2024-09-30
 ---
 
 We are thrilled to announce the release of Kubewarden v1.17.0. This release is
