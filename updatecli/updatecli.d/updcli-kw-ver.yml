@@ -27,6 +27,7 @@ scms:
       commitmessage:
         type: "chore"
         title: 'docs: update Kubewarden version to {{ source "kwc-version" }} on kubewarden.io front page'
+        footers: "Signed-off-by: Kubewarden bot <cncf-kubewarden-maintainers@lists.cncf.io>"
 
 sources:
   kwc-version:
