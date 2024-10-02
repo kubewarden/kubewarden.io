@@ -1,0 +1,167 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Policy Groups deep dive</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1727854249><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1" target=_blank class="btn no-bg">Policies</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/#get-in-touch target=_blank class="btn no-bg">Community</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Policy Groups deep dive</h1><p>Author: <author>Víctor Cuadrado Juan</author></p><p>Published: <time>02 Oct 2024</time></p><div id=blog-post-content><p>With <a href=https://www.kubewarden.io/blog/2024/10/kubewarden-1-17-release/>v1.17</a>,
+we introduced a new powerful feature, Policy Groups, enabled by two new Kubernetes
+Custom Resources:</p><ul><li><strong>AdmissionPolicyGroups</strong>: Namespaced policy comprised of several policies.</li><li><strong>ClusterAdmissionPolicyGroups</strong>: Clusterwide policy comprised of several policies.</li></ul><p>These new Policy Groups resources define a policy comprised of several policies and
+their policy settings, and they perform a combined evaluation of those multiple
+policies using logical operators.</p><p>Why are these useful? Because they reuse existing policies, reducing the need
+for custom policy creation. And they provide complex logic while at the same
+time reducing complexity as you have all the logic contained in one resource
+definition.</p><h2 id=writing-a-policy-group>Writing a Policy Group</h2><p>AdmissionPolicyGroups and ClusterAdmissionPolicyGroups are similar to the
+policies you already know. Let&rsquo;s start writing a ClusterAdmissionPolicyGroup
+that ensures Service selectors are unique, or assigned to a specific
+organization team.</p><p>We write the usual metadata and rules for the policy:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>policies.kubewarden.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterAdmissionPolicyGroup</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>unique-service-selector</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>rules</span>:
+    - <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;&#34;</span>]
+      <span style=color:#f92672>apiVersions</span>: [<span style=color:#e6db74>&#34;v1&#34;</span>]
+      <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;services&#34;</span>]
+      <span style=color:#f92672>operations</span>: [<span style=color:#e6db74>&#34;CREATE&#34;</span>, <span style=color:#e6db74>&#34;UPDATE&#34;</span>]
+</code></pre></div><h3 id=policies-field--context-aware>Policies field & context-aware</h3><p>Now, we define several policies and their settings. This is done in the
+<code>spec.policies</code> map:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>policies</span>:
+  <span style=color:#f92672>unique_service_selector</span>:
+    <span style=color:#f92672>module</span>: <span style=color:#ae81ff>registry://ghcr.io/kubewarden/policies/unique-service-selector-policy:v0.1.0</span>
+    <span style=color:#f92672>contextAwareResources</span>:
+      - <span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+        <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+    <span style=color:#f92672>settings</span>:
+      <span style=color:#f92672>app.kubernetes.io/name</span>: <span style=color:#ae81ff>MyApp</span>
+  <span style=color:#f92672>owned_by_quokkas_team</span>:
+    <span style=color:#f92672>module</span>: <span style=color:#ae81ff>registry://ghcr.io/kubewarden/policies/safe-annotations:v0.2.9</span>
+    <span style=color:#f92672>settings</span>:
+      <span style=color:#f92672>mandatory_annotations</span>:
+        - <span style=color:#ae81ff>owner</span>
+      <span style=color:#f92672>constrained_annotations</span>:
+        <span style=color:#f92672>owner</span>: <span style=color:#e6db74>&#34;quokkas-team&#34;</span>
+</code></pre></div><p>In this map, you can see we have defined 2 policies. One that checks for
+Services to be unique, and another that checks for an annotation <code>owner: foo-team</code>. These policy entries in the map are named. And this allows us
+to write a boolean expression combining the results of each policy.</p><p>If you look closer, you will see that the <code>unique_service_selector</code>
+policy is context-aware, as it defines its own <code>contextAwareResources</code>. That&rsquo;s
+true, Policy Groups support context-aware policies, and will evaluate them as
+usual, with their fine-grained defined permissions.</p><h3 id=expresion-field--mutation>Expresion field & mutation</h3><p>We evaluate that logic in the <code>spec.expression</code>. In our case:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>expression</span>: <span style=color:#e6db74>&#34;unique_service_selector() || (!unique_service_selector() &amp;&amp; owned_by_quokkas_team())&#34;</span>
+</code></pre></div><p>Which means that we expect the Service selector to be unique, or if it isn&rsquo;t,
+to be owned by the Quokkas team. The Quokkas team is awesome; they know how to
+keep a secure house.</p><p>The <code>expression</code> is a boolean one, evaluating the known policy identifiers
+defined in the Policy Group. We can use <code>&&</code>, <code>||</code>, <code>!</code> for AND, OR, and NOT
+operations, as well as <code>(</code>,<code>)</code> for evaluation priorities.</p><p>The expression evaluation has a short-circuit and only evaluates those that are
+needed; if one of the boolean results is true and nothing else is needed to
+accept or reject, the other evaluations are not performed to save resources.</p><p>The short-circuit means that we don&rsquo;t support mutation for Policy Groups, which simplifies evaluation and the conceptual load.</p><h3 id=message-field>Message field</h3><p>Ok, so we know how the policy gets evaluated and rejected or accepted.
+But how do we express that to users? We do it by setting its
+<code>spec.message</code>, which gets returned as part of the AdmissionResponse as usual,
+to kubectl, or whoever expects it.</p><p>In our case, we can write:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>message</span>: <span style=color:#e6db74>&#34;the service selector is not unique or the service is not owned by the foo team&#34;</span>
+</code></pre></div><p>In addition, all the evaluation details of each of the group policies are sent as part
+of the AdmissionResponse <code>.status.details.causes</code> as we will see later.</p><h2 id=hands-on-instantiating>Hands-on: Instantiating</h2><p>Our Policy Group looks as follows:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># unique-service-selector.yml</span>
+---
+<span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>policies.kubewarden.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterAdmissionPolicyGroup</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>unique-service-selector</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>rules</span>:
+    - <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;&#34;</span>]
+      <span style=color:#f92672>apiVersions</span>: [<span style=color:#e6db74>&#34;v1&#34;</span>]
+      <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;services&#34;</span>]
+      <span style=color:#f92672>operations</span>: [<span style=color:#e6db74>&#34;CREATE&#34;</span>, <span style=color:#e6db74>&#34;UPDATE&#34;</span>]
+  <span style=color:#f92672>policies</span>:
+    <span style=color:#f92672>unique_service_selector</span>:
+      <span style=color:#f92672>module</span>: <span style=color:#ae81ff>registry://ghcr.io/kubewarden/policies/unique-service-selector-policy:v0.1.0</span>
+      <span style=color:#f92672>contextAwareResources</span>:
+        - <span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
+          <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
+      <span style=color:#f92672>settings</span>:
+        <span style=color:#f92672>app.kubernetes.io/name</span>: <span style=color:#ae81ff>MyApp</span>
+    <span style=color:#f92672>owned_by_quokkas_team</span>:
+      <span style=color:#f92672>module</span>: <span style=color:#ae81ff>registry://ghcr.io/kubewarden/policies/safe-annotations:v0.2.9</span>
+      <span style=color:#f92672>settings</span>:
+        <span style=color:#f92672>mandatory_annotations</span>:
+          - <span style=color:#ae81ff>owner</span>
+        <span style=color:#f92672>constrained_annotations</span>:
+          <span style=color:#f92672>owner</span>: <span style=color:#e6db74>&#34;quokkas-team&#34;</span>
+  <span style=color:#f92672>expression</span>: <span style=color:#e6db74>&#34;unique_service_selector() || (!unique_service_selector() &amp;&amp; owned_by_quokkas_team())&#34;</span>
+  <span style=color:#f92672>message</span>: <span style=color:#e6db74>&#34;the service selector is not unique or the service is not owned by the Quokkas team&#34;</span>
+</code></pre></div><p>We can apply it as usual:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ kubectl apply -f unique-service-selector.yml
+clusteradmissionpolicygroup.policies.kubewarden.io/unique-service-selector created
+$ kubectl get clusteradmissionpolicygroups.policies.kubewarden.io
+NAME                      POLICY SERVER   MUTATING   BACKGROUNDAUDIT   MODE      OBSERVED MODE   STATUS    AGE
+unique-service-selector   default                    true              protect   protect         active    30s
+</code></pre></div><p>On Policy Group instantiation, both the <code>spec.expression</code> and each of the policies'
+settings get validated, and if any is incorrect, one gets an error as expected.</p><p>Our policy is now active and ready. Let&rsquo;s try to create a Service:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>kubectl apply -f - &lt;&lt;EOF
+# my-service.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app.kubernetes.io/name: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
+EOF
+
+service/my-service created
+</code></pre></div><p>As expected, the service creation succeeded. It is the first service that uses the selector for <code>MyApp</code>.</p><p>Now, if we create a second service, reusing the selector:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>kubectl apply -f - &lt;&lt;EOF
+# second-service.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: second-service
+spec:
+  selector:
+    app.kubernetes.io/name: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
+EOF
+
+Error from server: error when creating &#34;STDIN&#34;:
+admission webhook &#34;clusterwide-group-unique-service-selector.kubewarden.admission&#34; denied the request:
+the service selector is not unique or the service is not owned by the Quokkas team
+</code></pre></div><p>We get a rejection as expected.</p><h2 id=obtaining-full-details-on-results>Obtaining full details on results</h2><p>We know that for rejecting that <code>second-service</code>, the Policy Group evaluated
+each of their policies, only if it was needed. Kubewarden exposes this
+information as part of the AdmissionResponse&rsquo;s <code>.status.details.causes</code>. This
+will include skipping policy evaluations when possible.</p><p>These can be seen by tools, for example by increasing the verbosity level of kubectl:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>kubectl -v4 apply -f second-service.yml
+I0927 14:00:37.262003  107266 cert_rotation.go:137] Starting client certificate rotation controller
+I0927 14:00:37.527613  107266 helpers.go:246] server response object: [{
+  &#34;kind&#34;: &#34;Status&#34;,
+  &#34;apiVersion&#34;: &#34;v1&#34;,
+  &#34;metadata&#34;: {},
+  &#34;status&#34;: &#34;Failure&#34;,
+  &#34;message&#34;: &#34;error when creating \&#34;second-service.yml\&#34;: admission webhook \&#34;clusterwide-group-unique-service-selector.kubewarden.admission\&#34; denied the request: the service selector is not unique or the service is not owned by the Quokkas team&#34;,
+  &#34;details&#34;: {
+    &#34;causes&#34;: [
+      {
+        &#34;message&#34;: &#34;service is using selector(s) already defined by these services: [\&#34;my-service\&#34;]&#34;,
+        &#34;field&#34;: &#34;spec.policies.unique_service_selector&#34;
+      },
+      {
+        &#34;message&#34;: &#34;The following mandatory annotations are missing: owner&#34;,
+        &#34;field&#34;: &#34;spec.policies.owned_by_quokkas_team&#34;
+      }
+    ]
+  },
+  &#34;code&#34;: 400
+}]
+Error from server: error when creating &#34;second-service.yml&#34;: admission webhook &#34;clusterwide-group-unique-service-selector.kubewarden.admission&#34; denied the request: the service selector is not unique or the service is not owned by the Quokkas team
+</code></pre></div><h3 id=audit-scanner>Audit scanner</h3><p>Another way of obtaining details on the state of the cluster is the <a href=https://docs.kubewarden.io/next/explanations/audit-scanner>Audit
+Scanner</a>.
+Policy Groups are fully supported in the Kubewarden stack, and their results
+get published to Policy Reports.</p><h2 id=recap>Recap</h2><p>We have seen the 2 new Policy Groups Custom Resources: <strong>AdmissionPolicyGroups</strong> and
+<strong>ClusterAdmissionPolicyGroups</strong>. They provide a way to define complex policies
+by including definitions of existing policies. They support context-aware
+policies, yet they don&rsquo;t perform mutations.</p><p>We look forward to your usages of Policy Groups to simplify your policing,
+particularly with paired with CEL via the <a href=https://artifacthub.io/packages/kubewarden/cel-policy/cel-policy>cel-policy</a>.</p><p>Have a look at their CRD
+<a href=https://docs.kubewarden.io/reference/CRDs#resource-types>reference</a> docs,
+their <a href=https://docs.kubewarden.io/explanations/policy-groups>explanation</a> and
+<a href=https://docs.kubewarden.io/next/howtos/policy-groups>how-to</a> on our docs.</p><h2 id=getting-in-touch>Getting in touch</h2><p>As always, if you have any questions or feature requests, you can contact us
+through <a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden">Slack</a>
+and <a href=https://github.com/orgs/kubewarden/discussions>GitHub discussions</a>.</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2024 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p></footer><script async src="https://www.googletagmanager.com/gtag/js?id=G-PSW07XK7TM"></script><script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-PSW07XK7TM',{anonymize_ip:!0})}</script></body></html>
