@@ -16,9 +16,8 @@ scms:
   default:
     kind: github
     spec:
-      user: "kubewarden"
-      email: kubewarden@suse.de
-      owner: "kubewarden"
+      #owner: "kubewarden"
+      owner: "olblak"
       repository: kubewarden.io
       token: '{{ requiredEnv "GITHUB_TOKEN" }}'
       username: '{{ requiredEnv "GITHUB_ACTOR" }}'
@@ -37,7 +36,8 @@ sources:
       username: '{{ requiredEnv "GITHUB_ACTOR" }}'
       versionfilter:
         kind: semver
-        pattern: ">0.1"
+        #pattern: ">0.1"
+        pattern: "<1.18.0"
     transformers:
       - trimprefix: "v"
       - findsubmatch:
