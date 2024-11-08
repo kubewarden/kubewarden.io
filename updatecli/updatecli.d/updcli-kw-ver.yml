@@ -3,7 +3,6 @@ pipelineid: kubewarden-controller/latest
 
 actions:
   default:
-    title: 'updatecli: docs: update Kubewarden version to {{ source "kwc-version" }} on front page of kubewarden.io'
     kind: github/pullrequest
     scmid: default
     spec:
@@ -17,16 +16,13 @@ scms:
   default:
     kind: github
     spec:
-      user: "kubewarden"
-      email: kubewarden@suse.de
       owner: "kubewarden"
       repository: kubewarden.io
       token: '{{ requiredEnv "GITHUB_TOKEN" }}'
       username: '{{ requiredEnv "GITHUB_ACTOR" }}'
       branch: main
+      commitusingapi: true
       commitmessage:
-        type: "chore"
-        title: 'docs: update Kubewarden version to {{ source "kwc-version" }} on kubewarden.io front page'
         footers: "Signed-off-by: Kubewarden bot <cncf-kubewarden-maintainers@lists.cncf.io>"
 
 sources:
