@@ -16,12 +16,12 @@ scms:
   default:
     kind: github
     spec:
-      #owner: "kubewarden"
-      owner: "olblak"
+      owner: "kubewarden"
       repository: kubewarden.io
       token: '{{ requiredEnv "GITHUB_TOKEN" }}'
       username: '{{ requiredEnv "GITHUB_ACTOR" }}'
       branch: main
+      commitusingapi: true
       commitmessage:
         footers: "Signed-off-by: Kubewarden bot <cncf-kubewarden-maintainers@lists.cncf.io>"
 
@@ -36,8 +36,7 @@ sources:
       username: '{{ requiredEnv "GITHUB_ACTOR" }}'
       versionfilter:
         kind: semver
-        #pattern: ">0.1"
-        pattern: "<1.18.0"
+        pattern: ">0.1"
     transformers:
       - trimprefix: "v"
       - findsubmatch:
