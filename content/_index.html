@@ -6,18 +6,20 @@ date: 2021-04-16T13:28:46+02:00
   <div class="bg-primary">
     <div class="wrap grid-one">
       <div>
-        <h1 style="color: white;">Kubernetes Dynamic Admission at your fingertips</h1>
+        <h1 style="color: white;">Kubewarden</h1>
+        <h3 style="color: white;">A <em>universal</em> policy engine for Kubernetes</h3>
+        <h3 style="color: white;">Kubernetes Dynamic Admission at your fingertips</h3>
 				<h4 style="color: white;">Flexible, secure, and portable, thanks to WebAssembly. Get started with the latest version - <a href="#get-started">1.18</a></h4>
       </div>
     </div>
   </div>
 
   <div class="folder">
-    <h4 style="color: white;">Great For</h4>
+    <h4 style="color: white;">Great for</h4>
     <div class="bg-light grid-dynamic text-center">
       <h5>Familiar policy development</h5>
       <h5>Easy policy distribution</h5>
-      <h5>Build and push once, run everywhere</h5>
+      <h5>Build & push once, run everywhere</h5>
       <h5>Community maintained policies</h5>
     </div>
   </div>
@@ -25,14 +27,14 @@ date: 2021-04-16T13:28:46+02:00
 
 <section class="wrap">
   <h2>What is Kubewarden?</h2>
-  <p class="text-center font-weight-light">Kubewarden is a policy engine for Kubernetes. Its mission is to
-  simplify the adoption of <strong>policy-as-code</strong>.
+  <p class="text-center font-weight-light">Kubewarden is a universal policy engine for Kubernetes. Its mission is
+  simplifying the adoption of <strong>policy-as-code</strong>.
   </p>
 
   <div class=grid-two>
     <div>
       <h4>As a Policy author</h4>
-      <p class="text-left font-weight-light">Kubewarden doesn't force you to learn a new Domain Specific Language
+      <p class="text-left font-weight-light">Kubewarden doesn't require you to learn a new Domain Specific Language
       or a query language.</p>
       <p class="text-left font-weight-light">Write policies in your favorite programming language. Reuse skills and be quickly productive.
       </p>
@@ -82,11 +84,12 @@ date: 2021-04-16T13:28:46+02:00
   <p class="text-left font-weight-light">Kubewarden integrates with Kubernetes by providing a set of Custom Resources. These Custom
   Resources simplify the process of enforcing policies on your cluster.</p>
   <p class="text-left font-weight-light">Policies are implemented as WebAssembly modules and are distributed using regular
-  container registries. They are evaluated inside of a Kubewarden component called <em>"Policy Server".</em></p>
+  container registries. They are evaluated in a Kubewarden component called <em>"Policy Server".</em></p>
   </p>
   <p class="text-left font-weight-light">Kubewarden Policy Server is a Kubernetes Admission Webhook. Each policy is exposed using a
-  dedicated endpoint. Policies are isolated from the host and from each other. Every single policy is confined inside of a dedicated secure sandbox.
+  dedicated endpoint. Policies are isolated from the host and from each other. Policies are confined inside a dedicated, secure sandbox.
   </p>
+  <img src="../images/kw-arch.png">
 </section>
 <hr />
 
