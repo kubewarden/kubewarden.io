@@ -21,18 +21,20 @@ a nice improvement for deploying with OpenTelemetry and some bug fixes.
 With v1.20, we have expanded the Kubewarden controller capabilities to
 configure OpenTelemetry integrations.
 
-Until v1.19 inclusive, one could only configure the kubewarden-controller chart to
-inject the Opentelemetry collectors [as a
+Until v1.19 inclusive, one could only configure the `kubewarden-controller` chart to
+inject the OpenTelemetry collectors [as a
 sidecar](https://opentelemetry.io/docs/collector/architecture/#a-nameopentelemetry-agentarunning-as-an-agent)
-on Pods in the Kubewarden stack.
+into Pods in the Kubewarden stack.
 
-From v1.20 onwards, in addition of configuring for sidecars, the controller
-accepts providing a custom OpentelemetryCollector configuration. This
+From v1.20 onward, the official Kubewarden Helm chart allows also to
+configure the Kubewarden stack to send telemetry and metrics data
+to an OpenTelemetry Collector that is managed by the administrator of the
+cluster. This
 configuration allows for running the Collector [as a Gateway](https://opentelemetry.io/docs/collector/architecture/#a-nameopentelemetry-collectorarunning-as-a-gateway)
 in the same cluster. This architecture is useful for example when one wants the
 collector to receive tracing and metrics from more than one stack.
 
-To achieve this, we have reformatted the values.yml of kubewarden-controller to
+To achieve this, we have reformatted the `values.yml` of `kubewarden-controller` to
 add a new key `telemetry.mode` which can take either the `sidecar` value or
 `custom` value. We have also reorganized the set of keys under `telemetry`.
 
@@ -55,7 +57,7 @@ telemetry:
 ```
 
 And here is an example for the `custom` mode configuring Kubewarden to point to
-a custom OpenTelemetryCollector:
+a custom OpenTelemetry Collector:
 
 ```yaml
 # values.yaml
@@ -71,12 +73,12 @@ telemetry:
 ```
 
 This Helm chart configuration is used for the Kubewarden controller, which takes
-care of configuring each PolicyServer, including the needed certificates.
+care of configuring each Policy Server instance, including the needed certificates.
 
 We have refreshed our documentation pages to better showcase the sidecar mode,
 and added a new [example of the custom mode](https://docs.kubewarden.io/howtos/telemetry/custom-otel-collector).
 
-Would you like to see more capabilities to interact with OTLP? Don't hesistate
+Would you like to see more capabilities to interact with OpenTelemetry? Don't hesitate
 to get in touch!
 
 # Bug Fixes and Dependency Updates
