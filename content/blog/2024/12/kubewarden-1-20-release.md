@@ -8,7 +8,7 @@ date: 2024-12-19
 We're excited to announce the release of Kubewarden v1.20! This release brings
 a nice improvement for deploying with OpenTelemetry and some bug fixes.
 
-# Supporting more Opentelemetry deployment scenarios
+# Supporting more OpenTelemetry scenarios
 
 > ⚠️ **IMPORTANT**⚠️
 > The `kubewarden-controller` Helm chart has changed the `values.yml` schema
