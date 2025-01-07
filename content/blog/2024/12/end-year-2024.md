@@ -4,7 +4,7 @@ authors:
   - Martin Kravec
   - John Krug
   - José Guilherme Vanz
-date: 2024-12-19
+date: 2025-01-07
 ---
 
 It was an exciting year for Kubewarden policy management. We had new features,
