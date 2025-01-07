@@ -1,0 +1,63 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>The Year in Review: Kubewarden's Progress in 2024</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1736260547><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1" target=_blank class="btn no-bg">Policies</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://twitter.com/kubewarden target=_blank class="btn no-bg">Twitter</a></li><li><a href=/#get-in-touch target=_blank class="btn no-bg">Community</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>The Year in Review: Kubewarden's Progress in 2024</h1><p>Author: <author>Martin Kravec, John Krug and José Guilherme Vanz</author></p><p>Published: <time>07 Jan 2025</time></p><div id=blog-post-content><p>It was an exciting year for Kubewarden policy management. We had new features,
+performance improvements, and have been working towards a regular release
+schedule.</p><p>The year has seen work in these areas:</p><ul><li>performance and reliability</li><li>scalability improvements to reduce complexity and improve security</li><li>adding CEL policies and policy grouping using logical operators</li><li>improving community outreach</li></ul><p>Kubewarden
+<a href=https://www.kubewarden.io/blog/2024/01/kubewarden-1-10-release/>1.10</a> had
+optimizations for policy server performance. Memory usage was improved,
+enabling constant consumption even in large deployments. Policy evaluation now
+operates on-demand, consuming resources only as needed.</p><p>Policy authors can now create context-aware WASI policies with Kubernetes
+resource insights. This expands Kubewarden’s flexibility policies to use
+Kubernetes capabilities.</p><p>Kubewarden
+<a href=https://www.kubewarden.io/blog/2024/03/kubewarden-1-11-release/>1.11</a> brought
+audit scanner improvements. These included parallelized operations, reduced
+resource consumption, and improved efficiency. Furthermore, new host
+capabilities allowed policies to <a href=https://www.kubewarden.io/blog/2024/03/oci-manifest-capability/>retrieve OCI image
+manifests</a>,
+helping developers enforce security standards by inspecting container
+configurations in detail.</p><p>Releases
+<a href=https://www.kubewarden.io/blog/2024/04/kubewarden-1-12-release/>1.12</a> and
+<a href=https://www.kubewarden.io/blog/2024/06/kubewarden-1-13-release/>1.13</a> were
+about high availability and resource management. Policy Server deployments now
+have support for <code>PodDisruptionBudgets</code>, affinity rules, and resource limits.
+This improves stability in production environments. Gatekeeper policies saw a
+55% performance boost. Memory usage was reduced for clusters managing thousands
+of resources.</p><p>The introduction of <a href=https://www.kubewarden.io/blog/2024/06/welcome-cel-policy/>CEL
+policies</a> in
+release
+<a href=https://www.kubewarden.io/blog/2024/06/kubewarden-1-14-release/>1.14</a>,
+enabled the use of the <a href=https://cel.dev/>Common Expression Language</a> for
+policies. This is a drop-in replacement with Kubernetes'
+<a href=https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/><code>ValidatingAdmissionPolicies</code></a>.</p><p>The <a href=https://www.kubewarden.io/blog/2024/10/policy-groups/>Policy Groups
+feature</a> in release
+<a href=https://www.kubewarden.io/blog/2024/10/kubewarden-1-17-release/>1.17</a>, allows
+users to combine multiple policies using logical expressions. This reduces
+complexity while enabling advanced validations, like ensuring unique Kubernetes
+service selectors or enforcing organizational rules. This lets users create
+powerful, maintainable, and reusable policies more easily.</p><p>Release 1.17 also brought automated certificate generation and rotation,
+removing the dependency on <a href=https://cert-manager.io/>cert-manager</a>. This more
+self-sufficient approach improved the management of TLS certificates,
+simplifying operations and enhancing security. The
+<a href=https://www.kubewarden.io/blog/2024/11/kubewarden-1-18-release-slsa-level-3/>1.18</a>
+release contains <a href=https://slsa.dev/spec/v1.0/levels#build-l3>SLSA Level 3</a>
+compliance, an important milestone in our improved supply chain security.</p><p>By the end of the year, we released
+<a href=https://www.kubewarden.io/blog/2024/12/kubewarden-1-20-release/>1.20</a>, which
+brought new <a href=https://opentelemetry.io/>OpenTelemetry</a> scenarios. This release
+expands on how Kubewarden can be integrated with OpenTelemetry collectors,
+allowing users to configure the whole stack to send telemetry data to their own
+collectors, managed by their organization.</p><p>As well as the technical achievements, we tried to strengthen the Kubewarden
+community. A new <a href=https://github.com/kubewarden/community>community</a>
+repository consolidates documentation, guidelines, and contributor resources.
+This eases engagement for new or experienced contributors.</p><p>Kubewarden also grew its policy library, also refining existing policies like
+<a href=https://github.com/kubewarden/verify-image-signatures>verify-image-signatures</a>
+and <a href=https://github.com/kubewarden/trusted-repos-policy>trusted-repos</a> to
+support all Kubernetes workloads. Beyond that, We also had a presence at
+KubeCon and KCD Italy.</p><p>Kubewarden is ready for 2025. We plan to extend the capabilities of Policy
+Groups, refine certificate management, and introduce developer tools for
+automation and testing.</p><p>Thank you to our community for making 2024 a productive year. Let’s continue
+improving admission policy management. Join us on Slack or in our community
+meetings.</p><p>Happy policy writing!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2025 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p></footer><script async src="https://www.googletagmanager.com/gtag/js?id=G-PSW07XK7TM"></script><script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-PSW07XK7TM',{anonymize_ip:!0})}</script></body></html>
