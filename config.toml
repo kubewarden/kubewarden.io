@@ -62,7 +62,7 @@ home = ["HTML", "RSS"]
   [[menu.main]]
     identifier = "bluesky"
     name = "Bluesky"
-    url = "https://bsky.app/profile/kubewarden.bsky.social"
+    url = "https://bsky.app/profile/kubewarden.io"
     weight = -85
 
   [[menu.main]]
