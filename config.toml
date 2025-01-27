@@ -32,10 +32,6 @@ home = ["HTML", "RSS"]
 [privacy]
   [privacy.googleAnalytics]
     anonymizeIP = true
-  [privacy.twitter]
-    disable = false
-    enableDNT = false
-    simple = true
 
 [menu]
 
@@ -64,10 +60,18 @@ home = ["HTML", "RSS"]
     weight = -90
 
   [[menu.main]]
-    identifier = "twitter"
-    name = "Twitter"
-    url = "https://twitter.com/kubewarden"
+    identifier = "bluesky"
+    name = "Bluesky"
+    url = "https://bsky.app/profile/kubewarden.bsky.social"
+    weight = -85
+
+  [[menu.main]]
+    identifier = "mastodon"
+    name = "Mastodon"
+    url = "https://hachyderm.io/@kubewarden"
     weight = -80
+    [menu.main.params]
+      rel = 'me'
 
   [[menu.main]]
     identifier = "community"
