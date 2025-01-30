@@ -1,0 +1,86 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Kubewarden 1.21 release</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1738227375><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1" target=_blank class="btn no-bg">Policies</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://bsky.app/profile/kubewarden.io target=_blank class="btn no-bg">Bluesky</a></li><li><a href=https://hachyderm.io/@kubewarden rel=me target=_blank class="btn no-bg">Mastodon</a></li><li><a href=/#get-in-touch target=_blank class="btn no-bg">Community</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Kubewarden 1.21 release</h1><p>Author: <author>Víctor Cuadrado Juan and Flavio Castelli</author></p><p>Published: <time>30 Jan 2025</time></p><div id=blog-post-content><p>We&rsquo;re excited to announce the release of Kubewarden v1.21, our first release of 2025!</p><p>The release addresses two security issues that the Kubewarden team has discovered. Detailed information about them is included below.
+While these issues do not have a critical impact, we recommend our users upgrade their Kubewarden deployments.</p><p>Alongside these security fixes, the 1.21 release includes the usual stream of dependency updates and features some improvements to our documentation.</p><p>Finally, we have some updates about our presence on social media.</p><h2 id=security-fixes>Security fixes</h2><p>The Kubewarden team discovered two security issues affecting the Kubewarden controller. Both of them received a dedicated CVE.</p><h3 id=information-leak-via-admissionpolicygroup-resource>Information leak via AdmissionPolicyGroup resource</h3><blockquote><p>This issue received <a href=https://github.com/kubewarden/kubewarden-controller/security/advisories/GHSA-756x-m4mj-q96c>CVE-2025-24784</a></p></blockquote><p>The <a href=https://docs.kubewarden.io/explanations/policy-groups>policy group feature</a>, added to by the 1.17.0 release,
+introduced two new types of CRD: <code>ClusterAdmissionPolicyGroup</code> and <code>AdmissionPolicyGroup</code>. The former is cluster wide, while the latter is namespaced.</p><p>By being namespaced, the <code>AdmissionPolicyGroup</code> has a constrained impact on cluster resources. So, it’s considered safe to allow non-admin users
+to create and manage these resources in namespaces they own.
+Kubewarden policies can be permitted to query the Kubernetes API at evaluation time; these types of policies are called &ldquo;<a href=https://docs.kubewarden.io/reference/spec/context-aware-policies>context aware</a>&rdquo;.
+Context aware policies can perform &ldquo;<code>list</code>&rdquo; and &ldquo;<code>get</code>&rdquo; operations against a Kubernetes cluster. The queries are done using the ServiceAccount of the Policy Server instance that hosts the policy.
+That means that access to the cluster is determined by the RBAC rules that apply to that ServiceAccount.
+The AdmissionPolicyGroup CRD allowed the deployment of context aware policies. This could allow an attacker to obtain information about resources that are out of their reach, by leveraging a higher access to the cluster granted to the ServiceAccount token used to run the policy.</p><p>The impact of this vulnerability depends on the privileges granted to the ServiceAccount used to run the Policy Server. It assumes that users are using the recommended best practice
+of keeping the Policy Server&rsquo;s ServiceAccount least privileged. By default, the Kubewarden helm chart grants access to the following resources (cluster wide) only: Namespace, Pod, Deployment and Ingress.</p><p>Starting from the 1.21.0 release, the AdmissionPolicyGroup CRD does not allow the definition of context aware policies. No modifications are needed, either for performing the upgrade or afterwards.</p><h4 id=workaround>Workaround</h4><p>On clusters running Kubewarden &lt; 1.21.0, the following Kubewarden policy can be applied to prevent the creation of AdmissionPolicyGroup resources that have access to Kubernetes resources:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>policies.kubewarden.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterAdmissionPolicy</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#e6db74>&#34;deny-admission-policy-groups-with-context-resources&#34;</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>module</span>: <span style=color:#ae81ff>registry://ghcr.io/kubewarden/policies/cel-policy:latest</span>
+  <span style=color:#f92672>settings</span>:
+    <span style=color:#f92672>variables</span>:
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hasContextAwareResources</span>
+        <span style=color:#f92672>expression</span>: <span style=color:#e6db74>&#34;object.spec.policies.exists(p, has(object.spec.policies[p].contextAwareResources))&#34;</span>
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>isPendingDeletion</span>
+        <span style=color:#f92672>expression</span>: <span style=color:#e6db74>&#34;has(object.metadata.deletionTimestamp)&#34;</span>
+    <span style=color:#f92672>validations</span>:
+      - <span style=color:#f92672>expression</span>: <span style=color:#e6db74>&#34;!variables.hasContextAwareResources || variables.isPendingDeletion&#34;</span>
+        <span style=color:#f92672>message</span>: <span style=color:#e6db74>&#34;AdmissionPolicyGroup has contextAwareResources defined&#34;</span>
+  <span style=color:#f92672>rules</span>:
+    - <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;policies.kubewarden.io&#34;</span>]
+      <span style=color:#f92672>apiVersions</span>: [<span style=color:#e6db74>&#34;v1&#34;</span>]
+      <span style=color:#f92672>operations</span>: [<span style=color:#e6db74>&#34;CREATE&#34;</span>, <span style=color:#e6db74>&#34;UPDATE&#34;</span>]
+      <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;admissionpolicygroups&#34;</span>]
+  <span style=color:#f92672>mutating</span>: <span style=color:#66d9ef>false</span>
+  <span style=color:#f92672>backgroundAudit</span>: <span style=color:#66d9ef>true</span>
+</code></pre></div><p>Once the policy is applied, the <a href=https://docs.kubewarden.io/howtos/audit-scanner>Kubewarden Audit Scanner</a> can be used to identify the
+AdmissionPolicyGroup policies that are violating this policy.</p><h3 id=admissionpolicy-and-admissionpolicygroup-policies-can-be-used-to-alter-policyreport-resources>AdmissionPolicy and AdmissionPolicyGroup policies can be used to alter PolicyReport resources</h3><blockquote><p>This issue received <a href=https://github.com/kubewarden/kubewarden-controller/security/advisories/GHSA-fc89-jghx-8pvg>CVE-2025-24376</a></p></blockquote><p>By design, AdmissionPolicy and AdmissionPolicyGroup can evaluate only namespaced resources. The resources to be evaluated are determined by the rules provided by the user when defining the policy.
+There might be Kubernetes namespaced resources that should not be validated by AdmissionPolicy and AdmissionPolicyGroup policies because of their sensitive nature.
+For example, PolicyReports are namespaced resources containing the list of non-compliant objects in a namespace. See <a href=https://docs.kubewarden.io/explanations/audit-scanner/policy-reports>this section</a>
+of Kubewarden’s documentation for more details about PolicyReport resources.
+An attacker can use either an AdmissionPolicy or an AdmissionPolicyGroup to prevent the creation and update of PolicyReport objects to hide non-compliant resources.
+Moreover, the same attacker might use a mutating AdmissionPolicy to alter the contents of the PolicyReport created inside of the namespace.</p><p>Starting from the 1.21.0 release, the validation rules applied to AdmissionPolicy and AdmissionPolicyGroup have been tightened to prevent them from validating sensitive types of namespaced resources.
+The new validation will also restrict the usage of wildcards when defining apiGroups and resources rules for AdmissionPolicy and AdmissionPolicyGroup objects.</p><h4 id=workaround-1>Workaround</h4><p>On clusters running Kubewarden &lt; 1.21.0, the following Kubewarden policy can be applied to prevent the creation of AdmissionPolicy and AdmissionPolicyGroup resources
+that interact with PolicyReport resources:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>policies.kubewarden.io/v1</span>
+<span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterAdmissionPolicy</span>
+<span style=color:#f92672>metadata</span>:
+  <span style=color:#f92672>name</span>: <span style=color:#e6db74>&#34;deny-interaction-with-policyreport&#34;</span>
+<span style=color:#f92672>spec</span>:
+  <span style=color:#f92672>module</span>: <span style=color:#ae81ff>registry://ghcr.io/kubewarden/policies/cel-policy:latest</span>
+  <span style=color:#f92672>settings</span>:
+    <span style=color:#f92672>variables</span>:
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hasWildcardInsideOfApiGroup</span>
+        <span style=color:#f92672>expression</span>: <span style=color:#e6db74>&#34;object.spec.rules.exists(r, r.apiGroups.exists(ag, ag == &#39;*&#39;))&#34;</span>
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>hasWildcardInsideOfResources</span>
+        <span style=color:#f92672>expression</span>: <span style=color:#e6db74>&#34;object.spec.rules.exists(r, r.resources.exists(ag, ag == &#39;*&#39; || ag == &#39;*/* || ag == &#39;policyreports/*&#39;))&#34;</span>
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>dealsWithPolicyReportApiGroup</span>
+        <span style=color:#f92672>expression</span>: <span style=color:#e6db74>&#34;object.spec.rules.exists(r, r.apiGroups.exists(ag, ag == &#39;wgpolicyk8s.io&#39;))&#34;</span>
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>dealsWithPolicyReportResource</span>
+        <span style=color:#f92672>expression</span>: <span style=color:#e6db74>&#34;object.spec.rules.exists(r, r.resources.exists(ag, ag == &#39;policyreports&#39; || ag == &#39;policyreports/&#39;))&#34;</span>
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>isPendingDeletion</span>
+        <span style=color:#f92672>expression</span>: <span style=color:#e6db74>&#34;has(object.metadata.deletionTimestamp)&#34;</span>
+    <span style=color:#f92672>validations</span>:
+      - <span style=color:#f92672>expression</span>: |<span style=color:#e6db74>
+</span><span style=color:#e6db74>          !( variables.hasWildcardInsideOfApiGroup ||
+</span><span style=color:#e6db74>             variables.hasWildcardInsideOfResources ||
+</span><span style=color:#e6db74>             variables.dealsWithPolicyReportResource ||
+</span><span style=color:#e6db74>             variables.dealsWithPolicyReportApiGroup
+</span><span style=color:#e6db74>          ) || variables.isPendingDeletion</span>          
+        <span style=color:#f92672>message</span>: <span style=color:#e6db74>&#34;cannot target PolicyReport resources or use wildcards in apiGroups or resources&#34;</span>
+  <span style=color:#f92672>rules</span>:
+    - <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;policies.kubewarden.io&#34;</span>]
+      <span style=color:#f92672>apiVersions</span>: [<span style=color:#e6db74>&#34;v1&#34;</span>]
+      <span style=color:#f92672>operations</span>: [<span style=color:#e6db74>&#34;CREATE&#34;</span>, <span style=color:#e6db74>&#34;UPDATE&#34;</span>]
+      <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;admissionpolicies&#34;</span>, <span style=color:#e6db74>&#34;admissionpolicygroups&#34;</span>]
+  <span style=color:#f92672>mutating</span>: <span style=color:#66d9ef>false</span>
+  <span style=color:#f92672>backgroundAudit</span>: <span style=color:#66d9ef>true</span>
+</code></pre></div><h2 id=documentation-improvements>Documentation improvements</h2><h3 id=argocd-tutorial>ArgoCD tutorial</h3><p>The Kubewarden documentation now provides detailed information about <a href=https://docs.kubewarden.io/howtos/argocd-installation>using ArgoCD</a> to deploy and
+manage the Kubewarden stack.</p><p>This document was the result of community interaction.</p><h3 id=cli-documentation>CLI documentation</h3><p>The Kubewarden documentation now has pages describing the behavior of the <code>policy-server</code> and the <code>kwctl</code> cli tools.</p><p>These pages are automatically synchronized with the actual implementation, they can be found here:
+<a href=https://docs.kubewarden.io/reference/kwctl-cli>kwctl</a>,
+<a href=https://docs.kubewarden.io/reference/policy-server-cli>Policy Server</a>.</p><p>These documentation pages can also be generated locally using the new docs subcommands. For example, to generate the kwctl documentation you can
+invoke the following command: <code>kwctl docs --output docs.md</code>.</p><h3 id=new-pages>New pages</h3><p>As part of improvements suggested by a CNCF documentation review a <a href=https://docs.kubewarden.io/next/personas>personas</a>
+and a <a href=https://docs.kubewarden.io/next/organization>document organization</a> page have been added.
+Also, the introduction section has been reworded to highlight Kubewarden’s benefits more effectively.</p><h2 id=new-social-media-presence>New social media presence</h2><p>We’re happy to inform you that we have left X and you can now follow the Kubewarden project on Mastodon and on Bluesky using these accounts:</p><ul><li><a href=https://bsky.app/profile/kubewarden.io>Bluesky</a></li><li><a href=https://bsky.app/profile/kubewarden.io>Mastodon</a></li></ul><h3 id=getting-in-touch>Getting in touch</h3><p>As always, we welcome your feedback and contributions. Feel free to reach out
+to us on <a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden">Slack</a>
+and <a href=https://github.com/orgs/kubewarden/discussions>GitHub discussions</a>.</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2025 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p></footer><script async src="https://www.googletagmanager.com/gtag/js?id=G-PSW07XK7TM"></script><script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-PSW07XK7TM',{anonymize_ip:!0})}</script></body></html>
