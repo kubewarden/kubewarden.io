@@ -103,7 +103,7 @@ spec:
       - name: hasWildcardInsideOfApiGroup
         expression: "object.spec.rules.exists(r, r.apiGroups.exists(ag, ag == '*'))"
       - name: hasWildcardInsideOfResources
-        expression: "object.spec.rules.exists(r, r.resources.exists(ag, ag == '*' || ag == '*/* || ag == 'policyreports/*'))"
+        expression: "object.spec.rules.exists(r, r.resources.exists(ag, ag == '*' || ag == '*/*' || ag == 'policyreports/*'))"
       - name: dealsWithPolicyReportApiGroup
         expression: "object.spec.rules.exists(r, r.apiGroups.exists(ag, ag == 'wgpolicyk8s.io'))"
       - name: dealsWithPolicyReportResource
