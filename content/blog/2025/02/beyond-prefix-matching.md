@@ -2,9 +2,9 @@
 title: Beyond Prefix Matching
 authors:
   - Flavio Castelli
-  - Nuno do Carmo 
+  - Nuno do Carmo
   - Víctor Cuadrado Juan
-date: 2025-02-07
+date: 2025-02-19
 ---
 
 A recent [Aqua Security blog](https://www.aquasec.com/blog/risks-misconfigured-kubernetes-policy-engines-opa-gatekeeper/) post highlighted
@@ -12,7 +12,6 @@ the risks of misconfigured Kubernetes policy engines, particularly when dealing 
 The post correctly points out the challenges of managing complex policies and the potential for bypasses due to misconfigurations.
 However, it also underscores a critical limitation of many policy engines: their reliance on string manipulation, especially when dealing with OCI image references.
 This is where Kubewarden takes a different, and significantly more robust, approach.
-
 
 ## The Challenge: Accurately Handling OCI Image References
 
@@ -40,6 +39,7 @@ ensuring adherence to the OCI spec and avoiding the pitfalls of string-based app
 ## The Kubewarden Advantage: Accuracy, Reliability, and Maintainability
 
 Kubewarden's approach offers several key advantages:
+
 - **Unmatched Accuracy:** By using a dedicated OCI library, Kubewarden ensures accurate parsing and validation of image references, eliminating the risk of
   bypasses due to misconfigured regular expressions or incorrect prefix matching.
 - **Superior Reliability:** Because Kubewarden uses the official OCI spec, it's far more reliable than solutions that attempt to recreate the spec with string manipulation.
