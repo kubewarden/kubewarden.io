@@ -1,5 +1,5 @@
 ---
-title: Kubewarden 1.22 patch release
+title: Kubewarden 1.22 release
 authors:
   - Víctor Cuadrado Juan
 date: 2025-02-26
