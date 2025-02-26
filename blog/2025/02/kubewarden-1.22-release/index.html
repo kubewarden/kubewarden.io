@@ -1,0 +1,40 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Kubewarden 1.22 patch release</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1740585260><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1" target=_blank class="btn no-bg">Policies</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://bsky.app/profile/kubewarden.io target=_blank class="btn no-bg">Bluesky</a></li><li><a href=https://hachyderm.io/@kubewarden rel=me target=_blank class="btn no-bg">Mastodon</a></li><li><a href=/#get-in-touch target=_blank class="btn no-bg">Community</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Kubewarden 1.22 patch release</h1><p>Author: <author>Víctor Cuadrado Juan</author></p><p>Published: <time>26 Feb 2025</time></p><div id=blog-post-content><p>We&rsquo;re excited to announce the release of Kubewarden v1.22! This release
+brings some improvements to <code>kwctl</code> and the Rust SDK, together with some
+internal changes to prepare for future work.</p><h2 id=breaking-change-policyserver-health-check-endpoint-change>Breaking change: PolicyServer health check endpoint change</h2><blockquote><p>⚠️ <strong>IMPORTANT</strong>⚠️
+Breaking change: If you have created a custom instance of PolicyServer with a
+hard-coded <code>.spec.image</code>, you must update it to consume the <code>v1.22.0</code> tag.</p><p>Starting from 1.22, the Policy Server health check endpoint is exposed on port
+80 instead of port 443, and Policy Server Deployment objects created by the
+kubewarden-controller make this assumption.</p><p>This is reflected in major chart <code>version</code> bumps for both
+kubewarden-controller and kubewarden-defaults chart,
+as neither are backwards-compatible with older versions of each other.</p></blockquote><p>This change is motivated by our ongoing work in providing mutual TLS
+deployments on the Kubewarden stack.</p><h2 id=kwctl-now-adds-oci-annotations-when-pushing-policies>kwctl now adds OCI annotations when pushing policies</h2><p>When pushing a policy with <code>kwctl push</code>, <code>kwctl</code> now adds Kubewarden
+annotations from the policy&rsquo;s metadata into the resulting OCI manifest.
+Multi-line annotations will be skipped since they are not compliant with the
+OCI spec.</p><p>Moreover, the <code>io.kubewarden.policy.source</code> annotation is propagated as
+<code>org.opencontainers.image.source</code>. This allows tools like <a href=https://docs.renovatebot.com/modules/datasource/docker/#description>Renovate
+bot</a> to
+nicely display policy updates by sharing their source repository tag, changelog
+and so on.</p><p>The policies maintained by the Kubewarden team will steadily be pushed with
+these new annotations.</p><h2 id=rust-sdk-v013x-now-has-built-in-types-for-kubewarden-crds>Rust SDK v0.13.x now has built-in types for Kubewarden CRDs</h2><p>The Rust SDK now contains types for the Kubewarden CRDs, such as
+<code>ClusterAdmissionPolicies</code>, <code>PolicyServers</code>, etc. These types are toggled by a new
+crate feature, <code>crd</code>. These types are consistent with the <code>k8s-openapi</code> crate
+(using <code>Option&lt;T></code>), and are useful to those policy authors that want to write
+context-aware policies that deal with Kubewarden policies themselves.</p><h2 id=internal-policy-server-policyyaml-field-rename>Internal policy-server policy.yaml field rename</h2><p>Currently, policies hosted by a Policy Servers are configured via a <code>policy.yaml</code> file, created as a
+<code>ConfigMap</code> by our controller. For consistency reasons, we have changed the
+format of this policy.yaml file to match the format of policies defined in our
+CRDs by renaming the <code>url</code> field to <code>module</code>. This also allowed us to simplify
+our controller by removing translation logic.</p><p>This is a breaking change, but only impacts users using a Policy Server without
+the Kubernetes controller, such as raw policy users.</p><h2 id=bug-fixes-and-dependency-updates>Bug fixes and dependency updates</h2><p>As always, we&rsquo;ve addressed bugs and updated dependencies to ensure a smooth experience.
+Worth noting is a Policy Server bug fix for certificate hot-reload, which could
+make the Policy Server stop with a panic if the certificate was malformed,
+stopping the hot-reload mechanism. Now, it will error, but will accept a fixed
+certificate.</p><p>On the maintenance side, the OpenTelemetry libraries have been bumped for both
+the controller and Policy Server.</p><h2 id=getting-in-touch>Getting in touch</h2><p>As always, we welcome your feedback and contributions. Feel free to reach out
+to us on <a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden">Slack</a>
+and <a href=https://github.com/orgs/kubewarden/discussions>GitHub discussions</a>.</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2025 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p></footer><script async src="https://www.googletagmanager.com/gtag/js?id=G-PSW07XK7TM"></script><script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-PSW07XK7TM',{anonymize_ip:!0})}</script></body></html>
