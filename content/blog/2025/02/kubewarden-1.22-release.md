@@ -7,7 +7,7 @@ date: 2025-02-26
 
 We're excited to announce the release of Kubewarden v1.22! This release
 brings some improvements to `kwctl` and the Rust SDK, together with some
-internal changes to prepare future work.
+internal changes to prepare for future work.
 
 ## Breaking change: PolicyServer health check endpoint change
 
@@ -37,7 +37,7 @@ Moreover, the `io.kubewarden.policy.source` annotation is propagated as
 `org.opencontainers.image.source`. This allows tools like [Renovate
 bot](https://docs.renovatebot.com/modules/datasource/docker/#description) to
 nicely display policy updates by sharing their source repository tag, changelog
-and so.
+and so on.
 
 The policies maintained by the Kubewarden team will steadily be pushed with
 these new annotations.
