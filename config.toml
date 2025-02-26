@@ -84,3 +84,9 @@ home = ["HTML", "RSS"]
     name = "Blog"
     url = "/blog"
     weight = -60
+
+  [[menu.main]]
+    identifier = "enterprise"
+    name = "Enterprise"
+    url = "https://docs.kubewarden.io/enterprise"
+    weight = -50
