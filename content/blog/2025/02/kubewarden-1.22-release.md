@@ -42,35 +42,35 @@ and so on.
 The policies maintained by the Kubewarden team will steadily be pushed with
 these new annotations.
 
-## Rust SDK v0.13.0 now has built-in types for Kubewarden CRDs
+## Rust SDK v0.13.x now has built-in types for Kubewarden CRDs
 
 The Rust SDK now contains types for the Kubewarden CRDs, such as
-ClusterAdmissionPolicies, PolicyServers, etc. These types are toggled by a new
+`ClusterAdmissionPolicies`, `PolicyServers`, etc. These types are toggled by a new
 crate feature, `crd`. These types are consistent with the `k8s-openapi` crate
 (using `Option<T>`), and are useful to those policy authors that want to write
 context-aware policies that deal with Kubewarden policies themselves.
 
 ## Internal policy-server policy.yaml field rename
 
-Currently, PolicyServers are configured via a policy.yaml file, created as a
-ConfigMap by our controller. For consistency reasons, we have changed the
+Currently, policies hosted by a Policy Servers are configured via a `policy.yaml` file, created as a
+`ConfigMap` by our controller. For consistency reasons, we have changed the
 format of this policy.yaml file to match the format of policies defined in our
 CRDs by renaming the `url` field to `module`. This also allowed us to simplify
 our controller by removing translation logic.
 
-This is a breaking change, but only impacts users using a PolicyServer without
+This is a breaking change, but only impacts users using a Policy Server without
 the Kubernetes controller, such as raw policy users.
 
 ## Bug fixes and dependency updates
 
 As always, we've addressed bugs and updated dependencies to ensure a smooth experience.
-Worth noting is a policy-server bug fix for certificate hot-reload, which could
-make the policy-server stop with a panic if the certificate was malformed,
+Worth noting is a Policy Server bug fix for certificate hot-reload, which could
+make the Policy Server stop with a panic if the certificate was malformed,
 stopping the hot-reload mechanism. Now, it will error, but will accept a fixed
 certificate.
 
 On the maintenance side, the OpenTelemetry libraries have been bumped for both
-the controller and policy-server.
+the controller and Policy Server.
 
 ## Getting in touch
 
