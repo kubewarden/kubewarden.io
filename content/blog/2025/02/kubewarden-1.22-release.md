@@ -42,6 +42,21 @@ and so on.
 The policies maintained by the Kubewarden team will steadily be pushed with
 these new annotations.
 
+## Bump to Policy Reporter v3, UI v2
+
+We are happy to announce that we have bumped the Policy Reporter subchart in
+our `kubewarden-controller` to Policy Reporter V3 and its v2 UI. We
+congratulate the Policy Reporter authors on their new release! Head over to [their
+page](https://kyverno.github.io/policy-reporter/) for more information on new
+features.
+
+On the Kubewarden side, we have configured a Dashboard to show only Kubewarden
+policies (see `.Values.policy-reporter` in the `kubewarden-controller` chart):
+
+{{<figure src="/images/policy-reporter_kubewarden-filter.png" alt="screenshot of the Policy Reporter UI v2 dashboard"  >}}
+
+Also stay tuned, as the authors of Policy Reporter have joined https://openreports.io.
+
 ## Rust SDK v0.13.x now has built-in types for Kubewarden CRDs
 
 The Rust SDK now contains types for the Kubewarden CRDs, such as
