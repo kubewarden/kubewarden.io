@@ -1,14 +1,15 @@
-@import  "../../themes/projects-theme/assets/sass/main";
+@import "../../themes/projects-theme/assets/sass/main";
 
 :root {
-    --primary-color   : #c70a41;
-    --secondary-color : #5b0700;
-    --dark            : #0f0f0f;
-    --light           : #ffffff;
-  }
+  --primary-color: #c70a41;
+  --secondary-color: #5b0700;
+  --dark: #0f0f0f;
+  --light: #ffffff;
+}
 
-.bg-primary h1, .bg-primary h4 {
-    color: var(--light);
+.bg-primary h1,
+.bg-primary h4 {
+  color: var(--light);
 }
 
 a.btn {
@@ -37,76 +38,86 @@ section.wrap p {
 // Nav
 
 .menu-toggle {
-  color:#4a4a4a;
-  cursor:pointer;
-  display:block;
-  height:3.25rem;
-  position:relative;
-  width:3.25rem;
-  margin-left:auto
- }
- .menu-toggle span {
-  background-color:currentColor;
-  display:block;
-  height:1px;
-  left:calc(50% - 8px);
-  position:absolute;
-  transform-origin:center;
-  transition-duration:86ms;
-  transition-property:background-color, opacity, transform;
-  transition-timing-function:ease-out;
-  width:16px
- }
- .menu-toggle span:nth-child(1) {
-  top:calc(50% - 6px)
- }
- .menu-toggle span:nth-child(2) {
-  top:calc(50% - 1px)
- }
- .menu-toggle span:nth-child(3) {
-  top:calc(50% + 4px)
- }
- .menu-toggle:hover {
-  background-color:rgba(0,0,0,0.05)
- }
- .menu-toggle.is-active span:nth-child(1) {
-  transform:translateY(5px) rotate(45deg)
- }
- .menu-toggle.is-active span:nth-child(2) {
-  opacity:0
- }
- .menu-toggle.is-active span:nth-child(3) {
-  transform:translateY(-5px) rotate(-45deg)
- }
+  color: #4a4a4a;
+  cursor: pointer;
+  display: block;
+  height: 3.25rem;
+  position: relative;
+  width: 3.25rem;
+  margin-left: auto
+}
 
- @media (min-width: 768px) {
+.menu-toggle span {
+  background-color: currentColor;
+  display: block;
+  height: 1px;
+  left: calc(50% - 8px);
+  position: absolute;
+  transform-origin: center;
+  transition-duration: 86ms;
+  transition-property: background-color, opacity, transform;
+  transition-timing-function: ease-out;
+  width: 16px
+}
+
+.menu-toggle span:nth-child(1) {
+  top: calc(50% - 6px)
+}
+
+.menu-toggle span:nth-child(2) {
+  top: calc(50% - 1px)
+}
+
+.menu-toggle span:nth-child(3) {
+  top: calc(50% + 4px)
+}
+
+.menu-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05)
+}
+
+.menu-toggle.is-active span:nth-child(1) {
+  transform: translateY(5px) rotate(45deg)
+}
+
+.menu-toggle.is-active span:nth-child(2) {
+  opacity: 0
+}
+
+.menu-toggle.is-active span:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg)
+}
+
+@media (min-width: 768px) {
+
   /* Hide hamburger menu/'button' */
   .menu-toggle,
   .main-menu .menu-close {
     display: none;
   }
-  
+
   /* Undo positioning of off-canvas menu */
   .main-menu {
     position: relative;
-		left: auto;
-		top: auto;
-		height: auto;
+    left: auto;
+    top: auto;
+    height: auto;
     display: block;
     overflow: hidden;
   }
-  
+
   .main-menu ul {
-    display: flex; /* allows for full height of menu */
-    
+    display: flex;
+    /* allows for full height of menu */
+
     /* Undo off-canvas styling */
     -webkit-box-shadow: none;
-       -moz-box-shadow: none;
-            box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
     height: auto;
     width: auto;
     background: none;
-        padding: 0;
+    padding: 0;
     margin: 0;
     flex-direction: row;
     align-items: center;
@@ -116,7 +127,7 @@ section.wrap p {
       padding: 0;
       margin: 0;
       border: none;
-  
+
       &:last-child {
         padding-right: 0;
       }
@@ -136,12 +147,14 @@ section.wrap p {
 
   .main-menu a {
     color: var(--secondary-color);
-    border: 0 !important; /* Remove borders from off-canvas styling */
+    border: 0 !important;
+    /* Remove borders from off-canvas styling */
   }
-  
+
   .main-menu a:hover,
   .main-menu a:focus {
-    background: none; /* Remove background from off-canvas styling */
+    background: none;
+    /* Remove background from off-canvas styling */
     color: var(--primary-color);
 
     &.github {
@@ -149,7 +162,8 @@ section.wrap p {
     }
   }
 
-  .cncf .cncf-logo, .rancher-logo {
+  .cncf .cncf-logo,
+  .rancher-logo {
     display: block;
     width: 300px;
     margin: auto;
@@ -169,6 +183,7 @@ footer .project-icons a img {
   margin: 0 0 0 10px;
   border-radius: 3px;
   transition: ease-in-out all .25s;
+
   &:hover {
     filter: brightness(1)grayscale(0);
     background: #fff;
@@ -189,4 +204,9 @@ footer .project-icons a img {
   color: var(--light);
   font-size: 1.6rem;
   width: 100%;
+}
+
+// Make the version number link contras better on the red background
+.bg-primary a {
+  color: var(--light);
 }
