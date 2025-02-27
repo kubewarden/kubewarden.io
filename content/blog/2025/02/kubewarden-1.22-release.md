@@ -59,7 +59,7 @@ Also stay tuned, as the authors of Policy Reporter have joined https://openrepor
 
 ## Rust SDK v0.13.x now has built-in types for Kubewarden CRDs
 
-The Rust SDK now contains types for the Kubewarden CRDs, such as
+The Rust SDK now [contains types](https://docs.rs/kubewarden-policy-sdk/latest/kubewarden_policy_sdk/crd/index.html) for the Kubewarden CRDs, such as
 `ClusterAdmissionPolicies`, `PolicyServers`, etc. These types are toggled by a new
 crate feature, `crd`. These types are consistent with the `k8s-openapi` crate
 (using `Option<T>`), and are useful to those policy authors that want to write
