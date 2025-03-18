@@ -9,7 +9,7 @@ We are happy to highlight a recent CNCF webinar that does a first-dive into
 Kubewarden.
 
 In this webinar, CNCF Ambassador Carlos Santana explores Kubewarden's
-architecture, use cases, and benefits, and he does it with a smile and in a
+architecture, use cases, and benefits, with a smile in a
 relaxed enviroment. You'll learn how Kubewarden policies can be applied at
 admission control or runtime to ensure compliance and security.
 
