@@ -37,7 +37,7 @@ you can take advantage of this feature with the [latest release of Kubewarden's 
 ### But wait, there's more...
 
 More policies are on the way!
-We are actively working on releaseing more than 150 additional policies in the next few months.
+We are actively working on releasing more than 150 additional policies in the next few months.
 
 Under the [`staging` directory of the library's repository](https://github.com/kubewarden/rego-policies-library/tree/main/staging), you can find a collection of policies that are still under development.
 These policies are not yet ready for production use, but we encourage you to take a look and provide feedback.
