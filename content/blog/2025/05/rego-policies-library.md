@@ -5,7 +5,7 @@ authors:
 date: 2025-04-11
 ---
 
-We are excited to a announch the latest additions to our policy library!
+We are excited to a announce the latest additions to our policy library!
 
 70 finely crafted rego policies are now available for you to use in your Kubernetes clusters.
 
