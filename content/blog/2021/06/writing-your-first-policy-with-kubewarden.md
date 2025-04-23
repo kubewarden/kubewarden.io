@@ -529,7 +529,7 @@ this point are:
 - How to safely make the policy easy to distribute
     - Kubewarden has focused on reusing your existing knowledge
       and tools, so policies can either be distributed using an HTTPS
-      server, or preferrably, an OCI registry.
+      server, or preferably, an OCI registry.
 - How to deploy the policy to a Kubernetes cluster
     - We have created the [`kubewarden-controller`
       project](https://github.com/kubewarden/kubewarden-controller)

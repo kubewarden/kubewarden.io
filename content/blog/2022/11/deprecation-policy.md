@@ -58,7 +58,7 @@ You are updating your cluster's Kubernetes version, and want to know if you will
 be in trouble because of deprecated or removed resources in the new version?
 
 Check before updating! Just instantiate the deprecated-api-versions policy with
-the targetted Kubernetes version and `deny_on_deprecation` set to false, and get
+the targeted Kubernetes version and `deny_on_deprecation` set to false, and get
 an overview of future-you problems.
 
 ### In action

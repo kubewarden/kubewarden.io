@@ -19,7 +19,7 @@ updated. This can mean that resources that are inside the cluster are no longer
 compliant. A resource that was compliant some weeks ago, today may not be valid
 since the introduction of a new policy.
 
-Now with the new Audit Scanner, Kubewarden provides continous verification on
+Now with the new Audit Scanner, Kubewarden provides continuous verification on
 the compliance of cluster resources. The new Audit Scanner module is called via a
 Kubernetes `Cronjob`, which spawns the jobs that audit the cluster resources.
 

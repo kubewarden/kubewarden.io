@@ -66,7 +66,7 @@ being:
   docs](https://docs.kubewarden.io/howtos/policy-servers/private-registry) on
   creating the Secret for the PolicyServer.
 - `policy-server` binaries now have a new feature flag that allows them to
-  continue even on policy intialization errors. This provides users with a UX
+  continue even on policy initialization errors. This provides users with a UX
   where they don't need to check policy-server error logs and each of the
   policies if some are failing (with misconfigured policy settings for example).
   This feature is currently alpha as it needs more polishing. Because of that, this is disabled by default. Users can set the

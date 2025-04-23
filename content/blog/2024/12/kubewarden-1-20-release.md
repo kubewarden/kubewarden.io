@@ -90,7 +90,7 @@ Worth noting is a `kwctl` fix when dealing with local custom certificates for
 authenticating against OCI repositories when the user incorrectly passes a
 certificate in DER format (binary encoded) instead of PEM format (text, ASCII
 armored). Before, `kwctl` could stop with an error when trying to load the DER
-certificate. Now, `kwctl` has strenghtened PEM/DER recognition and `kwctl`
+certificate. Now, `kwctl` has strengthened PEM/DER recognition and `kwctl`
 informs better if one is using a DER certificate.
 
 # Getting in touch

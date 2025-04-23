@@ -62,7 +62,7 @@ creation time of policy evaluators is greatly reduced.
 
 Using this on-demand approach to policy evaluators brings two main advantages:
 
-- Impact of policies leaking memory is now virtualy non-existent.
+- Impact of policies leaking memory is now virtually non-existent.
 - Each evaluation starts with a clean slate, preventing bugs caused by policies
   leaving unclean state between evaluations.
 
@@ -81,7 +81,7 @@ context-aware capabilities, via WASI, to the Kubewarden Go SDK, so it is
 now possible to write context-aware Go WASI policies.
 
 No divergence is needed when writing context-aware policies in WASI. Just use the Go SDK as usual,
-making use of its `capabilities` package (which exposes quering for kubernetes
+making use of its `capabilities` package (which exposes querying for kubernetes
 resources, OCI manifest digest, Sigstore signature verification, etc).
 
 As an example, have a look at the
