@@ -6,11 +6,11 @@ date: 2025-04-17
 ---
 
 Kubewarden is an open-source CNCF project actively engaged with the wider
-Kubernetes ecosystem. This informs our use of valuable projects like Policy
+Kubernetes ecosystem. This informs the use of valuable projects like Policy
 Reporter. Using [Policy
 Reporter](https://docs.kubewarden.io/explanations/audit-scanner/policy-reports#policy-reporter-ui)
 as a default UI for Kubewarden simplifies the user experience, allowing the use
-of familiar reporting mechanisms. This strategic choice also allows the team to
+of familiar reporting mechanisms. This strategic choice also lets the team
 concentrate on the Kubewarden core stack.
 
 So, the Kubewarden team participates in the [Kubernetes Policy Working
