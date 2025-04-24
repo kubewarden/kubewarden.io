@@ -49,7 +49,7 @@ spec:
       - image: "ghcr.io/raulcabello/app-example:*" # match all tags 
         github_actions:
         - owner: "raulcabello"
-          repo: "app-example" #optional. if omited all signatures performed in repos from the owner will be valid.
+          repo: "app-example" #optional. if omitted all signatures performed in repos from the owner will be valid.
 ```
 
 This policy verifies all containers with an image that is `ghcr.io/raulcabello/app-example`. It will accept

@@ -76,7 +76,7 @@ policy is context-aware, as it defines its own `contextAwareResources`. That's
 true, Policy Groups support context-aware policies, and will evaluate them as
 usual, with their fine-grained defined permissions.
 
-### Expresion field & mutation
+### Expression field & mutation
 
 We evaluate that logic in the `spec.expression`. In our case:
 

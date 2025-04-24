@@ -31,7 +31,7 @@ tracing and metrics for Policy Server instances. In the past, enabling metrics i
 Kubewarden meant enabling both, and now users can decide to enable each separately, as we
 have realized from the requests raised by the community.
 
-We have made the concious decision to make this a breaking change in the helm
+We have made the conscious decision to make this a breaking change in the helm
 chart `values.yaml`, which is uncommon.
 We think it simplifies the adoption of OTLP changes in the future.
 
