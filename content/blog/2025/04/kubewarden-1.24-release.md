@@ -12,36 +12,36 @@ in this one.
 
 In the past, we consciously picked semver `0.X.Y` for policy versions as that
 meant that the policy API for the user (in this case, the policy
-`spec.settings`) was not considered stable. To be clear, we always ensure
-the policy API and ABI between policy-server and the policy is always
-compatible.
+`spec.settings`) was not considered stable.
 
-We haven't needed to review this over the past few years,
-so policies kept getting 0.X.0 minor releases, with none breaking backward
-compatibility.
-
-So, it is about time we proudly declare that our policies are semver
-`v1.0.0`!
+Since the settings of our policies haven't changed since their initial release,
+we decided it was time to highlight their stability by promoting them to `v1.0.0`.
 
 We have released most of our policies, those we consider stable,
 as `v1.0.0`. This shows our commitment over this time,
 now paraded in Semantic Versioning. You can find
 [here](https://github.com/kubewarden/community?tab=readme-ov-file#repositories)
 a list of policy repositories and their maturity level; note that the
-majority are declared stable. Others, like our `kyverno-dsl-policy`, being
-experimental, are released with version `0.1.0`.
+majority are declared stable. The ones that are still considered experimental,
+like the `kyverno-dsl-policy` one, have not reached `v1` yet.
 
-Benefits to using `v1.0.0` are:
+During the last months we have also worked on improving the automation pipelines
+used to build all our policies, both the stable and the experimental ones.
+That leads to the following enrichment:
 
-- Policy OCI artifacts are labeled with `org.opencontainers.image.*`. This
-  informs tools such as the Renovate bot, where the repo and changelog of the policy
-  live, which provides useful metadata when letting bots bump the policies you consume.
+- Policy OCI artifacts are labeled with `org.opencontainers.image.*` labels. This
+  information can be used by automation tools like Renovate or Dependabot to react
+  to new policy releases. For example, it would be possible to have Renovate create
+  pull requests to bump the policy version consumed by a `ClusterAdmissionPolicy`
+  definition.
 - The `kwctl scaffold artifacthub` command was simplified in the previous
   `v1.23` release. Some of its mandatory flags, like the policy version, are now
   read from the `io.kubewarden.policy.version` annotation from the `metadata.yml`
   file.
-- We have further automated the release process of our policies, to cut a
-  monthly release when possible.
+- Kubewarden policies are real code, using compilers and 3rd party libraries. We already
+  had automation in place to keep the policies dependencies up to date. Now, we also
+  have automation in place that cuts monthly patch releases of each policy to ensure
+  all these fresh dependencies are available to all of you.  
 
 To automate this, we have created new parts in our
 [kubewarden/github-actions](https://github.com/kubewarden/github-actions)
@@ -59,7 +59,9 @@ v4.4.4:
    This workflow checks for PRs that the previous workflow opened, and, once the
    maintainers merge the PR, tags the policy so it gets released.
 
-This process works for normal policy repos and monorepos (such as our github.com/kubewarden/rego-policies-library).
+This process works for normal policy repos and monorepos, such as
+[the one](https://github.com/kubewarden/rego-policies-library) that holds all our
+rego policies.
 
 ## cel-policy v1.3.1 released
 
@@ -73,16 +75,21 @@ allows users to encode/decode base64 strings. In addition, it contains bumps of
 
 As usual, we have kept busy by paying back technical debt for a better future.
 
-The Audit Scanner logs have now moved from consuming zerlog to
-[slog](https://pkg.go.dev/log/slog), a structured logging standard library for
-Go. If you are consuming the logs, there are no differences in output.
+The Audit Scanner logs have now moved from consuming [zerolog](https://github.com/rs/zerolog) to
+[slog](https://pkg.go.dev/log/slog). The latter is a structured logging
+that is part of Go's official standard library. We did this change to
+reduce our dependency tree.
+If you are consuming the logs, there are no differences in output.
 Thanks to Dharmit Shah for the contribution!
 
-The policy-server code that deals with PolicyGroups has been moved into
-the policy-evaluator library. Also, we no longer suppress TLS-related
-messages, and failed connections will appear at the Info level. Thanks to Kirat for
-the contribution! Kirat also made an improvement to kwctl for the registry URLs,
-planned for release in v1.25.
+The policy-server code that deals with [policy groups](https://docs.kubewarden.io/howtos/policy-groups) has been moved the
+[policy-evaluator library](https://github.com/kubewarden/policy-evaluator/).
+This refactoring paves the way for future improvements to `kwctl`, like being able
+to use `kwctl run` to evaluate policy groups.
+
+Finally, when the Kubewarden stack is [hardened using mTLS](https://docs.kubewarden.io/reference/security-hardening/webhooks-hardening#require-the-kubernetes-api-server-to-authenticate-to-the-webhook), the Policy Server instances will
+log all the connection attempts done by client that cannot be identified/trusted.
+Thanks to Kirat for the contribution!
 
 For the .NET SDK, we have now our first PR for adding host capabilities, in
 this case the network DNS host lookup. Thanks Ibrahim Gaber for the
