@@ -41,7 +41,7 @@ That lead to the following enrichment:
 - Kubewarden policies are real code, using compilers and 3rd party libraries. We already
   had automation in place to keep the policies dependencies up to date. Now, we also
   have automation in place that cuts monthly patch releases of each policy to ensure
-  all these fresh dependencies are available to all of you.  
+  all these fresh dependencies are available to all of you.
 
 To automate this, we have created new parts in our
 [kubewarden/github-actions](https://github.com/kubewarden/github-actions)
@@ -75,6 +75,8 @@ allows users to encode/decode base64 strings. In addition, it contains bumps of
 
 As usual, we have kept busy by paying back technical debt for a better future.
 
+### Audit scanner
+
 The Audit Scanner logs have now moved from consuming [zerolog](https://github.com/rs/zerolog) to
 [slog](https://pkg.go.dev/log/slog). The latter is a structured logging library
 that is part of Go's official standard library. We did this change to
@@ -82,18 +84,27 @@ reduce our dependency tree.
 If you are consuming the logs, there are no differences in output.
 Thanks to Dharmit Shah for the contribution!
 
+### Policy server & kwctl
+
 The policy-server code that deals with [policy groups](https://docs.kubewarden.io/howtos/policy-groups) has been moved the
 [policy-evaluator library](https://github.com/kubewarden/policy-evaluator/).
 This refactoring paves the way for future improvements to `kwctl`, like being able
 to use `kwctl run` to evaluate policy groups.
 
-Finally, when the Kubewarden stack is [hardened using mTLS](https://docs.kubewarden.io/reference/security-hardening/webhooks-hardening#require-the-kubernetes-api-server-to-authenticate-to-the-webhook), the Policy Server instances will
+Finally, when the Kubewarden stack is [hardened using
+mTLS](https://docs.kubewarden.io/reference/security-hardening/webhooks-hardening#require-the-kubernetes-api-server-to-authenticate-to-the-webhook),
+the Policy Server instances will
 log all the connection attempts done by client that cannot be identified/trusted.
+This change didn't make the cut of 1.24, but will surely be in 1.25.
 Thanks to Kirat for the contribution!
+
+### SDKs
 
 For the .NET SDK, we have now our first PR for adding host capabilities, in
 this case the network DNS host lookup. Thanks Ibrahim Gaber for the
 contribution!
+
+### Maintenance bumps
 
 We have addressed some CVEs in our dependency tree (e.g., `golang.org/x/net`).
 For others, consuming the fixes needs to propagate through our dependencies.
