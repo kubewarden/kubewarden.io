@@ -95,8 +95,6 @@ Finally, when the Kubewarden stack is [hardened using
 mTLS](https://docs.kubewarden.io/reference/security-hardening/webhooks-hardening#require-the-kubernetes-api-server-to-authenticate-to-the-webhook),
 the Policy Server instances will
 log all the connection attempts done by client that cannot be identified/trusted.
-This change didn't make the cut of 1.24, but will surely be in 1.25.
-Thanks to Kirat for the contribution!
 
 ### SDKs
 
