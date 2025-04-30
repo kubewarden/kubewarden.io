@@ -18,7 +18,7 @@ Since the settings of our policies haven't changed since their initial release,
 we decided it was time to highlight their stability by promoting them to `v1.0.0`.
 
 We have released most of our policies, those we consider stable,
-as `v1.0.0`. This shows our commitment over this time,
+as `v1.0.0`. This shows our commitment over time,
 now paraded in Semantic Versioning. You can find
 [here](https://github.com/kubewarden/community?tab=readme-ov-file#repositories)
 a list of policy repositories and their maturity level; note that the
@@ -27,7 +27,7 @@ like the `kyverno-dsl-policy` one, have not reached `v1` yet.
 
 During the last months we have also worked on improving the automation pipelines
 used to build all our policies, both the stable and the experimental ones.
-That lead to the following enrichment:
+That led to the following enrichment:
 
 - Policy OCI artifacts are labeled with `org.opencontainers.image.*` labels. This
   information can be used by automation tools like Renovate or Dependabot to react
@@ -40,8 +40,8 @@ That lead to the following enrichment:
   file.
 - Kubewarden policies are real code, using compilers and 3rd party libraries. We already
   had automation in place to keep the policies dependencies up to date. Now, we also
-  have automation in place that cuts monthly patch releases of each policy to ensure
-  all these fresh dependencies are available to all of you.
+  have automation that cuts monthly patch releases of each policy to ensure
+  all these fresh dependencies are available to you.
 
 To automate this, we have created new parts in our
 [kubewarden/github-actions](https://github.com/kubewarden/github-actions)
