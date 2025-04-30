@@ -96,12 +96,6 @@ mTLS](https://docs.kubewarden.io/reference/security-hardening/webhooks-hardening
 the Policy Server instances will
 log all the connection attempts done by client that cannot be identified/trusted.
 
-### SDKs
-
-For the .NET SDK, we have now our first PR for adding host capabilities, in
-this case the network DNS host lookup. Thanks Ibrahim Gaber for the
-contribution!
-
 ### Maintenance bumps
 
 We have addressed some CVEs in our dependency tree (e.g., `golang.org/x/net`).
