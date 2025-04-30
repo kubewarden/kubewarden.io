@@ -2,7 +2,7 @@
 title: Kubewarden 1.24 release
 authors:
   - Víctor Cuadrado Juan
-date: 2025-04-29
+date: 2025-04-30
 ---
 
 The wait is over—Kubewarden 1.24 has arrived! We have some easter eggs for you
