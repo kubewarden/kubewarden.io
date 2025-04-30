@@ -1,0 +1,66 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><title>Kubewarden 1.24 release</title><link rel=icon type=image/svg href=/favicon.svg><link rel=mask-icon href=/favicon.svg><link rel=stylesheet type=text/css href=/sass/blog.min.css?1746016062><script async defer src=https://buttons.github.io/buttons.js></script><script type=text/javascript src=//cdn.bizible.com/scripts/bizible.js async></script></head><body><header><div class=sub-header><a href><img src=/images/logo-kubewarden.svg alt=Kubewarden></a>
+<a href=#main-menu id=main-menu-toggle class=menu-toggle aria-label="Open main menu"><span aria-hidden=true></span><span aria-hidden=true></span><span aria-hidden=true></span></a><nav id=main-menu class=main-menu aria-label="Main menu"><a href=#main-menu-toggle id=main-menu-close class=menu-close aria-label="Close main menu"><span class=sr-only>Close main menu</span>
+<span class="fa fa-close" aria-hidden=true></span></a><h2 id=main-menu-heading class=sr-only>Main menu</h2><ul class=menu><li><a href="https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1" target=_blank class="btn no-bg">Policies</a></li><li><a href=https://charts.kubewarden.io/ target=_blank class="btn no-bg">Helm Charts</a></li><li><a href=https://docs.kubewarden.io/ target=_blank class="btn no-bg">Docs</a></li><li><a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target=_blank class="btn no-bg">Slack</a></li><li><a href=https://bsky.app/profile/kubewarden.io target=_blank class="btn no-bg">Bluesky</a></li><li><a href=https://hachyderm.io/@kubewarden rel=me target=_blank class="btn no-bg">Mastodon</a></li><li><a href=/#get-in-touch target=_blank class="btn no-bg">Community</a></li><li><a href=/blog target=_blank class="btn no-bg">Blog</a></li><li><a href=https://docs.kubewarden.io/enterprise target=_blank class="btn no-bg">Enterprise</a></li><li><a href=https://github.com/kubewarden class="btn github"><img src=/images/icon-github.svg><span>Github</span></a></li></ul></nav><a href=#main-menu-toggle class=backdrop tabindex=-1 aria-hidden=true hidden></a></div></header><link rel=stylesheet href=/css/blog.css><section class=intro><div class=bg-primary><div class="wrap grid-one"><div><h1 style=color:#fff><a href=/blog>The Kubewarden blog</a>
+<a href=/blog/index.xml><img src=/images/icon-rss.svg class=fill-white height=20></a></h1></div></div></div></section><main><section class=wrap><article><h1>Kubewarden 1.24 release</h1><p>Author: <author>Víctor Cuadrado Juan</author></p><p>Published: <time>30 Apr 2025</time></p><div id=blog-post-content><p>The wait is over, Kubewarden 1.24 has arrived! We have some Easter eggs for you
+in this one.</p><h2 id=promoting-our-policies-to-v100>Promoting our policies to v1.0.0</h2><p>In the past, we consciously picked semver <code>0.X.Y</code> for policy versions as that
+meant that the policy API for the user (in this case, the policy
+<code>spec.settings</code>) was not considered stable.</p><p>Since the settings of our policies haven&rsquo;t changed since their initial release,
+we decided it was time to highlight their stability by promoting them to <code>v1.0.0</code>.</p><p>We have released most of our policies, those we consider stable,
+as <code>v1.0.0</code>. This shows our commitment over time,
+now paraded in Semantic Versioning. You can find
+<a href="https://github.com/kubewarden/community?tab=readme-ov-file#repositories">here</a>
+a list of policy repositories and their maturity level; note that the
+majority are declared stable. The ones that are still considered experimental,
+like the <code>kyverno-dsl-policy</code> one, have not reached <code>v1</code> yet.</p><p>During the last months we have also worked on improving the automation pipelines
+used to build all our policies, both the stable and the experimental ones.
+That led to the following enrichment:</p><ul><li>Policy OCI artifacts are labeled with <code>org.opencontainers.image.*</code> labels. This
+information can be used by automation tools like Renovate or Dependabot to react
+to new policy releases. For example, it would be possible to have Renovate create
+pull requests to bump the policy version consumed by a <code>ClusterAdmissionPolicy</code>
+definition.</li><li>The <code>kwctl scaffold artifacthub</code> command was simplified in the previous
+<code>v1.23</code> release. Some of its mandatory flags, like the policy version, are now
+read from the <code>io.kubewarden.policy.version</code> annotation from the <code>metadata.yml</code>
+file.</li><li>Kubewarden policies are real code, using compilers and 3rd party libraries. We already
+had automation in place to keep the policies dependencies up to date. Now, we also
+have automation that cuts monthly patch releases of each policy to ensure
+all these fresh dependencies are available to you.</li></ul><p>To automate this, we have created new parts in our
+<a href=https://github.com/kubewarden/github-actions>kubewarden/github-actions</a>
+v4.4.4:</p><ol><li>We added a new reusable workflow, <code>reusable-release-pr</code>, that can be
+triggered on a schedule. When it runs, it checks for changes from the last
+draft release, and opens a PR with <a href=updatecli.io>Updatecli</a> if it finds changes. This is done
+via the new
+<a href=https://github.com/kubewarden/github-actions/blob/main/.github/workflows/reusable-release-pr.yml><code>open-release-pr</code></a> reusable workflow.
+You can find the updatecli policy
+<a href=https://github.com/kubewarden/automation/tree/main/updatecli>here</a>.</li><li>We have a second reusable workflow,
+<a href=https://github.com/kubewarden/github-actions/blob/main/.github/workflows/reusable-release-tag.yml><code>reusable-release-tag</code></a>.
+This workflow checks for PRs that the previous workflow opened, and, once the
+maintainers merge the PR, tags the policy so it gets released.</li></ol><p>This process works for normal policy repos and monorepos, such as
+<a href=https://github.com/kubewarden/rego-policies-library>the one</a> that holds all our
+rego policies.</p><h2 id=cel-policy-v131-released>cel-policy v1.3.1 released</h2><p>The latest release of the cel-policy comes with the <a href=https://pkg.go.dev/github.com/google/cel-go/ext#Encoders>Encoder CEL
+extension</a>, which
+allows users to encode/decode base64 strings. In addition, it contains bumps of
+<code>github.com/google/cel-go</code> to v0.23.2, plus <code>k8s.io/apiserver</code> and
+<code>k8s.io/apimachinery</code> to v1.33.0.</p><h2 id=bugs-minor-features-and-maintenance-bumps>Bugs, minor features and maintenance bumps</h2><p>As usual, we have kept busy by paying back technical debt for a better future.</p><h3 id=audit-scanner>Audit scanner</h3><p>The Audit Scanner logs have now moved from consuming <a href=https://github.com/rs/zerolog>zerolog</a> to
+<a href=https://pkg.go.dev/log/slog>slog</a>. The latter is a structured logging library
+that is part of Go&rsquo;s official standard library. We did this change to
+reduce our dependency tree.
+If you are consuming the logs, there are no differences in output.
+Thanks to Dharmit Shah for the contribution!</p><h3 id=policy-server--kwctl>Policy server & kwctl</h3><p>The policy-server code that deals with <a href=https://docs.kubewarden.io/howtos/policy-groups>policy groups</a> has been moved the
+<a href=https://github.com/kubewarden/policy-evaluator/>policy-evaluator library</a>.
+This refactoring paves the way for future improvements to <code>kwctl</code>, like being able
+to use <code>kwctl run</code> to evaluate policy groups.</p><p>Finally, when the Kubewarden stack is <a href=https://docs.kubewarden.io/reference/security-hardening/webhooks-hardening#require-the-kubernetes-api-server-to-authenticate-to-the-webhook>hardened using
+mTLS</a>,
+the Policy Server instances will
+log all the connection attempts done by client that cannot be identified/trusted.</p><h3 id=maintenance-bumps>Maintenance bumps</h3><p>We have addressed some CVEs in our dependency tree (e.g., <code>golang.org/x/net</code>).
+For others, consuming the fixes needs to propagate through our dependencies.
+The bumps also include the Policy Reporter subchart to 3.1.3. We also migrated
+to golangci-lint v2 with a golden config and refactored as needed by linters.</p><h2 id=google-summer-of-code>Google Summer of Code</h2><p>We await the decision from the Google Summer of Code administrators regarding
+our projects. Fingers crossed! We thank those who have been
+stretching their Kubewarden muscles and contributing.</p><h2 id=getting-in-touch>Getting in touch</h2><p>Join the conversation on
+<a href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden">Slack</a>
+or
+<a href=https://github.com/orgs/kubewarden/discussions>GitHub discussions</a>.
+and let us know how you&rsquo;re using Kubewarden 1.24!</p></div><div><ul id=tags></ul></div><div></div></article></section></main><footer><p>&copy; 2025 Kubewarden Project Authors. All rights reserved.
+The Linux Foundation has registered trademarks and uses trademarks.
+For a list of trademarks of The Linux Foundation, please see our Trademark Usage page:
+<a href=https://www.linuxfoundation.org/trademark-usage>https://www.linuxfoundation.org/trademark-usage</a></p></footer><script async src="https://www.googletagmanager.com/gtag/js?id=G-PSW07XK7TM"></script><script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-PSW07XK7TM',{anonymize_ip:!0})}</script></body></html>
