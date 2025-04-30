@@ -5,7 +5,7 @@ authors:
 date: 2025-04-30
 ---
 
-The wait is over—Kubewarden 1.24 has arrived! We have some easter eggs for you
+The wait is over, Kubewarden 1.24 has arrived! We have some Easter eggs for you
 in this one.
 
 ## Promoting our policies to v1.0.0
@@ -51,7 +51,7 @@ v4.4.4:
    triggered on a schedule. When it runs, it checks for changes from the last
    draft release, and opens a PR with [Updatecli](updatecli.io) if it finds changes. This is done
    via the new
-   [`open-release-pr`](https://github.com/kubewarden/github-actions/blob/main/.github/workflows/reusable-release-pr.yml)
+   [`open-release-pr`](https://github.com/kubewarden/github-actions/blob/main/.github/workflows/reusable-release-pr.yml) reusable workflow.
    You can find the updatecli policy
    [here](https://github.com/kubewarden/automation/tree/main/updatecli).
 2. We have a second reusable workflow,
