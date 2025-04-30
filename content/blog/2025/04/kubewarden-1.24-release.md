@@ -27,7 +27,7 @@ like the `kyverno-dsl-policy` one, have not reached `v1` yet.
 
 During the last months we have also worked on improving the automation pipelines
 used to build all our policies, both the stable and the experimental ones.
-That leads to the following enrichment:
+That lead to the following enrichment:
 
 - Policy OCI artifacts are labeled with `org.opencontainers.image.*` labels. This
   information can be used by automation tools like Renovate or Dependabot to react
@@ -76,7 +76,7 @@ allows users to encode/decode base64 strings. In addition, it contains bumps of
 As usual, we have kept busy by paying back technical debt for a better future.
 
 The Audit Scanner logs have now moved from consuming [zerolog](https://github.com/rs/zerolog) to
-[slog](https://pkg.go.dev/log/slog). The latter is a structured logging
+[slog](https://pkg.go.dev/log/slog). The latter is a structured logging library
 that is part of Go's official standard library. We did this change to
 reduce our dependency tree.
 If you are consuming the logs, there are no differences in output.
