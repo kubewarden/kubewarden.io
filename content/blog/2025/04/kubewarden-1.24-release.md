@@ -71,7 +71,7 @@ allows users to encode/decode base64 strings. In addition, it contains bumps of
 `github.com/google/cel-go` to v0.23.2, plus `k8s.io/apiserver` and
 `k8s.io/apimachinery` to v1.33.0.
 
-## Bugs, minor features and maintenance bumps
+## Bug fixes, minor features and maintenance bumps
 
 As usual, we have kept busy by paying back technical debt for a better future.
 
