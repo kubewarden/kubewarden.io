@@ -1,18 +1,50 @@
 name: Publish Site
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
+      - name: Install hugo
+        run: |
+          sudo apt install hugo
+          hugo version
       - name: Checkout Repo
         uses: actions/checkout@master
         with:
           submodules: true
-      - name: Publish Site
-        uses: chabad360/hugo-gh-pages@master
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b #v5.0.0
+      - name: Build Site
+        run: |
+          set -e
+
+          hugo --gc --minify --cleanDestinationDir \
+            --baseURL "${{ steps.pages.outputs.base_url }}/" \
+            -d ${{ runner.temp }}/gh-pages/
+      - name: Upload gh-pages artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa #v3.0.1
         with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          hugoVersion: extended_0.82.0
+          path: ${{ runner.temp }}/gh-pages/
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    steps:
+      - name: Publish Site
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e #v4.0.5
