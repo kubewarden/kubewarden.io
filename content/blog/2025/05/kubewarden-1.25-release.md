@@ -5,9 +5,10 @@ authors:
 date: 2025-05-15
 ---
 
-Kubewarden 1.25 arrives with enhanced Kubernetes Priority Class integration
-across the stack, improved CI security through GitHub Actions cleanup, and
-usability refinements in the kwctl tool.
+Kubewarden 1.25 arrives with:
+* enhanced Kubernetes Priority Class integration across the stack
+* improved CI security through GitHub Actions cleanup
+* usability refinements in the kwctl tool.
 
 ## Priority Class support
 
@@ -16,7 +17,7 @@ Priority
 Classes](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/)
 across the entire Kubewarden stack. This allows for fine-grained control over
 the scheduling and resource allocation of Kubewarden components and other
-workloads in the cluster. Notably, the Kubewarden Helm charts now include a new
+workloads in the cluster. The Kubewarden Helm charts now include a new
 value, `.global.priorityClassName`. This `priorityClassName` is applied to the
 controller deployment pods and the pods of the default policy server. Further
 details can be found in the [official
@@ -36,7 +37,7 @@ practices regarding the priority assigned to different applications and
 services running within the cluster. The policy can be used to ensure that
 critical workloads have appropriate priority levels assigned or to restrict the
 use of certain Priority Classes based on defined criteria. The policy
-configuration is straightforward, utilizing a list of allowed `PriorityClass`
+configuration is straightforward, using a list of allowed `PriorityClass`
 names that users can specify in the Pod's `priorityClassName` field. Here's a
 simple example demonstrating how to ensure that specific namespaces can only
 use predefined `PriorityClass` names:
