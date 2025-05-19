@@ -11,7 +11,7 @@ Kubewarden is showing significant maturity as a Kubernetes policy enforcement so
 
 ## Why Kubewarden?
 
-But why use Kubewarden? Kubewarden has seen a substantial expansion of its policy library. More pre-built policies are available, covering a wider range of security and operational best practices. Kubewarden's use of WebAssembly (Wasm) allows for policies to be written in various languages, providing developers with flexibility. WASM offer high performance and efficient resource utilization, which is crucial in Kubernetes environments. With the ability to verify policies using SLSA (Supply Chain Levels for Software Artifacts).
+But why use Kubewarden? Kubewarden has seen a substantial expansion of its policy library. More pre-built policies are available, covering a wider range of security and operational best practices. Kubewarden's use of WebAssembly (Wasm) allows for policies to be written in various languages, providing developers with flexibility. Wasm offers high performance and efficient resource utilization, which is crucial in Kubernetes environments. Kubewarden can verify policies using SLSA (Supply Chain Levels for Software Artifacts).
 
 ## Try Kubewarden
 
