@@ -19,6 +19,6 @@ From the initial release of Kubewarden till now the project has matured and is i
 
 ## Using Kubewarden?
 
-If you are already using Kubewarden, please consider adding your organization to our `ADOPTERS.md` [page](https://github.com/kubewarden/community/blob/main/ADOPTERS.md) on GitHub. This helps us as a project not only understand who is using Kubewarden but also helps move the project throught the Cloud Native Computing Foundations (CNCF) project process.
+If you are already using Kubewarden, please consider adding your organization to our `ADOPTERS.md` [page](https://github.com/kubewarden/community/blob/main/ADOPTERS.md) on GitHub. This helps us understand who uses Kubewarden and moves the project forward, through the Cloud Native Computing Foundation's (CNCF) project process.
 
 If you have feedback about Kubewarden feel free to find us on [Slack](https://kubernetes.slack.com/archives/C01T3GTC3L7) or on [GitHub](https://github.com/kubewarden/community/issues).
