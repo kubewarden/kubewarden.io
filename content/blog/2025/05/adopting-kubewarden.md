@@ -2,7 +2,7 @@
 title: "Adopting of Kubewarden"
 authors:
   - Robert Sirchia
-date: 2025-05-19
+date: 2025-05-23
 ---
 
 ## Call for Adopters
