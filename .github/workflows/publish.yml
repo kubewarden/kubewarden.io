@@ -15,6 +15,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Temporal workaround for innacessible mirrors
+        run: |
+          sudo sed -i 's|mirror+file:/etc/apt/apt-mirrors.txt|http://archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list
+          sudo apt-get update
       - name: Install hugo
         run: |
           sudo apt install hugo
