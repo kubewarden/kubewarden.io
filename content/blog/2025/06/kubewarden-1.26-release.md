@@ -82,8 +82,8 @@ Definition (CRD) are evaluated:
 - Policy settings
 - Context-aware resources the policy can access
 
-Other fields, such as rules, matchConditions, objectSelector, and
-namespaceSelector, are ignored, as they cannot be applied out of cluster.
+Other fields, such as rules, `matchConditions`, `objectSelector`, and
+`namespaceSelector`, are ignored, as they cannot be applied out of cluster.
 
 You can read about this by performing a `kwctl run --help` or by reading our
 [reference docs](https://docs.kubewarden.io/reference/kwctl-cli#kwctl-run) for
@@ -98,7 +98,7 @@ substitute it, as the message may be hardcoded in some policies.
 For example, a cluster operator deploying a
 [priority-class](https://artifacthub.io/packages/kubewarden/priority-class-policy/priority-class-policy)
 policy to a teams' Namespace might want want to add information on _why_
-specific priority classes are disallowed, and which was are allowed. The
+specific priority classes are disallowed, and which are allowed. The
 operator could also redirect the users of that team Namespace to an internal
 Wiki documenting all the needed policies. This streamlines administration of
 Kubewarden by different personas.
@@ -192,7 +192,7 @@ Service on port 443 to simplify the mTLS configuration, in addition to 8443
 
 With 1.26, we are removing the port 8443 on the Services. This is an internal
 change and an update will work as expected. Yet if users are manually consuming
-policy-server Services, they should expect them in port 443 from now on.
+policy-server Services, they should expect them on port 443 from now on.
 
 ## Rego Policy Catalog SPDX artifacts
 
