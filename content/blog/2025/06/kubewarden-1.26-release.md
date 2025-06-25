@@ -23,8 +23,11 @@ $ kwctl run \
 Thanks to suggestions from our user community, `kwctl` now can consume a YAML
 file containing the Custom Resource Definition of policies, and run the request
 against them. Using this run mode, `kwctl` evaluates not only 1 policy, but
-each policy in the file using the same request. This works for all types of
-policies, including PolicyGroups.
+each policy in the file using the same request.
+
+Moreover, it's now possible to run ["policy
+groups"](https://docs.kubewarden.io/explanations/policy-groups) policies using
+`kwctl` too! 🥳
 
 For example, with the following definition of 2 policies:
 
