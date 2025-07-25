@@ -211,14 +211,14 @@ policy configurations before deploying them to a cluster.
 The post-policy steps performed also by `kwctl` are:
 
 - policy mode enforcement: when the policy is in monitor mode, `kwctl` returns the request as allowed, even if the request was
-  reject by the policy. Printing a warning message with the original result
+  rejected by the policy. Printing a warning message with the original result
 - custom error message: `kwctl` will return the error message defined in the
   `message` field when the policy is rejected
-- reject mutated requests: `kwctl` will reject a request if the policy mutate
+- reject mutated requests: `kwctl` will reject a request if the policy mutates
   the request but the `mutating` field is set to `false`
 
-Let's take a look on some examples, let's consider the following policy in
-monitor mode. Therefore, all the evaluation should be allowed. When the policy
+Let's take a look at some examples. Let's consider the following policy in
+monitor mode. Therefore, all the evaluations should be allowed. When the policy
 is run against a
 [request](https://github.com/kubewarden/pod-privileged-policy/blob/main/test_data/privileged_container.json)
 with a privileged container, it returns the evaluation as "allowed":
@@ -255,7 +255,7 @@ spec:
 ```
 
 Now let's change the policy to protect mode, add a custom error message and run
-agains the same request:
+against the same request:
 
 ```console
 $ cat policy.yaml
