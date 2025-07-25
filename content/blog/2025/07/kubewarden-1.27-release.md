@@ -199,9 +199,9 @@ its permissions accordingly.
 ## _kwctl_ Now Mirrors _policy-server_ Behavior
 
 The `kwctl` CLI now performs post-policy processing validations and changes
-that were previously executed only by the `policy-server`. We've moved logic
+that were previously executed only by the `policy-server`. We've moved the logic
 for features like custom error messages and mutation permissions from the
-`policy-server` codebase to their common [evaluation
+`policy-server` codebase to a shared [evaluation
 library](https://github.com/kubewarden/policy-evaluator).
 
 As a result, users running policies with `kwctl` will now see the exact same
