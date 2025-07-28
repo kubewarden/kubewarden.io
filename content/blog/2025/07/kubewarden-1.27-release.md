@@ -184,14 +184,14 @@ To make the High-Risk Service Account Blocker policy more efficient, this
 release introduces a new host capability:
 [`kubernetes/can_i`](https://docs.kubewarden.io/reference/spec/host-capabilities/kubernetes#operation---can_i).
 
-This capability leverages the Kubernetes `SubjectAccessReview` API to check if
+This capability uses the Kubernetes `SubjectAccessReview` API to check if
 a service account has permission to perform certain operations. This approach
 avoids the need to fetch numerous RBAC resources to determine if the service
-account can perform the blocked operations, making the check much faster and
+account can perform the blocked operations, making the check faster and
 more reliable.
 
 To support this new capability, the default `ServiceAccount` used in the Helm
-chart to run the Policy Server has also been updated to add the permission to
+chart to run the Policy Server has been updated to add permission to
 create `SubjectAccessReview` resources. If you want to use this new capability
 with a Policy Server that uses a different `ServiceAccount`, you must update
 its permissions accordingly.
@@ -204,14 +204,14 @@ for features like custom error messages and mutation permissions from the
 `policy-server` codebase to a shared [evaluation
 library](https://github.com/kubewarden/policy-evaluator).
 
-As a result, users running policies with `kwctl` will now see the exact same
-behavior that the `policy-server` would produce. This is great for testing
+As a result, users running policies with `kwctl` now see the same
+behavior that the `policy-server` produces. This is great for testing
 policy configurations before deploying them to a cluster.
 
-The post-policy steps performed also by `kwctl` are:
+The post-policy steps also performed by `kwctl` are:
 
 - policy mode enforcement: when the policy is in monitor mode, `kwctl` returns the request as allowed, even if the request was
-  rejected by the policy. Printing a warning message with the original result
+  rejected by the policy. It prints a warning message with the original result.
 - custom error message: `kwctl` will return the error message defined in the
   `message` field when the policy is rejected
 - reject mutated requests: `kwctl` will reject a request if the policy mutates
@@ -315,7 +315,7 @@ we've removed all references to the deprecated
 [spdx-sbom-generator](https://github.com/opensbom-generator/spdx-sbom-generator)
 tool. All our GitHub Actions now use [Syft](https://github.com/anchore/syft) to
 generate SBOM files. The generated files are slightly different due to the
-change in tooling, but users should not be concerned, as the files are
+change in tooling, but users should not be concerned, the files are
 equivalent.
 
 ## Getting in touch
