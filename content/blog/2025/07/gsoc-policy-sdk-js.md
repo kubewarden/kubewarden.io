@@ -1,5 +1,5 @@
 ---
-title: Google Summer of Code: Writing Kubewarden Policies in TypeScript/JavaScript
+title: Writing Kubewarden Policies in TypeScript/JavaScript (Google Summer of Code)
 authors:
 - Esosa Ohangbon
 date: 2025-07-29
