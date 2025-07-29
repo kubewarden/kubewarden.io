@@ -2,7 +2,7 @@
 title: "Kubewarden 1.27 Release"
 authors:
   - José Guilherme Vanz
-date: 2025-07-23
+date: 2025-07-29
 ---
 
 Here's a look at the key updates and improvements in the latest release.
