@@ -51,4 +51,4 @@ There are exciting milestones ahead for the JavaScript SDK:
 - We plan to do a proper alpha release of the `policy-sdk-js` soon
 - We are creating a template repository for writing Kubewarden policies in JavaScript/TypeScript, similar to what's available for other SDKs
 - I will continue to implement API's for the remaining host capabilities
-- Finally, we'll be working towards officially publishing the SDK.
+- Finally, we'll be working towards officially publishing the SDK on [npm](https://www.npmjs.com/).
