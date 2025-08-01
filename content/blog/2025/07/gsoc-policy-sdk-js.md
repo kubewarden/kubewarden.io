@@ -13,7 +13,7 @@ My focus has been on developing **policy-sdk-js**, a JavaScript SDK for writing 
 
 Kubernetes policies are crucial for maintaining security, compliance, and operational best practices within clusters. Kubewarden simplifies this by allowing policies to be written in languages the compile to WebAssembly modules. While Kubewarden already supports languages like Rust, Go, and Rego, there hasn't been any official support for JavaScript.
 
-The goal of the project is to enable developers to write Kubewarden policies in JavaScript/TypeScript using [Javy](https://github.com/bytecodealliance/javy) for compilation to WebAssembly. This opens up Kubewarden to a whole new group of developers who may not be comfortable with Rust or Go but are very familiar with JavaScript.
+The goal of the project is to enable developers to write Kubewarden policies in JavaScript/TypeScript using [Javy](https://github.com/bytecodealliance/javy), a project from the [Bytecode Alliance](https://bytecodealliance.org/) organization, for compilation to WebAssembly. This opens up Kubewarden to a whole new group of developers who may not be comfortable with Rust or Go but are very familiar with JavaScript or TypeScript.
 
 ## The Work So Far
 
