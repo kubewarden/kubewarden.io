@@ -2,7 +2,7 @@
 title: "Kubewarden 1.27.1 Patch Release"
 authors:
   - Víctor Cuadrado Juan
-date: 2025-07-31
+date: 2025-08-01
 ---
 
 We have just released 1.27.1, a small patch release for `kwctl`.
