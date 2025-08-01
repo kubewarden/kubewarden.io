@@ -7,7 +7,7 @@ date: 2025-07-29
 
 Hi, I’m Esosa Ohangbon, a software engineering student at Carleton University. This summer, I've had the incredible opportunity to participate in **Google Summer of Code (GSoC)** as a contributor to **Kubewarden**.
 
-My focus has been on developing **policy-sdk-js**, a JavaScript SDK for writing Kubewarden policies using JavaScript or TypeScript. In this post, I’ll share what the experience has been like so far, some of the challenges I’ve faced, what I’ve learned, and what I’m looking forward to next.
+My focus has been on developing [`policy-sdk-js`](https://github.com/kubewarden/policy-sdk-js), a JavaScript SDK for writing Kubewarden policies using JavaScript or TypeScript. In this post, I’ll share what the experience has been like so far, some of the challenges I’ve faced, what I’ve learned, and what I’m looking forward to next.
 
 ## The Project
 
