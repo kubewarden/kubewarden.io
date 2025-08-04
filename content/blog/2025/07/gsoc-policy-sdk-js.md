@@ -2,7 +2,7 @@
 title: Writing Kubewarden Policies in TypeScript/JavaScript (Google Summer of Code)
 authors:
 - Esosa Ohangbon
-date: 2025-07-29
+date: 2025-08-04
 ---
 
 Hi, I’m Esosa Ohangbon, a software engineering student at Carleton University. This summer, I've had the incredible opportunity to participate in **Google Summer of Code (GSoC)** as a contributor to **Kubewarden**.
