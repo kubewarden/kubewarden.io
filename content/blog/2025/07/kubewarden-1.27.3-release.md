@@ -14,15 +14,15 @@ take care of running the policies in the correct execution mode that the
 policies have defined via their
 [metadata](https://docs.kubewarden.io/tutorials/writing-policies/metadata).
 This means that Kubewarden policies that are Wasm modules intended to run as
-WASI are run as such; the same for example for Rust policies compiled to run as
-WAPC, or [OPA
+WASI are executed as such. The same applies, for example, to Rust policies compiled for
+WAPC or to [OPA
 policies](https://docs.kubewarden.io/tutorials/writing-policies/rego/open-policy-agent/build-and-run#run).
 
 Up until `kwctl` 1.27.2, when doing `kwctl run` of a ClusterPolicyGroup or
 PolicyGroup, `kwctl` wasn't extracting the execution mode from the metadata information
 of the policies part of the group, but using the default execution mode.
-This meant that, if mingling different types of policies, it would fail for
-example with:
+This meant that when mixing different policies, it would fail, for
+example, with:
 
 ```console
 $ kwctl run policy-group.yml --request-path adm-req.yml
