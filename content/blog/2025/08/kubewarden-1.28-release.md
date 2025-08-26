@@ -43,12 +43,12 @@ spec:
 With this manifest and the [`hauler`
 cli](https://docs.hauler.dev/docs/next/introduction/install) tool, you can
 create an archive file with all the needed artifacts (Helm charts, container
-images, policies), so you can jump past the air gap to install or regularly
-update your Kubewarden stack:
+images, policies). This also verifies the artifacts via cosign, so you can
+confidently jump past the air gap to install or regularly update your
+Kubewarden stack:
 
 ```console
-(dev)$ hauler store sync --filename hauler_manifest.yaml # downloads all artifacts locally
-(dev)$ cosign verify                                     # optionally, verify all artifacts with Cosign. See hauler docs
+(dev)$ hauler store sync --filename hauler_manifest.yaml # downloads and verifies all artifacts locally
 (dev)$ hauler store save --filename haul.tar.zst         # saves artifacts to an archive file
 
 (airgap)$ hauler store load --filename haul.tar.zst                # load artifacts from archive file
