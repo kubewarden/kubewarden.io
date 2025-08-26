@@ -178,9 +178,8 @@ apart from the usual dependency bumps, we have performed a partial migration to 
 - Our container images also got the bump, but the changes will be released on
   the next version.
 
-In addition, to simplify our Rust code dealing with PKI, we got rid of the
-dependency on the `picky` crate in favour of `webpki` crate from the rustls
-folks. This will be in the codebase for the next release.
+In addition, we have simplified our Rust code devs dealing with PKI certs,
+which will be included for the next release.
 
 # Getting in touch
 
