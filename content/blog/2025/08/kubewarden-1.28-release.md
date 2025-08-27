@@ -84,7 +84,7 @@ We have added these 2 criteria: `containsOtherThan` and
 `doesNotContainOtherThan`. The second one implements an allowlist.
 
 For this, we refactored the policy separating the logic into a subcrate, which
-allows us to reuse for other similar policies like the following.
+allows us to reuse it for policies similar to the following one.
 
 ## 2 new policies: `labels` policy, `annotations` policy
 
@@ -109,7 +109,7 @@ settings:
 The [`trusted-repos`
 policy](https://artifacthub.io/packages/kubewarden/trusted-repos/trusted-repos)
 also has jumped to `v2`. This signifies a backwards-incompatible change when
-matching images: the policy now is more powerful when allowing or rejecting images.
+matching images, the policy now is more powerful when allowing or rejecting images.
 For example:
 
 ```yaml
@@ -142,8 +142,8 @@ The [`host-namespaces`
 policy](https://artifacthub.io/packages/kubewarden/host-namespaces-psp/host-namespaces-psp)
 and [`user-group-psp`
 policy](https://artifacthub.io/packages/kubewarden/user-group-psp/user-group-psp)
-now declare in their metadata that they can validate UPDATE operations of
-Pods too. They _could_ always validate UPDATE operations, but the metadata didn't
+now declare in their metadata that they can validate `UPDATE` operations of
+Pods too. They _could_ always validate `UPDATE` operations, but the metadata didn't
 reflect it. If you deployed them by doing a `kwctl scaffold manifest`, it may
 be worth to refresh your policy definitions.
 
@@ -164,7 +164,7 @@ of resources correctly and not error nor stop execution.
 kwctl `1.27.3`(see [blog
 post](https://www.kubewarden.io/blog/2025/07/kubewarden-1.27.3-release/)) fixes
 a bug when doing `kwctl run`of PolicyGroups if the policies in the group were
-of different type (e.g: one Rego and another WaPC Rust).
+of different type (e.g: one Rego and another waPC Rust).
 
 All of these changes are now part of 1.28.
 
@@ -173,12 +173,12 @@ All of these changes are now part of 1.28.
 As usual, we tackle some maintenance and pay off some tech debt. For this cycle,
 apart from the usual dependency bumps, we have performed a partial migration to Golang 1.25:
 
-- Finished for the Go policies, which comes with a needed bump to Tinygo 0.39,
+- Finished for the Go policies, which comes with a needed bump to [Tinygo 0.39](https://github.com/tinygo-org/tinygo/releases/tag/v0.39.0),
   also included in our [kubewarden/github-actions](https://github.com/kubewarden/github-actions) reusable workflows for CI/CD.
 - Our container images also got the bump, but the changes will be released on
   the next version.
 
-In addition, we have simplified our Rust code devs dealing with PKI certs,
+In addition, we have simplified our Rust code dealing with PKI certs,
 which will be included for the next release.
 
 # Getting in touch
