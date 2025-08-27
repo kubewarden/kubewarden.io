@@ -5,9 +5,10 @@ authors:
 date: 2025-08-26
 ---
 
-Kubewarden 1.28 has emerged anew from a bath in the lake. This release cycle
-comes mainly with improvements on policies, though some stack features plus
-`kwctl` bugfixes also bubbled up.
+Kubewarden 1.28 has emerged refreshed from a bath in the lake (just like my dog
+on the morning walk before writing this post!). This release cycle comes
+mainly with improvements on policies, though some stack features plus `kwctl`
+bugfixes also bubbled up.
 
 ## Supporting Hauler for air-gap installs
 
