@@ -66,7 +66,7 @@ For this new feature, we automated the creation on this Hauler manifest with
 [updatecli](https://www.updatecli.io/), in addition of expanding our end-to-end
 air-gap tests to make use of it.
 
-## Major version bump: `environment-variables-policy` v3
+## Major version bump: environment-variables policy v3
 
 The [`environment-variables`
 policy](https://artifacthub.io/packages/kubewarden/environment-variable-policy/environment-variable-policy)
@@ -87,7 +87,7 @@ We have added these 2 criteria: `containsOtherThan` and
 For this, we refactored the policy separating the logic into a subcrate, which
 allows us to reuse it for policies similar to the following one.
 
-## 2 new policies: `labels` policy, `annotations` policy
+## 2 new policies: labels policy, annotations policy
 
 The new [`labels`
 policy](https://artifacthub.io/packages/kubewarden/labels-policy/labels) and
@@ -105,7 +105,7 @@ settings:
     - cost-center
 ```
 
-## Major version bump: `trusted-repos` v2
+## Major version bump: trusted-repos policy v2
 
 The [`trusted-repos`
 policy](https://artifacthub.io/packages/kubewarden/trusted-repos/trusted-repos)
