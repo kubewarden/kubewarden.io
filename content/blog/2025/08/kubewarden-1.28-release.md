@@ -179,9 +179,6 @@ apart from the usual dependency bumps, we have performed a partial migration to 
 - Our container images also got the bump, but the changes will be released on
   the next version.
 
-In addition, we have simplified our Rust code dealing with PKI certs,
-which will be included for the next release.
-
 # Getting in touch
 
 Join the conversation on
