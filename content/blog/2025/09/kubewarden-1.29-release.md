@@ -5,13 +5,13 @@ authors:
 date: 2025-09-30
 ---
 
-Straight from the kitchen, Kubewarden 1.29 is served! This release is a medley
+Straight from the kitchen, Kubewarden 1.29 is served! This release is a poké
 bowl of healthy stack features, crisp policy improvements, and some fresh
 fixes, all seasoned with the wholesome flavour of paid-off tech debt.
 
 ## Removal of Picky dependency and stringent behavior change
 
-Since long we have been depending on the Rust crate `picky` as the
+We have long depended on the Rust crate `picky` as the
 implementation for X.509 and PKI certificates that we use in [our cryptographic host
 capabilities](https://docs.kubewarden.io/reference/spec/host-capabilities/crypto).
 It allowed us to overcome some limitations in the `webpki` crate.
@@ -26,7 +26,7 @@ host capability brings stricter behaviour when validating certificates:
 - Key usage: Previously, certificates were checked only against signing usage.
   Now, we accept any key usage, which opens more use cases.
 - Change with certificate chains: Now, a certificate will be considered
-  not trusted if its intermediate CA is expired. Wepki does not check the
+  untrusted if its intermediate CA is expired. Wepki does not check the
   expiration of the root CA.
 - Field `not_after`: Previously, if omitted, the certificate expiration was not
   checked. Now, if a certificate chain is provided, we will always
@@ -59,7 +59,7 @@ With 1.29.0, we have added a new field to all policy resources:
 This field complements the already existing `spec.timeoutSeconds`, which sets
 the timeout for the associated Kubernetes Webhhok for the policy.
 
-The new `spec.timeoutEvalSeconds` field is optional and allows to specify the
+The new `spec.timeoutEvalSeconds` field is optional and allows specifying the
 timeout for the policy evaluation. After the timeout passes, the policy
 evaluation call will fail as usual based on the `spec.failurePolicy` setting.
 Its value must be between 2 and 30 seconds. The new field value is checked so
@@ -164,7 +164,7 @@ This host capability is the one used in only one of the possible settings for
 the verify-image-signatures policy: verifying via certificates ([point 5 in its
 readme](https://github.com/kubewarden/verify-image-signatures)).
 
-Doing so, we broke this specific host capability API, therefore, this policy
+In doing so, we broke this specific host capability API, and therefore, this policy
 setting too.
 
 With 1.29, we have corrected this regression, and this specific policy
