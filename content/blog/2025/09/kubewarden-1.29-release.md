@@ -20,7 +20,7 @@ These limitations have been resolved recently in the `rustls-wepbki` crate, a
 fork of the original `webpki` project. For us, this meant that we could perform
 the library migration as part of our recurring tech-debt efforts.
 
-This library change from `picky` to `rustls-wepbki` for the cryptographic
+This library change from `picky` to [`rustls-wepbki`](https://crates.io/crates/rustls-webpki) for the cryptographic
 host capability brings stricter behaviour when validating certificates:
 
 - Key usage: Previously, certificates were checked only against signing usage.
@@ -139,8 +139,8 @@ collaborations such as this one!
 
 ## Signing Hauler manifest
 
-Since Kubewarden 1.28, we also ship a [Hauler
-manifest](../08/kubewarden-1.28-release/) together with our Helm charts to
+Since [Kubewarden 1.28](../08/kubewarden-1.28-release/), we also ship a [Hauler
+manifest](https://docs.hauler.dev/docs/intro) together with our Helm charts to
 simplify air-gap installs.
 
 With 1.29, we now cryptographically sign the Hauler manifest, the image and the
