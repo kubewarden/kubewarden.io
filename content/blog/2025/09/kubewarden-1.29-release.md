@@ -53,19 +53,19 @@ them.
 Up until now, this was possible globally per PolicyServer by setting their env
 var `KUBEWARDEN_POLICY_TIMEOUT` via its `spec.env`.
 
-With 1.29.0, we have added a new field to all policy resources:
-`spec.timeoutEvalSeconds`.
+With 1.29.0, we have added a new field `spec.timeoutEvalSeconds` to all policy
+resources. This allows to set the evaluation timeout on a per-policy basis,
+in addition to per PolicyServer.
 
 This field complements the already existing `spec.timeoutSeconds`, which sets
-the timeout for the associated Kubernetes Webhhok for the policy.
+the timeout for the associated Kubernetes Webhook for the policy.
 
-The new `spec.timeoutEvalSeconds` field is optional and allows specifying the
-timeout for the policy evaluation. After the timeout passes, the policy
-evaluation call will fail as usual based on the `spec.failurePolicy` setting.
-Its value must be between 2 and 30 seconds. The new field value is checked so
-it doesn't exceed `spec.timeoutSeconds`, and so neither `timeoutSeconds` nor
-`timeoutEvalSeconds` can be greated than the maximum webhook timeout from
-Kubernetes (hardcoded at 30s).
+The new `spec.timeoutEvalSeconds` field is optional. After the timeout passes,
+the policy evaluation call will fail as usual based on the `spec.failurePolicy`
+setting. Its value must be between 2 and 30 seconds. The new field value is
+checked so it doesn't exceed `spec.timeoutSeconds`, and so neither
+`timeoutSeconds` nor `timeoutEvalSeconds` can be greater than the maximum
+webhook timeout from Kubernetes (hardcoded at 30s).
 
 In the case of AdmissionPolicies and ClusterAdmissionPolicies, this new field
 is part of the [usual spec](https://docs.kubewarden.io/reference/CRDs#policyspec).
