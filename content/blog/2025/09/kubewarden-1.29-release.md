@@ -75,6 +75,9 @@ For AdmissionPolicyGroups and ClusterAdmissionPolicyGroups, the new field is
 member](https://docs.kubewarden.io/reference/CRDs#policygroupmember) instead of
 the global policy group spec, which allows for more fine tuning.
 
+As usual, you can also read about this in our
+[docs](https://docs.kubewarden.io/reference/policy-evaluation-timeout#per-policy).
+
 ## container-resources policy improvements
 
 This policy enforces memory and CPU requests and limits. Since version
