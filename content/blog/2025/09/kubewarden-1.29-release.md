@@ -11,7 +11,7 @@ fixes, all seasoned with the wholesome flavour of paid-off tech debt.
 
 ## Removal of Picky dependency and stringent behavior change
 
-We have long depended on the Rust crate `picky` as the
+We have long depended on the Rust crate [`picky`](https://crates.io/crates/picky) as the
 implementation for X.509 and PKI certificates that we use in [our cryptographic host
 capabilities](https://docs.kubewarden.io/reference/spec/host-capabilities/crypto).
 It allowed us to overcome some limitations in the `webpki` crate.
