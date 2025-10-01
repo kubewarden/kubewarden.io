@@ -2,7 +2,7 @@
 title: "Kubewarden 1.29 Release"
 authors:
   - Víctor Cuadrado Juan
-date: 2025-09-30
+date: 2025-10-01
 ---
 
 Straight from the kitchen, Kubewarden 1.29 is served! This release is a poké
