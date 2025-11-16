@@ -5,7 +5,7 @@ authors:
 date: 2025-11-16
 ---
 
-Writing Kubewarden policies just got a whole lot more accessible. Today, we're excited to announce the alpha release of the Kubewarden JavaScript/TypeScript SDK, bringing policy development to the world's most popular programming language.
+Writing Kubewarden policies just got a whole lot more accessible. Today, we're excited to announce the alpha release of the [Kubewarden JavaScript/TypeScript SDK](https://github.com/kubewarden/policy-sdk-js), bringing policy development to the world's most popular programming language.
 
 ## Why JavaScript for Kubernetes Policies?
 
@@ -93,7 +93,7 @@ Want to see the full power of the SDK? Check out our [comprehensive demo policy]
 
 ## Get Started Today
 
-The SDK is available now on npm:
+The SDK is available now on npm and [GitHub](https://github.com/kubewarden/policy-sdk-js):
 ```bash
 npm install kubewarden-policy-sdk
 ```
@@ -108,7 +108,7 @@ npm install
 # Start writing your policy in src/index.ts
 ```
 
-We've also created a comprehensive [tutorial](https://docs.kubewarden.io/tutorials/writing-policies/typescript/intro-script) that walks you through building a policy using the template.
+We've also created a comprehensive [tutorial](https://docs.kubewarden.io/tutorials/writing-policies/typescript/intro-typescript) that walks you through building a policy using the template.
 
 ## A Note on GSoC
 
