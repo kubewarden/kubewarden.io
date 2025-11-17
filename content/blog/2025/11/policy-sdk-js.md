@@ -89,7 +89,7 @@ export function validate(): void {
 
 ### Demo Policy
 
-Want to see the full power of the SDK? Check out our [comprehensive demo policy](https://github.com/kubewarden/policy-sdk-js/tree/main/demo_policy) that showcases all 14 host capability operations. It serves as both a learning resource and a testing suite, demonstrating real-world usage patterns for container registry access, network operations, Kubernetes resource queries, and signature verification.
+To see the full power of the SDK take a look at [comprehensive demonstration policy](https://github.com/kubewarden/policy-sdk-js/tree/main/demo_policy) that showcases all 14 host capability operations. It serves as both a learning resource and a testing suite, demonstrating real-world usage patterns for container registry access, network operations, Kubernetes resource queries, and signature verification.
 
 ## Get Started Today
 
