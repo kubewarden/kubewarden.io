@@ -18,7 +18,7 @@ Kubewarden uses [Javy](https://github.com/bytecodealliance/javy), a project from
 The compilation pipeline is straightforward:
 1. Write your policy in JavaScript or TypeScript
 2. Compile to WebAssembly using the SDK's tooling
-3. Deploy to your cluster like any other Kubewarden policy
+3. Deploy to your cluster, just like any other Kubewarden policy
 
 ## What's Included
 
