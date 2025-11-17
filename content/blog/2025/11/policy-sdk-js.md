@@ -46,6 +46,8 @@ To get started, clone our [policy template repository](https://github.com/kubewa
 - Example policy demonstrating best practices
 - Integration with Kubernetes TypeScript types for complete type safety
 
+For a step-by-step guide on using the template, check out our [comprehensive tutorial](https://docs.kubewarden.io/tutorials/writing-policies/typescript/intro-typescript).
+
 Here's what a simple policy looks like:
 ```typescript
 import { Validation, writeOutput } from 'kubewarden-policy-sdk';
