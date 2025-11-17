@@ -22,7 +22,7 @@ The compilation pipeline is straightforward:
 
 ## What's Included
 
-The SDK comes with everything you need to hit the ground running:
+The SDK comes with everything you need to get started:
 
 ### Host Capabilities APIs
 
