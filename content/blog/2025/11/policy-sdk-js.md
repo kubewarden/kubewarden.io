@@ -13,7 +13,7 @@ Kubewarden has always been about choice, letting you write policies in the langu
 
 ## How It Works
 
-Under the hood, we're leveraging [Javy](https://github.com/bytecodealliance/javy), a project from the Bytecode Alliance that compiles JavaScript to WebAssembly. This means your JavaScript policies run with the same security, portability, and performance characteristics as policies written in any other Kubewarden-supported language.
+Kubewarden uses [Javy](https://github.com/bytecodealliance/javy), a project from the Bytecode Alliance that compiles JavaScript to WebAssembly. This means your JavaScript policies run with the same security, portability, and performance characteristics as policies written in any other Kubewarden-supported language.
 
 The compilation pipeline is straightforward:
 1. Write your policy in JavaScript or TypeScript
