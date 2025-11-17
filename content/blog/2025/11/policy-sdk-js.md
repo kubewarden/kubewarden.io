@@ -38,7 +38,7 @@ All APIs are fully typed, giving you IntelliSense and type safety throughout you
 
 ### Policy Template
 
-Getting started is as simple as cloning our [policy template repository](https://github.com/kubewarden/js-policy-template/). The template includes:
+To get started, clone our [policy template repository](https://github.com/kubewarden/js-policy-template/). The template includes:
 
 - Pre-configured TypeScript compilation pipeline
 - Integration with the Kubewarden SDK
