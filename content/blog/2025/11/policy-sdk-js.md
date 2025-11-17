@@ -5,7 +5,7 @@ authors:
 date: 2025-11-16
 ---
 
-Writing Kubewarden policies just got a whole lot more accessible. Today, we're excited to announce the alpha release of the [Kubewarden JavaScript/TypeScript SDK](https://github.com/kubewarden/policy-sdk-js), bringing policy development to the world's most popular programming language.
+Writing Kubewarden policies is now even more accessible. Today, we're excited to announce the alpha release of the [Kubewarden JavaScript/TypeScript SDK](https://github.com/kubewarden/policy-sdk-js), bringing policy development to the world's most popular programming language.
 
 ## Why JavaScript for Kubernetes Policies?
 
