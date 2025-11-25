@@ -93,12 +93,12 @@ For kwctl, we dropped from the previous 1.30 release the optional
 `--fulcio-cert-path` and `--rekor-public-key-path` flags used to support custom
 Sigstore trusted roots or air-gapped environments.
 
-In this release, we are adding a new `--trust-config` flag which specifies a
+In this release, we are adding a new `--sigstore-trust-config` flag which specifies a
 path to this JSON file containing a
 [ClientTrustRoot](https://github.com/sigstore/protobuf-specs/blob/4d38e4482bf67c7ab86bf2f61e8d79010ac0974e/protos/sigstore_trustroot.proto#L341)
 object.
 
-This new `--trust-config` flag is also optional; if not specified, kwctl will
+This new `--sigstore-trust-config` flag is also optional; if not specified, kwctl will
 continue using the default upstream Sigstore services such as Rekor and Fulcio.
 
 Users that want to use kwctl against their own custom Rekor and Fulcio services,
