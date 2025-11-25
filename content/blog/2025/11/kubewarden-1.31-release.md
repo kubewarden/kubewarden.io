@@ -25,7 +25,7 @@ Thursday 11th of December to learn more and ask any questions you may have!
 
 The Kubewarden team is now maintaining a new policy, the `probes` policy. This
 policy checks the livenessProbe and readinessProbe of containers. You can find
-it as always on [artifacthub.io](https://artifacthub.io/packages/kubewarden/probes-policy/probes-policy).
+it, as always, on [artifacthub.io](https://artifacthub.io/packages/kubewarden/probes-policy/probes-policy).
 
 This policy was started in the community by Nicolas Mirault (nlamirault),
 who we thank. We felt the policy was a good candidate for being supported
