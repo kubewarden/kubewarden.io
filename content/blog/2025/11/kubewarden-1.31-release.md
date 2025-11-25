@@ -149,7 +149,7 @@ anyOf: null
 ```
 
 And now, we can create the new trusted root config, and pass it to
-kwctl using the new `--trust-config` flag:
+kwctl using the new `--sigstore-trust-config` flag:
 
 ```console
 $ cosign trusted-root create \
@@ -160,7 +160,7 @@ $ cosign trusted-root create \
   # this creates ./trust_config.json
 
 $ kwctl verify \
- --trust-config ./trust_config.json \
+ --sigstore-trust-config ./trust_config.json \
  --verification-config-path ./verification-config.yaml \
  registry://ghcr.io/jvanz/policies/testing-sigstore-localinfra:latest
 2025-11-10T19:23:35.965221Z INFO kwctl::verify: Policy successfully verified
