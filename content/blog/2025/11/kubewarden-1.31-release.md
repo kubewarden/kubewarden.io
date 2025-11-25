@@ -14,7 +14,7 @@ The running group is growing too!
 
 ## New peer project: SBOMScanner
 
-As we announced some weeks ago, Kubewarden family is growing with the adition
+As announced some weeks ago, the Kubewarden family is growing with the addition
 of SBOMscanner. Have a read of its [blog post here](https://www.kubewarden.io/blog/2025/11/expanding-kubewarden-scope/).
 
 Join us on our next [community monthly
@@ -27,8 +27,8 @@ The Kubewarden team is now maintaining a new policy, the `probes` policy. This
 policy checks the livenessProbe and readinessProbe of containers. You can find
 it as always on [artifacthub.io](https://artifacthub.io/packages/kubewarden/probes-policy/probes-policy).
 
-This policy was started in the community by Nicolas Mirault (nlamirault), to
-whom we thank. We felt the policy was a good candidate for being supported
+This policy was started in the community by Nicolas Mirault (nlamirault),
+who we thank. We felt the policy was a good candidate for being supported
 by the Kubewarden team and published in ArtifactHub, so we have elected to
 [fork](https://github.com/kubewarden/probes-policy), release, and maintain our
 own policy based on it.
@@ -80,16 +80,16 @@ to more policy ideas from the community!
 
 ## kwctl accepts the new Sigstore ClientTrustConfig format (BYO-PKI)
 
-On the previous 1.30 release [we
-talked](https://www.kubewarden.io/blog/2025/10/kubewarden-1.30-release/) on how
+For the previous 1.30 release [we
+talked](https://www.kubewarden.io/blog/2025/10/kubewarden-1.30-release/) about how
 we are performing a migration to Cosign v3. Sigstore tools are moving away from
-consuming several config files containing certificates and endpoints, and into
+consuming several config files containing certificates and endpoints, and towards
 consuming a single JSON configuration file with all the certificates, URLs and
-information to perform signing and verifications, which is colloquially named
+information to perform signing and verifications. It's colloquially named
 "Bring Your Own PKI (BYO-PKI)". This makes things simpler for clients such as
-kwctl and users in an air-gap.
+kwctl and users in an air-gap environment.
 
-For kwctl, we dropped on the previous 1.30 release the optional
+For kwctl, we dropped from the previous 1.30 release the optional
 `--fulcio-cert-path` and `--rekor-public-key-path` flags used to support custom
 Sigstore trusted roots or air-gapped environments.
 
@@ -166,7 +166,7 @@ $ kwctl verify \
 2025-11-10T19:23:35.965221Z INFO kwctl::verify: Policy successfully verified
 ```
 
-Sucess!
+Success!
 
 This showcases a great path for using Kubewarden + Sigstore in air-gap
 scenarios or with custom Sigstore stacks. Stay tuned!
