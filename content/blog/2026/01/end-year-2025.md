@@ -7,9 +7,9 @@ date: 2026-01-05
 
 Join us in celebrating a fruitful 2025 for the Kubewarden project!
 
-The team has spent equal times planting kernels and enjoying the fruits of
-grown ideas. Let's look together at what the basket brings as we say ciao to 2025.
-Grab anything you like for the way!
+The team has spent time planting kernels and enjoying the fruit of
+the grown ideas. Let's look together at what the basket brings as we say ciao to 2025.
+Grab anything you like for the trip!
 
 ## Expanding the Scope: Introducing SBOMScanner
 
@@ -81,9 +81,9 @@ Our stack now supports mTLS for webhook servers, full Pod Security Admission
 restricted profile compliance, and granular per-policy evaluation timeouts.
 These features empower operators to deploy Kubewarden at scale with confidence.
 
-As usual, we continously paid our technical debt, labored and tilled. We took
-care of our dependencies, automations, and overall architecture to ensure we
-have a reliable and secure project.
+As usual, we continuously paid our technical debt, laboring and tilling. We took
+care of our dependencies, automations, overall architecture, and documentation 
+to ensure we have a reliable and secure project.
 
 ## Community and Collaboration
 
