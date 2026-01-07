@@ -2,7 +2,7 @@
 title: "The year in review: Kubewarden's progress in 2025"
 authors:
   - Víctor Cuadrado Juan
-date: 2026-01-05
+date: 2026-01-07
 ---
 
 Join us in celebrating a fruitful 2025 for the Kubewarden project!
