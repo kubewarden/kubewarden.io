@@ -62,24 +62,25 @@ As usual, all our policies are available in [artifacthub.io](https://artifacthub
 
 2025 marked a milestone with the release of the [JavaScript/TypeScript
 SDK](https://www.kubewarden.io/blog/2025/11/policy-sdk-js), thanks to a
-successful Google Summer of Code project from Esosa Ohangbon. Policy developers
+successful Google Summer of Code project from [Esosa Ohangbon](https://github.com/esosaoh). Policy developers
 can now write policies in the world’s most popular language, using a fully
 typed SDK and a ready-to-use policy template. This opens Kubewarden to a
 broader audience and fosters new contributions.
 
 ## An eye on Usability and Scale
 
-Our CLI tool, `kwctl`, saw major improvements: support for running
+Our CLI tool, `kwctl`, saw [major improvements](https://www.kubewarden.io/blog/2025/06/kubewarden-1.26-release/): support for running
 policies and policy groups from YAML, custom rejection messages, and local
 evaluation mirroring in-cluster behavior.
 
-Helm charts gained air-gap install support via Hauler manifests, and small
+Helm charts gained [air-gap install support via Hauler manifests](https://www.kubewarden.io/blog/2025/08/kubewarden-1.28-release/), and small
 tidbits to simplify deployments at scale. Our Audit Scanner now supports both
-legacy PolicyReports and new OpenReports CRDs.
+legacy PolicyReports and new [OpenReports CRDs](https://www.kubewarden.io/blog/2025/04/openreport/).
 
-Our stack now supports mTLS for webhook servers, full Pod Security Admission
-restricted profile compliance, and granular per-policy evaluation timeouts.
-These features empower operators to deploy Kubewarden at scale with confidence.
+```suggestion
+Our stack now supports [mTLS for webhook servers, full Pod Security Admission
+restricted profile compliance](https://www.kubewarden.io/blog/2025/03/kubewarden-1.23-release/), and [granular per-policy evaluation timeouts](https://www.kubewarden.io/blog/2025/10/kubewarden-1.29-release/).
+These features empower operators to [deploy Kubewarden at scale](https://docs.kubewarden.io/howtos/deploy-at-scale) with confidence.
 
 As usual, we continuously paid our technical debt, laboring and tilling. We took
 care of our dependencies, automations, overall architecture, and documentation 
