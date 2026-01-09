@@ -77,7 +77,6 @@ Helm charts gained [air-gap install support via Hauler manifests](https://www.ku
 tidbits to simplify deployments at scale. Our Audit Scanner now supports both
 legacy PolicyReports and new [OpenReports CRDs](https://www.kubewarden.io/blog/2025/04/openreport/).
 
-```suggestion
 Our stack now supports [mTLS for webhook servers, full Pod Security Admission
 restricted profile compliance](https://www.kubewarden.io/blog/2025/03/kubewarden-1.23-release/), and [granular per-policy evaluation timeouts](https://www.kubewarden.io/blog/2025/10/kubewarden-1.29-release/).
 These features empower operators to [deploy Kubewarden at scale](https://docs.kubewarden.io/howtos/deploy-at-scale) with confidence.
