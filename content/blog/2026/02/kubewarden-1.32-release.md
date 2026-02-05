@@ -6,30 +6,30 @@ date: 2026-02-05
 ---
 
 Another year rolls around, and Kubewarden is still growing like a well-watered
-houseplant! Kubewarden got a new year’s resolution to tidy up and repot, and
-have gone full in with this digital gardening. This release is a maintenance
+houseplant! Kubewarden got a New Year’s resolution to tidy up and repot, and
+have gone full on with digital gardening. This release is a maintenance
 one, with big moves to monorepos and a refresh in release artifacts.
 
 
 ## New Admission Controller monorepo
 
-With the inclusion of [SBOMscanner](https://www.kubewarden.io/blog/2025/11/expanding-kubewarden-scope)
-to the Kubewarden harvest, we saw a great moment for cleanup on the Admission Controller side.
+With the addition of [SBOMscanner](https://www.kubewarden.io/blog/2025/11/expanding-kubewarden-scope)
+to the Kubewarden harvest, we saw a great opportunity for cleanup on the Admission Controller side.
 
 Previously, we had several repositories for all the bits and pieces. Main repos
 such as [kubewarden-controller](github.com/kubewarden/kubewarden-controller),
 [policy-server](github.com/kubewarden/policy-server),
 [audit-scanner](github.com/kubewarden/audit-scanner), and
-[kwctl](github.com/kubewarden/kwctl). And library repos such as
+[kwctl](github.com/kubewarden/kwctl). Also library repos such as
 [policy-evaluator](github.com/kubewarden/policy-evaluator),
 [policy-fetcher](github.com/kubewarden/policy-fetcher),
 [context-aware-test-policy](github.com/kubewarden/context-aware-test-policy), and so on.
 
-Now, all of that them are included in our admission controller monorepo:
+Now, all of those are included in our admission controller monorepo:
 
 **[github.com/kubewarden/kubewarden-controller](https://github.com/kubewarden/kubewarden-controller)**
 
-This monorepo now contains all the bits and libraries to build the Admission
+This monorepo contains all the bits and libraries to build the Admission
 Controller and our `kwctl` CLI library.
 
 To make this monorepo a reality, we tackled quite the list of tasks for each of
@@ -40,7 +40,7 @@ streamlined GitHub release and package automation, cleaned up legacy
 directories, and updated development documentation and contribution guidelines
 between others.
 
-This turned out to be an epic effort, and we are happy on how it's turning up.
+This turned out to be an epic effort, and we are happy with how it's turning out.
 It ensures that every part of the Admission Controller, from code to releases
 now lives and grows together, making development smoother and future
 improvements easier for everyone.
@@ -80,8 +80,8 @@ each in their own repository.
 The new policies monorepo has per-policy Makefiles, and a CI/CD that heavily
 reuses those local Make targets.  Of course, with end-to-end tests, unit tests,
 format and linting. We also continue to have nice dependency and release
-automation with [Updatecli](https://www.updatecli.io/) and Renovate bot, and a
-ton of less GitHub notifications, which is a joy to maintain. We are happy to
+automation with [Updatecli](https://www.updatecli.io/) and Renovate bot, and have
+a ton less GitHub notifications, which is a joy to maintain. We are happy to
 see that contributors find it easier to work with them too!
 
 All these policies are released in
@@ -96,12 +96,12 @@ This monorepo mirrors our already existing monorepo for Rego policies in
 
 ## Changes to release artifacts
 
-The `kwctl` CLI binary release artifacts can now be found in the [GitHub
+The `kwctl` CLI binary release artifacts are now found in the [GitHub
 releases](https://github.com/kubewarden/kubewarden-controller/releases) of our
 controller monorepo.
 
 The GitHub releases under [kubewarden/helm-charts](https://github.com/kubewarden/helm-charts/releases)
-don't ship anymore a `<charts>_images.xt`, yet each of the Helm charts keep
+no longer ship a `<charts>_images.xt`, and each of the Helm charts keep
 including their own `imagelist.txt` and `policylist.txt` inside the charts to
 aid in air-gap installation. See our updated [air-gap
 docs](https://docs.kubewarden.io/next/howtos/airgap/install) (we recommend
@@ -134,11 +134,11 @@ for this change.
 
 ## Simplifying versioning: patching together
 
-Previously, our images and our `kwctl` CLI utility could to get patch releases
+Previously, our images and our `kwctl` CLI utility could get patch releases
 independently. For example, we could have a `policy-server:1.32.0` image and
 `kwctl` in version `1.32.1`.
 
-From now on, we will release the Kubewarden Admission Controller stack all in
+From now on, we will release the Kubewarden Admission Controller stack in
 sync: if the `policy-server` container image gets a patch release, so will be
 the `kubewarden-controller` image and our `kwctl` utility. As usual, we have
 documented this in our [RFC](https://github.com/kubewarden/rfc/pull/53) repo,
