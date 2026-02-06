@@ -7,7 +7,7 @@ date: 2026-02-05
 
 Another year rolls around, and Kubewarden is still growing like a well-watered
 houseplant! Kubewarden got a New Year’s resolution to tidy up and repot, and
-have gone full on with digital gardening. This release is a maintenance
+has gone full on with digital gardening. This release is a maintenance
 one, with big moves to monorepos and a refresh in release artifacts.
 
 ## New Admission Controller monorepo
@@ -40,7 +40,7 @@ directories, and updated development documentation and contribution guidelines
 between others.
 
 This turned out to be an epic effort, and we are happy with how it's turning out.
-It ensures that every part of the Admission Controller, from code to releases
+It ensures that every part of the Admission Controller, from code to releases,
 now lives and grows together, making development smoother and future
 improvements easier for everyone.
 
@@ -84,7 +84,7 @@ see that contributors find it easier to work with them too!
 All these policies are released in
 [artifacthub.io](https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1),
 and nothing has changed there. Thanks to the Artifact Hub maintainers
-collaboration, we were able to migrate all of them without hiccup. Cheers to
+collaboration, we were able to migrate all of them without a hiccup. Cheers to
 them!
 
 This monorepo mirrors our already existing monorepo for Rego policies in
@@ -97,7 +97,7 @@ releases](https://github.com/kubewarden/kubewarden-controller/releases) of our
 controller monorepo.
 
 The GitHub releases under [kubewarden/helm-charts](https://github.com/kubewarden/helm-charts/releases)
-no longer ship a `<charts>_images.xt`, and each of the Helm charts keep
+no longer ship a `<charts>_images.xt`, and each of the Helm charts keeps
 including their own `imagelist.txt` and `policylist.txt` inside the charts to
 aid in air-gap installation. See our updated [air-gap
 docs](https://docs.kubewarden.io/next/howtos/airgap/install) (we recommend
@@ -118,7 +118,7 @@ differently as their GitHub release workflow URI has changed:
 - Policies are now signed by the `github.com/kubewarden/policies` `release.yml` job.
 
 For example, the `policy-server` image was previously produced by a GH release
-workflow under kubewarden/policy-server and now is generated from
+workflow under kubewarden/policy-server and is now generated from
 kubewarden/kubewarden-controller. This means that:
 
 - Old `policy-server:v1.31.0` CertificateIdentity used to have SAN value of:
