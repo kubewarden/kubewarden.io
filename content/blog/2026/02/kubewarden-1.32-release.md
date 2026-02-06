@@ -10,7 +10,6 @@ houseplant! Kubewarden got a New Year’s resolution to tidy up and repot, and
 have gone full on with digital gardening. This release is a maintenance
 one, with big moves to monorepos and a refresh in release artifacts.
 
-
 ## New Admission Controller monorepo
 
 With the addition of [SBOMscanner](https://www.kubewarden.io/blog/2025/11/expanding-kubewarden-scope)
@@ -45,7 +44,6 @@ It ensures that every part of the Admission Controller, from code to releases
 now lives and grows together, making development smoother and future
 improvements easier for everyone.
 
-
 ### Developing with Tilt
 
 Tilt is a developer tool that installs your local Helm charts, rebuilds your
@@ -65,7 +63,6 @@ Read our refreshed
 [CONTRIBUTING.md](https://github.com/kubewarden/kubewarden-controller/blob/main/CONTRIBUTING.md#development)
 to get up to speed.
 
-
 ## New Policies monorepo
 
 What better moment to keep folding repositories than this release. We have also
@@ -78,7 +75,7 @@ This monorepo contains (at the time of writing) 55 policies that used to live
 each in their own repository.
 
 The new policies monorepo has per-policy Makefiles, and a CI/CD that heavily
-reuses those local Make targets.  Of course, with end-to-end tests, unit tests,
+reuses those local Make targets. Of course, with end-to-end tests, unit tests,
 format and linting. We also continue to have nice dependency and release
 automation with [Updatecli](https://www.updatecli.io/) and Renovate bot, and have
 a ton less GitHub notifications, which is a joy to maintain. We are happy to
@@ -92,7 +89,6 @@ them!
 
 This monorepo mirrors our already existing monorepo for Rego policies in
 [kubewarden/rego-policies-library](github.com/kubewarden/rego-policies-library).
-
 
 ## Changes to release artifacts
 
@@ -109,11 +105,12 @@ using [Hauler](https://docs.hauler.dev/docs/intro)).
 
 ### Changes to Cosign signature metadata
 
-Cosign signatures of our artifacts have changed their CertificateIdentity with
+Cosign signatures of our artifacts have changed their `CertificateIdentity` with
 the change of repositories.
 
 Container images, kwctl, and policies are now performed
 differently as their GitHub release workflow URI has changed:
+
 - `policy-server`, `audit-scanner` images are now signed by the
   `github.com/kubewarden/kubewarden-controller` `release.yml` job
 - `kwctl` artifacts are now signed by the
@@ -123,6 +120,7 @@ differently as their GitHub release workflow URI has changed:
 For example, the `policy-server` image was previously produced by a GH release
 workflow under kubewarden/policy-server and now is generated from
 kubewarden/kubewarden-controller. This means that:
+
 - Old `policy-server:v1.31.0` CertificateIdentity used to have SAN value of:
   `"https://github.com/kubewarden/policy-server/.github/workflows/release.yml@refs/tags/v1.31.0"`
 - New `policy-server:v1.32.0` has now SAN value of:
@@ -130,7 +128,6 @@ kubewarden/kubewarden-controller. This means that:
 
 The [slsactl](https://github.com/rancherlabs/slsactl) utility has been updated
 for this change.
-
 
 ## Simplifying versioning: patching together
 
@@ -145,16 +142,14 @@ documented this in our [RFC](https://github.com/kubewarden/rfc/pull/53) repo,
 as well as updated the
 [docs](https://docs.kubewarden.io/next/reference/upgrade-path#stack-version-compatibility-among-components).
 
-
 ## Ongoing cleanup touches
 
-there's still some minor cleanups, reorg, and even further automation to
+There's still some minor cleanups, reorg, and even further automation to
 perform for the benefit of developers. These cleanups will land in future
 versions.
 
-Our docs at doc.kubewarden.io will also get expanded in the near future. Stay
+Our docs at [doc.kubewarden.io](https://docs.kubewarden.io) will also get expanded in the near future. Stay
 tuned!
-
 
 # Getting in touch
 
