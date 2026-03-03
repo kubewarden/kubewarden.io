@@ -9,16 +9,16 @@ This release is an important one, with deprecations, and features galore.
 
 ## Deprecation of old context-aware API calls
 
-The following host-callbacks API calls, which were marked as deprecated since a
+The following host-callback API calls, which have been marked as deprecated for a
 long time, have been removed: `kubernetes/ingresses`, `kubernetes/namespaces`,
-`kubernetes/services`. These allowed to respectively read Ingresses,
+`kubernetes/services`. These allowed reading Ingresses,
 Namespaces, and Services resources.
 
-These host-capabilities had been already superseded  since a long time by
+These host-capabilities have already been superseded for a long time by
 `kubewarden/kubernetes/list_resources_by_namespace`,
 `kubewarden/kubernetes/list_resources`, and
-`kubewarden/kubernetes/get_resource`, which provided similar capabilities while
-being more fine grained. These current host-capabilities are part of Kubernetes
+`kubewarden/kubernetes/get_resource`. They provide similar capabilities while
+being more fine-grained. These current host-capabilities are part of Kubernetes
 capabilities listed in our
 [docs](https://docs.kubewarden.io/reference/spec/host-capabilities/kubernetes).
 
@@ -35,20 +35,20 @@ With this release, we are defaulting to OpenReports instead.
 Both CRDs for the deprecated `wgk8spolicy.io` PolicyReports and the new
 OpenReports are still installed by the `kubewarden-crds` Helm chart for now.
 
-The Audit Scanner is configured to produce OpenReports now. Users wishing to
+The Audit Scanner is now configured to produce OpenReports. Users wishing to
 maintain the previous behavior, can change the `kubewarden-controller` Helm
 chart value of `.Values.auditScanner.reportCRDsKind` from `openreports` to
 `policyreport`.
 
 When the Audit Scanner is configured to create OpenReports (the new default), 
-upon each scan, it performs a one-time cleanup of old
+with each scan, it performs a one-time cleanup of old
 `wgk8spolicy.io` PolicyReports and ClusterPolicyReports. This cleanup is performant.
 
 In a future release, both creation of `wgk8spolicy.io` PolicyReports and their
 CRDs installation will be removed.
 
 The included sub-chart for policy-reporter already supports OpenReports and
-will continue to function for both the deprecated `wgk8spolicy.io`
+continues to function for both the deprecated `wgk8spolicy.io`
 PolicyReports and OpenReports without any reconfiguration.
 
 ## Support for custom Sigstore trust roots and BYO-PKI in policy-server
@@ -66,9 +66,9 @@ services (like those inside an air-gap) can now set the PolicyServer
 configuration.
 
 The ConfigMap must contain the JSON in a key named `sigstore-trust-config`, and
-it must be on the same Namespace as the PolicyServer.
+it must be in the same Namespace as the PolicyServer.
 
-For the default PolicyServer installed via the `kubewarden-defaults` Helm chart,
+For the default PolicyServer, installed via the `kubewarden-defaults` Helm chart,
 the ConfigMap name can be configured via its `.Values.sigstoreTrustConfig`.
 
 ## Field mask filtering for Kubernetes context aware calls
@@ -101,7 +101,7 @@ and exposed this feature as a native CEL function, `<Client>.fieldMask(<string>)
 You can read more in the [go CEL docs](https://pkg.go.dev/github.com/kubewarden/policies/internal/cel/library#Kubernetes)
 of the policy.
 
-As an example, the following CEL code returns the `nginx` Pod and with only its
+As an example, the following CEL code returns the `nginx` Pod with only its
 `metadata.labels` field:
 
 ```cel
@@ -116,9 +116,9 @@ only their `metadata.name` and `medata.namespace` fields:
 kw.k8s.apiVersion('v1').kind('Pod').fieldMask('metadata.name').fieldMask('metadata.namespace').list()
 ```
 
-## Configuring clusterwide policies to run in the kubewarden namespace
+## Configuring cluster-wide policies to run in the kubewarden namespace
 
-By default, the Kubewarden admission controller configures *all clustwide
+By default, the Kubewarden admission controller configures *all cluster-wide
 policies* to ignore the namespace in which the controller is running (usually,
 `kubewarden`).
 
@@ -129,16 +129,16 @@ fail, as its container images are signed by the Kubewarden team.
 
 In some cases though, users may want to run ClusterAdmissionPolicies or
 ClusterAdmissionPolicyGroups also in the namespace of the Admission Controller,
-for example if aiding with resource allocation or
+for example if aiding resource allocation or
 preventing core namespaces from being modified.
 
 For those really unusual cases, cluster operators can now deploy Kubewarden
 clusterwide policies to also apply to the Admission Controller namespace by
 setting their `spec.allowInsideKubewardenNamespace`to `true`.
 
-Namespaced policies don't have this posibility, of course.
+This is not possible with namespaced policies.
 
-We expect cluster operators to seldomly make use of this feature, and we
+We expect cluster operators to rarely use this feature. We
 recommend caution when doing so.
 
 ## Proxy configuration
@@ -148,14 +148,14 @@ usual environment variables `HTTPS_PROXY`, `HTTP_PROXY`, `NO_PROXY`  (and their
 lowercase counterparts), or via the `sources.yaml` file.
 
 This proxy configuration routes policy pulling and pushing, as well as those
-context-aware capabilities that make use of network, such as obtaining an OCI
+context-aware capabilities that make use of the network, such as obtaining an OCI
 image digest or Sigstore operations. Read more about it in our
 [how-to](https://docs.kubewarden.io/howtos/proxy-configuration) docs.
 
 ## Versioning of the policy-server cert Secret
 
 Starting with this release, the Secret that contains the PolicyServer
-certificate is now versioned via an annotation, to facilitate maintenance and
+certificate is now versioned via an annotation, to ease maintenance and
 future migrations. This means that on first install/upgrade of this release,
 the Secret and certificate will be automatically recreated to match this new
 scheme. This doesn't affect users.
