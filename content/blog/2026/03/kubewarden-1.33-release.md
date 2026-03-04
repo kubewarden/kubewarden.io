@@ -29,23 +29,30 @@ The removed calls were not being exercised by any Kubewarden SDK.
 Since `v1.30` [we have optionally supported
 OpenReports](https://www.kubewarden.io/blog/2025/10/kubewarden-1.30-release/)
 as an output report format of our Audit Scanner. In that release we marked the
-`wgk8spolicy.io` PolicyReports as deprecated.
+`wgk8spolicy.io` PolicyReports CRDs as deprecated, but we kept installing them
+by default.
 
-With this release, we are defaulting to OpenReports instead.
-Both CRDs for the deprecated `wgk8spolicy.io` PolicyReports and the new
-OpenReports are still installed by the `kubewarden-crds` Helm chart for now.
+With this release, we are defaulting to OpenReports instead. The CRDs for
+`wgk8spolicy.io` PolicyReports are not installed by default anymore by the
+`kubewarden-crds`, only the new OpenReports. The Audit Scanner is configured to
+produce OpenReports by default now.
 
-The Audit Scanner is now configured to produce OpenReports. Users wishing to
-maintain the previous behavior, can change the `kubewarden-controller` Helm
-chart value of `.Values.auditScanner.reportCRDsKind` from `openreports` to
-`policyreport`.
+Users wishing to maintain the previous behavior need to:
+- Change the `kubewarden-crds` Helm chart value of
+  `.Values.install.installPolicyReportCRDs` to `true`.
+- Change the `kubewarden-controller` Helm chart value of
+  `.Values.auditScanner.reportCRDsKind` from `openreports` to `policyreport`.
 
-When the Audit Scanner is configured to create OpenReports (the new default), 
-with each scan, it performs a one-time cleanup of old
-`wgk8spolicy.io` PolicyReports and ClusterPolicyReports. This cleanup is performant.
+Old existing `wgk8spolicy.io` reports CRs will be removed when performing the
+upgrade, as the CRDs for them are removed. In the case that the user had
+installed the `wgk8spolicy.io` CRDs by other means, if the Audit Scanner is
+configured to create OpenReports (the new default), upon each scan, it performs
+a one-time cleanup of old `wgk8spolicy.io` PolicyReports and
+ClusterPolicyReports that were created by Kubewarden. This cleanup is
+performant.
 
-In a future release, both creation of `wgk8spolicy.io` PolicyReports and their
-CRDs installation will be removed.
+In a future release, the option to create `wgk8spolicy.io` PolicyReports
+and their optional CRDs installation will both be removed.
 
 The included sub-chart for policy-reporter already supports OpenReports and
 continues to function for both the deprecated `wgk8spolicy.io`
