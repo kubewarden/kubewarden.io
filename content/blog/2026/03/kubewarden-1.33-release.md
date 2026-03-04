@@ -116,27 +116,31 @@ only their `metadata.name` and `medata.namespace` fields:
 kw.k8s.apiVersion('v1').kind('Pod').fieldMask('metadata.name').fieldMask('metadata.namespace').list()
 ```
 
-## Configuring cluster-wide policies to run in the kubewarden namespace
+## Configuring policies to run in the kubewarden namespace
 
-By default, the Kubewarden admission controller configures *all cluster-wide
-policies* to ignore the namespace in which the controller is running (usually,
-`kubewarden`).
+By default, the Kubewarden admission controller is configured so *all policies*
+pass in the namespace in which the controller is running (usually, `kubewarden`).
 
-This prevents the user from locking the cluster if they misconfigure policies.
-For example, expecting *all* container images to be signed by Issuer `my.corp`
-would make the Deployment of the Kubewarden Admission Controller eventually
-fail, as its container images are signed by the Kubewarden team.
+This prevents the user from locking the cluster if they misconfigure policies,
+or interfering with the PolicyServers there. For example, expecting *all*
+container images to be signed by Issuer `my.corp` would make the Deployment of
+the Kubewarden Admission Controller eventually fail, as its container images
+are signed by the Kubewarden team. Or mutating PolicyServers, which may affect
+not only their desired PolicyServers but others.
 
-In some cases though, users may want to run ClusterAdmissionPolicies or
-ClusterAdmissionPolicyGroups also in the namespace of the Admission Controller,
-for example if aiding resource allocation or
-preventing core namespaces from being modified.
+In some cases though, users may want to run policies in the namespace of the
+Admission Controller, for example if aiding resource allocation or preventing
+core namespaces from being modified.
 
 For those really unusual cases, cluster operators can now deploy Kubewarden
-clusterwide policies to also apply to the Admission Controller namespace by
-setting their `spec.allowInsideKubewardenNamespace`to `true`.
-
-This is not possible with namespaced policies.
+policies to also apply to the Admission Controller namespace by doing the following:
+- Configure the Admission Controller to accept AdmissionReviews for policies in
+  the controller namespace by setting the `kubewarden-controller` Helm chart
+  values `.Values.alwaysAcceptAdmissionReviewsOnDeploymentsNamespace` to `false`.
+  This means that both clusterwide and namespaced policies may apply to the
+  namespace where the Deployments for the controller and PolicyServers are.
+- If deploying clusterwide policies, do so with their new
+  `spec.allowInsideAdmissionControllerNamespace`to `true`.
 
 We expect cluster operators to rarely use this feature. We
 recommend caution when doing so.
