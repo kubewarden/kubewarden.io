@@ -1,5 +1,5 @@
 ---
-title: "Kubewarden 1.33 Release"
+title: "Admission Controller 1.33 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2026-03-03
