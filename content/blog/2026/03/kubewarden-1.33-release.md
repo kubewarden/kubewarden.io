@@ -78,6 +78,10 @@ it must be in the same Namespace as the PolicyServer.
 For the default PolicyServer, installed via the `kubewarden-defaults` Helm chart,
 the ConfigMap name can be configured via its `.Values.sigstoreTrustConfig`.
 
+Have a read at our new [documentation
+page](https://docs.kubewarden.io/howtos/policy-servers/private-sigstore) on how
+to configure this feature.
+
 ## Field mask filtering for Kubernetes context aware calls
 
 When policies perform queries about Kubernetes resources via context-aware
@@ -105,7 +109,7 @@ SDK authors can also find this new `field_masks` input field in the Kubernetes
 In addition, we have enhanced our
 [cel-policy](https://artifacthub.io/packages/kubewarden/kubewarden-policy-library/cel-policy),
 and exposed this feature as a native CEL function, `<Client>.fieldMask(<string>)`.
-You can read more in the [go CEL docs](https://pkg.go.dev/github.com/kubewarden/policies/internal/cel/library#Kubernetes)
+You can read more in the [go CEL docs](https://github.com/kubewarden/policies/blob/main/policies/cel-policy/internal/cel/library/kubernetes.go#L70-L90)
 of the policy.
 
 As an example, the following CEL code returns the `nginx` Pod with only its
@@ -150,7 +154,9 @@ policies to also apply to the Admission Controller namespace by doing the follow
   `spec.allowInsideAdmissionControllerNamespace`to `true`.
 
 We expect cluster operators to rarely use this feature. We
-recommend caution when doing so.
+recommend caution when doing so. If interested, you can see our [documentation
+page](https://docs.kubewarden.io/howtos/policies-eval-resources-in-controller-namespace)
+for it.
 
 ## Proxy configuration
 
