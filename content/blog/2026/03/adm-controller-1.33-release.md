@@ -19,7 +19,7 @@ post](https://www.kubewarden.io/blog/2026/02/not-affected-by-cve-2026-22039/)
 we explained how our architecture protects namespaced policy users from
 privilege escalations. While this still stands, Ville Vesilehto
 ([thevilledev](https://github.com/thevilledev) on GitHub) found the following
-security vulnerability: an attacker with permissions to create
+[security vulnerability](https://github.com/kubewarden/kubewarden-controller/security/advisories/GHSA-6r7f-3fwq-hq74): an attacker with permissions to create
 AdmissionPolicies could make use of 3 deprecated host-callbacks
 (`kubernetes/ingresses`, `kubernetes/namespaces`, `kubernetes/services`) to
 craft a policy that would allow them read access to Ingresses, Namespaces, and
@@ -34,7 +34,7 @@ could read, for example:
 - Services across all namespaces with ClusterIPs and ports to reveal cluster
   internal topology.
 
-This security issue has received **CVE-2026-29773**, with score 2.7(low). We thank
+This security issue has received **CVE-2026-29773**, with score 4.3(moderate). We thank
 Ville for finding this vulnerability and responsible disclosure!
 
 In this release we remove these vulnerable and already-deprecated host-callback
