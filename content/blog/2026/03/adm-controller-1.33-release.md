@@ -2,27 +2,52 @@
 title: "Admission Controller 1.33 Release"
 authors:
   - Víctor Cuadrado Juan
-date: 2026-03-03
+date: 2026-03-09
 ---
 
-This release is an important one, with deprecations, and features galore.
+The garden is thriving and Kubewarden 1.33 is ready to bloom! Following last
+release's big repotting, this one is serious about pruning, including a
+security issue. It's not all housekeeping though, fresh flowers are blooming
+and come with nice features: BYO-PKI landing in the policy-server, field mask
+filtering for context-aware calls, proxy support, and a few more treats. Let's
+dig in!
 
-## Deprecation of old context-aware API calls
+## Security fix: Cross-namespace data access, removal of deprecated API calls
 
-The following host-callback API calls, which have been marked as deprecated for a
-long time, have been removed: `kubernetes/ingresses`, `kubernetes/namespaces`,
-`kubernetes/services`. These allowed reading Ingresses,
-Namespaces, and Services resources.
+In our [previous
+post](https://www.kubewarden.io/blog/2026/02/not-affected-by-cve-2026-22039/)
+we explained how our architecture protects namespaced policy users from
+privilege escalations. While this still stands, Ville Vesilehto
+([thevilledev](https://github.com/thevilledev) on GitHub) found the following
+security vulnerability: an attacker with permissions to create
+AdmissionPolicies could make use of 3 deprecated host-callbacks
+(`kubernetes/ingresses`, `kubernetes/namespaces`, `kubernetes/services`) to
+craft a policy that would allow them read access to Ingresses, Namespaces, and
+Services resources respectively.
 
-These host-capabilities have already been superseded for a long time by
+This attack is read-only, there is no write capability and no access to
+Secrets, ConfigMaps, or other resource types beyond these three. The attacker
+could read, for example:
+
+- Ingresses across all namespaces with hostnames and routing rules.
+- Namespace names and labels.
+- Services across all namespaces with ClusterIPs and ports to reveal cluster
+  internal topology.
+
+This security issue has received **CVE-2026-29773**, with score 2.7(low). We thank
+Ville for finding this vulnerability and responsible disclosure!
+
+In this release we remove these vulnerable and already-deprecated host-callback
+API calls (`kubernetes/ingresses`, `kubernetes/namespaces`, `kubernetes/services`).
+The removed calls were not being used by any Kubewarden SDK.
+
+These host-callbacks had already long been superseded by
 `kubewarden/kubernetes/list_resources_by_namespace`,
 `kubewarden/kubernetes/list_resources`, and
 `kubewarden/kubernetes/get_resource`. They provide similar capabilities while
-being more fine-grained. These current host-capabilities are part of Kubernetes
-capabilities listed in our
-[docs](https://docs.kubewarden.io/reference/spec/host-capabilities/kubernetes).
-
-The removed calls were not being exercised by any Kubewarden SDK.
+being more granular, performant, and gated through our context-aware permissions
+feature. These current host-capabilities are part of the Kubernetes capabilities
+listed in our [documentation](https://docs.kubewarden.io/reference/spec/host-capabilities/kubernetes).
 
 ## Deprecation of `wgk8spolicy.io` in favour of OpenReports
 
@@ -38,6 +63,7 @@ With this release, we are defaulting to OpenReports instead. The CRDs for
 produce OpenReports by default now.
 
 Users wishing to maintain the previous behavior need to:
+
 - Change the `kubewarden-crds` Helm chart value of
   `.Values.install.installPolicyReportCRDs` to `true`.
 - Change the `kubewarden-controller` Helm chart value of
@@ -92,7 +118,7 @@ full Kubernetes object, with its versions and fields.
 
 To improve performance, we have enhanced our Kubernetes context aware calls
 with an optional `field_masks` field that prunes the Kubernetes resource to
-contain *only* the specified fields.
+contain _only_ the specified fields.
 
 Our [image-cve-policy](https://artifacthub.io/packages/kubewarden/kubewarden-policy-library/image-cve-policy),
 exercised by our SBOMscanner project, now makes use of this feature. This
@@ -129,11 +155,11 @@ kw.k8s.apiVersion('v1').kind('Pod').fieldMask('metadata.name').fieldMask('metada
 
 ## Configuring policies to run in the kubewarden namespace
 
-By default, the Kubewarden admission controller is configured so *all policies*
+By default, the Kubewarden admission controller is configured so _all policies_
 pass in the namespace in which the controller is running (usually, `kubewarden`).
 
 This prevents the user from locking the cluster if they misconfigure policies,
-or interfering with the PolicyServers there. For example, expecting *all*
+or interfering with the PolicyServers there. For example, expecting _all_
 container images to be signed by Issuer `my.corp` would make the Deployment of
 the Kubewarden Admission Controller eventually fail, as its container images
 are signed by the Kubewarden team. Or mutating PolicyServers, which may affect
@@ -145,6 +171,7 @@ core namespaces from being modified.
 
 For those really unusual cases, cluster operators can now deploy Kubewarden
 policies to also apply to the Admission Controller namespace by doing the following:
+
 - Configure the Admission Controller to accept AdmissionReviews for policies in
   the controller namespace by setting the `kubewarden-controller` Helm chart
   values `.Values.alwaysAcceptAdmissionReviewsOnDeploymentsNamespace` to `false`.
@@ -161,7 +188,7 @@ for it.
 ## Proxy configuration
 
 Both `kwctl` and `policy-server` support now proxy configuration via either the
-usual environment variables `HTTPS_PROXY`, `HTTP_PROXY`, `NO_PROXY`  (and their
+usual environment variables `HTTPS_PROXY`, `HTTP_PROXY`, `NO_PROXY` (and their
 lowercase counterparts), or via the `sources.yaml` file.
 
 This proxy configuration routes policy pulling and pushing, as well as those
