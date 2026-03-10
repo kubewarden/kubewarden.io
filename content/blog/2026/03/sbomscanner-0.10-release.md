@@ -32,6 +32,15 @@ This allows users to query the API and resolve all architecture-specific images
 back to their parent digest, providing much better visibility into supply chain 
 metadata for diverse hardware environments.
 
+Here's how the user can retrieve all the images belonging to the same `indexDigest`:
+
+```
+kubectl get images --field-selector imageMetadata.indexDigest=sha256:9027c22b27e600e56eef6b35771629e9d14a7e9075170f516845d30b5776943d
+NAME                                                               REFERENCE                                     PLATFORM
+8bcd8a3c9fc325a379a739322ca54baded7eb9eb717be9a3764f5a4b0f1820fa   index.docker.io/cilium/cilium:v1.17.0-pre.2   linux/amd64
+c49d5c94330d411e2f3db068e1990e30d60f5b1cd61f04873dcd3af50aa70cda   index.docker.io/cilium/cilium:v1.17.0-pre.2   linux/arm64
+```
+
 ## Bug Fixes and Stability
 
 Beyond the headline features, `v0.10.0` includes several "under the hood" fixes to 
