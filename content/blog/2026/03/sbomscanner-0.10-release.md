@@ -41,6 +41,11 @@ NAME                                                               REFERENCE    
 c49d5c94330d411e2f3db068e1990e30d60f5b1cd61f04873dcd3af50aa70cda   index.docker.io/cilium/cilium:v1.17.0-pre.2   linux/arm64
 ```
 
+In this example, the `cilium/cilium:v1.17.0-pre.2` image is a multi-architecture image.
+
+The above query shows that two images found inside of
+that multi-arch index match the scanning criteria: the amd64 and the arm64 ones.
+
 ## Bug Fixes and Stability
 
 Beyond the headline features, `v0.10.0` includes several "under the hood" fixes to 
