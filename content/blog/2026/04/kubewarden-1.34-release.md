@@ -2,7 +2,7 @@
 title: "Kubewarden 1.34 Release"
 authors:
   - José Guilherme Vanz
-date: 2026-04-08
+date: 2026-04-09
 ---
 
 After the big blooms of 1.33, this release turns its attention to the garden
