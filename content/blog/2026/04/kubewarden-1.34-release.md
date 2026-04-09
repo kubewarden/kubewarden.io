@@ -11,7 +11,7 @@ trustworthy, and a nagging bug in `kwctl` gets pulled out by the roots. Nothing
 flashy, but the kind of care that keeps the garden healthy for the long haul.
 Let's take a look at what's new!
 
-## kwctl scaffold manifest fix
+## Fix for `kwctl scaffold` command
 
 When using `kwctl` command `scaffold manifest` with a policy URI that omits an
 explicit tag (e.g. `registry://ghcr.io/kubewarden/policies/pod-privileged`),
@@ -29,6 +29,8 @@ For example, the following now works as expected:
 $ kwctl scaffold manifest -t ClusterAdmissionPolicy \
     registry://ghcr.io/kubewarden/policies/pod-privileged
 apiVersion: policies.kubewarden.io/v1
+
+---
 kind: ClusterAdmissionPolicy
 metadata:
   name: pod-privileged-policy
@@ -79,7 +81,7 @@ checksum before using it. For example, our Dockerfiles now fetch the
 because it allows checksum verification. Base images and tool versions are
 also pinned, making our build inputs fully deterministic.
 
-## Wildcard support in trusted-repos-policy
+## Wildcard support in trusted-repos-policy v2.1.0
 
 The [`trusted-repos-policy`](https://artifacthub.io/packages/kubewarden/kubewarden-policy-library/trusted-repos-policy)
 now supports wildcard patterns (`*` and `?`) when matching image registries,
