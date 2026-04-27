@@ -75,20 +75,26 @@ spec:
     - kubernetes/can_i
 ```
 
+See the [reference list of all host capability
+identifiers](https://docs.kubewarden.io/next/reference/spec/host-capabilities/host-capabiliy-call-reference).
 
 ### Default settings and upgrade configuration
 
-The PolicyServer `default`, managed via the `kubewarden-defaults` Helm chart,
-defaults to having its `spec.namespacedPoliciesCapabilities` to `['*']`. This
-means that by default it allows all host capability calls for namespaced
-policies, which is the status quo prior to this version and
-backwards-compatible.
+All PolicyServers, including the `default` installed via our
+`kubewarden-defaults` Helm chart and custom deployed ones, default to having
+their `spec.namespacedPoliciesCapabilities` to `['*']`. This means that by
+default they allows all host capability calls for namespaced policies, which is
+the status quo prior to this version and backwards-compatible.
 
 Cluster Operators that make use of namespaced AdmissionPolicies and
 AdmissionPolicyGroups for their users (not the default) must configure the
-`kubewarden-defaults` Helm chart value of `.Values.policyServer.namespacedPoliciesCapabilities`.
-For example, to allow no host capabilities: `--set 'policyServer.namespacedPoliciesCapabilities={}'`.
-To allow only OCI and DNS capabilities: `--set 'policyServer.namespacedPoliciesCapabilities={oci/*,net/v1/dns_lookup_host}'`.
+PolicyServer `default` from the `kubewarden-defaults` Helm chart value of
+`.Values.policyServer.namespacedPoliciesCapabilities`.
+
+For example, to allow no host capabilities set an empty list: `--set
+'policyServer.namespacedPoliciesCapabilities={}'`.
+To allow only OCI and DNS capabilities: `--set
+'policyServer.namespacedPoliciesCapabilities={oci/*,net/v1/dns_lookup_host}'`.
 
 If using custom PolicyServers deployed by themselves, Cluster Operators must:
 - Configure their PolicyServers's `Spec.namespacedPoliciesCapabilities` as
@@ -97,8 +103,6 @@ If using custom PolicyServers deployed by themselves, Cluster Operators must:
   PolicyServers. This can be done for example with the new
   `ns-policyserver-mapper` policy, as follows.
 
-Our documentation provides a [reference of all host capability
-identifiers](https://docs.kubewarden.io/next/reference/spec/host-capabilities/host-capabiliy-call-reference).
 See more information on this feature in our dedicated [how-to
 page](https://docs.kubewarden.io/next/howtos/policy-servers/namespaced-policies-capabilities).
 
