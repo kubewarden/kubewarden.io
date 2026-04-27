@@ -19,9 +19,9 @@ Kubewarden makes the following security promise:
 raised privileges."**
 
 Cluster Operators can rely on this promise to provide self-servicing of
-policies in Namespaces. Useful for example when servicing several teams.
+policies in Namespaces. Useful, for example, when servicing several teams.
 
-While this still stands, Ville Vesilehto
+While this still applies, Ville Vesilehto
 ([thevilledev](https://github.com/thevilledev) on GitHub) found the following
 [security vulnerability](https://github.com/kubewarden/kubewarden-controller/security/advisories/GHSA-wqcw-g35j-j578).
 An attacker with elevated permissions to create namespaced policies (which
@@ -152,8 +152,8 @@ We believe that a solid and up-to-date threat model is paramount for our users
 to reason about our stack, understand the usability trade-offs of production,
 and simplify their deployment.
 
-Therefore, we have updated our Thread model with 3 new cases relevant to
-Kubewarden. You can read them in our [Thread model
+Therefore, we have updated our Threat model with 3 new cases relevant to
+Kubewarden. You can read them in our [Threat model
 reference](https://docs.kubewarden.io/reference/threat-model#kubewarden-threats)
 documentation page.
 
