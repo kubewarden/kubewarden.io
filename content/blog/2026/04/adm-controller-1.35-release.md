@@ -5,6 +5,11 @@ authors:
 date: 2026-04-27
 ---
 
+This Admission Controller 1.35 release is one that builds the nest properly:
+load-bearing branches first, then careful weaving. A moderate security
+vulnerability has been fixed, and rather than a quick twig stuffed in a gap,
+the team reinforced the whole structure. This release brings also a new policy,
+an expansion on our threat model, and a JavaScrypt/TypeScrypt SDK relocation.
 
 ## Security fix: RBAC reconnaissance and host capability calls
 
