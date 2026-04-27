@@ -184,7 +184,7 @@ WARN host capabilities declared in metadata but not detected in the policy
 ```
 
 > **NOTE** This self-reporting from the authors and the `kwctl annotate`
-> heuristic scan cannot be used a security boundary, as an untrusted policy
+> heuristic scan cannot be used as a security boundary, as an untrusted policy
 > publisher could embed an arbitrary list.
 > 
 > Use this information as one signal alongside other trust indicators (image
