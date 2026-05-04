@@ -45,8 +45,7 @@ exfiltration. The attacker learns permission information, such as whether
 specific service accounts can "get secrets", "create pods", or "bind
 clusterroles" in chosen namespaces.
 
-This security vulnerability has receveid [**GHSA-wqcw-g35j-j578**](https://github.com/kubewarden/kubewarden-controller/security/advisories/GHSA-wqcw-g35j-j578#event-647361) (plus an
-upcoming CVE identifier), with score 4.3 (moderate).
+This security vulnerability has receveid CVE [**CVE-2026-42541**](https://github.com/kubewarden/kubewarden-controller/security/advisories/GHSA-wqcw-g35j-j578#event-647361), with score 4.3 (moderate).
 
 We thank Ville Vesilehto for finding this vulnerability and the responsible disclosure!
 
