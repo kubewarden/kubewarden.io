@@ -45,7 +45,7 @@ exfiltration. The attacker learns permission information, such as whether
 specific service accounts can "get secrets", "create pods", or "bind
 clusterroles" in chosen namespaces.
 
-This security vulnerability has receveid CVE [**CVE-2026-42541**](https://github.com/kubewarden/kubewarden-controller/security/advisories/GHSA-wqcw-g35j-j578#event-647361), with score 4.3 (moderate).
+This security vulnerability has received [**CVE-2026-42541**](https://github.com/kubewarden/kubewarden-controller/security/advisories/GHSA-wqcw-g35j-j578#event-647361), with score 4.3 (moderate).
 
 We thank Ville Vesilehto for finding this vulnerability and the responsible disclosure!
 
@@ -80,7 +80,7 @@ spec:
 ```
 
 See the [reference list of all host capability
-identifiers](https://docs.kubewarden.io/next/reference/spec/host-capabilities/host-capabiliy-call-reference).
+identifiers](https://docs.kubewarden.io/reference/spec/host-capabilities/host-capabiliy-call-reference).
 
 ### Default settings and upgrade configuration
 
@@ -108,7 +108,7 @@ If using custom PolicyServers deployed by themselves, Cluster Operators must:
   `ns-policyserver-mapper` policy, as follows.
 
 See more information on this feature in our dedicated [how-to
-page](https://docs.kubewarden.io/next/howtos/policy-servers/namespaced-policies-capabilities).
+page](https://docs.kubewarden.io/howtos/policy-servers/namespaced-policies-capabilities).
 
 ## New policy: `ns-policyserver-mapper`
 
@@ -140,7 +140,7 @@ PolicyServers and provide self-service per Namespace, for example to dedicated
 teams, without elevated privileges.
 
 For a concrete step-by-step example, have a look at our [how-to page](
-https://docs.kubewarden.io/next/howtos/policy-servers/namespaced-policies-capabilities#complete-example-secure-self-service-namespace-setup).
+https://docs.kubewarden.io/howtos/policy-servers/namespaced-policies-capabilities#complete-example-secure-self-service-namespace-setup).
 
 ## Threat model expansion
 
