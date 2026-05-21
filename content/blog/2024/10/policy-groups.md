@@ -249,7 +249,7 @@ Error from server: error when creating "second-service.yml": admission webhook "
 ### Audit scanner
 
 Another way of obtaining details on the state of the cluster is the [Audit
-Scanner](https://docs.kubewarden.io/next/explanations/audit-scanner).
+Scanner](https://docs.kubewarden.io/explanations/audit-scanner).
 Policy Groups are fully supported in the Kubewarden stack, and their results
 get published to Policy Reports.
 
@@ -266,7 +266,7 @@ particularly with paired with CEL via the [cel-policy](https://artifacthub.io/pa
 Have a look at their CRD
 [reference](https://docs.kubewarden.io/reference/CRDs#resource-types) docs,
 their [explanation](https://docs.kubewarden.io/explanations/policy-groups) and
-[how-to](https://docs.kubewarden.io/next/howtos/policy-groups) on our docs.
+[how-to](https://docs.kubewarden.io/howtos/policy-groups) on our docs.
 
 ## Getting in touch
 

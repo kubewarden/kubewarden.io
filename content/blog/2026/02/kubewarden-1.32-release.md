@@ -100,7 +100,7 @@ The GitHub releases under [kubewarden/helm-charts](https://github.com/kubewarden
 no longer ship a `<charts>_images.xt`, and each of the Helm charts keeps
 including their own `imagelist.txt` and `policylist.txt` inside the charts to
 aid in air-gap installation. See our updated [air-gap
-docs](https://docs.kubewarden.io/next/howtos/airgap/install) (we recommend
+docs](https://docs.kubewarden.io/howtos/airgap/install) (we recommend
 using [Hauler](https://docs.hauler.dev/docs/intro)).
 
 ### Changes to Cosign signature metadata
@@ -140,7 +140,7 @@ sync: if the `policy-server` container image gets a patch release, so will be
 the `kubewarden-controller` image and our `kwctl` utility. As usual, we have
 documented this in our [RFC](https://github.com/kubewarden/rfc/pull/53) repo,
 as well as updated the
-[docs](https://docs.kubewarden.io/next/reference/upgrade-path#stack-version-compatibility-among-components).
+[docs](https://docs.kubewarden.io/reference/upgrade-path#stack-version-compatibility-among-components).
 
 ## Ongoing cleanup touches
 

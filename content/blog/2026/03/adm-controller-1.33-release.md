@@ -130,7 +130,7 @@ the whole of it.
 
 We have enhanced our Policy SDKs to expose this new field mask feature. Policy
 SDK authors can also find this new `field_masks` input field in the Kubernetes
-[host-calls](https://docs.kubewarden.io/next/reference/spec/host-capabilities/kubernetes#operation---list_resources_all).
+[host-calls](https://docs.kubewarden.io/reference/spec/host-capabilities/kubernetes#operation---list_resources_all).
 
 In addition, we have enhanced our
 [cel-policy](https://artifacthub.io/packages/kubewarden/kubewarden-policy-library/cel-policy),

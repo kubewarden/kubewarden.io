@@ -106,7 +106,7 @@ As usual, the CRDs are documented in our
 [reference](https://docs.kubewarden.io/reference/CRDs#resource-types) docs. And
 you can read their
 [explanation](https://docs.kubewarden.io/explanations/policy-groups) and an
-in-depth [how-to](https://docs.kubewarden.io/next/howtos/policy-groups) on the
+in-depth [how-to](https://docs.kubewarden.io/howtos/policy-groups) on the
 docs for these resources.
 
 Stay tuned for a new deep dive blog post!

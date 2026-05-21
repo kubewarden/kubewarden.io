@@ -42,7 +42,7 @@ spec:
 ```
 
 With this manifest and the [`hauler`
-cli](https://docs.hauler.dev/docs/next/introduction/install) tool, you can
+cli](https://docs.hauler.dev/docs/introduction/install) tool, you can
 create an archive file with all the needed artifacts (Helm charts, container
 images, policies). This also verifies the artifacts via cosign, so you can
 confidently jump past the air gap to install or regularly update your
@@ -59,7 +59,7 @@ Kubewarden stack:
             oci://my-secure-airgap-registry/hauler/kubewarden-crds
 ```
 
-You can find a more complete [how-to example](https://docs.kubewarden.io/next/howtos/airgap/hauler)
+You can find a more complete [how-to example](https://docs.kubewarden.io/howtos/airgap/hauler)
 in our docs.
 
 For this new feature, we automated the creation on this Hauler manifest with

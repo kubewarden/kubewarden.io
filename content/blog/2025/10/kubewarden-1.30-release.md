@@ -125,7 +125,7 @@ We have expanded support on performing migrations from VAPs into Kubewarden's
 CEL policy with `kwctl scaffold vap`, which now supports params.
 
 The tutorial on [reusing VAPs into our CEL
-policy](https://docs.kubewarden.io/next/tutorials/writing-policies/CEL/reusing-vap)
+policy](https://docs.kubewarden.io/tutorials/writing-policies/CEL/reusing-vap)
 has also been refreshed, have a look!
 
 ## PriorityClass policy gains mutation & denylist

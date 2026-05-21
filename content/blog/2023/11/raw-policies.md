@@ -47,7 +47,7 @@ This one is accepted but the request is mutated:
 
 ## Conclusion
 
-If you want to learn more about Raw policies, please check out the [how-to](https://docs.kubewarden.io/next/howtos/raw-policies).
+If you want to learn more about Raw policies, please check out the [how-to](https://docs.kubewarden.io/howtos/raw-policies).
 
 We are excited to see how the community will use this new feature.
 What are you going to build with it? We are curious to know!
