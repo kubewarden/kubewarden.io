@@ -30,7 +30,7 @@ image has the [SPDX license
 annotation](https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys).
 Consider this Rust validation code:
 
-```rust 
+```rust
 fn has_license_specified(image: &str) -> Result<bool> {
     let manifest = get_manifest(image)?;
     match manifest {
@@ -85,7 +85,7 @@ a cluster.
 ## Conclusion
 
 To learn more about this and other host capabilities, refer to the [official
-documentation](https://docs.kubewarden.io/next/writing-policies/spec/host-capabilities/container-registry#oci-manifest).
+documentation](https://docs.kubewarden.io/writing-policies/spec/host-capabilities/container-registry#oci-manifest).
 
 We look forward to seeing how the community utilizes this new feature to
 develop innovative solutions. Share your ideas with us on our [Slack

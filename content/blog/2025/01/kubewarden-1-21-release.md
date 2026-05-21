@@ -145,12 +145,12 @@ These pages are automatically synchronized with the actual implementation, they 
 [Policy Server](https://docs.kubewarden.io/reference/policy-server-cli).
 
 These documentation pages can also be generated locally using the new docs subcommands. For example, to generate the kwctl documentation you can
-invoke the following command: `kwctl docs --output docs.md`. 
+invoke the following command: `kwctl docs --output docs.md`.
 
 ### New pages
 
-As part of improvements suggested by a CNCF documentation review a [personas](https://docs.kubewarden.io/next/personas)
-and a [document organization](https://docs.kubewarden.io/next/organization) page have been added.
+As part of improvements suggested by a CNCF documentation review a [personas](https://docs.kubewarden.io/personas)
+and a [document organization](https://docs.kubewarden.io/organization) page have been added.
 Also, the introduction section has been reworded to highlight Kubewarden’s benefits more effectively.
 
 ## New social media presence
@@ -164,4 +164,3 @@ We’re happy to inform you that we have left X and you can now follow the Kubew
 As always, we welcome your feedback and contributions. Feel free to reach out
 to us on [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden)
 and [GitHub discussions](https://github.com/orgs/kubewarden/discussions).
-

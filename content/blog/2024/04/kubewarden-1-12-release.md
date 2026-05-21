@@ -15,7 +15,7 @@ production.
 The previous [1.11
 release](https://www.kubewarden.io/blog/2024/03/kubewarden-1-11-release/)
 featured lots of optimizations for
-[context aware policies](https://docs.kubewarden.io/next/reference/spec/context-aware-policies).
+[context aware policies](https://docs.kubewarden.io/reference/spec/context-aware-policies).
 
 The 1.12 release provides a further optimization for Gatekeeper policies that
 access Kubernetes resources. This optimization provides an extra 55%
@@ -32,7 +32,7 @@ on big clusters where hundreds of Pod objects are defined.
 
 Due to community requests for increasing deployment availability of
 Kubewarden, from 1.12 each [PolicyServer
-spec](https://docs.kubewarden.io/next/reference/CRDs#policyserverspec) has
+spec](https://docs.kubewarden.io/reference/CRDs#policyserverspec) has
 additional fields to configure policy-server Deployment behavior in clusters:
 
 - `spec.minAvailable` or `spec.maxUnavailable`: Configure the number of

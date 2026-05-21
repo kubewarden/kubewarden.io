@@ -61,7 +61,7 @@ The Kubewarden SDKs have been updated to expose this new functionality. We will 
 
 ## Context aware policies optimization
 
-As part of our host capabilities, Kubewarden provides a way to query the Kubernetes API server. This is used to create [context aware policies](https://docs.kubewarden.io/next/reference/spec/context-aware-policies).
+As part of our host capabilities, Kubewarden provides a way to query the Kubernetes API server. This is used to create [context aware policies](https://docs.kubewarden.io/reference/spec/context-aware-policies).
 These are policies that use information about the state of Kubernetes cluster to make validating/mutating decisions.
 
 Starting from the 1.11 release, Kubewarden uses a different way to fetch information from the Kubernetes API server and keep this data up to date. That brings two major improvements.
