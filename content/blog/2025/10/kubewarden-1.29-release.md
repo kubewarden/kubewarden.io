@@ -47,7 +47,7 @@ Policies usually run and finish fast enough. Yet there can be some that perform
 more complex validations: for example the
 [`env-variable-secrets-scanner`](https://artifacthub.io/packages/kubewarden/env-variable-secrets-scanner/env-variable-secrets-scanner)
 policy, which uses a Rust library to scan for secrets in environment variables.
-For these policies, it is beneficial to extend the evaluation time alloted to
+For these policies, it is beneficial to extend the evaluation time allotted to
 them.
 
 Up until now, this was possible globally per PolicyServer by setting their env

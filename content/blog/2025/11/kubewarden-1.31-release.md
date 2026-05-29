@@ -112,7 +112,7 @@ leveraging the
 
 ### Example
 
-Let's see an abridged example from our colleage José Vanz. José
+Let's see an abridged example from our colleague José Vanz. José
 has first deployed his own Sigstore stack with `sigstore/scaffolding`.
 
 With it, he has then signed and verified a Kubewarden policy. This means
@@ -176,9 +176,9 @@ scenarios or with custom Sigstore stacks. Stay tuned!
 Starting with `v9.0.0`, the
 [`rancher-backup`](https://github.com/rancher/backup-restore-operator) Operator
 supports Kubewarden. This operator is an open source project to backup and restore
-Kubernetes clusters. We have contributed the neccesary bits to the
+Kubernetes clusters. We have contributed the necessary bits to the
 `rancher-backup` Operator, and we have also added testcases in our end-to-end
-testsuite to ensure that backing up and restoring keeps being suppported with
+testsuite to ensure that backing up and restoring keeps being supported with
 each Kubewarden release.
 
 You can read how to backup and restore Kubewarden with this operator in our

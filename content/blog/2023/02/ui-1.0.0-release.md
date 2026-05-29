@@ -1,13 +1,13 @@
 ---
 title: Kubewarden UI 1.0.0 is released!
 authors:
-- Jordon Leach 
+- Jordon Leach
 date: 2023-02-09
 ---
 
 We are excited to announce that the Kubewarden UI 1.0.0 has been released!
 
-The UI is an Extension for [Rancher Manager](https://github.com/rancher/rancher/), now you will be able to enable Kubewarden policies for your Kubernetes clusters with a streamlined user experience. You can find the latests releases of the extension Helm chart [here](https://github.com/kubewarden/ui/releases/), the release provides a [Github Pages deployment](https://kubewarden.github.io/ui/) which can be used when adding the UI as a Helm repository.
+The UI is an Extension for [Rancher Manager](https://github.com/rancher/rancher/), now you will be able to enable Kubewarden policies for your Kubernetes clusters with a streamlined user experience. You can find the latest releases of the extension Helm chart [here](https://github.com/kubewarden/ui/releases/), the release provides a [Github Pages deployment](https://kubewarden.github.io/ui/) which can be used when adding the UI as a Helm repository.
 
 Currently Rancher is required to run this extension, however, in the future it will be possible to deploy the same UI as a stand-alone platform.
 
