@@ -98,10 +98,7 @@ date: 2021-04-16T13:28:46+02:00
     <pre>
 <code>
 helm repo add kubewarden https://charts.kubewarden.io
-
-helm install --create-namespace -n kubewarden kubewarden-crds kubewarden/kubewarden-crds
-helm install --wait -n kubewarden kubewarden-controller kubewarden/kubewarden-controller
-helm install --wait -n kubewarden kubewarden-defaults kubewarden/kubewarden-defaults
+helm install --create-namespace -n kubewarden admission-controller kubewarden/admission-controller
 
 # ... and continue reading <a href="https://docs.kubewarden.io/quick-start" style="color: white;">the quick start</a> documentation
 </code>
