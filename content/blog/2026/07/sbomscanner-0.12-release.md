@@ -52,8 +52,8 @@ The new CRDs introduced in this release are:
 ## Getting started
 
 Node scanning becomes active as soon as you apply a `NodeScanConfiguration`
-resource. Here is a minimal example that scans every eligible node every 5
-minutes:
+resource. Here is a minimal example that scans every eligible node every 24
+hours:
 
 ```yaml
 apiVersion: sbomscanner.kubewarden.io/v1alpha1
