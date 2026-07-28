@@ -27,8 +27,9 @@ the stack needs a correct and staggered cleanup before removing policies,
 PolicyServers or CRDs, as leaving orphaned webhooks means a Denial Of Service
 on the cluster.
 
-Like all migrations, it is a self-renewal cycle. In our case, an opportunity 
-to pay tech-debt, simplify, and serve these benefits forward to our users.
+Now, like all migrations, it is a self-renewal cycle. In our case, an
+opportunity to pay tech-debt, simplify, and serve these benefits forward to our
+users.
 
 For the last releases, we have put the pieces together to migrate to a single
 unified chart. On the previous v1.36 we have enhanced the controller to allow
@@ -70,10 +71,10 @@ user experience is almost the same, with minor changes:
   care of removing the controller, webhooks and associated resources in a
   safe, staggered, and idempotent manner.
 - On uninstall, the `admission-controller` chart now leaves behind CRDS and CRs
-  deployed by users. This means that one can uninstall the chart, leaving the
-  policies and PolicyServers, and reinstalling the chart will re-activate all of
-  those policies. If wanted, users can delete the CRDs for a complete cleanup.
-  See our [uninstall
+  deployed by users. This means that one can uninstall the chart, leaving only the
+  policies and PolicyServers definitions but no associated resources.
+  Reinstalling the chart will re-activate all of those policies. If wanted, users
+  can delete the CRDs for a complete cleanup. See our [uninstall
   section](https://docs.kubewarden.io/admission-controller/1.37/en/quick-start.html#_uninstall)
   on our quick-start documentation page for more info.
   
@@ -83,7 +84,7 @@ migration documentation to simplify the life of our cluster operators.
 
 #### New Installs of `admission-controller-6.0.0` (1.37)
 
-No new changes here. Follow our updated
+No new changes here besides the simplification to 1 chart. Follow our updated
 [quickstart](https://docs.kubewarden.io/admission-controller/1.37/en/quick-start.html)
 for new installations.
 
@@ -109,8 +110,9 @@ the new chart.
   
 As mentioned above and contrary to the legacy 3 Helm charts, the new
 `admission-controller` Helm chart leaves CRDs, and CRs for policies and
-PolicyServers deployed by users when uninstalled. Reinstalling the chart will
-re-activate all of those policies. If wanted, users can delete the CRDs for a
+PolicyServers deployed by users when uninstalled, without any associated
+resources. Reinstalling the chart will re-activate all of those policies. If
+wanted, users can delete the CRDs for a
 complete cleanup. See our [uninstall
 section](https://docs.kubewarden.io/admission-controller/1.37/en/quick-start.html#_uninstall)
 on our quick-start documentation page for more info.
@@ -122,7 +124,7 @@ We keep shipping `imagelist.txt` and `policylist.txt` files inside our new
 air gap installs with them.
 
 We recommend using [Hauler](https://docs.hauler.dev/docs/intro), which we already
-supported for some time. Have a look at our documentation page for [air gap
+supported for some time. Have a look at our documentation page on [air gap setups
 with
 Hauler](https://docs.kubewarden.io/admission-controller/1.37/en/howtos/airgap/02-hauler.html).
 
@@ -131,7 +133,7 @@ Hauler](https://docs.kubewarden.io/admission-controller/1.37/en/howtos/airgap/02
 Fixed a race condition that could wrongly mark reports as stale and remove them
 as part of a new Audit Scanner run.
 
-## kwctl
+## Kwctl
 
 `kwctl bench` now allows context-aware policies to be benchmarked. This is done
 by rewinding the recorded host-capabilities session before every iteration done
