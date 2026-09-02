@@ -80,7 +80,7 @@ metadata:
 
 spec:
   policyServer: default
-  module: registry://ghcr.io/kubewarden/policies/container-resources:latest
+  module: registry://ghcr.io/kubewarden/policies/container-resources:v1.3.6
   mutating: true
   failurePolicy: Fail
   namespaceSelector:
@@ -326,7 +326,7 @@ metadata:
 spec:
   containers:
     - name: web
-      image: registry.suse.com/suse/tomcat:latest
+      image: registry.suse.com/suse/mariadb:11.8
       resources:
         limits:
           cpu: "6"
@@ -349,7 +349,7 @@ clusteradmissionpolicy container-resources-policy`:
 active
 ```
 
-If a policy fails to deploy, then its status will stay pending
+If a policy fails to deploy, then its status will stay [pending](https://docs.kubewarden.io/admission-controller/latest/en/explanations/policy-lifecycle.html#_pending)
 indefinitely. Check the logs from the kubewarden policy server to find out what
 went wrong:
 
