@@ -1,9 +1,13 @@
+---
 name: Publish Site
 on:
   workflow_dispatch:
   push:
     branches:
       - main
+  schedule:
+    # shortly after midnight UTC.
+    - cron: '12 0 * * *'
 permissions:
   contents: read
   pages: write

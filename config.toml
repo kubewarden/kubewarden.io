@@ -1,5 +1,6 @@
 baseURL = ""
 languageCode = "en-us"
+timeZone = "UTC"
 title = "Kubewarden"
 theme = "projects-theme"
 pluralizeListTitles = false
