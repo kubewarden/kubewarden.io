@@ -2,7 +2,7 @@
 title: "Preventing containers from sharing the PID namespace with Kubewarden"
 authors:
   - Dan Čermák
-date: 2026-09-03
+date: 2026-09-09
 ---
 
 ## The PID namespace
