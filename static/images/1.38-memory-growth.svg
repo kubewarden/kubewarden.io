@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" role="img" aria-labelledby="t d" font-family="ui-sans-serif, system-ui, sans-serif">
+  <title id="t">Heap in-use memory: cached versus moka</title>
+  <desc id="d">Line chart. After 60,000 unique cache keys, the cached crate holds 47.2 MB and does not release it during idle. moka peaks at 4.7 MB and decays to 3.15 MB.</desc>
+  <style>
+    .axis { stroke: #94a3b8; stroke-width: 1; }
+    .grid { stroke: #e2e8f0; stroke-width: 1; }
+    .lbl  { fill: #475569; font-size: 13px; }
+    .tick { fill: #64748b; font-size: 12px; }
+    .cached { stroke: #dc2626; }
+    .moka   { stroke: #16a34a; }
+  </style>
+  <rect width="760" height="440" fill="#ffffff"/>
+  <text x="380" y="28" text-anchor="middle" font-size="17" font-weight="600" fill="#0f172a">Heap in-use after unique-key traffic (60k keys, then idle)</text>
+
+  <!-- plot area: x 80..690, y 60..360; y scale 0..50 MB -->
+  <g class="grid">
+    <line x1="80" y1="300" x2="690" y2="300"/>
+    <line x1="80" y1="240" x2="690" y2="240"/>
+    <line x1="80" y1="180" x2="690" y2="180"/>
+    <line x1="80" y1="120" x2="690" y2="120"/>
+    <line x1="80" y1="60"  x2="690" y2="60"/>
+  </g>
+  <g class="tick" text-anchor="end">
+    <text x="72" y="364">0</text>
+    <text x="72" y="304">10</text>
+    <text x="72" y="244">20</text>
+    <text x="72" y="184">30</text>
+    <text x="72" y="124">40</text>
+    <text x="72" y="64">50</text>
+  </g>
+  <text class="lbl" x="24" y="210" transform="rotate(-90 24 210)" text-anchor="middle">heap in-use (MB)</text>
+
+  <line class="axis" x1="80" y1="360" x2="690" y2="360"/>
+  <line class="axis" x1="80" y1="60"  x2="80"  y2="360"/>
+
+  <!-- x scale: 0..60k keys maps 80..560; idle zone 560..690 -->
+  <g class="tick" text-anchor="middle">
+    <text x="80"  y="380">0</text>
+    <text x="272" y="380">24k</text>
+    <text x="560" y="380">60k</text>
+    <text x="625" y="380">idle 60 s</text>
+  </g>
+  <text class="lbl" x="385" y="404" text-anchor="middle">unique cache keys processed, then idle period</text>
+  <line class="grid" x1="560" y1="60" x2="560" y2="360" stroke-dasharray="4 4"/>
+
+  <!-- cached: 0 -> 12.6MB @24k -> 47.2MB @60k, frozen in idle. y = 360 - MB*6 -->
+  <polyline class="cached" fill="none" stroke-width="3"
+    points="80,360 272,284.4 560,76.8 690,76.8"/>
+  <circle cx="272" cy="284.4" r="4" fill="#dc2626"/>
+  <circle cx="560" cy="76.8"  r="4" fill="#dc2626"/>
+  <text x="300" y="278" font-size="12" fill="#dc2626">+12.6 MB</text>
+  <text x="470" y="70" font-size="12" fill="#dc2626" font-weight="600">+47.2 MB</text>
+  <text x="600" y="98" font-size="12" fill="#dc2626">frozen, zero reclaim</text>
+
+  <!-- moka: 0 -> ~1MB @24k -> 4.7MB @60k -> 3.15MB after idle -->
+  <polyline class="moka" fill="none" stroke-width="3"
+    points="80,360 272,354 560,331.8 690,341.1"/>
+  <circle cx="560" cy="331.8" r="4" fill="#16a34a"/>
+  <circle cx="690" cy="341.1" r="4" fill="#16a34a"/>
+  <text x="500" y="322" font-size="12" fill="#16a34a" font-weight="600">+4.7 MB peak</text>
+  <text x="600" y="358" font-size="12" fill="#16a34a">decays to 3.15 MB</text>
+
+  <!-- legend -->
+  <g font-size="13">
+    <line x1="100" y1="46" x2="130" y2="46" class="cached" stroke-width="3"/>
+    <text x="136" y="50" fill="#334155">cached crate (before)</text>
+    <line x1="310" y1="46" x2="340" y2="46" class="moka" stroke-width="3"/>
+    <text x="346" y="50" fill="#334155">moka (after)</text>
+  </g>
+
+  <text x="380" y="428" text-anchor="middle" font-size="12" fill="#94a3b8">Source: jemalloc in-use bytes from /debug/pprof/heap, policy-server on minikube, k6 load with unique serviceAccountName per request</text>
+</svg>
