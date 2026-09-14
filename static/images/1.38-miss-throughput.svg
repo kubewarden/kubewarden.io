@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" role="img" aria-labelledby="t d" font-family="ui-sans-serif, system-ui, sans-serif">
+  <title id="t">Throughput on concurrent cache misses: cached versus moka</title>
+  <desc id="d">Bar chart with a linear scale. In a flood of 2,000 distinct keys with a 1 ms backend, cached stays near 480 requests per second at every concurrency. moka reaches 3,784 at concurrency 8 and 28,340 at concurrency 64.</desc>
+  <style>
+    .axis { stroke: #94a3b8; stroke-width: 1; }
+    .grid { stroke: #e2e8f0; stroke-width: 1; }
+    .lbl  { fill: #475569; font-size: 13px; }
+    .tick { fill: #64748b; font-size: 12px; }
+    .val  { font-size: 13px; font-weight: 600; text-anchor: middle; }
+  </style>
+  <rect width="760" height="440" fill="#ffffff"/>
+  <text x="380" y="28" text-anchor="middle" font-size="17" font-weight="600" fill="#0f172a">Unique-key flood: 2,000 distinct keys, 1 ms backend</text>
+
+  <!-- plot area x 90..700, y 70..360. linear scale: 0 -> y360, 30000 -> y70. y = 360 - v*290/30000 -->
+  <g class="grid">
+    <line x1="90" y1="263.3" x2="700" y2="263.3"/>
+    <line x1="90" y1="166.7" x2="700" y2="166.7"/>
+    <line x1="90" y1="70"    x2="700" y2="70"/>
+  </g>
+  <g class="tick" text-anchor="end">
+    <text x="82" y="364">0</text>
+    <text x="82" y="267">10k</text>
+    <text x="82" y="171">20k</text>
+    <text x="82" y="74">30k</text>
+  </g>
+  <text class="lbl" x="26" y="215" transform="rotate(-90 26 215)" text-anchor="middle">requests per second</text>
+  <line class="axis" x1="90" y1="360" x2="700" y2="360"/>
+  <line class="axis" x1="90" y1="70"  x2="90"  y2="360"/>
+
+  <!-- groups at concurrency 1, 8, 64. group centers: 190, 395, 600. bar width 60, gap 10 -->
+  <!-- cached: 480 -> 355.4; 482 -> 355.3; 480 -> 355.4 -->
+  <!-- moka: 478 -> 355.4; 3784 -> 323.4; 28340 -> 86.1 -->
+  <g>
+    <!-- concurrency 1 -->
+    <rect x="125" y="355.4" width="60" height="4.6" fill="#dc2626" rx="1"/>
+    <rect x="195" y="355.4" width="60" height="4.6" fill="#16a34a" rx="1"/>
+    <text class="val" x="155" y="349" fill="#dc2626">480</text>
+    <text class="val" x="225" y="336" fill="#16a34a">478</text>
+    <!-- concurrency 8 -->
+    <rect x="330" y="355.3" width="60" height="4.7" fill="#dc2626" rx="1"/>
+    <rect x="400" y="323.4" width="60" height="36.6" fill="#16a34a" rx="1"/>
+    <text class="val" x="360" y="349" fill="#dc2626">482</text>
+    <text class="val" x="430" y="317" fill="#16a34a">3,784</text>
+    <!-- concurrency 64 -->
+    <rect x="535" y="355.4" width="60" height="4.6" fill="#dc2626" rx="1"/>
+    <rect x="605" y="86.1" width="60" height="273.9" fill="#16a34a" rx="1"/>
+    <text class="val" x="565" y="349" fill="#dc2626">480</text>
+    <text class="val" x="635" y="80" fill="#16a34a">28,340</text>
+  </g>
+
+  <!-- lock ceiling annotation -->
+  <line x1="90" y1="355.4" x2="700" y2="355.4" stroke="#dc2626" stroke-width="1" stroke-dasharray="6 4" opacity="0.6"/>
+  <line x1="292" y1="270" x2="292" y2="351" stroke="#dc2626" stroke-width="1" opacity="0.5"/>
+  <text x="292" y="262" text-anchor="middle" font-size="12" fill="#dc2626">cached global-lock ceiling (~1 / backend latency)</text>
+
+  <g class="tick" text-anchor="middle">
+    <text x="190" y="380">concurrency 1</text>
+    <text x="395" y="380">concurrency 8</text>
+    <text x="600" y="380">concurrency 64</text>
+  </g>
+  <text class="lbl" x="395" y="402" text-anchor="middle">Higher is better.</text>
+
+  <!-- legend -->
+  <g font-size="13">
+    <rect x="110" y="40" width="16" height="12" fill="#dc2626" rx="2"/>
+    <text x="132" y="50" fill="#334155">cached crate (before)</text>
+    <rect x="310" y="40" width="16" height="12" fill="#16a34a" rx="2"/>
+    <text x="332" y="50" fill="#334155">moka (after)</text>
+  </g>
+
+  <text x="380" y="424" text-anchor="middle" font-size="12" fill="#94a3b8">Source: microbenchmark of the can_i host-call path in policy-evaluator, mock API server with a fixed 1 ms delay</text>
+</svg>

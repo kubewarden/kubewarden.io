@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" role="img" aria-labelledby="t d" font-family="ui-sans-serif, system-ui, sans-serif">
+  <title id="t">Median latency in a mixed workload: cached versus moka</title>
+  <desc id="d">Bar chart with a linear scale. In a 90 percent hit and 10 percent miss workload, the cached crate median latency rises to 12.8 milliseconds at concurrency 64 because hits queue behind misses. moka stays at 42 microseconds.</desc>
+  <style>
+    .axis { stroke: #94a3b8; stroke-width: 1; }
+    .grid { stroke: #e2e8f0; stroke-width: 1; }
+    .lbl  { fill: #475569; font-size: 13px; }
+    .tick { fill: #64748b; font-size: 12px; }
+    .val  { font-size: 13px; font-weight: 600; text-anchor: middle; }
+  </style>
+  <rect width="760" height="440" fill="#ffffff"/>
+  <text x="380" y="28" text-anchor="middle" font-size="17" font-weight="600" fill="#0f172a">Mixed workload (90% hits / 10% misses): median latency</text>
+
+  <!-- plot area x 90..700, y 70..360. linear scale: 0 ms -> y360, 13 ms -> y70. y = 360 - ms*22.3077 -->
+  <g class="grid">
+    <line x1="90" y1="270.8" x2="700" y2="270.8"/>
+    <line x1="90" y1="181.5" x2="700" y2="181.5"/>
+    <line x1="90" y1="92.3"  x2="700" y2="92.3"/>
+  </g>
+  <g class="tick" text-anchor="end">
+    <text x="82" y="364">0</text>
+    <text x="82" y="275">4 ms</text>
+    <text x="82" y="186">8 ms</text>
+    <text x="82" y="96">12 ms</text>
+  </g>
+  <text class="lbl" x="22" y="215" transform="rotate(-90 22 215)" text-anchor="middle">p50 latency</text>
+  <line class="axis" x1="90" y1="360" x2="700" y2="360"/>
+  <line class="axis" x1="90" y1="70"  x2="90"  y2="360"/>
+
+  <!-- values: cached 3 µs / 2.1 ms / 12.8 ms; moka 5 µs / 9 µs / 42 µs.
+       Microsecond bars round to less than 1 px; drawn at a 2 px minimum height. -->
+  <g>
+    <!-- concurrency 1 -->
+    <rect x="125" y="358" width="60" height="2" fill="#dc2626" rx="1"/>
+    <rect x="195" y="358" width="60" height="2" fill="#16a34a" rx="1"/>
+    <text class="val" x="155" y="352" fill="#dc2626">3 µs</text>
+    <text class="val" x="225" y="338" fill="#16a34a">5 µs</text>
+    <!-- concurrency 8 -->
+    <rect x="330" y="313.2" width="60" height="46.8" fill="#dc2626" rx="1"/>
+    <rect x="400" y="358" width="60" height="2" fill="#16a34a" rx="1"/>
+    <text class="val" x="360" y="307" fill="#dc2626">2.1 ms</text>
+    <text class="val" x="430" y="352" fill="#16a34a">9 µs</text>
+    <!-- concurrency 64 -->
+    <rect x="535" y="74.5" width="60" height="285.5" fill="#dc2626" rx="1"/>
+    <rect x="605" y="358" width="60" height="2" fill="#16a34a" rx="1"/>
+    <text class="val" x="565" y="68" fill="#dc2626">12.8 ms</text>
+    <text class="val" x="635" y="352" fill="#16a34a">42 µs</text>
+  </g>
+
+  <g class="tick" text-anchor="middle">
+    <text x="190" y="380">concurrency 1</text>
+    <text x="395" y="380">concurrency 8</text>
+    <text x="600" y="380">concurrency 64</text>
+  </g>
+  <text class="lbl" x="395" y="402" text-anchor="middle">Lower is better. With cached, microsecond-class hits queue behind in-flight misses.</text>
+
+  <!-- legend -->
+  <g font-size="13">
+    <rect x="110" y="40" width="16" height="12" fill="#dc2626" rx="2"/>
+    <text x="132" y="50" fill="#334155">cached crate (before)</text>
+    <rect x="310" y="40" width="16" height="12" fill="#16a34a" rx="2"/>
+    <text x="332" y="50" fill="#334155">moka (after)</text>
+  </g>
+
+  <text x="380" y="424" text-anchor="middle" font-size="12" fill="#94a3b8">Source: microbenchmark of the can_i host-call path, 10,000 requests, mock API server with a fixed 1 ms delay</text>
+</svg>
