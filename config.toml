@@ -37,54 +37,58 @@ anonymizeIP = true
 [menu]
 
 [[menu.main]]
-identifier = "hub"
-name = "Policies"
-url = "https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1"
-weight = -130
-
-[[menu.main]]
-identifier = "charts"
-name = "Helm Charts"
-url = "https://charts.kubewarden.io/"
-weight = -120
+identifier = "platform"
+name = "Platform"
+url = "/#components"
+weight = -140
 
 [[menu.main]]
 identifier = "docs"
 name = "Docs"
 url = "https://docs.kubewarden.io/"
-weight = -110
-
-[[menu.main]]
-identifier = "slack"
-name = "Slack"
-url = "https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden"
-weight = -90
-
-[[menu.main]]
-identifier = "bluesky"
-name = "Bluesky"
-url = "https://bsky.app/profile/kubewarden.io"
-weight = -85
-
-[[menu.main]]
-identifier = "mastodon"
-name = "Mastodon"
-url = "https://hachyderm.io/@kubewarden"
-weight = -80
-[menu.main.params]
-rel = 'me'
-
-[[menu.main]]
-identifier = "community"
-name = "Community"
-url = "/#get-in-touch"
-weight = -70
+weight = -130
 
 [[menu.main]]
 identifier = "blog"
 name = "Blog"
 url = "/blog"
-weight = -60
+weight = -110
+
+[[menu.main]]
+identifier = "community"
+name = "Community"
+url = "/#get-in-touch"
+weight = -100
+
+[[menu.main]]
+identifier = "meetings"
+name = "Community meetings"
+parent = "community"
+url = "/#get-in-touch"
+weight = -99
+
+[[menu.main]]
+identifier = "slack"
+name = "Slack"
+parent = "community"
+url = "https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden"
+weight = -97
+
+[[menu.main]]
+identifier = "bluesky"
+name = "Bluesky"
+parent = "community"
+url = "https://bsky.app/profile/kubewarden.io"
+weight = -96
+
+[[menu.main]]
+identifier = "mastodon"
+name = "Mastodon"
+parent = "community"
+url = "https://hachyderm.io/@kubewarden"
+weight = -95
+[menu.main.params]
+rel = 'me'
 
 [[menu.main]]
 identifier = "enterprise"

@@ -1,6 +1,6 @@
 <header>
   <div class="sub-header">
-    <a href="{{ .Site.BaseURL }}">
+    <a href="{{ .Site.BaseURL }}" class="logo-link">
       <img src="/images/logo-{{lower .Site.Title }}.svg" alt="{{ .Site.Title }}">
     </a>
     <a href="#main-menu" id="main-menu-toggle" class="menu-toggle" aria-label="Open main menu">
@@ -19,10 +19,31 @@
 
       <ul class="menu">
         {{ range . }}
-        <li><a href="{{ .URL }}" {{- with .Params.rel -}}rel="{{ . }}"{{- end }} target="_blank" class="btn no-bg">{{ .Name }}</a></li>
+        {{ if not .Parent }}
+        <li class="menu-item{{ if .HasChildren }} has-children{{ end }}">
+          <a href="{{ .URL }}"
+            {{- with .Params.rel }} rel="{{ . }}"{{ end -}}
+            {{- if strings.HasPrefix .URL "http" }} target="_blank"{{ end -}}
+            class="btn no-bg{{ if $.IsMenuCurrent "main" . }} is-active{{ end }}">
+            {{ .Name }}{{ if .HasChildren }} <svg class="icon icon-sm icon-caret" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg>{{ end }}
+          </a>
+          {{ if .HasChildren }}
+          <ul class="submenu">
+            {{ range .Children }}
+            <li>
+              <a href="{{ .URL }}"
+                {{- with .Params.rel }} rel="{{ . }}"{{ end -}}
+                {{- if strings.HasPrefix .URL "http" }} target="_blank"{{ end -}}
+              >{{ .Name }}</a>
+            </li>
+            {{ end }}
+          </ul>
+          {{ end }}
+        </li>
+        {{ end }}
         {{ end }}
         <!-- github  -->
-        <li><a href="{{ $.Site.Params.github }}" class="btn github"><img src="/images/icon-github.svg"><span>Github</span></a>
+        <li><a href="{{ $.Site.Params.github }}" target="_blank" class="btn github"><img src="/images/icon-github.svg"><span>Github</span><span class="sr-only"> (opens in new tab)</span></a>
         </li>
       </ul>
     </nav>

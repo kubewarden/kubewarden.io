@@ -1,0 +1,150 @@
+{{ define "main" }}
+<main>
+
+<section class="hero">
+  <div class="wrap-lg hero-inner">
+    <div class="hero-copy">
+      <h1>Kubernetes security,<br><span class="accent">from admission to runtime.</span></h1>
+      <p class="hero-lead">Kubewarden is an open source security platform for Kubernetes. A set of
+      complementary components to secure your workloads across the entire lifecycle — from
+      admission, to runtime, and beyond.</p>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-diagram">
+        <svg class="diagram-svg" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+          <defs>
+            <radialGradient id="heroGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#c70a41" stop-opacity="0.16"/>
+              <stop offset="100%" stop-color="#c70a41" stop-opacity="0"/>
+            </radialGradient>
+            <marker id="diagramArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 Z" fill="#c70a41"/>
+            </marker>
+          </defs>
+
+          <ellipse class="diagram-glow" cx="50" cy="48" rx="56" ry="48"/>
+
+          <!-- decorative cubes -->
+          <g class="diagram-cube" transform="translate(19,18) scale(1.15)">
+            <polygon points="0,3 4,1 8,3 8,7 4,9 0,7" class="cube-top"/>
+            <polygon points="0,3 4,5 4,9 0,7" class="cube-left"/>
+            <polygon points="8,3 4,5 4,9 8,7" class="cube-right"/>
+          </g>
+          <g class="diagram-cube" transform="translate(76,16) scale(1.25)">
+            <polygon points="0,3 4,1 8,3 8,7 4,9 0,7" class="cube-top"/>
+            <polygon points="0,3 4,5 4,9 0,7" class="cube-left"/>
+            <polygon points="8,3 4,5 4,9 8,7" class="cube-right"/>
+          </g>
+          <g class="diagram-cube" transform="translate(73,74) scale(1.05)">
+            <polygon points="0,3 4,1 8,3 8,7 4,9 0,7" class="cube-top"/>
+            <polygon points="0,3 4,5 4,9 0,7" class="cube-left"/>
+            <polygon points="8,3 4,5 4,9 8,7" class="cube-right"/>
+          </g>
+
+          <!-- connector ring -->
+          <ellipse class="diagram-ring" cx="50" cy="48" rx="30" ry="24"/>
+
+          <!-- spokes -->
+          <line class="diagram-spoke" x1="50" y1="24" x2="50" y2="14.5" marker-end="url(#diagramArrow)"/>
+          <line class="diagram-spoke" x1="50" y1="72" x2="50" y2="81.5" marker-end="url(#diagramArrow)"/>
+          <line class="diagram-spoke" x1="20" y1="48" x2="10.5" y2="48" marker-end="url(#diagramArrow)"/>
+          <line class="diagram-spoke" x1="80" y1="48" x2="89.5" y2="48" marker-end="url(#diagramArrow)"/>
+          <circle class="diagram-node" cx="50" cy="24" r="1.1"/>
+          <circle class="diagram-node" cx="50" cy="72" r="1.1"/>
+          <circle class="diagram-node" cx="20" cy="48" r="1.1"/>
+          <circle class="diagram-node" cx="80" cy="48" r="1.1"/>
+
+          <!-- isometric plinth -->
+          <g class="diagram-plinth">
+            <polygon class="plinth-face plinth-face--3" points="50,47 66,54 50,61 34,54"/>
+            <polygon class="plinth-side plinth-side--right" points="50,55 66,48 66,54 50,61"/>
+            <polygon class="plinth-side plinth-side--left" points="34,48 50,55 50,61 34,54"/>
+
+            <polygon class="plinth-face plinth-face--2" points="50,41 66,48 50,55 34,48"/>
+            <polygon class="plinth-side plinth-side--right" points="50,49 66,42 66,48 50,55"/>
+            <polygon class="plinth-side plinth-side--left" points="34,42 50,49 50,55 34,48"/>
+
+            <polygon class="plinth-face plinth-face--1" points="50,35 66,42 50,49 34,42"/>
+          </g>
+        </svg>
+
+        <img class="diagram-hub-logo" src="/images/kubernetes-logo.svg" alt="">
+
+        <div class="diagram-card diagram-card--top">
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>
+          <span>Runtime Enforcer</span>
+        </div>
+        <div class="diagram-card diagram-card--left">
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shield"></use></svg>
+          <span>Admission Controller</span>
+        </div>
+        <div class="diagram-card diagram-card--right">
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-nodes"></use></svg>
+          <span>Network Enforcer</span>
+        </div>
+        <div class="diagram-card diagram-card--bottom">
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg>
+          <span>SBOM Scanner</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-components" id="components">
+  <div class="wrap-lg">
+    <h2>Explore the Kubewarden components</h2>
+    <p class="section-lead">A modular security platform. Use the components you need, together or independently.</p>
+    {{ partial "component-grid.html" (dict "current" "") }}
+  </div>
+</section>
+
+<section class="section-news">
+  <div class="wrap-lg">
+    <div class="section-news-header">
+      <h2>Latest news</h2>
+      <a class="arrow-link" href="/blog/">View all posts <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
+    </div>
+    <div class="news-grid">
+      {{ $posts := where .Site.RegularPages "Section" "blog" }}
+      {{ range first 3 $posts.ByDate.Reverse }}
+      <article class="news-card">
+        <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+        <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+        <p>{{ .Plain | truncate 140 " …" }}</p>
+        <a class="arrow-link" href="{{ .Permalink }}">Read more <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<section class="section-touch" id="get-in-touch">
+  <div class="wrap-lg">
+    <h2>Get in Touch</h2>
+    <p class="section-lead">We hold monthly community meetings that are open to everybody. Subscribe to
+    <a href="https://ics.teamup.com/feed/ks2bj74dvw132mhjtj/11992689.ics">this calendar feed</a> to not miss them,
+    or view all of the events <a href="https://teamup.com/ks2bj74dvw132mhjtj">here</a>.</p>
+
+    <div class="social-row">
+      <a class="btn-outline" href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-slack"></use></svg>Slack<span class="sr-only"> (opens in new tab)</span>
+      </a>
+      <a class="btn-outline" href="https://bsky.app/profile/kubewarden.io" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-bluesky"></use></svg>Bluesky<span class="sr-only"> (opens in new tab)</span>
+      </a>
+      <a class="btn-outline" href="https://hachyderm.io/@kubewarden" target="_blank" rel="me noopener">
+        <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-mastodon"></use></svg>Mastodon<span class="sr-only"> (opens in new tab)</span>
+      </a>
+    </div>
+
+    <h3>Upcoming events</h3>
+    <iframe src="https://teamup.com/ks2bj74dvw132mhjtj?view=a&tz=UTC&showLogo=0&showSearch=0&showProfileAndInfo=0&showSidepanel=1&disableSidepanel=1&showTitle=0&showViewSelector=0&showMenu=0&showAgendaHeader=0&showAgendaDetails=0&showYearViewHeader=0" style="width: 100%; height: 400px; border: 1px solid #cccccc" loading="lazy" frameborder="0"></iframe>
+  </div>
+</section>
+
+{{ partial "cncf-band.html" . }}
+
+</main>
+{{ end }}
