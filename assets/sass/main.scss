@@ -1195,6 +1195,17 @@ footer .project-icons a img {
     margin-right: 0;
     flex-shrink: 0;
   }
+
+  &--inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 2rem;
+    margin: 0;
+
+    li {
+      padding: 0;
+    }
+  }
 }
 
 .code-panel {
@@ -1334,7 +1345,7 @@ footer .project-icons a img {
     }
 
     p {
-      margin-bottom: 0;
+      margin-bottom: 1rem;
     }
 
     .policy-card-actions {
