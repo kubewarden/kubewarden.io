@@ -1,0 +1,143 @@
+---
+title: "SBOM Scanner"
+tagline: "Find vulnerabilities in the container images running inside your cluster."
+icon: icon-scan
+status: Stable
+docs: https://docs.kubewarden.io/sbom-scanner/latest/en/introduction.html
+repoUrl: https://github.com/kubewarden/sbomscanner
+hero: sbom
+intro: "SBOM Scanner is an <strong>SBOM-based</strong> vulnerability scanner for Kubernetes. It builds a Software Bill of Materials for your images, workloads and nodes, then keeps watching them for known vulnerabilities &mdash; all through Kubernetes resources you already know how to use."
+date: 2026-09-16T00:00:00+00:00
+---
+
+<section class="section-why">
+  <div class="wrap-lg">
+    <h2>Why SBOM Scanner?</h2>
+    <div class="feature-row">
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg>
+        <h4>Scan images, workloads and nodes</h4>
+        <p>One tool for registries, what is actually running, and the hosts underneath.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg>
+        <h4>SBOM first</h4>
+        <p>Build the bill of materials once, then keep re-checking it as new vulnerabilities are published.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>
+        <h4>Kubernetes-native</h4>
+        <p>Registries, scans and reports are Kubernetes resources. Query them with kubectl.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shield"></use></svg>
+        <h4>Enforce with Kubewarden</h4>
+        <p>Block vulnerable images at admission with the image-cve policy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-built">
+  <div class="wrap-lg">
+    <h2>Built for the people doing the work</h2>
+    <div class="work-grid">
+
+      <div class="work-card">
+        <div class="work-card-head">
+          <div>
+            <h3>For platform teams</h3>
+            <p>Know what runs in your cluster, and what is wrong with it.</p>
+          </div>
+        </div>
+        <ul class="checklist">
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Scan whole registries or only the images your workloads use</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Schedule scans, or run them on demand</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Cover the nodes, not just the containers</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Cut false positives with VEX statements</li>
+        </ul>
+        <div class="code-panel">
+          <div class="code-panel-head">registry.yaml</div>
+          <pre><code><span class="tok-key">apiVersion:</span> sbomscanner.kubewarden.io/v1alpha1
+<span class="tok-key">kind:</span> Registry
+<span class="tok-key">metadata:</span>
+  <span class="tok-key">name:</span> <span class="tok-str">my-registry</span>
+  <span class="tok-key">namespace:</span> <span class="tok-str">default</span>
+<span class="tok-key">spec:</span>
+  <span class="tok-key">uri:</span> <span class="tok-str">ghcr.io</span>
+  <span class="tok-key">scanInterval:</span> <span class="tok-str">1h</span>
+  <span class="tok-key">repositories:</span>
+    - <span class="tok-key">name:</span> <span class="tok-str">kubewarden/sbomscanner</span></code></pre>
+        </div>
+        <a class="arrow-link" href="https://docs.kubewarden.io/sbom-scanner/latest/en/user-guide/scanning-registries.html" target="_blank" rel="noopener">Learn about scanning registries <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+
+      <div class="work-card">
+        <div class="work-card-head">
+          <div>
+            <h3>For security teams</h3>
+            <p>Turn findings into decisions.</p>
+          </div>
+        </div>
+        <ul class="checklist">
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Query SBOMs and reports with kubectl</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Filter by registry, repository, tag or severity</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Block vulnerable images at admission with Kubewarden</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Works in air-gapped and private-registry setups</li>
+        </ul>
+        <div class="code-panel">
+          <div class="code-panel-head">kubectl</div>
+          <pre><code><span class="tok-comment"># Filter by severity</span>
+kubectl get vulnerabilityreport -n default \
+  --field-selector spec.severity=Critical
+
+<span class="tok-comment"># Inspect a single report</span>
+kubectl describe vulnerabilityreport &lt;name&gt; -n default</code></pre>
+        </div>
+        <a class="arrow-link" href="https://docs.kubewarden.io/sbom-scanner/latest/en/user-guide/querying-reports.html" target="_blank" rel="noopener">Learn about querying reports <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section-ready">
+  <div class="wrap-lg">
+    <h2>Ready to try it?</h2>
+    <p class="section-lead">Install SBOM Scanner with Helm and start scanning your first registry.</p>
+    <div class="section-ready-inner">
+      <div class="code-panel code-panel--dark code-panel--terminal">
+        <pre><code><span class="tok-comment"># Requires cert-manager and CloudNativePG - see the quickstart</span>
+helm repo add kubewarden https://charts.kubewarden.io
+
+helm install sbomscanner kubewarden/sbomscanner \
+  --namespace sbomscanner --create-namespace \
+  --set controller.replicas=1 --set storage.replicas=1 \
+  --set storage.postgres.cnpg.instances=1 --set worker.replicas=1 \
+  --wait</code></pre>
+      </div>
+      <div class="section-ready-actions">
+        <a class="btn-primary" href="https://docs.kubewarden.io/sbom-scanner/latest/en/quickstart.html" target="_blank" rel="noopener">Follow the quickstart <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-policies">
+  <div class="wrap-lg">
+    <h2>Works with the Admission Controller</h2>
+    <p class="section-lead">SBOM Scanner finds the vulnerabilities. The Admission Controller can act on them.</p>
+
+    <div class="policy-card policy-card--wide">
+      <div class="policy-card-main">
+        <span class="pill pill-supply">Supply chain</span>
+        <h3>image-cve policy</h3>
+        <p>Reject or audit workloads whose images have known vulnerabilities, using SBOM Scanner's vulnerability reports.</p>
+      </div>
+      <div class="policy-card-actions">
+        <a class="arrow-link" href="https://artifacthub.io/packages/kubewarden/kubewarden-policy-library/image-cve-policy" target="_blank" rel="noopener">View on Artifact Hub <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+        <a class="arrow-link" href="/component/adm-controller/">See the Admission Controller <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+{{/*
+  Simple "what SBOM Scanner watches, and what it produces" graphic for the
+  SBOM Scanner hero. Message: it scans registries, running workloads and
+  nodes, builds a Software Bill of Materials for each, and turns that into
+  vulnerability findings for your cluster.
+*/}}
+<div class="component-hero-diagram" aria-hidden="true">
+  <div class="ha-resources-col">
+    <div class="ha-resources ha-resources--stack">
+      <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-globe"></use></svg>Registries</div>
+      <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>Workloads</div>
+      <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg>Nodes</div>
+    </div>
+    <p class="ha-caption">Scan images, running workloads, and node filesystems.</p>
+  </div>
+
+  <div class="ha-fanout">
+    <svg viewBox="0 0 40 120" preserveAspectRatio="none" focusable="false">
+      <path d="M6,6 C24,6 18,54 36,60 C18,66 24,114 6,114" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div class="ha-node">
+    <div class="ha-node-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg></div>
+    <h3 class="ha-node-title">SBOM Scanner</h3>
+    <div class="ha-outcomes">
+      <div class="ha-outcome ha-outcome--sbom">
+        <span class="ha-outcome-icon"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg></span>
+        Generate SBOM
+      </div>
+      <div class="ha-outcome ha-outcome--deny">
+        <span class="ha-outcome-icon"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-x"></use></svg></span>
+        Find vulnerabilities
+      </div>
+    </div>
+  </div>
+
+  <span class="ha-connector"></span>
+
+  <div class="ha-cluster">
+    <img src="/images/kubernetes-logo.svg" alt="">
+    <span>Kubernetes cluster</span>
+  </div>
+</div>

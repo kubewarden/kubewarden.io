@@ -866,7 +866,7 @@ footer .project-icons a img {
 
 // Admission Controller hero graphic
 
-.hero-admission {
+.component-hero-diagram {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -884,6 +884,10 @@ footer .project-icons a img {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: .8rem;
+
+  &--stack {
+    grid-template-columns: 1fr;
+  }
 }
 
 .ha-resource {
@@ -1041,6 +1045,16 @@ footer .project-icons a img {
 
   .ha-outcome-icon {
     background: var(--primary-color);
+    color: var(--light);
+  }
+}
+
+.ha-outcome--sbom {
+  background: #e9eaed;
+  color: #5a5e68;
+
+  .ha-outcome-icon {
+    background: #5a5e68;
     color: var(--light);
   }
 }
@@ -1301,6 +1315,35 @@ footer .project-icons a img {
 
   > .arrow-link {
     margin-top: auto;
+  }
+
+  &--wide {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2.5rem;
+
+    .policy-card-main {
+      flex: 1 1 320px;
+    }
+
+    h3 {
+      margin-bottom: .6rem;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+
+    .policy-card-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      flex: 0 0 auto;
+    }
   }
 }
 
