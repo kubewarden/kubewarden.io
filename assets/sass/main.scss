@@ -871,6 +871,11 @@ footer .project-icons a img {
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
+
+  &--vertical {
+    flex-direction: column;
+    gap: .8rem;
+  }
 }
 
 .ha-resources-col {
@@ -884,10 +889,6 @@ footer .project-icons a img {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: .8rem;
-
-  &--stack {
-    grid-template-columns: 1fr;
-  }
 }
 
 .ha-resource {
@@ -940,6 +941,45 @@ footer .project-icons a img {
   height: 0;
   border-top: 2px dashed var(--primary-color);
   opacity: .55;
+
+  &--vertical {
+    flex: 0 0 auto;
+    width: 0;
+    height: 1.6rem;
+    border-top: none;
+    border-left: 2px dashed var(--primary-color);
+  }
+}
+
+// SBOM Scanner hero: vertical funnel (sources converge into the
+// scanner, the scanner's own outputs are shown below it)
+
+.ha-sources {
+  display: flex;
+  gap: .8rem;
+}
+
+.ha-converge {
+  width: 100%;
+  max-width: 26rem;
+  height: 4rem;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
+
+.ha-outputs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .8rem;
+
+  .ha-outcome {
+    width: auto;
+  }
 }
 
 .ha-node {

@@ -1,44 +1,41 @@
 {{/*
-  Simple "what SBOM Scanner watches, and what it produces" graphic for the
-  SBOM Scanner hero. Message: it scans registries, running workloads and
-  nodes, builds a Software Bill of Materials for each, and turns that into
-  vulnerability findings for your cluster.
+  Simple "inputs -> scanner -> outputs" graphic for the SBOM Scanner hero.
+  Deliberately NOT the same "sources -> node -> Kubernetes cluster" shape
+  used by hero-admission: SBOM Scanner doesn't turn its inputs into a
+  cluster, it turns them into SBOMs and vulnerability reports. So this
+  is a vertical funnel instead: three sources converge into the scanner,
+  and the scanner's own outputs are shown below it.
 */}}
-<div class="component-hero-diagram" aria-hidden="true">
-  <div class="ha-resources-col">
-    <div class="ha-resources ha-resources--stack">
-      <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-globe"></use></svg>Registries</div>
-      <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>Workloads</div>
-      <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg>Nodes</div>
-    </div>
-    <p class="ha-caption">Scan images, running workloads, and node filesystems.</p>
+<div class="component-hero-diagram component-hero-diagram--vertical" aria-hidden="true">
+  <div class="ha-sources">
+    <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-globe"></use></svg>Registries</div>
+    <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>Workloads</div>
+    <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg>Nodes</div>
   </div>
 
-  <div class="ha-fanout">
-    <svg viewBox="0 0 40 120" preserveAspectRatio="none" focusable="false">
-      <path d="M6,6 C24,6 18,54 36,60 C18,66 24,114 6,114" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
+  <div class="ha-converge">
+    <svg viewBox="0 0 300 60" preserveAspectRatio="none" focusable="false">
+      <path d="M50,0 C50,30 130,30 150,58" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
+      <path d="M150,0 L150,58" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
+      <path d="M250,0 C250,30 170,30 150,58" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
     </svg>
   </div>
 
   <div class="ha-node">
     <div class="ha-node-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg></div>
     <h3 class="ha-node-title">SBOM Scanner</h3>
-    <div class="ha-outcomes">
-      <div class="ha-outcome ha-outcome--sbom">
-        <span class="ha-outcome-icon"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg></span>
-        Generate SBOM
-      </div>
-      <div class="ha-outcome ha-outcome--deny">
-        <span class="ha-outcome-icon"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-x"></use></svg></span>
-        Find vulnerabilities
-      </div>
-    </div>
   </div>
 
-  <span class="ha-connector"></span>
+  <span class="ha-connector ha-connector--vertical"></span>
 
-  <div class="ha-cluster">
-    <img src="/images/kubernetes-logo.svg" alt="">
-    <span>Kubernetes cluster</span>
+  <div class="ha-outputs">
+    <div class="ha-outcome ha-outcome--sbom">
+      <span class="ha-outcome-icon"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg></span>
+      SBOMs
+    </div>
+    <div class="ha-outcome ha-outcome--deny">
+      <span class="ha-outcome-icon"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-x"></use></svg></span>
+      Vulnerability reports
+    </div>
   </div>
 </div>
