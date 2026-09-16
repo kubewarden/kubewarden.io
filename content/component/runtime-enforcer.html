@@ -1,0 +1,201 @@
+---
+title: "Runtime Enforcer"
+tagline: "Control what can run inside your Kubernetes workloads."
+icon: icon-cube
+status: Beta
+docs: https://docs.kubewarden.io/runtime-enforcer/latest/en/introduction.html
+repoUrl: https://github.com/kubewarden/runtime-enforcer
+hero: runtime
+intro: "Learn the normal behavior of your workloads, detect unexpected process executions, and block them at runtime using eBPF."
+date: 2026-09-16T00:00:00+00:00
+---
+
+<section class="section-why">
+  <div class="wrap-lg">
+    <h2>Why Runtime Enforcer?</h2>
+    <div class="feature-row feature-row--divided">
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye"></use></svg>
+        <h4>Learn from real workloads</h4>
+        <p>Observe the processes your workloads actually run, and get a policy proposal generated automatically for each one.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-activity"></use></svg>
+        <h4>Roll out safely</h4>
+        <p>Start in monitor mode and see violations reported before you switch a workload to enforcement.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shield"></use></svg>
+        <h4>Enforce at runtime</h4>
+        <p>Use eBPF to block executables that are not on a workload's allow-list.</p>
+      </div>
+      <div class="feature">
+        <img class="icon" src="/images/kubernetes-logo.svg" alt="">
+        <h4>Kubernetes-native</h4>
+        <p>Manage policies as Kubernetes resources, and export violation events through OpenTelemetry.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-built">
+  <div class="wrap-lg">
+    <h2>Learn. Monitor. Protect.</h2>
+    <p class="section-lead">A simple workflow to secure your workloads.</p>
+
+    <div class="step-cards">
+      <div class="step-card">
+        <div class="step-card-head">
+          <span class="step-badge">1</span>
+          <div>
+            <h3>Learn</h3>
+            <p>Observe normal process execution and generate a policy proposal.</p>
+          </div>
+        </div>
+        <div class="step-panel">
+          <div class="step-panel-head">Observing&hellip;</div>
+          <div class="step-panel-body">
+            <ul class="hr-exec-list">
+              <li class="hr-exec hr-exec--allow"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>/usr/bin/payments-api</li>
+              <li class="hr-exec hr-exec--allow"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>/usr/bin/nginx</li>
+              <li class="hr-exec hr-exec--allow"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>/usr/bin/worker</li>
+              <li class="hr-exec hr-exec--allow"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>/usr/bin/curl</li>
+              <li class="hr-exec hr-exec--allow"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>&hellip;</li>
+            </ul>
+          </div>
+        </div>
+        <div class="step-footer">Creates a WorkloadPolicyProposal</div>
+      </div>
+
+      <span class="pipeline-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+
+      <div class="step-card">
+        <div class="step-card-head">
+          <span class="step-badge">2</span>
+          <div>
+            <h3>Monitor</h3>
+            <p>Detect unexpected executions without breaking your workload.</p>
+          </div>
+        </div>
+        <div class="step-panel step-panel--flag">
+          <div class="step-panel-head">Violation detected</div>
+          <div class="step-panel-body">
+            <p class="step-record-path step-record-path--warn"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-alert-triangle"></use></svg>/bin/bash</p>
+            <p class="step-record-line"><span class="step-record-key">podName:</span> payments-api</p>
+            <p class="step-record-line"><span class="step-record-key">containerName:</span> app</p>
+            <p class="step-record-line"><span class="step-record-key">action:</span> <span class="step-record-value--warn">monitor</span></p>
+            <p class="step-record-line"><span class="step-record-key">timestamp:</span> 2026-09-16T14:23:11Z</p>
+          </div>
+        </div>
+        <div class="step-footer">Violations are reported</div>
+      </div>
+
+      <span class="pipeline-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+
+      <div class="step-card">
+        <div class="step-card-head">
+          <span class="step-badge">3</span>
+          <div>
+            <h3>Protect</h3>
+            <p>Block unexpected executions using eBPF.</p>
+          </div>
+        </div>
+        <div class="step-panel step-panel--flag">
+          <div class="step-panel-head">Execution blocked</div>
+          <div class="step-panel-body">
+            <p class="step-record-path step-record-path--deny"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-x"></use></svg>/bin/bash</p>
+            <p class="step-record-line"><span class="step-record-key">podName:</span> payments-api</p>
+            <p class="step-record-line"><span class="step-record-key">containerName:</span> app</p>
+            <p class="step-record-line"><span class="step-record-key">action:</span> <span class="step-record-value--deny">protect</span></p>
+            <p class="step-record-line"><span class="step-record-key">timestamp:</span> 2026-09-16T14:24:03Z</p>
+          </div>
+        </div>
+        <div class="step-footer">Unauthorized executions are denied</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-policies">
+  <div class="wrap-lg">
+    <h2>From observation to policy</h2>
+    <p class="section-lead">Runtime Enforcer learns from your workloads and generates a policy proposal that you can review and enforce.</p>
+
+    <div class="policy-compare">
+      <div class="policy-compare-col">
+        <div class="policy-compare-head">
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings"></use></svg>
+          <h3>WorkloadPolicyProposal <span>(generated)</span></h3>
+        </div>
+        <div class="code-panel">
+          <div class="code-panel-head">workloadpolicyproposal.yaml</div>
+          <pre><code><span class="tok-key">apiVersion:</span> runtimeenforcer.kubewarden.io/v1alpha1
+<span class="tok-key">kind:</span> WorkloadPolicyProposal
+<span class="tok-key">metadata:</span>
+  <span class="tok-key">name:</span> <span class="tok-str">deploy-payments-api</span>
+  <span class="tok-key">namespace:</span> <span class="tok-str">default</span>
+<span class="tok-key">spec:</span>
+  <span class="tok-key">rulesByContainer:</span>
+    <span class="tok-key">init-setup:</span>
+      <span class="tok-key">executables:</span>
+        <span class="tok-key">allowed:</span>
+          - <span class="tok-str">/bin/bash</span>
+          - <span class="tok-str">/usr/bin/curl</span>
+    <span class="tok-key">app:</span>
+      <span class="tok-key">executables:</span>
+        <span class="tok-key">allowed:</span>
+          - <span class="tok-str">/usr/bin/payments-api</span></code></pre>
+        </div>
+      </div>
+
+      <span class="pipeline-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+
+      <div class="policy-compare-col">
+        <div class="policy-compare-head">
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shield"></use></svg>
+          <h3>WorkloadPolicy <span>(enforced)</span></h3>
+        </div>
+        <div class="code-panel">
+          <div class="code-panel-head">workloadpolicy.yaml</div>
+          <pre><code><span class="tok-key">apiVersion:</span> runtimeenforcer.kubewarden.io/v1alpha1
+<span class="tok-key">kind:</span> WorkloadPolicy
+<span class="tok-key">metadata:</span>
+  <span class="tok-key">name:</span> <span class="tok-str">deploy-payments-api</span>
+  <span class="tok-key">namespace:</span> <span class="tok-str">default</span>
+<span class="tok-key">spec:</span>
+  <span class="tok-key">mode:</span> <span class="tok-str">protect</span>
+  <span class="tok-key">rulesByContainer:</span>
+    <span class="tok-key">init-setup:</span>
+      <span class="tok-key">executables:</span>
+        <span class="tok-key">allowed:</span>
+          - <span class="tok-str">/bin/bash</span>
+          - <span class="tok-str">/usr/bin/curl</span>
+    <span class="tok-key">app:</span>
+      <span class="tok-key">executables:</span>
+        <span class="tok-key">allowed:</span>
+          - <span class="tok-str">/usr/bin/payments-api</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-ready">
+  <div class="wrap-lg">
+    <h2>Ready to try it?</h2>
+    <p class="section-lead">Deploy Runtime Enforcer and learn the behavior of your first workload.</p>
+    <div class="section-ready-inner">
+      <div class="code-panel code-panel--dark code-panel--terminal">
+        <pre><code><span class="tok-comment"># Requires cert-manager and cert-manager-csi-driver - see the quickstart</span>
+helm repo add kubewarden https://charts.kubewarden.io
+
+helm install runtime-enforcer kubewarden/runtime-enforcer \
+  --namespace runtime-enforcer --create-namespace \
+  --wait</code></pre>
+      </div>
+      <div class="section-ready-actions">
+        <a class="btn-primary" href="https://docs.kubewarden.io/runtime-enforcer/latest/en/quickstart.html" target="_blank" rel="noopener">Follow the quickstart <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+    </div>
+  </div>
+</section>

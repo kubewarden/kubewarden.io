@@ -992,6 +992,194 @@ footer .project-icons a img {
   margin: 0;
 }
 
+// Runtime Enforcer hero: vertical stack (Pod on top, eBPF enforcement
+// and the Linux kernel below it)
+
+.component-hero-diagram--stack {
+  flex-direction: column;
+  width: 100%;
+}
+
+.hr-pod {
+  width: 100%;
+  max-width: 34rem;
+  background: var(--light);
+  border: 1px solid #ececec;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(15, 15, 15, 0.08);
+  padding: 1.4rem 1.6rem;
+}
+
+.hr-pod-head {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: 1.2rem;
+  font-family: 'poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--dark);
+
+  img {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+}
+
+.hr-containers {
+  display: flex;
+  gap: 1rem;
+}
+
+.hr-container {
+  flex: 1 1 0;
+  background: #faf7f8;
+  border: 1px solid #ececec;
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+}
+
+.hr-container-head {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .8rem;
+
+  .icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    color: var(--primary-color);
+    fill: none;
+    margin-right: 0;
+    flex-shrink: 0;
+  }
+
+  span {
+    display: flex;
+    flex-direction: column;
+  }
+
+  strong {
+    font-family: 'poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--dark);
+  }
+
+  small {
+    font-size: 1rem;
+    color: #8a8a8a;
+  }
+}
+
+.hr-exec-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.hr-exec {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  border: none;
+  margin: 0;
+  padding: 0;
+  font-family: 'fira mono', monospace;
+  font-size: 1.15rem;
+
+  .icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-right: 0;
+    flex-shrink: 0;
+  }
+
+  &--allow {
+    color: #1e7d47;
+
+    .icon {
+      color: #1e7d47;
+    }
+  }
+
+  &--deny {
+    color: var(--primary-color);
+
+    .icon {
+      color: var(--primary-color);
+    }
+  }
+}
+
+.hr-arrow {
+  display: flex;
+  justify-content: center;
+
+  .icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--primary-color);
+    fill: none;
+    margin-right: 0;
+  }
+
+  &--up .icon {
+    transform: rotate(-90deg);
+  }
+
+  &--down .icon {
+    transform: rotate(90deg);
+  }
+}
+
+.hr-ebpf {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  background: #fdf1f4;
+  color: var(--primary-color);
+  font-family: 'poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  padding: .8rem 1.6rem;
+  border-radius: 8px;
+
+  .icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--primary-color);
+    fill: none;
+    margin-right: 0;
+  }
+}
+
+.hr-kernel {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  background: var(--light);
+  border: 1px solid #ececec;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(15, 15, 15, 0.06);
+  color: var(--dark);
+  font-family: 'poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  padding: .9rem 1.6rem;
+
+  .icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--dark);
+    fill: currentColor;
+    margin-right: 0;
+  }
+}
+
 .ha-node {
   display: flex;
   flex-direction: column;
@@ -1573,6 +1761,213 @@ footer .project-icons a img {
   }
 }
 
+// Runtime Enforcer: "Learn. Monitor. Protect." step cards
+
+.step-cards {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 3rem 0;
+}
+
+.step-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 260px;
+  background: var(--light);
+  border: 1px solid #ececec;
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.step-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.6rem;
+
+  h3 {
+    font-size: 1.9rem;
+    line-height: 2.4rem;
+    margin-bottom: .4rem;
+  }
+
+  p {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: #4a4a4a;
+    margin-bottom: 0;
+  }
+}
+
+.step-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: var(--light);
+  font-family: 'poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.step-panel {
+  background: #f6f7f9;
+  border: 1px solid #ececec;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.6rem;
+
+  &--flag .step-panel-head {
+    background: #fdf1f4;
+    color: var(--primary-color);
+  }
+}
+
+.step-panel-head {
+  font-family: 'fira mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #4a4a4a;
+  padding: .8rem 1.4rem;
+  border-bottom: 1px solid #ececec;
+}
+
+.step-panel-body {
+  padding: 1.2rem 1.4rem;
+}
+
+.step-record-path {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-family: 'fira mono', monospace;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin: 0 0 .8rem;
+
+  .icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-right: 0;
+    flex-shrink: 0;
+  }
+
+  &--warn {
+    color: #b45309;
+
+    .icon {
+      color: #b45309;
+    }
+  }
+
+  &--deny {
+    color: var(--primary-color);
+
+    .icon {
+      color: var(--primary-color);
+    }
+  }
+}
+
+.step-record-line {
+  margin: 0 0 .3rem;
+  font-family: 'fira mono', monospace;
+  font-size: 1.1rem;
+  color: #4a4a4a;
+}
+
+.step-record-key {
+  color: #8a8a8a;
+  margin-right: .3rem;
+}
+
+.step-record-value {
+  &--warn {
+    color: #b45309;
+    font-weight: 700;
+  }
+
+  &--deny {
+    color: var(--primary-color);
+    font-weight: 700;
+  }
+}
+
+.step-footer {
+  margin-top: auto;
+  background: #fdf1f4;
+  color: var(--primary-color);
+  font-family: 'poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  text-align: center;
+  padding: .9rem 1rem;
+  border-radius: 8px;
+}
+
+@media (max-width: 900px) {
+  .step-cards {
+    flex-direction: column;
+  }
+
+  .step-cards .pipeline-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+// Runtime Enforcer: "From observation to policy" compare panels
+
+.policy-compare {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 3rem 0;
+}
+
+.policy-compare-col {
+  flex: 1 1 320px;
+}
+
+.policy-compare-head {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: 1rem;
+
+  .icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--primary-color);
+    fill: none;
+    margin-right: 0;
+    flex-shrink: 0;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.6rem;
+
+    span {
+      font-weight: 400;
+      color: #8a8a8a;
+      font-size: 1.3rem;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .policy-compare .pipeline-arrow {
+    transform: rotate(90deg);
+  }
+}
+
 .pill-security {
   background: #fdf1f4;
   color: var(--primary-color);
@@ -1717,6 +2112,10 @@ footer .project-icons a img {
   .component-hero-visual {
     max-width: 44rem;
     margin: 0 auto;
+  }
+
+  .hr-containers {
+    flex-direction: column;
   }
 
   .work-grid,
