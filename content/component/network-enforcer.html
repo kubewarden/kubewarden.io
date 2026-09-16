@@ -1,0 +1,269 @@
+---
+title: "Network Enforcer"
+tagline: "Discover network activity and secure the communication between your workloads."
+icon: icon-nodes
+status: Beta
+badge: Experimental
+docs: https://docs.kubewarden.io/network-enforcer/latest/en/introduction.html
+repoUrl: https://github.com/kubewarden/network-enforcer
+hero: network
+intro: "Observe real network traffic, learn the communication patterns your applications need, and turn them into enforceable network policies."
+date: 2026-09-16T00:00:00+00:00
+---
+
+<section class="section-why">
+  <div class="wrap-lg">
+    <h2>Why Network Enforcer?</h2>
+    <div class="feature-row feature-row--divided">
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye"></use></svg>
+        <h4>Learn from real traffic</h4>
+        <p>Observe the communication patterns of running workloads instead of manually guessing every allowed peer and port.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-activity"></use></svg>
+        <h4>Roll out safely</h4>
+        <p>Start in monitor mode. See unexpected communication before you decide to block it.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg>
+        <h4>Use your existing network stack</h4>
+        <p>Build on Istio Ambient, Calico, or Cilium instead of introducing another data plane.</p>
+      </div>
+      <div class="feature">
+        <img class="icon" src="/images/kubernetes-logo.svg" alt="">
+        <h4>Kubernetes-native enforcement</h4>
+        <p>Turn learned behavior into an Istio AuthorizationPolicy or a Kubernetes NetworkPolicy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-built">
+  <div class="wrap-lg">
+    <h2>Learn. Monitor. Protect.</h2>
+    <p class="section-lead">A simple workflow to secure your network.</p>
+
+    <div class="step-cards">
+      <div class="step-card">
+        <div class="step-card-head">
+          <span class="step-badge">1</span>
+          <div>
+            <h3>Learn</h3>
+            <p>Observe network flows and automatically build workload-specific policy proposals.</p>
+          </div>
+        </div>
+        <div class="hn-grid">
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>frontend</strong></div>
+          <div class="hn-edge"><span class="hn-edge-line"></span></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>api</strong></div>
+          <div class="hn-edge"><span class="hn-edge-line"></span></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>database</strong></div>
+          <div class="hn-branch">
+            <span class="hn-branch-line"></span>
+            <span class="hn-branch-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+            <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>redis</strong></div>
+          </div>
+          <div class="hn-cell"></div>
+          <div class="hn-cell"></div>
+          <div class="hn-cell"></div>
+          <div class="hn-cell"></div>
+        </div>
+        <div class="step-footer">Creates a WorkloadNetworkPolicyProposal</div>
+      </div>
+
+      <span class="pipeline-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+
+      <div class="step-card">
+        <div class="step-card-head">
+          <span class="step-badge">2</span>
+          <div>
+            <h3>Monitor</h3>
+            <p>Find traffic outside the learned policy without breaking your applications.</p>
+          </div>
+        </div>
+        <div class="hn-grid">
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>frontend</strong></div>
+          <div class="hn-edge hn-edge--violation">
+            <span class="hn-edge-line hn-edge-line--deny"></span>
+            <span class="hn-edge-badge"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-alert-triangle"></use></svg></span>
+          </div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>api</strong></div>
+          <div class="hn-edge"><span class="hn-edge-line"></span></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>database</strong></div>
+        </div>
+        <div class="step-footer">Violations are reported (traffic is allowed)</div>
+      </div>
+
+      <span class="pipeline-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+
+      <div class="step-card">
+        <div class="step-card-head">
+          <span class="step-badge">3</span>
+          <div>
+            <h3>Protect</h3>
+            <p>Enforce the allow-list using the policy mechanism provided by your network stack.</p>
+          </div>
+        </div>
+        <div class="hn-grid">
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>frontend</strong></div>
+          <div class="hn-edge hn-edge--violation">
+            <span class="hn-edge-line hn-edge-line--deny"></span>
+            <span class="hn-edge-badge"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-x"></use></svg></span>
+          </div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>api</strong></div>
+          <div class="hn-edge"><span class="hn-edge-line"></span></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>database</strong></div>
+        </div>
+        <div class="step-footer">Unexpected communication is blocked</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-built">
+  <div class="wrap-lg">
+    <h2>Works with your network stack</h2>
+    <p class="section-lead">Network Enforcer consumes flow information from your existing networking solution and generates native policies.</p>
+
+    <div class="work-grid work-grid--3">
+      <div class="work-card">
+        <div class="stack-card-head">
+          <img src="/images/logos/istio.svg" alt="">
+          <h3>Istio Ambient</h3>
+        </div>
+        <div class="stack-flow">
+          <span class="stack-node">ztunnel</span>
+          <span class="stack-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+          <span class="stack-node stack-node--enforcer"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>Network Enforcer</span>
+          <span class="stack-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+          <span class="stack-node stack-node--policy"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg>AuthorizationPolicy</span>
+        </div>
+        <p class="stack-desc">Observe inbound TCP traffic and enforce using Istio's native authorization mechanism.</p>
+      </div>
+
+      <div class="work-card">
+        <div class="stack-card-head">
+          <img src="/images/logos/calico.svg" alt="">
+          <h3>Calico</h3>
+        </div>
+        <div class="stack-flow">
+          <span class="stack-node">Goldmane</span>
+          <span class="stack-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+          <span class="stack-node stack-node--enforcer"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>Network Enforcer</span>
+          <span class="stack-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+          <span class="stack-node stack-node--policy"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg>NetworkPolicy</span>
+        </div>
+        <p class="stack-desc">Observe ingress and egress TCP/UDP flows and enforce using Kubernetes NetworkPolicy.</p>
+      </div>
+
+      <div class="work-card">
+        <div class="stack-card-head">
+          <img src="/images/logos/cilium.svg" alt="">
+          <h3>Cilium</h3>
+        </div>
+        <div class="stack-flow">
+          <span class="stack-node">Hubble Relay</span>
+          <span class="stack-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+          <span class="stack-node stack-node--enforcer"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>Network Enforcer</span>
+          <span class="stack-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+          <span class="stack-node stack-node--policy"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg>NetworkPolicy</span>
+        </div>
+        <p class="stack-desc">Observe ingress and egress TCP/UDP flows and enforce using Kubernetes NetworkPolicy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-policies">
+  <div class="wrap-lg">
+    <div class="split-grid">
+      <div class="split-col">
+        <h2>From observed traffic to reviewable policy</h2>
+        <p class="section-lead">Network Enforcer learns the communication your workloads actually use and generates a policy proposal you can inspect before enforcing it.</p>
+        <div class="step-panel">
+          <div class="step-panel-head">Observed traffic (example)</div>
+          <div class="step-panel-body">
+            <p class="step-record-path"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>payments-api</p>
+            <ul class="hr-exec-list">
+              <li class="hr-exec hr-exec--observed"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg>postgres :5432</li>
+              <li class="hr-exec hr-exec--observed"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg>redis :6379</li>
+              <li class="hr-exec hr-exec--observed"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg>external API :443</li>
+            </ul>
+          </div>
+        </div>
+        <div class="code-panel">
+          <div class="code-panel-head">workloadnetworkpolicyproposal.yaml</div>
+          <pre><code><span class="tok-key">apiVersion:</span> networkenforcer.kubewarden.io/v1alpha1
+<span class="tok-key">kind:</span> WorkloadNetworkPolicyProposal
+<span class="tok-key">metadata:</span>
+  <span class="tok-key">name:</span> <span class="tok-str">deployment-payments-api-egress</span>
+  <span class="tok-key">namespace:</span> <span class="tok-str">default</span>
+<span class="tok-key">spec:</span>
+  <span class="tok-key">backend:</span> <span class="tok-str">kubernetes</span>
+  <span class="tok-key">kubernetes:</span>
+    <span class="tok-key">egress:</span>
+      - <span class="tok-key">ports:</span>
+          - <span class="tok-key">port:</span> <span class="tok-str">5432</span>
+            <span class="tok-key">protocol:</span> <span class="tok-str">TCP</span>
+        <span class="tok-key">to:</span>
+          - <span class="tok-key">podSelector:</span>
+              <span class="tok-key">matchLabels:</span>
+                <span class="tok-key">app:</span> <span class="tok-str">postgres</span>
+      - <span class="tok-key">ports:</span>
+          - <span class="tok-key">port:</span> <span class="tok-str">6379</span>
+            <span class="tok-key">protocol:</span> <span class="tok-str">TCP</span>
+        <span class="tok-key">to:</span>
+          - <span class="tok-key">podSelector:</span>
+              <span class="tok-key">matchLabels:</span>
+                <span class="tok-key">app:</span> <span class="tok-str">redis</span>
+      - <span class="tok-comment">...</span></code></pre>
+        </div>
+      </div>
+
+      <div class="split-col">
+        <h2>See unexpected communication before blocking it</h2>
+        <p class="section-lead">Insights into unexpected traffic help you refine policies with confidence.</p>
+        <div class="step-panel step-panel--flag">
+          <div class="step-panel-head">Unexpected network flow</div>
+          <div class="step-panel-body">
+            <p class="step-record-line"><span class="step-record-key">source:</span> frontend</p>
+            <p class="step-record-line"><span class="step-record-key">dest:</span> payments-db</p>
+            <p class="step-record-line"><span class="step-record-key">dstPort:</span> 5432</p>
+            <p class="step-record-line"><span class="step-record-key">protocol:</span> TCP</p>
+            <p class="step-record-line"><span class="step-record-key">action:</span> <span class="step-record-value--warn">monitor</span></p>
+            <p class="step-record-line"><span class="step-record-key">timestamp:</span> 2026-09-16T10:24:32Z</p>
+          </div>
+        </div>
+        <ul class="checklist">
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Reported in the policy's status</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Exported via OpenTelemetry</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Includes source, destination, port and protocol</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Helps you fine-tune policies before enforcement</li>
+        </ul>
+        <a class="arrow-link" href="https://github.com/kubewarden/network-enforcer/blob/main/docs/phases.adoc#monitor-phase" target="_blank" rel="noopener">Learn more about the Monitor phase <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-ready">
+  <div class="wrap-lg">
+    <h2>Ready to experiment?</h2>
+    <p class="section-lead">Deploy Network Enforcer on a cluster using Istio Ambient, Calico, or Cilium and learn the communication of your first workload.</p>
+    <div class="section-ready-inner">
+      <div class="code-panel code-panel--dark code-panel--terminal">
+        <pre><code><span class="tok-comment"># Requires cert-manager, cert-manager-csi-driver, and Istio Ambient, Calico, or Cilium</span>
+helm repo add kubewarden https://charts.kubewarden.io
+
+helm install network-enforcer kubewarden/network-enforcer \
+  --namespace network-enforcer --create-namespace \
+  --set controller.provider.name=istio \
+  --wait</code></pre>
+      </div>
+      <div class="section-ready-actions">
+        <a class="btn-primary" href="https://docs.kubewarden.io/network-enforcer/latest/en/quickstart.html" target="_blank" rel="noopener">Follow the quickstart <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+    </div>
+  </div>
+</section>

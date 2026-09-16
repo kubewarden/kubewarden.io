@@ -332,6 +332,12 @@ footer .project-icons a img {
   font-style: normal;
 }
 
+.pill-experimental {
+  background: #fdf1f4;
+  color: var(--primary-color);
+  margin-bottom: 0;
+}
+
 // Arrow links
 
 .arrow-link {
@@ -860,6 +866,7 @@ footer .project-icons a img {
 
 .component-hero-actions {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 1.5rem;
 }
@@ -1113,6 +1120,14 @@ footer .project-icons a img {
       color: var(--primary-color);
     }
   }
+
+  &--observed {
+    color: #4a4a4a;
+
+    .icon {
+      color: #8a8a8a;
+    }
+  }
 }
 
 .hr-arrow {
@@ -1177,6 +1192,237 @@ footer .project-icons a img {
     color: var(--dark);
     fill: currentColor;
     margin-right: 0;
+  }
+}
+
+// Network Enforcer hero: pod-to-pod traffic graph
+
+.hn-diagram {
+  width: 100%;
+}
+
+.hn-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  row-gap: 1.2rem;
+  column-gap: .5rem;
+}
+
+.hn-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: .2rem;
+  background: var(--light);
+  border: 1px dashed #c9ccd3;
+  border-radius: 8px;
+  padding: 1rem;
+
+  .icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--primary-color);
+    fill: none;
+    margin: 0 0 .3rem;
+  }
+
+  strong {
+    display: block;
+    font-family: 'poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--dark);
+  }
+
+  small {
+    display: block;
+    font-size: 1rem;
+    color: #8a8a8a;
+  }
+
+  &--flag {
+    background: #fdf1f4;
+    border: 1px solid #fdf1f4;
+
+    .icon {
+      color: var(--primary-color);
+    }
+
+    strong,
+    small {
+      color: var(--primary-color);
+    }
+  }
+}
+
+.hn-edge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .4rem;
+  min-width: 7rem;
+}
+
+.hn-edge-label {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  background: #e3f3ea;
+  color: #1e7d47;
+  font-family: 'fira mono', monospace;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: .3rem .8rem;
+  border-radius: 999px;
+  white-space: nowrap;
+
+  .icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: #1e7d47;
+    margin-right: 0;
+  }
+
+  &--sm {
+    font-size: 1rem;
+    padding: .2rem .6rem;
+  }
+}
+
+.hn-edge-line {
+  width: 100%;
+  height: 2px;
+  background: #1e7d47;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 6px solid #1e7d47;
+  }
+
+  &--deny {
+    background: none;
+    height: 0;
+    border-top: 2px dashed var(--primary-color);
+
+    &::after {
+      border-left-color: var(--primary-color);
+    }
+  }
+}
+
+.hn-edge {
+  &--violation {
+    position: relative;
+  }
+}
+
+.hn-edge-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--primary-color);
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0;
+    color: var(--light);
+    fill: none;
+  }
+}
+
+.hn-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+}
+
+.hn-branch-line {
+  width: 0;
+  height: 2rem;
+  border-left: 2px solid #1e7d47;
+}
+
+.hn-branch-arrow {
+  display: flex;
+  margin-top: -.6rem;
+
+  .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    color: #1e7d47;
+    fill: none;
+    transform: rotate(90deg);
+    margin-right: 0;
+  }
+}
+
+.hn-branch--deny {
+  .hn-branch-line {
+    border-left: 2px dashed var(--primary-color);
+  }
+
+  .hn-branch-arrow .icon {
+    color: var(--primary-color);
+  }
+}
+
+.hn-cell {
+  min-height: 1px;
+}
+
+.hn-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(199, 10, 65, .15);
+  font-size: 1.1rem;
+  color: #4a4a4a;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .icon {
+    width: 1.3rem;
+    height: 1.3rem;
+    color: var(--primary-color);
+    fill: none;
+    margin-right: 0;
+  }
+}
+
+.hn-legend-line {
+  display: inline-block;
+  width: 1.6rem;
+  height: 0;
+  border-top: 2px solid #1e7d47;
+
+  &--deny {
+    border-top: 2px dashed var(--primary-color);
   }
 }
 
@@ -1418,6 +1664,96 @@ footer .project-icons a img {
     color: #4a4a4a;
     margin-bottom: 0;
   }
+}
+
+// Network Enforcer: "Works with your network stack" cards
+
+.stack-card-head {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  margin-bottom: 1.6rem;
+
+  img {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.7rem;
+  }
+}
+
+.stack-flow {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.6rem;
+}
+
+.stack-node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  flex: 1 1 0;
+  background: #f6f7f9;
+  border: 1px solid #ececec;
+  border-radius: 6px;
+  padding: .7rem 1rem;
+  font-family: 'poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--dark);
+  text-align: center;
+
+  .icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-right: 0;
+    fill: none;
+    flex-shrink: 0;
+  }
+
+  &--enforcer {
+    background: var(--light);
+    border-color: #ececec;
+
+    .icon {
+      color: var(--primary-color);
+    }
+  }
+
+  &--policy {
+    background: #eef4fb;
+    border-color: #dce8f5;
+
+    .icon {
+      color: #2f6fb0;
+    }
+  }
+}
+
+.stack-arrow {
+  display: flex;
+  flex: 0 0 auto;
+
+  .icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    color: #1e7d47;
+    fill: none;
+    margin-right: 0;
+  }
+}
+
+.stack-desc {
+  font-size: 1.4rem;
+  line-height: 2.1rem;
+  color: #4a4a4a;
+  margin-bottom: 0;
 }
 
 .checklist {
@@ -1911,6 +2247,32 @@ footer .project-icons a img {
   border-radius: 8px;
 }
 
+// Compact the pod-flow graphic when it sits inside a step card,
+// alongside two others, instead of alone in the wider hero column.
+
+.step-card {
+  .hn-grid {
+    column-gap: .3rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .hn-node {
+    padding: .5rem .4rem;
+
+    strong {
+      font-size: 1.05rem;
+    }
+  }
+
+  .hn-edge {
+    min-width: 2.2rem;
+  }
+
+  .hn-branch-line {
+    height: 1.4rem;
+  }
+}
+
 @media (max-width: 900px) {
   .step-cards {
     flex-direction: column;
@@ -1965,6 +2327,32 @@ footer .project-icons a img {
 @media (max-width: 900px) {
   .policy-compare .pipeline-arrow {
     transform: rotate(90deg);
+  }
+}
+
+// Network Enforcer: two-column sections with their own heading each
+// (unlike .policy-compare, columns are not symmetric, so no shared
+// vertical centering or connecting arrow is needed)
+
+.split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.split-col {
+  h2 {
+    text-align: left;
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .split-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
   }
 }
 

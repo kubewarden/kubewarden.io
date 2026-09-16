@@ -14,6 +14,7 @@
         {{ with .Params.docs }}<a class="btn-primary" href="{{ . }}" target="_blank" rel="noopener">Read the docs <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>{{ end }}
         {{ with .Params.policiesUrl }}<a class="btn-outline" href="{{ . }}" target="_blank" rel="noopener">Browse ready-to-use policies <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>{{ end }}
         {{ with .Params.repoUrl }}<a class="btn-outline" href="{{ . }}" target="_blank" rel="noopener">View on GitHub <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-github"></use></svg><span class="sr-only"> (opens in new tab)</span></a>{{ end }}
+        {{ with .Params.badge }}<span class="pill pill-{{ . | urlize }}">{{ . }}</span>{{ end }}
       </div>
     </div>
     <div class="component-hero-visual">
