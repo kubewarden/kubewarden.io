@@ -1,5 +1,51 @@
 @import "../../themes/projects-theme/assets/sass/main";
 
+// ---------------------------------------------------------------------------
+// Webfonts
+//
+// Self-hosted, copied from the projects-theme submodule
+// (themes/projects-theme/assets/fonts/) into static/fonts/ so this site
+// doesn't depend on the theme's asset layout at runtime.
+//   - Poppins: SIL Open Font License 1.1, see /fonts/POPPINS-OFL.txt
+//   - Roboto: Apache License 2.0, see /fonts/ROBOTO-LICENSE.txt
+// ---------------------------------------------------------------------------
+
+@font-face {
+  font-family: 'roboto';
+  src: url('/fonts/roboto-light.woff2') format('woff2'),
+       url('/fonts/roboto-light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'roboto';
+  src: url('/fonts/roboto-regular.woff2') format('woff2'),
+       url('/fonts/roboto-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'poppins';
+  src: url('/fonts/poppins-light.woff2') format('woff2'),
+       url('/fonts/poppins-light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'poppins';
+  src: url('/fonts/poppins-bold.woff2') format('woff2'),
+       url('/fonts/poppins-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --primary-color: #c70a41;
   --secondary-color: #5b0700;
