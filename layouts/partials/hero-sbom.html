@@ -1,41 +1,56 @@
 {{/*
-  Simple "inputs -> scanner -> outputs" graphic for the SBOM Scanner hero.
-  Deliberately NOT the same "sources -> node -> Kubernetes cluster" shape
-  used by hero-admission: SBOM Scanner doesn't turn its inputs into a
-  cluster, it turns them into SBOMs and vulnerability reports. So this
-  is a vertical funnel instead: three sources converge into the scanner,
-  and the scanner's own outputs are shown below it.
+  Horizontal "inputs -> scanner -> outputs" graphic for the SBOM Scanner
+  hero. Three sources (registries, workloads, nodes) converge into the
+  scanner; the scanner produces two outputs (SBOMs, vulnerability
+  reports). No Kubernetes cluster icon: the scanner does not turn its
+  inputs into a cluster, so that shape (borrowed from hero-admission in
+  an earlier pass) was misleading.
 */}}
-<div class="component-hero-diagram component-hero-diagram--vertical" aria-hidden="true">
-  <div class="ha-sources">
-    <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-globe"></use></svg>Registries</div>
-    <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>Workloads</div>
-    <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg>Nodes</div>
+<div class="component-hero-diagram" aria-hidden="true">
+  <div class="ha-cards">
+    <div class="ha-card">
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-database"></use></svg>
+      <span><strong>Registries</strong><small>Container registries</small></span>
+    </div>
+    <div class="ha-card">
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>
+      <span><strong>Workloads</strong><small>Deployments, Jobs, Pods</small></span>
+    </div>
+    <div class="ha-card">
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-server"></use></svg>
+      <span><strong>Nodes</strong><small>Cluster nodes</small></span>
+    </div>
   </div>
 
-  <div class="ha-converge">
-    <svg viewBox="0 0 300 60" preserveAspectRatio="none" focusable="false">
-      <path d="M50,0 C50,30 130,30 150,58" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
-      <path d="M150,0 L150,58" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
-      <path d="M250,0 C250,30 170,30 150,58" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
+  <div class="ha-fanout">
+    <svg viewBox="0 0 40 120" preserveAspectRatio="none" focusable="false">
+      <path d="M2,10 C22,10 22,60 38,60" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
+      <path d="M2,60 L38,60" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
+      <path d="M2,110 C22,110 22,60 38,60" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
     </svg>
   </div>
 
   <div class="ha-node">
     <div class="ha-node-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg></div>
     <h3 class="ha-node-title">SBOM Scanner</h3>
+    <p class="ha-node-caption">Generate SBOMs and find vulnerabilities</p>
   </div>
 
-  <span class="ha-connector ha-connector--vertical"></span>
+  <div class="ha-fanout">
+    <svg viewBox="0 0 40 120" preserveAspectRatio="none" focusable="false">
+      <path d="M2,60 C18,60 18,10 38,10" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
+      <path d="M2,60 C18,60 18,110 38,110" fill="none" stroke="#c70a41" stroke-width="1.6" stroke-dasharray="4 3" opacity=".55" stroke-linecap="round"/>
+    </svg>
+  </div>
 
-  <div class="ha-outputs">
-    <div class="ha-outcome ha-outcome--sbom">
-      <span class="ha-outcome-icon"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg></span>
-      SBOMs
+  <div class="ha-cards">
+    <div class="ha-card">
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg>
+      <span><strong>SBOMs</strong><small>Software Bill of Materials</small></span>
     </div>
-    <div class="ha-outcome ha-outcome--deny">
-      <span class="ha-outcome-icon"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-x"></use></svg></span>
-      Vulnerability reports
+    <div class="ha-card">
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shield"></use></svg>
+      <span><strong>Vulnerability Reports</strong><small>Known and emerging vulnerabilities</small></span>
     </div>
   </div>
 </div>
