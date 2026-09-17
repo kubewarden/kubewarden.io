@@ -3,17 +3,17 @@
     <a href="{{ .Site.BaseURL }}" class="logo-link">
       <img src="/images/logo-{{lower .Site.Title }}.svg" alt="{{ .Site.Title }}">
     </a>
-    <a href="#main-menu" id="main-menu-toggle" class="menu-toggle" aria-label="Open main menu">
+    <button type="button" id="main-menu-toggle" class="menu-toggle" aria-label="Open main menu" aria-controls="main-menu" aria-expanded="false" hidden>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
-    </a>
+    </button>
     {{ with .Site.Menus.main }}
     <nav id="main-menu" class="main-menu" aria-label="Main menu">
-      <a href="#main-menu-toggle" id="main-menu-close" class="menu-close" aria-label="Close main menu">
+      <button type="button" id="main-menu-close" class="menu-close" aria-label="Close main menu" hidden>
         <span class="sr-only">Close main menu</span>
         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-x"></use></svg>
-      </a>
+      </button>
 
       <h2 id="main-menu-heading" class="sr-only">Main menu</h2>
 
@@ -50,6 +50,8 @@
       </ul>
     </nav>
     {{ end }}
-    <a href="#main-menu-toggle" class="backdrop" tabindex="-1" aria-hidden="true" hidden></a>
+    <div class="backdrop" aria-hidden="true" hidden></div>
   </div>
 </header>
+{{ $menuScript := resources.Get "js/menu.js" | minify }}
+<script src="{{ $menuScript.RelPermalink }}" defer></script>

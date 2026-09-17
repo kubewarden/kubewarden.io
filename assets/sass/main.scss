@@ -85,6 +85,10 @@ section.wrap p {
   width: 44px;
   height: 44px;
   padding: 12px;
+  border: 0;
+  background: transparent;
+  color: var(--light);
+  cursor: pointer;
   .icon { width: 20px; height: 20px; margin: 0; }
 }
 
@@ -103,6 +107,9 @@ section.wrap p {
 }
 
 .menu-toggle {
+  border: 0;
+  padding: 0;
+  background: transparent;
   color: #4a4a4a;
   cursor: pointer;
   display: block;
@@ -110,6 +117,23 @@ section.wrap p {
   position: relative;
   width: 3.25rem;
   margin-left: auto
+}
+
+.menu-toggle[hidden], .main-menu .menu-close[hidden] { display: none; }
+.menu-toggle:focus-visible, .menu-close:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; }
+
+@media (max-width: 767px) {
+  header:not([data-menu-ready]) {
+    .sub-header { flex-wrap: wrap; }
+    .main-menu { display: block; position: static; height: auto; width: 100%; }
+    .main-menu > ul.menu { width: 100%; padding-top: 0; }
+  }
+
+  header[data-menu-ready] .main-menu { display: none; }
+  header[data-menu-open="true"] .main-menu { display: block; position: fixed; left: 0; top: 0; height: 100%; }
+  header[data-menu-open="true"] .menu-close { z-index: 1001; }
+  header .backdrop:not([hidden]) { display: block; position: fixed; inset: 0; z-index: 998; background: rgba(15, 15, 15, .5); }
+  header .backdrop[hidden] { display: none; }
 }
 
 .menu-toggle span {
