@@ -259,7 +259,7 @@ footer {
   span {
     display: block;
     font-size: 1.3rem;
-    color: #8a8a8a;
+    color: #626977;
   }
 }
 
@@ -317,12 +317,12 @@ footer {
     margin: 0;
     font-size: 1.2rem;
     line-height: 1.9rem;
-    color: #8a8a8a;
+    color: #626977;
     max-width: 60rem;
   }
 
   a {
-    color: #8a8a8a;
+    color: #626977;
     text-decoration: underline;
 
     &:hover {
@@ -475,7 +475,7 @@ footer {
 
 .pill-stable {
   background: #e3f3ea;
-  color: #1e7d47;
+  color: #1b7743;
 }
 
 .pill-beta {
@@ -486,7 +486,7 @@ footer {
 
 .pill-experimental {
   background: #fdf0e3;
-  color: #c2680a;
+  color: #945209;
 }
 
 // Arrow links
@@ -779,7 +779,7 @@ footer {
   time {
     display: block;
     font-size: 1.3rem;
-    color: #8a8a8a;
+    color: #626977;
     margin-bottom: 1rem;
   }
 
@@ -983,11 +983,11 @@ footer {
   align-items: center;
   gap: .4rem;
   font-size: 1.4rem;
-  color: #8a8a8a;
+  color: #626977;
   margin-bottom: 2rem;
 
   a {
-    color: #8a8a8a;
+    color: #626977;
     text-decoration: none;
 
     &:hover {
@@ -1121,7 +1121,7 @@ footer {
 .ha-caption {
   font-size: 1.2rem;
   line-height: 1.8rem;
-  color: #8a8a8a;
+  color: #626977;
   font-style: italic;
   margin: 1rem 0 0;
   text-align: center;
@@ -1187,14 +1187,14 @@ footer {
 
   small {
     font-size: 1rem;
-    color: #8a8a8a;
+    color: #626977;
   }
 }
 
 .ha-node-caption {
   font-size: 1.1rem;
   line-height: 1.6rem;
-  color: #8a8a8a;
+  color: #626977;
   text-align: center;
   margin: 0;
 }
@@ -1275,7 +1275,7 @@ footer {
 
   small {
     font-size: 1rem;
-    color: #8a8a8a;
+    color: #626977;
   }
 }
 
@@ -1432,7 +1432,7 @@ footer {
   small {
     display: block;
     font-size: 1rem;
-    color: #8a8a8a;
+    color: #626977;
   }
 
   &--flag {
@@ -1463,7 +1463,7 @@ footer {
   align-items: center;
   gap: .3rem;
   background: #e3f3ea;
-  color: #1e7d47;
+  color: #1b7743;
   font-family: 'fira mono', monospace;
   font-weight: 700;
   font-size: 1.05rem;
@@ -1692,7 +1692,7 @@ footer {
 
 .ha-outcome--allow {
   background: #e3f3ea;
-  color: #1e7d47;
+  color: #1b7743;
 
   .ha-outcome-icon {
     background: #1e7d47;
@@ -1702,7 +1702,7 @@ footer {
 
 .ha-outcome--mutate {
   background: #fdf0e3;
-  color: #c2680a;
+  color: #945209;
 
   .ha-outcome-icon {
     background: #c2680a;
@@ -2005,7 +2005,7 @@ footer {
   .code-panel-head {
     font-family: 'fira mono', monospace;
     font-size: 1.2rem;
-    color: #8a8a8a;
+    color: #626977;
     padding: .8rem 1.4rem;
     border-bottom: 1px solid #ececec;
   }
@@ -2039,7 +2039,7 @@ footer {
   }
 
   .tok-comment {
-    color: #8a8a8a;
+    color: #626977;
   }
 
   &--dark {
@@ -2064,7 +2064,7 @@ footer {
     }
 
     .tok-comment {
-      color: #6d6d78;
+      color: #9a9aa5;
     }
   }
 }
@@ -2150,7 +2150,7 @@ footer {
   small {
     display: block;
     font-size: 1.1rem;
-    color: #8a8a8a;
+    color: #626977;
     margin-top: 0.2rem;
   }
 }
@@ -2228,7 +2228,7 @@ footer {
   small {
     display: block;
     font-size: 1rem;
-    color: #8a8a8a;
+    color: #626977;
   }
 
   &--allow .pipeline-outcome-icon {
@@ -2421,7 +2421,7 @@ footer {
 }
 
 .step-record-key {
-  color: #8a8a8a;
+  color: #626977;
   margin-right: .3rem;
 }
 
@@ -2462,7 +2462,7 @@ footer {
   .step-panel-head,
   .step-footer {
     background: #fdf0e3;
-    color: #b45309;
+    color: #aa4e08;
   }
 
 }
@@ -2552,7 +2552,7 @@ footer {
 
     span {
       font-weight: 400;
-      color: #8a8a8a;
+      color: #626977;
       font-size: 1.3rem;
     }
   }
@@ -2617,7 +2617,7 @@ footer {
   margin: 0;
   border-radius: 8px;
   background: #fdf0e3;
-  color: #b45309;
+  color: #aa4e08;
   font-size: 1.4rem;
   line-height: 2.1rem;
 
@@ -2639,7 +2639,7 @@ footer {
 
 .pill-practice {
   background: #e3f3ea;
-  color: #1e7d47;
+  color: #1b7743;
 }
 
 // Ready to try it
