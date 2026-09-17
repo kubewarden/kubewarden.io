@@ -1,4 +1,5 @@
 {{ define "main" }}
+<main id="main-content" tabindex="-1">
 {{ if .Params.hero }}
 <section class="component-hero">
   <div class="wrap-lg component-hero-inner">
@@ -49,4 +50,5 @@
 </section>
 
 {{ partial "cncf-band.html" . }}
+</main>
 {{ end }}

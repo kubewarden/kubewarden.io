@@ -3,7 +3,7 @@
 {{ if eq .Kind "term" }}
   {{ $posts = where .RegularPages "Section" "blog" }}
 {{ end }}
-<main class="blog-archive">
+<main id="main-content" tabindex="-1" class="blog-archive">
   <section class="hero blog-hero">
     <div class="wrap-lg hero-inner">
       <div class="hero-copy">

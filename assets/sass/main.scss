@@ -80,6 +80,21 @@ section.wrap p {
 
 // Nav
 
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  transform: translateY(-200%);
+  z-index: 2000;
+  padding: 1rem 1.5rem;
+  background: var(--light);
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+  &:focus { transform: none; }
+}
+
 .main-menu .menu-close {
   box-sizing: border-box;
   width: 44px;
