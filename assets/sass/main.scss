@@ -531,13 +531,14 @@ footer {
 
 .hero-visual {
   position: relative;
+  min-width: 0;
 }
 
 .hero-diagram {
   position: relative;
   width: 100%;
-  max-width: 480px;
-  aspect-ratio: 540 / 460;
+  max-width: 640px;
+  aspect-ratio: 640 / 480;
   margin: 0 auto;
 }
 
@@ -557,49 +558,22 @@ footer {
 .diagram-ring {
   fill: none;
   stroke: var(--primary-color);
-  stroke-width: .35;
-  stroke-dasharray: 1.6 1.4;
-  opacity: .45;
-}
-
-.diagram-spoke {
-  stroke: var(--primary-color);
-  stroke-width: .35;
-  stroke-dasharray: 1.4 1.3;
-  opacity: .55;
+  stroke-width: 1.6;
+  stroke-dasharray: 6 6;
+  opacity: .65;
 }
 
 .diagram-node {
   fill: var(--primary-color);
-  opacity: .55;
 }
 
-.diagram-cube {
-  opacity: .8;
+.diagram-halo {
+  fill: var(--primary-color);
+  opacity: .025;
 }
 
-.cube-top {
-  fill: #f4f4f7;
-}
-
-.cube-left {
-  fill: #e2e3e9;
-}
-
-.cube-right {
-  fill: #d3d4dc;
-}
-
-.plinth-face--1 {
+.plinth-face {
   fill: #ffffff;
-}
-
-.plinth-face--2 {
-  fill: #eceef2;
-}
-
-.plinth-face--3 {
-  fill: #dfe1e7;
 }
 
 .plinth-side--left {
@@ -612,9 +586,9 @@ footer {
 
 .diagram-hub-logo {
   position: absolute;
-  top: 34%;
+  top: 54%;
   left: 50%;
-  width: 15%;
+  width: 16%;
   transform: translate(-50%, -50%);
   z-index: 1;
   filter: drop-shadow(0 6px 10px rgba(15, 15, 15, 0.18));
@@ -625,63 +599,54 @@ footer {
   z-index: 2;
   display: flex;
   align-items: center;
-  gap: .9rem;
+  gap: .7rem;
   background: var(--light);
   border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(15, 15, 15, 0.1);
-  padding: 1.1rem 1.6rem;
+  box-shadow: 0 6px 20px rgba(91, 7, 0, 0.05);
+  padding: 1rem 1.2rem;
   font-family: 'poppins', sans-serif;
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   line-height: 1.6rem;
   color: var(--dark);
-  white-space: nowrap;
+  box-sizing: border-box;
+  max-width: 40%;
 
   .icon {
     color: var(--primary-color);
     fill: none;
     margin-right: 0;
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 2rem;
+    height: 2rem;
     flex-shrink: 0;
   }
 
-  span {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: .4rem;
-  }
-
-  .pill {
-    margin-bottom: 0;
-    font-size: 1rem;
-    padding: .2rem .8rem;
-  }
 }
 
 .diagram-card--top {
-  top: 10%;
+  bottom: 84%;
   left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.diagram-card--bottom {
-  top: 88%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
 }
 
 .diagram-card--left {
-  top: 46%;
-  left: 8%;
-  transform: translate(-50%, -50%);
+  bottom: 73%;
+  right: 65%;
 }
 
 .diagram-card--right {
-  top: 46%;
-  left: 92%;
-  transform: translate(-50%, -50%);
+  bottom: 73%;
+  left: 65%;
+}
+
+.diagram-card--lower-right {
+  top: 63%;
+  right: 0;
+}
+
+@media (max-width: 1100px) {
+  .hero-diagram { margin-top: 2rem; }
+  .diagram-card--left, .diagram-card--right { top: 35%; bottom: auto; }
 }
 
 // Components grid
@@ -2743,20 +2708,6 @@ footer {
 @media (max-width: 900px) {
   .hero-inner {
     grid-template-columns: 1fr;
-  }
-
-  .hero-diagram {
-    max-width: 100%;
-    aspect-ratio: auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-
-  .diagram-card {
-    position: static;
-    transform: none !important;
-    white-space: normal;
   }
 
   .policy-grid {
