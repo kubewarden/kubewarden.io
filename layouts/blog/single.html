@@ -20,7 +20,7 @@
           <a href="{{ .RelPermalink }}"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-{{ index $icons .Title | default "layers" }}"></use></svg>{{ .Title }}</a>
           {{ else }}<span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg>Kubewarden / Platform</span>{{ end }}
         </div>
-        <h1>{{ .Title }}</h1>
+        <h1{{ with .Params.titleAnchor }} id="{{ . }}"{{ end }}>{{ .Title }}</h1>
         {{ with .Description }}<p class="article-description">{{ . }}</p>{{ end }}
         <div class="article-meta">
           {{ with .Params.authors }}<span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-people"></use></svg><span>By {{ delimit . ", " " and " }}</span></span>{{ end }}

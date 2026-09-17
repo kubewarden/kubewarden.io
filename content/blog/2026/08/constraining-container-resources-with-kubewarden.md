@@ -1,5 +1,6 @@
 ---
 title: "Constraining Container Resources with Kubewarden"
+titleAnchor: constraining-container-resources-with-kubewarden
 authors:
   - Dan Čermák
   - John Krug

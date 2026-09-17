@@ -22,7 +22,9 @@
       <span>Kubewarden / Platform</span>
       {{ end }}
     </div>
-    <h2><a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a></h2>
+    {{ $heading := "h2" }}
+    {{ if .filtered }}{{ $heading = "h3" }}{{ end }}
+    {{ printf "<%s>" $heading | safeHTML }}<a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a>{{ printf "</%s>" $heading | safeHTML }}
     <p>{{ $post.Summary | plainify | htmlUnescape | truncate 240 }}</p>
   </div>
   <a class="blog-read-more" href="{{ $post.RelPermalink }}">Read more<span class="sr-only">: {{ $post.Title }}</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>

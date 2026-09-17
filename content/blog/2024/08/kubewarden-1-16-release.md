@@ -1,5 +1,6 @@
 ---
 title: Kubewarden 1.16 release
+titleAnchor: kubewarden-v1160-release
 authors:
   - Víctor Cuadrado Juan
 date: 2024-08-19
@@ -10,13 +11,11 @@ types:
   - security-advisory
 ---
 
-## Kubewarden v1.16.0 release
-
 We are thrilled to announce the release of Kubewarden v1.16.0! Following the
 northern hemisphere summer, this version packs some goodies but is a bit more
 lightweight than usual.
 
-### kwctl scaffold for AdmissionRequests
+## kwctl scaffold for AdmissionRequests
 
 The `kwctl` cli has learned a new command, `kwctl scaffold admission-request`,
 which prints a Kubernetes AdmissionRequest object from the provided Kubernetes
@@ -56,11 +55,11 @@ can scaffold for CRDs deployed in that cluster.
 Currently, only the CREATE operation is supported, UPDATE and DELETE will be
 added in the future.
 
-### Policy updates
+## Policy updates
 
 Through this cycle, we have updated the following policies.
 
-#### Container-resources policy
+### Container-resources policy
 
 This policy checks for resource limits on the containers, and mutates them to
 add limits if configured so.
@@ -70,14 +69,14 @@ with a limit that is less than the requested, but will reject the resource
 instead, to force the user to change the minimum request resource amount or
 adjust the policy configuration.
 
-#### User-group-psp policy
+### User-group-psp policy
 
 Starting with `v0.6.2`, if the container image validation is enabled (with
 `validate_container_image_configuration`), the policy will only check for it
 when the rule is "MustRunAs" or "MayRunAs"; "RunAsAny" does not check the
 container image.
 
-### Maintenance updates
+## Maintenance updates
 
 As usual, we perform maintenance updates of our dependencies. Notably, in this
 release we have updated `sigs.k8s.io/controller-runtime` on the Go projects,
@@ -87,12 +86,12 @@ not shipped in the release artifacts. Nevertheless, The kubewarden-controller
 and audit-scanner images were showing a Docker-related CVE present, which now
 will be gone.
 
-### Paving work for next releases
+## Paving work for next releases
 
 Thanks to the reduction of technical debt in the Kubewarden controller, we can
 now iterate faster on this codebase. Stay tuned for the following features:
 
-#### Cert-manager dependency removal and certificate auto-renewal
+### Cert-manager dependency removal and certificate auto-renewal
 
 We intend to remove the dependency on Cert-manager, by providing automatic CA and
 certificate creation and rotation across kubewarden-controller and policy-server.
@@ -104,14 +103,14 @@ and policy-server will both automatically reload their certificates securely.
 
 If you are still interested on using Cert-manager, get in contact with us!
 
-#### PolicyGroups CRD
+### PolicyGroups CRD
 
 Following on the work done in 1.15 on policy-server, we keep pushing forward in
 teaching the Kubewarden controller about the new PolicyGroups CRD. We are in the final
 steps of the implementation, if you would like to know more about PolicyGroups,
 have a look at [our related RFC](https://github.com/kubewarden/rfc/blob/main/rfc/0020-policy-group.md).
 
-### Bye and Let's stay in touch!
+## Bye and Let's stay in touch!
 
 Stay tuned for more updates, and happy policy writing!
 
