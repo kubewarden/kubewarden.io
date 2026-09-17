@@ -1059,8 +1059,7 @@ footer {
 .ha-connector {
   flex: 0 0 3.5rem;
   height: 0;
-  border-top: 2px dashed var(--primary-color);
-  opacity: .55;
+  border-top: 2px solid var(--primary-color);
 }
 
 // SBOM Scanner hero: horizontal pipeline (sources on the left converge
