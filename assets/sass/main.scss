@@ -2399,6 +2399,14 @@ footer {
   border-radius: 8px;
 }
 
+.step-card--monitor {
+  .step-panel-head,
+  .step-footer {
+    background: #fdf0e3;
+    color: #b45309;
+  }
+}
+
 // Compact the pod-flow graphic when it sits inside a step card,
 // alongside two others, instead of alone in the wider hero column.
 
