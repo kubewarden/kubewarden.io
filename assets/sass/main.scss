@@ -81,7 +81,13 @@ section.wrap p {
 // Nav
 
 .main-menu .menu-item > a.btn.no-bg.is-active {
-  color: var(--primary-color) !important;
+  text-decoration: underline;
+  text-underline-offset: .4rem;
+}
+
+.main-menu a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -3px;
 }
 
 .menu-toggle {
@@ -187,26 +193,27 @@ section.wrap p {
 
     a.btn {
       &.no-bg {
-        color: var(--secondary-color) !important;
+        color: var(--dark) !important;
+
+        &:hover, &:focus, &.is-active {
+          color: var(--primary-color) !important;
+        }
       }
     }
   }
 
-  .main-menu a {
-    color: var(--secondary-color);
+  .main-menu a:not(.header-github) {
+    color: var(--dark);
     border: 0 !important;
     /* Remove borders from off-canvas styling */
   }
 
-  .main-menu a:hover,
-  .main-menu a:focus {
+  .main-menu a:not(.header-github):hover,
+  .main-menu a:not(.header-github):focus {
     background: none;
     /* Remove background from off-canvas styling */
     color: var(--primary-color);
 
-    &.github {
-      background: var(--primary-color);
-    }
   }
 }
 
@@ -404,6 +411,29 @@ footer {
   border-radius: 4px;
   border: 2px solid var(--primary-color);
   transition: all .2s ease-out;
+}
+
+.main-menu a.header-github {
+  display: inline-flex;
+  padding: .8rem 1.4rem;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  background: var(--light);
+  border: 2px solid var(--primary-color) !important;
+  text-transform: none;
+  letter-spacing: normal;
+
+  .icon { width: 1.6rem; height: 1.6rem; }
+
+  &:hover, &:focus-visible {
+    background: var(--primary-color);
+    color: var(--light) !important;
+    text-decoration: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .main-menu a.header-github { margin: 1rem 1.5rem; }
 }
 
 .btn-primary {
@@ -2642,7 +2672,7 @@ footer {
     a {
       display: block;
       padding: 1rem 1.6rem !important;
-      color: var(--secondary-color) !important;
+      color: var(--dark) !important;
       background: none !important;
 
       &:hover {
