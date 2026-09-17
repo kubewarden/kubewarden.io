@@ -1,5 +1,6 @@
 .blog-single {
   color: #343844;
+  overflow-wrap: anywhere;
 
   a:focus-visible, summary:focus-visible, [tabindex="0"]:focus-visible {
     outline: 2px solid var(--primary-color);
@@ -169,7 +170,7 @@
     color: var(--dark);
     font-size: 1.4rem;
     > .icon { width: 2.8rem; height: 2.8rem; flex-shrink: 0; color: var(--primary-color); margin: 0; }
-    > span:not(.sr-only) { flex: 1; }
+    > span:not(.sr-only) { flex: 1; min-width: 0; }
     strong { display: block; }
     span span { display: block; color: #626977; font-size: 1.3rem; line-height: 1.5; margin-top: .3rem; }
     > .article-link-arrow { width: 1.6rem; height: 1.6rem; }

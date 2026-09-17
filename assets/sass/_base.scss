@@ -7,9 +7,9 @@
   box-sizing: inherit;
 }
 
-html,
-body {
-  font-size: 10px;
+html {
+  // Preserve the current rem scale while respecting browser font preferences.
+  font-size: 62.5%;
 }
 
 body {
@@ -114,7 +114,7 @@ footer {
   p, a {
     color: var(--light);
     margin: 0;
-    font-size: 12px;
+    font-size: 1.2rem;
   }
 }
 
@@ -134,7 +134,7 @@ pre {
   color: var(--light);
   page-break-inside: avoid;
   font-family: monospace;
-  font-size: 15px;
+  font-size: 1.5rem;
   line-height: 1.6;
   margin-bottom: 1.6em;
   max-width: 100%;

@@ -38,7 +38,8 @@
 {{ end }}
 
 <div class="component-body">
-  {{ .Content }}
+  {{/* Network diagrams can scroll when readers enlarge text. */}}
+  {{ replace .Content `class="hn-grid"` `class="hn-grid" tabindex="0"` | safeHTML }}
 </div>
 
 <section class="component-other">

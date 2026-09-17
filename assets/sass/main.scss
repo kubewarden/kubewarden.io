@@ -1,55 +1,54 @@
+@import "fonts";
 @import "base";
 @import "blog-archive";
-
-// ---------------------------------------------------------------------------
-// Webfonts
-//
-// Self-hosted in static/fonts/. Original faces came from projects-theme.
-//   - Poppins: SIL Open Font License 1.1, see /fonts/POPPINS-OFL.txt
-//   - Roboto: Apache License 2.0, see /fonts/ROBOTO-LICENSE.txt
-// ---------------------------------------------------------------------------
-
-@font-face {
-  font-family: 'roboto';
-  src: url('/fonts/roboto-light.woff2') format('woff2'),
-       url('/fonts/roboto-light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'roboto';
-  src: url('/fonts/roboto-regular.woff2') format('woff2'),
-       url('/fonts/roboto-regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'poppins';
-  src: url('/fonts/poppins-light.woff2') format('woff2'),
-       url('/fonts/poppins-light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'poppins';
-  src: url('/fonts/poppins-bold.woff2') format('woff2'),
-       url('/fonts/poppins-bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
 
 :root {
   --primary-color: #c70a41;
   --secondary-color: #5b0700;
   --dark: #0f0f0f;
   --light: #ffffff;
+}
+
+// Let enlarged text wrap instead of widening grid and flex layouts.
+main, footer { overflow-wrap: anywhere; }
+.hero-inner > *, .component-hero-inner > *, .cards > *, .news-grid > *,
+.feature-row > *, .pipeline-step > *, .step-card-head > *,
+.scan-workflow-heading > * { min-width: 0; }
+.btn-primary, .btn-outline, .arrow-link, .pill {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.breadcrumb { flex-wrap: wrap; }
+.component-hero-visual { min-width: 0; max-width: 100%; overflow: auto; }
+.step-card .hn-grid, .traffic-policy-example .hn-grid { min-width: 0; overflow-x: auto; }
+.step-card .hn-grid:focus-visible, .traffic-policy-example .hn-grid:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
+}
+.pipeline-step, .step-card { min-width: 0; max-width: 100%; }
+.sub-header { flex-wrap: wrap; }
+.main-menu > ul.menu { flex-wrap: wrap; }
+.main-menu a.btn { line-height: 1.5; }
+
+@media (max-width: 767px) {
+  .main-menu { max-width: 100%; }
+  .main-menu > ul.menu { width: 32rem; max-width: 100vw; }
+}
+
+.hero-visual { container-type: inline-size; }
+@container (max-width: 45rem) {
+  .hero-visual .hero-diagram {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    aspect-ratio: auto;
+  }
+  .hero-diagram .diagram-card {
+    position: static;
+    transform: none;
+    max-width: none;
+  }
+  .diagram-svg, .diagram-hub-logo { display: none; }
 }
 
 .bg-primary h1,
@@ -65,10 +64,6 @@ a.btn {
 
 .folder h4 {
   color: var(--dark);
-}
-
-section.wrap h3 {
-  font-weight: 500;
 }
 
 section.wrap p {
@@ -704,6 +699,7 @@ footer {
 }
 
 .diagram-card--top {
+  max-width: 28%;
   bottom: 84%;
   left: 50%;
   transform: translateX(-50%);
@@ -1134,7 +1130,7 @@ footer {
 .component-hero-diagram {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: safe center;
   gap: 1.2rem;
 }
 
@@ -1357,7 +1353,7 @@ footer {
   border: none;
   margin: 0;
   padding: 0;
-  font-family: 'fira mono', monospace;
+  font-family: monospace;
   font-size: 1.4rem;
   line-height: 1.5;
   overflow-wrap: anywhere;
@@ -1530,7 +1526,7 @@ footer {
   gap: .3rem;
   background: #e3f3ea;
   color: #1b7743;
-  font-family: 'fira mono', monospace;
+  font-family: monospace;
   font-weight: 700;
   font-size: 1.3rem;
   line-height: 1.5;
@@ -2138,7 +2134,7 @@ footer {
   border: 1px solid #ececec;
 
   .code-panel-head {
-    font-family: 'fira mono', monospace;
+    font-family: monospace;
     font-size: 1.3rem;
     line-height: 1.5;
     overflow-wrap: anywhere;
@@ -2509,7 +2505,7 @@ footer {
 }
 
 .step-panel-head {
-  font-family: 'fira mono', monospace;
+  font-family: monospace;
   font-size: 1.3rem;
   line-height: 1.5;
   overflow-wrap: anywhere;
@@ -2527,7 +2523,7 @@ footer {
   display: flex;
   align-items: center;
   gap: .6rem;
-  font-family: 'fira mono', monospace;
+  font-family: monospace;
   font-weight: 700;
   font-size: 1.4rem;
   line-height: 1.5;
@@ -2560,7 +2556,7 @@ footer {
 
 .step-record-line {
   margin: 0 0 .3rem;
-  font-family: 'fira mono', monospace;
+  font-family: monospace;
   font-size: 1.4rem;
   line-height: 1.5;
   overflow-wrap: anywhere;

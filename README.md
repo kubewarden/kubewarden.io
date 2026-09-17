@@ -18,3 +18,14 @@ Install Hugo Extended to compile the Sass styles, then start the local server:
 ``` console
 $ hugo server -D
 ```
+
+## Fonts and readability
+
+The site serves its fonts locally. Font sources, licenses, and conversion commands
+are recorded in [the font source notes](static/fonts/SOURCES.md).
+The base font size follows browser preferences while preserving the default design.
+Code uses the browser's monospace font.
+
+Before publishing style changes, test the home page, component pages, blog lists,
+and articles with larger browser fonts and at narrow widths. Check keyboard
+navigation and long code examples as well.

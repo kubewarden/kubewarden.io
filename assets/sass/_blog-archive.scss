@@ -1,4 +1,8 @@
 .blog-archive {
+  overflow-wrap: anywhere;
+  .blog-badge, .blog-latest, .blog-filters a { box-sizing: border-box; max-width: 100%; }
+  .blog-term-list a > :first-child { min-width: 0; }
+  .blog-term-list a > :last-child { flex-shrink: 0; }
   .blog-hero {
     padding: 3.5rem 0;
     background: linear-gradient(115deg, #fdf1f4, #fff9fb 65%, #fce5ed);
@@ -75,6 +79,7 @@
   .blog-posts { display: grid; gap: 1.2rem; }
 
   .blog-post {
+    container-type: inline-size;
     display: grid;
     grid-template-columns: 7rem minmax(0, 1fr) auto;
     align-items: center;
@@ -110,6 +115,10 @@
       -webkit-line-clamp: 3;
       overflow: hidden;
     }
+  }
+
+  @container (max-width: 15rem) {
+    .blog-post p { -webkit-line-clamp: unset; overflow: visible; }
   }
 
   .blog-post-icon {
@@ -174,7 +183,7 @@
     color: var(--primary-color);
     font-size: 1.4rem;
     font-weight: 700;
-    white-space: nowrap;
+    white-space: normal;
     text-decoration: none;
     .icon { width: 1.6rem; height: 1.6rem; margin: 0; }
     &:hover { text-decoration: underline; }
