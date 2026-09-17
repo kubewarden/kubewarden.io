@@ -11,16 +11,17 @@
     <nav class="footer-nav" aria-label="Footer">
       {{ range . }}
       {{ if not .Parent }}
-      <a href="{{ .URL }}"{{ if strings.HasPrefix .URL "http" }} target="_blank" rel="noopener"{{ end }}>{{ .Name }}</a>
+      {{ $external := strings.HasPrefix .URL "http" }}
+      <a href="{{ .URL }}"{{ if $external }} target="_blank" rel="{{ with .Params.rel }}{{ . }} {{ end }}noopener"{{ end }}>{{ .Name }}{{ if $external }} <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span>{{ end }}</a>
       {{ end }}
       {{ end }}
     </nav>
     {{ end }}
     <div class="footer-social">
-      <a href="{{ .Site.Params.github }}" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
-      <a href="https://www.linkedin.com/company/kubewarden/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-linkedin"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
-      <a href="https://hachyderm.io/@kubewarden" rel="me noopener" target="_blank" aria-label="Mastodon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mastodon"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
-      <a href="https://x.com/kubewarden" target="_blank" rel="noopener" aria-label="X"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-x-brand"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      <a href="{{ .Site.Params.github }}" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github"></use></svg><span class="sr-only">GitHub (opens in new tab)</span></a>
+      <a href="https://www.linkedin.com/company/kubewarden/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-linkedin"></use></svg><span class="sr-only">LinkedIn (opens in new tab)</span></a>
+      <a href="https://hachyderm.io/@kubewarden" rel="me noopener" target="_blank"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mastodon"></use></svg><span class="sr-only">Mastodon (opens in new tab)</span></a>
+      <a href="https://x.com/kubewarden" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-x-brand"></use></svg><span class="sr-only">X (opens in new tab)</span></a>
     </div>
   </div>
 
@@ -32,9 +33,9 @@
       <a href="https://www.linuxfoundation.org/trademark-usage">Trademark Usage page</a>.
     </p>
     <nav class="footer-legal" aria-label="Legal">
-      <a href="https://www.linuxfoundation.org/legal/privacy-policy" target="_blank" rel="noopener">Privacy</a>
-      <a href="https://www.linuxfoundation.org/legal/terms" target="_blank" rel="noopener">Terms</a>
-      <a href="https://github.com/kubewarden/community/security/policy" target="_blank" rel="noopener">Security</a>
+      <a href="https://www.linuxfoundation.org/legal/privacy-policy" target="_blank" rel="noopener">Privacy <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      <a href="https://www.linuxfoundation.org/legal/terms" target="_blank" rel="noopener">Terms <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      <a href="https://github.com/kubewarden/community/security/policy" target="_blank" rel="noopener">Security <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
       <a href="mailto:cncf-kubewarden-maintainers@lists.cncf.io">Contact</a>
     </nav>
   </div>
