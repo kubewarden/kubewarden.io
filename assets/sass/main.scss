@@ -1777,6 +1777,30 @@ footer {
   }
 }
 
+// Cards share content rows; each layout supplies its number of rows.
+.work-grid.aligned-rows {
+  --card-rows: 4;
+}
+
+@media (min-width: 901px) {
+  .aligned-rows {
+    > * {
+      grid-row: span var(--card-rows);
+    }
+
+    > :not(.pipeline-arrow) {
+      display: grid;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+      min-width: 0;
+    }
+
+    > .pipeline-arrow {
+      align-self: center;
+    }
+  }
+}
+
 .work-card-head {
   margin-bottom: 2rem;
 
@@ -2411,18 +2435,27 @@ footer {
   }
 }
 
+@media (min-width: 901px) {
+  .step-cards.aligned-rows {
+    --card-rows: 3;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+}
+
 // Runtime Enforcer: "From observation to policy" compare panels
 
 .policy-compare {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+  --card-rows: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 0 1.5rem;
   margin: 3rem 0;
+
 }
 
 .policy-compare-col {
-  flex: 1 1 320px;
+  min-width: 0;
 }
 
 .policy-compare-head {
@@ -2453,6 +2486,11 @@ footer {
 }
 
 @media (max-width: 900px) {
+  .policy-compare {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1.5rem;
+  }
+
   .policy-compare .pipeline-arrow {
     transform: rotate(90deg);
   }
@@ -2637,6 +2675,11 @@ footer {
   .work-grid,
   .work-grid--3 {
     grid-template-columns: 1fr;
+  }
+
+  .work-grid.aligned-rows > .work-card {
+    display: flex;
+    grid-row: auto;
   }
 
   .feature-row {
