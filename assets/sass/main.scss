@@ -1893,6 +1893,63 @@ footer {
   }
 }
 
+.scan-workflows {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.scan-workflow {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0 3rem;
+  border-left: 1px solid #ececec;
+
+  &:first-child { padding-left: 0; border-left: 0; }
+  &:last-child { padding-right: 0; }
+  > .arrow-link { margin-top: auto; font-size: 1.4rem; }
+  .checklist li { align-items: flex-start; color: #626977; }
+  .checklist .icon { margin-top: .3rem; }
+}
+
+.scan-workflow-heading {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  margin-bottom: 2rem;
+
+  h3 { margin: 0; font-size: 1.8rem; line-height: 1.4; }
+}
+
+.scan-workflow-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background: #fdf1f4;
+  color: var(--primary-color);
+
+  .icon { width: 2.8rem; height: 2.8rem; margin: 0; }
+}
+
+@media (min-width: 901px) {
+  .scan-workflow { grid-row: span 3; display: grid; grid-template-rows: subgrid; }
+  .scan-workflow > .arrow-link { margin-top: 0; }
+}
+
+@media (max-width: 900px) {
+  .scan-workflows { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+  .scan-workflow {
+    padding: 2.5rem 0 0;
+    border-left: 0;
+    border-top: 1px solid #ececec;
+    &:first-child { padding-top: 0; border-top: 0; }
+  }
+}
+
 .work-card {
   border: 1px solid #ececec;
   border-radius: 8px;

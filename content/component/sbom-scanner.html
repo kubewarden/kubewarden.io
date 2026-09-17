@@ -42,86 +42,44 @@ date: 2026-09-16T00:00:00+00:00
   <div class="wrap-lg">
     <h2>Scan what matters</h2>
     <p class="section-lead">Choose the scanning workflow that fits your environment.</p>
-    <div class="work-grid work-grid--3 aligned-rows">
+    <div class="scan-workflows">
 
-      <div class="work-card">
-        <div class="work-card-head">
-          <div>
-            <h3>Scan registries</h3>
-            <p>Scan container registries and discover vulnerabilities before you deploy.</p>
-          </div>
+      <div class="scan-workflow">
+        <div class="scan-workflow-heading">
+          <span class="scan-workflow-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-database"></use></svg></span>
+          <h3>Scan registries</h3>
         </div>
         <ul class="checklist">
           <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Scan entire repositories or specific images</li>
           <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Filter by tags, platforms, or architectures</li>
           <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Find vulnerabilities early in your pipeline</li>
         </ul>
-        <div class="code-panel">
-          <div class="code-panel-head" id="sbom-scanner-registry-yaml">registry.yaml</div>
-          <pre tabindex="0" role="region" aria-labelledby="sbom-scanner-registry-yaml"><code><span class="tok-key">apiVersion:</span> sbomscanner.kubewarden.io/v1alpha1
-<span class="tok-key">kind:</span> Registry
-<span class="tok-key">metadata:</span>
-  <span class="tok-key">name:</span> <span class="tok-str">my-registry</span>
-<span class="tok-key">spec:</span>
-  <span class="tok-key">uri:</span> <span class="tok-str">ghcr.io</span>
-  <span class="tok-key">scanInterval:</span> <span class="tok-str">1h</span>
-  <span class="tok-key">platforms:</span>
-    - <span class="tok-key">os:</span> <span class="tok-str">linux</span>
-      <span class="tok-key">arch:</span> <span class="tok-str">amd64</span>
-    - <span class="tok-key">os:</span> <span class="tok-str">linux</span>
-      <span class="tok-key">arch:</span> <span class="tok-str">arm64</span></code></pre>
-        </div>
         <a class="arrow-link" href="https://docs.kubewarden.io/sbom-scanner/latest/en/user-guide/scanning-registries.html" target="_blank" rel="noopener">Learn more about registry scanning <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
       </div>
 
-      <div class="work-card">
-        <div class="work-card-head">
-          <div>
-            <h3>Follow workloads</h3>
-            <p>Discover the images actually running in your cluster and scan them.</p>
-          </div>
+      <div class="scan-workflow">
+        <div class="scan-workflow-heading">
+          <span class="scan-workflow-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg></span>
+          <h3>Follow workloads</h3>
         </div>
         <ul class="checklist">
           <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Find images used by Deployments, StatefulSets, DaemonSets, CronJobs, and more</li>
           <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Automatically track new workloads</li>
           <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Get workload-focused vulnerability reports</li>
         </ul>
-        <div class="code-panel">
-          <div class="code-panel-head" id="sbom-scanner-kubectl">kubectl</div>
-          <pre tabindex="0" role="region" aria-labelledby="sbom-scanner-kubectl"><code><span class="tok-comment"># View results</span>
-kubectl get workloadscanreports -n prod
-
-<span class="tok-comment"># Summary for a single workload</span>
-kubectl get workloadscanreport deployment-nginx \
-  -n prod -o yaml</code></pre>
-        </div>
         <a class="arrow-link" href="https://docs.kubewarden.io/sbom-scanner/latest/en/user-guide/scanning-workloads.html" target="_blank" rel="noopener">Learn more about workload scanning <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
       </div>
 
-      <div class="work-card">
-        <div class="work-card-head">
-          <div>
-            <h3>Scan cluster nodes</h3>
-            <p>Scan node packages and filesystems to uncover node-level vulnerabilities.</p>
-          </div>
+      <div class="scan-workflow">
+        <div class="scan-workflow-heading">
+          <span class="scan-workflow-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-server"></use></svg></span>
+          <h3>Scan cluster nodes</h3>
         </div>
         <ul class="checklist">
           <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Scan host packages and node filesystems</li>
           <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Surface OS vulnerabilities</li>
           <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Schedule periodic or on-demand scans</li>
         </ul>
-        <div class="code-panel">
-          <div class="code-panel-head" id="sbom-scanner-nodescanconfiguration-yaml">nodescanconfiguration.yaml</div>
-          <pre tabindex="0" role="region" aria-labelledby="sbom-scanner-nodescanconfiguration-yaml"><code><span class="tok-key">apiVersion:</span> sbomscanner.kubewarden.io/v1alpha1
-<span class="tok-key">kind:</span> NodeScanConfiguration
-<span class="tok-key">metadata:</span>
-  <span class="tok-key">name:</span> <span class="tok-str">default</span>
-<span class="tok-key">spec:</span>
-  <span class="tok-key">scanInterval:</span> <span class="tok-str">24h</span>
-  <span class="tok-key">nodeSelector:</span>
-    <span class="tok-key">matchLabels:</span>
-      <span class="tok-key">node-role.kubernetes.io/worker:</span> <span class="tok-str">""</span></code></pre>
-        </div>
         <a class="arrow-link" href="https://docs.kubewarden.io/sbom-scanner/latest/en/user-guide/scanning-nodes.html" target="_blank" rel="noopener">Learn more about node scanning <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
       </div>
 
