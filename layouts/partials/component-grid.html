@@ -4,6 +4,10 @@
   and no more are planned, so a data-driven layout isn't worth the
   indirection.
 
+  Maturity ("status") is not hardcoded here: it is read from each
+  component page's front matter, so the grid and the component page
+  can never disagree about it.
+
   Context: pass a dict with "current" set to the current page's
   RelPermalink to omit that component's own card (used on the
   component single pages, under "Other components"). Pass an empty
@@ -16,28 +20,24 @@
     "icon" "icon-shield"
     "name" "Admission Controller"
     "desc" "Stop unsafe workloads before they enter your cluster."
-    "status" "Stable"
     "link" "/component/adm-controller/"
   )
   (dict
     "icon" "icon-cube"
     "name" "Runtime Enforcer"
     "desc" "Control what can run inside your Kubernetes pods."
-    "status" "Beta"
     "link" "/component/runtime-enforcer/"
   )
   (dict
     "icon" "icon-nodes"
     "name" "Network Enforcer"
     "desc" "Discover network activity and secure the communication between your workloads."
-    "status" "Beta"
     "link" "/component/network-enforcer/"
   )
   (dict
     "icon" "icon-scan"
     "name" "SBOM Scanner"
     "desc" "Find vulnerabilities in the container images running inside your cluster."
-    "status" "Stable"
     "link" "/component/sbom-scanner/"
   )
 }}
@@ -45,11 +45,12 @@
 <div class="cards cards-4">
   {{ range $components }}
   {{ if ne .link $current }}
+  {{ $page := site.GetPage (strings.TrimSuffix "/" .link) }}
   <div class="card">
     <div class="card-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#{{ .icon }}"></use></svg></div>
     <h3>{{ .name }}</h3>
     <p>{{ .desc }}</p>
-    <span class="pill pill-{{ .status | lower }}">{{ .status }}</span>
+    {{ with $page }}{{ with .Params.status }}<span class="pill pill-{{ . | lower }}">{{ . }}</span>{{ end }}{{ end }}
     <a class="arrow-link" href="{{ .link }}">Learn more <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
   </div>
   {{ end }}
