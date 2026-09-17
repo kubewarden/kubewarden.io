@@ -65,36 +65,6 @@ url = "/#get-in-touch"
 weight = -100
 
 [[menu.main]]
-identifier = "meetings"
-name = "Community meetings"
-parent = "community"
-url = "/#get-in-touch"
-weight = -99
-
-[[menu.main]]
-identifier = "slack"
-name = "Slack"
-parent = "community"
-url = "https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden"
-weight = -97
-
-[[menu.main]]
-identifier = "bluesky"
-name = "Bluesky"
-parent = "community"
-url = "https://bsky.app/profile/kubewarden.io"
-weight = -96
-
-[[menu.main]]
-identifier = "mastodon"
-name = "Mastodon"
-parent = "community"
-url = "https://hachyderm.io/@kubewarden"
-weight = -95
-[menu.main.params]
-rel = 'me'
-
-[[menu.main]]
 identifier = "enterprise"
 name = "Enterprise"
 url = "https://docs.kubewarden.io/enterprise"

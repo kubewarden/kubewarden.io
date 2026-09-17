@@ -23,25 +23,13 @@
         {{ if not .Parent }}
         {{ $active := or ($.IsMenuCurrent "main" .) (and (eq .Identifier "blog") (or (eq $.Section "blog") (and (in (slice "term" "taxonomy") $.Kind) (in (slice "components" "types") $.Data.Plural)))) }}
         {{ $external := strings.HasPrefix .URL "http" }}
-        <li class="menu-item{{ if .HasChildren }} has-children{{ end }}">
+        <li class="menu-item">
           <a href="{{ .URL }}"
             {{- if $external }} target="_blank" rel="{{ with .Params.rel }}{{ . }} {{ end }}noopener"{{ else }}{{ with .Params.rel }} rel="{{ . }}"{{ end }}{{ end -}}
             {{- if $active }} aria-current="true"{{ end }}
             class="btn no-bg{{ if $active }} is-active{{ end }}">
-            {{ .Name }}{{ if $external }}<span class="sr-only"> (opens in new tab)</span>{{ end }}{{ if .HasChildren }} <svg class="icon icon-sm icon-caret" aria-hidden="true"><use xlink:href="#icon-chevron-down"></use></svg>{{ end }}
+            {{ .Name }}{{ if $external }}<span class="sr-only"> (opens in new tab)</span>{{ end }}
           </a>
-          {{ if .HasChildren }}
-          <ul class="submenu">
-            {{ range .Children }}
-            {{ $external := strings.HasPrefix .URL "http" }}
-            <li>
-              <a href="{{ .URL }}"
-                {{- if $external }} target="_blank" rel="{{ with .Params.rel }}{{ . }} {{ end }}noopener"{{ else }}{{ with .Params.rel }} rel="{{ . }}"{{ end }}{{ end -}}
-              >{{ .Name }}{{ if $external }}<span class="sr-only"> (opens in new tab)</span>{{ end }}</a>
-            </li>
-            {{ end }}
-          </ul>
-          {{ end }}
         </li>
         {{ end }}
         {{ end }}

@@ -434,13 +434,6 @@ footer {
   transition: transform .15s ease-out;
 }
 
-.icon-caret {
-  width: 1rem;
-  height: 1rem;
-  margin-right: 0;
-  margin-left: 0.3rem;
-}
-
 // Buttons
 
 .btn-primary,
@@ -2859,75 +2852,6 @@ footer {
   max-width: 260px;
   height: auto;
   margin: 0 auto;
-}
-
-// Header dropdown (Community menu)
-
-@media (max-width: 767px) {
-  .main-menu .menu-item ul.submenu {
-    display: block;
-    width: auto;
-    min-height: 0;
-    box-shadow: none;
-    padding: 0 0 1rem 1.5rem;
-
-    a { font-size: 1.3rem; line-height: 1.5; white-space: normal; }
-  }
-  .main-menu .icon-caret { display: none; }
-}
-
-.menu-item {
-  position: relative;
-}
-
-.main-menu ul.submenu {
-  display: none;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  li {
-    border: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  a {
-    white-space: nowrap;
-  }
-}
-
-@media (min-width: 768px) {
-  .main-menu .menu-item.has-children:hover .submenu,
-  .main-menu .menu-item.has-children:focus-within .submenu {
-    display: block;
-  }
-
-  .main-menu ul.submenu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: var(--light);
-    box-shadow: 0 10px 25px rgba(15, 15, 15, 0.12);
-    border-radius: 4px;
-    padding: .5rem 0;
-    z-index: 10;
-    min-width: 220px;
-    width: max-content;
-    height: auto;
-    min-height: 0;
-
-    a {
-      display: block;
-      padding: 1rem 1.6rem !important;
-      color: var(--dark) !important;
-      background: none !important;
-
-      &:hover {
-        color: var(--primary-color) !important;
-      }
-    }
-  }
 }
 
 @media (max-width: 1024px) {
