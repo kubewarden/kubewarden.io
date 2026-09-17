@@ -235,10 +235,11 @@ date: 2026-09-16T00:00:00+00:00
 <section class="section-ready">
   <div class="wrap-lg">
     <h2>Ready to experiment?</h2>
-    <p class="section-lead">Deploy Network Enforcer on a cluster using Istio Ambient, Calico, or Cilium and learn the communication of your first workload.</p>
+    <p class="section-lead">This example installs Network Enforcer on a cluster with Istio Ambient. For Calico or Cilium, follow the provider-specific instructions in the quickstart.</p>
     <div class="section-ready-inner">
       <div class="code-panel code-panel--dark code-panel--terminal">
-        <pre tabindex="0" role="region" aria-label="Network Enforcer installation commands"><code><span class="tok-comment"># Requires cert-manager, cert-manager-csi-driver, and Istio Ambient, Calico, or Cilium</span>
+        <div class="code-panel-head" id="network-enforcer-istio-example">Istio Ambient example</div>
+        <pre tabindex="0" role="region" aria-labelledby="network-enforcer-istio-example"><code><span class="tok-comment"># Requires cert-manager, cert-manager-csi-driver, and Istio Ambient</span>
 helm repo add kubewarden https://charts.kubewarden.io
 
 helm install network-enforcer kubewarden/network-enforcer \
