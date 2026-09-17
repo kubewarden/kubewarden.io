@@ -57,8 +57,8 @@ date: 2021-04-16T13:28:46+02:00
           <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Test locally with kwctl, publish to any OCI registry</li>
         </ul>
         <div class="code-panel">
-          <div class="code-panel-head">lib.rs</div>
-          <pre><code><span class="tok-comment">// validate incoming Pods</span>
+          <div class="code-panel-head" id="adm-controller-lib-rs">lib.rs</div>
+          <pre tabindex="0" role="region" aria-labelledby="adm-controller-lib-rs"><code><span class="tok-comment">// validate incoming Pods</span>
 <span class="tok-kw">use</span> kubewarden_policy_sdk <span class="tok-kw">as</span> kubewarden;
 
 <span class="tok-kw">fn</span> <span class="tok-fn">validate</span>(payload: &amp;[u8]) -&gt; CallResult {
@@ -85,8 +85,8 @@ date: 2021-04-16T13:28:46+02:00
           <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Start from hundreds of ready-to-use policies</li>
         </ul>
         <div class="code-panel">
-          <div class="code-panel-head">policy.yaml</div>
-          <pre><code><span class="tok-key">apiVersion:</span> policies.kubewarden.io/v1
+          <div class="code-panel-head" id="adm-controller-policy-yaml">policy.yaml</div>
+          <pre tabindex="0" role="region" aria-labelledby="adm-controller-policy-yaml"><code><span class="tok-key">apiVersion:</span> policies.kubewarden.io/v1
 <span class="tok-key">kind:</span> ClusterAdmissionPolicy
 <span class="tok-key">metadata:</span>
   <span class="tok-key">name:</span> <span class="tok-str">privileged-pods</span>
@@ -111,7 +111,7 @@ date: 2021-04-16T13:28:46+02:00
     <p class="section-lead">Install the Admission Controller with Helm and deploy your first policy in a few minutes.</p>
     <div class="section-ready-inner">
       <div class="code-panel code-panel--dark code-panel--terminal">
-        <pre><code><span class="tok-comment"># Add the Kubewarden Helm repository</span>
+        <pre tabindex="0" role="region" aria-label="Admission Controller installation commands"><code><span class="tok-comment"># Add the Kubewarden Helm repository</span>
 helm repo add kubewarden https://charts.kubewarden.io
 
 <span class="tok-comment"># Install the admission controller</span>

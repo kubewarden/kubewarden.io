@@ -128,8 +128,8 @@ date: 2026-09-16T00:00:00+00:00
           <h3>WorkloadPolicyProposal <span>(generated)</span></h3>
         </div>
         <div class="code-panel">
-          <div class="code-panel-head">workloadpolicyproposal.yaml</div>
-          <pre><code><span class="tok-key">apiVersion:</span> runtimeenforcer.kubewarden.io/v1alpha1
+          <div class="code-panel-head" id="runtime-enforcer-workloadpolicyproposal-yaml">workloadpolicyproposal.yaml</div>
+          <pre tabindex="0" role="region" aria-labelledby="runtime-enforcer-workloadpolicyproposal-yaml"><code><span class="tok-key">apiVersion:</span> runtimeenforcer.kubewarden.io/v1alpha1
 <span class="tok-key">kind:</span> WorkloadPolicyProposal
 <span class="tok-key">metadata:</span>
   <span class="tok-key">name:</span> <span class="tok-str">deploy-payments-api</span>
@@ -156,8 +156,8 @@ date: 2026-09-16T00:00:00+00:00
           <h3>WorkloadPolicy <span>(enforced)</span></h3>
         </div>
         <div class="code-panel">
-          <div class="code-panel-head">workloadpolicy.yaml</div>
-          <pre><code><span class="tok-key">apiVersion:</span> runtimeenforcer.kubewarden.io/v1alpha1
+          <div class="code-panel-head" id="runtime-enforcer-workloadpolicy-yaml">workloadpolicy.yaml</div>
+          <pre tabindex="0" role="region" aria-labelledby="runtime-enforcer-workloadpolicy-yaml"><code><span class="tok-key">apiVersion:</span> runtimeenforcer.kubewarden.io/v1alpha1
 <span class="tok-key">kind:</span> WorkloadPolicy
 <span class="tok-key">metadata:</span>
   <span class="tok-key">name:</span> <span class="tok-str">deploy-payments-api</span>
@@ -186,7 +186,7 @@ date: 2026-09-16T00:00:00+00:00
     <p class="section-lead">Deploy Runtime Enforcer and learn the behavior of your first workload.</p>
     <div class="section-ready-inner">
       <div class="code-panel code-panel--dark code-panel--terminal">
-        <pre><code><span class="tok-comment"># Requires cert-manager and cert-manager-csi-driver - see the quickstart</span>
+        <pre tabindex="0" role="region" aria-label="Runtime Enforcer installation commands"><code><span class="tok-comment"># Requires cert-manager and cert-manager-csi-driver - see the quickstart</span>
 helm repo add kubewarden https://charts.kubewarden.io
 
 helm install runtime-enforcer kubewarden/runtime-enforcer \

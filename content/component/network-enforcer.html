@@ -202,8 +202,8 @@ date: 2026-09-16T00:00:00+00:00
       <div class="policy-compare-col work-card">
         <div class="policy-compare-head"><h3>Generated policy proposal <span>(API egress)</span></h3></div>
         <div class="code-panel">
-          <div class="code-panel-head">api-egress.yaml</div>
-          <pre><code><span class="tok-key">apiVersion:</span> networkenforcer.kubewarden.io/v1alpha1
+          <div class="code-panel-head" id="network-enforcer-api-egress-yaml">api-egress.yaml</div>
+          <pre tabindex="0" role="region" aria-labelledby="network-enforcer-api-egress-yaml"><code><span class="tok-key">apiVersion:</span> networkenforcer.kubewarden.io/v1alpha1
 <span class="tok-key">kind:</span> WorkloadNetworkPolicyProposal
 <span class="tok-key">metadata:</span>
   <span class="tok-key">name:</span> <span class="tok-str">deployment-api-egress</span>
@@ -238,7 +238,7 @@ date: 2026-09-16T00:00:00+00:00
     <p class="section-lead">Deploy Network Enforcer on a cluster using Istio Ambient, Calico, or Cilium and learn the communication of your first workload.</p>
     <div class="section-ready-inner">
       <div class="code-panel code-panel--dark code-panel--terminal">
-        <pre><code><span class="tok-comment"># Requires cert-manager, cert-manager-csi-driver, and Istio Ambient, Calico, or Cilium</span>
+        <pre tabindex="0" role="region" aria-label="Network Enforcer installation commands"><code><span class="tok-comment"># Requires cert-manager, cert-manager-csi-driver, and Istio Ambient, Calico, or Cilium</span>
 helm repo add kubewarden https://charts.kubewarden.io
 
 helm install network-enforcer kubewarden/network-enforcer \

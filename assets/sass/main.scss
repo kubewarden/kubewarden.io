@@ -2046,6 +2046,15 @@ footer {
   }
 }
 
+.component-body pre:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: -3px;
+}
+
+.component-body .code-panel--dark pre:focus-visible {
+  outline-color: var(--light);
+}
+
 .code-panel {
   border-radius: 8px;
   overflow: hidden;
