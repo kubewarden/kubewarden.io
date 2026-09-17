@@ -9,22 +9,20 @@ components:
 types:
   - tutorial
 ---
-## Constraining Container Resources with Kubewarden
 
 Kubewarden is a policy framework for Kubernetes that helps you set up tighter
 guardrails for your Kubernetes cluster. Policies allow you to restrict
 deployments on your cluster in many ways, like:
 
-* control the container images that are used
-* permit only certain users to perform actions
-* limit resources that can be assigned to a deployment.
+- control the container images that are used
+- permit only certain users to perform actions
+- limit resources that can be assigned to a deployment.
 
 In this tutorial, we cover how to set up Kubewarden and apply a policy providing
 boundaries and defaults to container resource limits for pods. You need is a
 running Kubernetes cluster (for example, k3s) and Helm to get started!
 
-
-### Install Kubewarden Admission Controller
+## Install Kubewarden Admission Controller
 
 The easiest way to install Kubewarden’s Admission controller is using Helm:
 
@@ -48,7 +46,7 @@ admission-controller    1/1     1            1           18h
 policy-server-default   1/1     1            1           18h
 ```
 
-### Container-Resources Policy
+## Container-Resources Policy
 
 When deploying applications on Kubernetes, you can define limits and set default
 values for requested resources, like CPU and memory. As an organization
@@ -62,7 +60,7 @@ Kubewarden’s
 policy allows you to set defaults and for requested CPU and memory and
 constraint the limits to both resources.
 
-### Example constraint policy
+## Example constraint policy
 
 You start by creating a namespace for our experiments, so it's easy to clean it
 up later:
@@ -132,8 +130,9 @@ The container-resources policy allows you to specify the request (minimum
 guaranteed) and limit (maximum allowed) for CPU and memory for the default,
 maximum and minimum. In the above example, every pod will be assigned 1GB of
 memory by default and the requested memory must stay in the bounds of 500MB and
-2GB.  Note, that the following rule applies to the values of both CPU and memory
+2GB. Note, that the following rule applies to the values of both CPU and memory
 limit and request:
+
 ```
 minRequest <= defaultRequest <= maxRequest <= minLimit <= defaultLimit <= maxLimit
 ```
@@ -183,12 +182,12 @@ Error from server: error when creating "STDIN": admission webhook "kw.cap.contai
 With this policy active Kubewarden rejects the pod, as its limit is below the
 minimum of 2G.
 
-#### Additional Resource Constraint Policy Features
+### Additional Resource Constraint Policy Features
 
 The `container-resources` policy does not require you to provide all values for
 all resource limits and requests, you can omit them and the policy will treat
-them as not configured. It might be useful to require a *resource limit and
-request to be defined*, irrespective of its actual value. You can achieve this
+them as not configured. It might be useful to require a _resource limit and
+request to be defined_, irrespective of its actual value. You can achieve this
 with the following policy:
 
 ```yaml
@@ -264,7 +263,7 @@ Another useful feature is the ability to exempt certain images from the resource
 limits with the ignoreImages list. This is a list of container image URLs, which
 are exempt from the policy. It supports string matching using `*` as a wild
 card. Use carefully to avoid accidentally exempting another similarly named
-image.  You can create a policy, where limits apply, except for an image that
+image. You can create a policy, where limits apply, except for an image that
 can request arbitrarily high limits (or none at all):
 
 ```yaml
@@ -339,12 +338,12 @@ EOF
 Error from server: error when creating "STDIN": admission webhook "kw.cap.container-resources-policy.kubewarden.admission" denied the request: memory limit '12Gi' exceeds the max allowed value '4G'
 ```
 
-#### Debugging Policy Problems
+### Debugging Policy Problems
 
 The Admission Controller validates your policy settings after it has been
 applied. So you can apply a policy that is invalid (for example, because the
 defaultRequest is higher than the defaultLimit) and that consequently fails to
-deploy. You will *not notice this* when only running kubectl apply, you should
+deploy. You will _not notice this_ when only running kubectl apply, you should
 always check whether the policy has been deployed using `kubectl get
 clusteradmissionpolicy container-resources-policy`:
 
