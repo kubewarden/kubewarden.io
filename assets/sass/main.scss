@@ -806,6 +806,24 @@ footer {
   }
 }
 
+.news-components {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  margin-bottom: 1rem;
+  color: #626977;
+  font-size: 1.3rem;
+  line-height: 2rem;
+
+  .icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    flex-shrink: 0;
+    margin: .2rem 0 0;
+    color: var(--primary-color);
+  }
+}
+
 // Get in touch
 
 .section-touch {

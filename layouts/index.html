@@ -30,9 +30,17 @@
     </div>
     <div class="news-grid">
       {{ $posts := where .Site.RegularPages "Section" "blog" }}
+      {{ $icons := dict "Admission Controller" "shield" "Network Enforcer" "nodes" "Runtime Enforcer" "cube" "SBOM Scanner" "scan" }}
       {{ range first 3 $posts.ByDate.Reverse }}
+      {{ $components := .GetTerms "components" }}
+      {{ $icon := "layers" }}
+      {{ if eq (len $components) 1 }}{{ $icon = index $icons (index $components 0).Title | default "layers" }}{{ end }}
       <article class="news-card">
         <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+        <div class="news-components">
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-{{ $icon }}"></use></svg>
+          <span>{{ range $index, $component := $components }}{{ if $index }} / {{ end }}{{ .Title }}{{ else }}Kubewarden / Platform{{ end }}</span>
+        </div>
         <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
         <p>{{ .Plain | truncate 140 " …" }}</p>
         <a class="arrow-link" href="{{ .Permalink }}">Read more <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
