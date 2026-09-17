@@ -1126,37 +1126,46 @@ footer {
   max-width: 78rem;
 }
 
-.component-hero-diagram--admission {
+.component-hero-diagram.component-hero-diagram--admission {
+  flex-direction: column;
   padding: 1.5rem;
-  .ha-resources-col { min-width: 27rem; }
-  .ha-collector-vertical { display: none; }
+  max-width: 58rem;
+  margin: 0 auto;
+  .ha-resources-col { flex: none; width: 100%; min-width: 0; }
+  .ha-resources { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ha-resource { min-width: 0; }
+  .ha-fanout {
+    flex: none;
+    align-self: center;
+    width: 100%;
+    height: 2.5rem;
+    min-height: 0;
+  }
+  .ha-node { box-sizing: border-box; width: 100%; min-width: 0; padding: 1.2rem; }
+  .ha-outcomes { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .ha-outcome { padding: .5rem .6rem; gap: .4rem; }
+  .ha-cluster { min-width: 0; }
+  .ha-connector { width: 100%; }
 }
 
-@container (max-width: 74rem) {
-  .component-hero-diagram--admission {
-    flex-direction: column;
+.ha-admission-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2rem 10rem;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
 
-    .ha-resources-col {
-      flex: none;
-      min-width: 0;
-      width: 100%;
-      max-width: 38rem;
-    }
+@container (max-width: 48rem) {
+  .component-hero-diagram.component-hero-diagram--admission {
     .ha-resources { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .ha-resource { min-width: 0; }
-    .ha-fanout {
-      flex: none;
-      align-self: center;
-      width: 100%;
-      max-width: 38rem;
-      height: 3rem;
-      min-height: 0;
-    }
-    .ha-collector-horizontal { display: none; }
-    .ha-collector-vertical { display: block; }
-    .ha-node { box-sizing: border-box; width: 22rem; max-width: 100%; }
+  }
+}
+
+@container (max-width: 38rem) {
+  .component-hero-diagram.component-hero-diagram--admission {
+    .ha-admission-flow { grid-template-columns: minmax(0, 1fr); justify-items: center; }
     .ha-connector {
-      flex: none;
       height: 3.5rem;
       width: 0;
       border-top: 0;
