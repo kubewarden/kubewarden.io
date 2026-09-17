@@ -2704,6 +2704,19 @@ footer {
 
 // Header dropdown (Community menu)
 
+@media (max-width: 767px) {
+  .main-menu .menu-item ul.submenu {
+    display: block;
+    width: auto;
+    min-height: 0;
+    box-shadow: none;
+    padding: 0 0 1rem 1.5rem;
+
+    a { font-size: 1.3rem; line-height: 1.5; white-space: normal; }
+  }
+  .main-menu .icon-caret { display: none; }
+}
+
 .menu-item {
   position: relative;
 }
