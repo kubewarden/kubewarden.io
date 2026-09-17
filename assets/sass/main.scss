@@ -852,6 +852,61 @@ footer {
   margin-bottom: 5rem;
 }
 
+.events-panel {
+  background: var(--light);
+  border: 1px solid #e5e7ec;
+  border-radius: 1rem;
+  overflow: hidden;
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: 400px;
+    border: 0;
+  }
+
+  a:focus-visible, iframe:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 3px;
+  }
+}
+
+.events-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem 2.4rem;
+  padding: 2rem 2.4rem;
+  border-bottom: 1px solid #e5e7ec;
+
+  h3#events-title {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin: 0 0 .6rem;
+    .icon { width: 2rem; height: 2rem; margin: 0; color: var(--primary-color); flex-shrink: 0; }
+  }
+
+  p { margin: 0; font-size: 1.3rem; line-height: 1.6; color: #626977; }
+}
+
+.events-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  font-size: 1.4rem;
+  line-height: 1.6;
+
+  a { color: var(--primary-color); text-underline-offset: .3rem; }
+  .icon { width: 1.4rem; height: 1.4rem; margin: 0 0 0 .3rem; vertical-align: -.2em; }
+}
+
+@media (max-width: 600px) {
+  .events-header { padding: 1.6rem; }
+  .events-panel iframe { height: 480px; }
+}
+
 // Component single/list pages
 
 .component-header {

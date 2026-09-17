@@ -53,9 +53,7 @@
 <section class="section-touch" id="get-in-touch">
   <div class="wrap-lg">
     <h2>Get in Touch</h2>
-    <p class="section-lead">We hold monthly community meetings that are open to everybody. Subscribe to
-    <a href="https://ics.teamup.com/feed/ks2bj74dvw132mhjtj/11992689.ics">this calendar feed</a> to not miss them,
-    or view all of the events <a href="https://teamup.com/ks2bj74dvw132mhjtj">here</a>.</p>
+    <p class="section-lead">We hold monthly community meetings that are open to everybody.</p>
 
     <div class="social-row">
       <a class="btn-outline" href="https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden" target="_blank" rel="noopener">
@@ -69,8 +67,19 @@
       </a>
     </div>
 
-    <h3>Upcoming events</h3>
-    <iframe src="https://teamup.com/ks2bj74dvw132mhjtj?view=a&tz=UTC&showLogo=0&showSearch=0&showProfileAndInfo=0&showSidepanel=1&disableSidepanel=1&showTitle=0&showViewSelector=0&showMenu=0&showAgendaHeader=0&showAgendaDetails=0&showYearViewHeader=0" style="width: 100%; height: 400px; border: 1px solid #cccccc" loading="lazy" frameborder="0"></iframe>
+    <div class="events-panel" role="region" aria-labelledby="events-title">
+      <div class="events-header">
+        <div>
+          <h3 id="events-title"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar"></use></svg>Upcoming events</h3>
+          <p id="events-timezone">Times shown in UTC (Coordinated Universal Time).</p>
+        </div>
+        <div class="events-links">
+          <a href="https://ics.teamup.com/feed/ks2bj74dvw132mhjtj/11992689.ics">Subscribe to calendar</a>
+          <a href="https://teamup.com/ks2bj74dvw132mhjtj" target="_blank" rel="noopener">Open full calendar <svg class="icon" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+        </div>
+      </div>
+      <iframe src="https://teamup.com/ks2bj74dvw132mhjtj?view=a&tz=UTC&showHeader=0&showProfileAndInfo=0&showSidepanel=0&disableSidepanel=1&showViewSelector=0&showMenu=0&showAgendaHeader=0&showAgendaDetails=0&showDateControls=1" title="Kubewarden upcoming events calendar" aria-describedby="events-timezone" loading="lazy"></iframe>
+    </div>
   </div>
 </section>
 
