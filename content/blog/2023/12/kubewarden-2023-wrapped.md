@@ -21,7 +21,7 @@ Policy, by default, has no access to the cluster information. Kuberwarden admini
 
 This feature is available to all kinds of Kubewarden policies, except for the WASI ones (yet). Context-aware policies written for Open Policy Agent/Gatekeeper do not need any change.
 
-You can learn more about context-aware policies [here](https://docs.kubewarden.io/explanations/context-aware-policies).
+You can learn more about [context-aware policies](https://docs.kubewarden.io/explanations/context-aware-policies).
 
 ## WASI policies
 
@@ -30,7 +30,7 @@ This year, we introduced a new type of policy: the WASI one. This type of policy
 We created WASI policies because we wanted to use the latest changes introduced by Go 1.21.
 For example, we used a WASI policy to write [this policy](https://github.com/kubewarden/kyverno-dsl-policy) which allows the reuse of Kyverno policies.
 
-You can learn more about WASI policies [here](https://docs.kubewarden.io/writing-policies/wasi/intro-wasi).
+You can learn more about [WASI policies](https://docs.kubewarden.io/writing-policies/wasi/intro-wasi).
 
 ## Audit Scanner
 
@@ -39,7 +39,7 @@ Administrators enforce new policies over time and change the settings of the exi
 The Audit Scanner provides continuous verification of the compliance of cluster resources. The scanner writes its results using dedicated Custom Resources: PolicyReport and ClusterPolicyReport.
 The [Kubernetes Policy Working Group](https://github.com/kubernetes-sigs/wg-policy-prototypes/tree/master/policy-report) is working on the standardization of these CRDs.
 
-You can learn more about the audit scanner [here](https://www.kubewarden.io/blog/2023/10/audit-scanner-feature/).
+You can learn more about the [audit scanner](https://www.kubewarden.io/blog/2023/10/audit-scanner-feature/).
 
 ## Kubewarden as a generic policy engine
 
@@ -47,14 +47,14 @@ Kubewarden started as a policy engine for Kubernetes. Last year, we introduced a
 
 Raw policies are regular Kubewarden policies that process arbitrary JSON data. For instance, they can validate resources such as configurations, Terraform/OpenTofu plans, test coverage, static analysis and more. Kubewarden can even be deployed alongside your web application to assess domain-specific requests.
 
-You can learn more about raw policies [here](https://docs.kubewarden.io/howtos/raw-policies).
+You can learn more about [raw policies](https://docs.kubewarden.io/howtos/raw-policies).
 
 ## Policy Evaluation timeout
 
 We improved Kubewarden's reliability with the introduction of policy evaluation timeouts.
 Policy Server now limits the duration of a policy evaluation. This prevents policy bugs from overloading the computation resources of a Policy Server instance.
 
-You can learn more about policy evaluation timeout [here](https://docs.kubewarden.io/operator-manual/policy-evaluation-timeout).
+You can learn more about [policy evaluation timeout](https://docs.kubewarden.io/operator-manual/policy-evaluation-timeout).
 
 ## Improving the developer experience of Go policy authors
 

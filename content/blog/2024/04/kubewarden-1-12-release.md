@@ -82,7 +82,7 @@ being:
 ## Documentation improvements
 
 The architecture page now has an improved explanation and a more accurate graphic.
-Have a look [here](https://docs.kubewarden.io/explanations/architecture).
+Have a look at the [Kubewarden architecture documentation](https://docs.kubewarden.io/explanations/architecture).
 
 ## Stay tuned!
 

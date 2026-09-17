@@ -43,7 +43,7 @@
         </div>
         <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
         <p>{{ .Plain | truncate 140 " …" }}</p>
-        <a class="arrow-link" href="{{ .Permalink }}">Read more <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
+        <a class="arrow-link" href="{{ .Permalink }}">Read more<span class="sr-only">: {{ .Title }}</span> <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
       </article>
       {{ end }}
     </div>

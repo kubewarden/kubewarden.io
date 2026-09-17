@@ -22,8 +22,8 @@ SDK](https://opentelemetry.io/blog/2023/otel-go-metrics-sdk-stable/) or the
 Instrumentation](https://opentelemetry.io/blog/2023/otel-dotnet-auto-instrumentation/).
 
 Still, the OpenTelemetry stack is not yet stable, and unannounced backwards-incompatible
-changes still happen. You can have a look at the status of each of their
-libraries and protocols [here](https://opentelemetry.io/status).
+changes still happen. You can have a look at the
+[status of OpenTelemetry libraries and protocols](https://opentelemetry.io/status).
 
 For Kubewarden, this means we should expect more users to configure and fine
 tune the deployment to fit their stacks.

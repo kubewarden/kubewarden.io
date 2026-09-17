@@ -51,7 +51,7 @@
     <h3>{{ .name }}</h3>
     <p>{{ .desc }}</p>
     {{ with $page }}{{ with .Params.status }}<span class="pill pill-{{ . | lower }}">{{ . }}</span>{{ end }}{{ end }}
-    <a class="arrow-link" href="{{ .link }}">Learn more <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
+    <a class="arrow-link" href="{{ .link }}">Learn more<span class="sr-only"> about {{ .name }}</span> <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
   </div>
   {{ end }}
   {{ end }}

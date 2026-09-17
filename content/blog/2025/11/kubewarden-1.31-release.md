@@ -186,8 +186,7 @@ testsuite to ensure that backing up and restoring keeps being supported with
 each Kubewarden release.
 
 You can read how to backup and restore Kubewarden with this operator in our
-kubewarden docs
-[here](https://docs.kubewarden.io/howtos/rancher-backup-operator).
+[rancher-backup Operator guide](https://docs.kubewarden.io/howtos/rancher-backup-operator).
 
 ## kubewarden-controller chart gains resource limits & requests for post-install and pre-delete hooks
 

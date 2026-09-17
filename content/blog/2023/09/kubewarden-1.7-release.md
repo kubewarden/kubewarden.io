@@ -66,7 +66,7 @@ It's clear from the previous section, we have been playing with the WASI support
 introduced by the Go 1.21 release. We did this to create a Kubewarden policy capable of interpreting the Kyverno DSL,
 this required the full power of the official Go compiler.
 
-You can find this policy [here](https://github.com/kubewarden/kyverno-dsl-policy). The code is in its early days,
+You can find the [Kyverno DSL policy on GitHub](https://github.com/kubewarden/kyverno-dsl-policy). The code is in its early days,
 but it's already able to reuse certain types of Kyverno policies.
 
 The policy is highly experimental and has limitations.

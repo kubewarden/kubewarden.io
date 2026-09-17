@@ -68,7 +68,7 @@ module requires more effort. The good news is, we did the hard work!
 We wrote a Rust library that can be used to invoke Rego policies compiled into
 WebAssembly modules.
 This library is called Burrego (a burrito with a Rego filling: obvious, isn't it?! 🌯 🤓)
-and can be found [here](https://github.com/kubewarden/policy-evaluator/tree/main/crates/burrego).
+and you can find the [Burrego source code on GitHub](https://github.com/kubewarden/policy-evaluator/tree/main/crates/burrego).
 
 The Rego language provides some [built-in functions](https://www.openpolicyagent.org/docs/latest/policy-reference/#built-in-functions)
 to help with String operations, regular expressions and many more.

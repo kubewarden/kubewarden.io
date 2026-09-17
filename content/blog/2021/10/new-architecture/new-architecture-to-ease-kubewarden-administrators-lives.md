@@ -174,7 +174,7 @@ default   38s
 ```
 
 The default configuration values should be good enough for the majority of
-deployments (all options are documented [here](https://charts.kubewarden.io/#configuration)).
+deployments (see all options in the [Helm chart configuration reference](https://charts.kubewarden.io/#configuration)).
 
 Now, you can use Kubewarden, with Go, Rust, Swift, Open Policy Agent and
 Gatekeeper policies, as you are used to.

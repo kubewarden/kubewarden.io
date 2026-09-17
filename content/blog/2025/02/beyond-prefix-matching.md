@@ -36,7 +36,7 @@ Instead of trying to approximate the OCI spec with regular expressions, Kubeward
 Consider a real-world example: the [trusted-repos](https://github.com/kubewarden/trusted-repos-policy) policy within the Kubewarden project.
 This policy doesn't rely on prefix matching. Instead, it checks against a provided set of trusted repositories.
 
-The code, available on GitHub [here](https://github.com/kubewarden/trusted-repos-policy/blob/main/src/validation.rs#L99-L104),
+The [trusted-repos validation code](https://github.com/kubewarden/trusted-repos-policy/blob/main/src/validation.rs#L99-L104), available on GitHub,
 demonstrates how the .registry component of the image reference is extracted and validated. This extraction is performed using the aforementioned Rust library,
 ensuring adherence to the OCI spec and avoiding the pitfalls of string-based approximations.
 

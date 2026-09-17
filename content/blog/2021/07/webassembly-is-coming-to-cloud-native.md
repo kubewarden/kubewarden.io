@@ -57,10 +57,10 @@ Plus, cherry on top, they both feature Kubewarden 😊.
 
 But we're not over yet; more exciting things happened this week. The
 following projects started the process to get included in the [CNCF sandbox](https://www.cncf.io/sandbox-projects/):
-[Krustlet](https://krustlet.dev/) (see [here](https://github.com/cncf/toc/issues/690)),
-[wasmCloud](https://wasmcloud.com/) (see [here](https://github.com/cncf/toc/issues/693))
+[Krustlet](https://krustlet.dev/) (see [Krustlet's CNCF sandbox proposal](https://github.com/cncf/toc/issues/690)),
+[wasmCloud](https://wasmcloud.com/) (see [wasmCloud's CNCF sandbox proposal](https://github.com/cncf/toc/issues/693))
 and
-[ORAS](https://oras.land/) (see [here](https://github.com/cncf/toc/issues/692)).
+[ORAS](https://oras.land/) (see [ORAS's CNCF sandbox proposal](https://github.com/cncf/toc/issues/692)).
 
 Let's take a closer look at them!
 
