@@ -2,7 +2,7 @@
   Network Enforcer hero: a small pod-to-pod traffic graph. Three
   workloads (frontend, api, database) talk to each other over learned,
   allowed ports; frontend's other attempt is blocked, and api also
-  exports telemetry. A legend explains the line styles.
+   connects to Redis. A legend explains the traffic colors.
 */}}
 <div class="component-hero-diagram component-hero-diagram--stack hn-diagram" aria-hidden="true">
   <div class="hn-grid">
@@ -29,7 +29,6 @@
 
     <div class="hn-branch hn-branch--deny">
       <span class="hn-branch-line"></span>
-      <span class="hn-branch-arrow"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
       <div class="hn-node hn-node--flag">
         <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-x"></use></svg>
         <strong>Blocked</strong><small>unexpected</small>
@@ -37,12 +36,11 @@
     </div>
     <div class="hn-cell"></div>
     <div class="hn-branch">
-      <span class="hn-edge-label hn-edge-label--sm"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>OTLP :4317</span>
+      <span class="hn-edge-label hn-edge-label--sm"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Redis :6379</span>
       <span class="hn-branch-line"></span>
-      <span class="hn-branch-arrow"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
       <div class="hn-node">
         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg>
-        <strong>telemetry</strong><small>pod</small>
+        <strong>redis</strong><small>pod</small>
       </div>
     </div>
     <div class="hn-cell"></div>
