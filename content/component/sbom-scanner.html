@@ -6,7 +6,7 @@ status: Stable
 docs: https://docs.kubewarden.io/sbom-scanner/latest/en/introduction.html
 repoUrl: https://github.com/kubewarden/sbomscanner
 hero: sbom
-intro: "SBOM Scanner generates SBOMs and discovers vulnerabilities in container registries, running workloads, and cluster nodes, using Kubernetes-native resources. Get a complete view of what you run and focus on what matters most."
+intro: "SBOM Scanner generates software bills of materials (SBOMs), inventories of software components, and vulnerability reports. It scans container registries, running workloads, and cluster nodes using Kubernetes-native resources."
 date: 2026-09-16T00:00:00+00:00
 ---
 
@@ -114,7 +114,7 @@ helm install sbomscanner kubewarden/sbomscanner \
     <h2>Turn vulnerability findings into enforcement</h2>
     <p class="section-lead">SBOM Scanner finds the vulnerabilities. The <code>image-cve</code> policy lets the Admission Controller act on them.</p>
 
-    <div class="pipeline">
+    <div class="pipeline" role="img" aria-label="SBOM Scanner scans images, workloads, and nodes and stores findings in a Kubernetes VulnerabilityReport. The image-cve policy evaluates these findings against your rules. The Admission Controller then allows or denies the workload based on the policy decision.">
       <div class="pipeline-step">
         <span class="pipeline-step-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg></span>
         <span><strong>SBOM Scanner</strong><small>Scans images, workloads and nodes</small></span>

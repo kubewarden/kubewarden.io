@@ -52,7 +52,7 @@ date: 2026-09-16T00:00:00+00:00
             <p>Observe network flows and automatically build workload-specific policy proposals.</p>
           </div>
         </div>
-        <div class="hn-grid">
+        <div class="hn-grid" role="img" aria-label="Learn example: Frontend connects to API, and API connects to Database. These observed connections form a policy proposal. Redis is present, but no connection to it has been observed.">
           <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>frontend</strong></div>
           <div class="hn-edge"><span class="hn-edge-line"></span></div>
           <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>api</strong></div>
@@ -76,7 +76,7 @@ date: 2026-09-16T00:00:00+00:00
             <p>Find traffic outside the learned policy without breaking your applications.</p>
           </div>
         </div>
-        <div class="hn-grid">
+        <div class="hn-grid" role="img" aria-label="Monitor example: Frontend connects to API, and API connects to Database. API also connects to Redis. This unexpected connection is reported but allowed.">
           <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>frontend</strong></div>
           <div class="hn-edge"><span class="hn-edge-line"></span></div>
           <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>api</strong></div>
@@ -86,7 +86,7 @@ date: 2026-09-16T00:00:00+00:00
             <span class="hn-branch-line"></span>
             <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>redis</strong></div>
           </div>
-          <span class="hn-branch-label hn-branch-label--monitor">Unexpected, allowed</span>
+          <span class="hn-branch-label hn-branch-label--monitor">API &rarr; Redis: unexpected, allowed</span>
         </div>
         <div class="step-footer"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-alert-triangle"></use></svg>Violations are reported (traffic is allowed)</div>
       </div>
@@ -101,7 +101,7 @@ date: 2026-09-16T00:00:00+00:00
             <p>Enforce the allow-list using the policy mechanism provided by your network stack.</p>
           </div>
         </div>
-        <div class="hn-grid">
+        <div class="hn-grid" role="img" aria-label="Protect example: Frontend can connect to API, and API can connect to Database. After review, API can also connect to Redis. A direct connection from Frontend to Redis is blocked.">
           <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>frontend</strong></div>
           <div class="hn-edge"><span class="hn-edge-line"></span></div>
           <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>api</strong></div>
