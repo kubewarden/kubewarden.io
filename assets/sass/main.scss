@@ -80,6 +80,18 @@ section.wrap p {
 
 // Nav
 
+.main-menu .menu-close {
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  padding: 12px;
+  .icon { width: 20px; height: 20px; margin: 0; }
+}
+
+@media (max-width: 767px) {
+  .main-menu > ul.menu { padding-top: 44px; }
+}
+
 .main-menu .menu-item > a.btn.no-bg.is-active {
   text-decoration: underline;
   text-underline-offset: .4rem;
