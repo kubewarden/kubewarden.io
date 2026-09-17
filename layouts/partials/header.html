@@ -27,7 +27,7 @@
             {{- if strings.HasPrefix .URL "http" }} target="_blank"{{ end -}}
             {{- if $active }} aria-current="true"{{ end }}
             class="btn no-bg{{ if $active }} is-active{{ end }}">
-            {{ .Name }}{{ if .HasChildren }} <svg class="icon icon-sm icon-caret" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg>{{ end }}
+            {{ .Name }}{{ if .HasChildren }} <svg class="icon icon-sm icon-caret" aria-hidden="true"><use xlink:href="#icon-chevron-down"></use></svg>{{ end }}
           </a>
           {{ if .HasChildren }}
           <ul class="submenu">
