@@ -1,11 +1,12 @@
 ---
 title: Kubewarden 1.6.0 is released!
 authors:
-- Flavio Castelli
+  - Flavio Castelli
 date: 2023-04-17
 components:
   - Admission Controller
 types:
+  - release
   - security-advisory
 ---
 

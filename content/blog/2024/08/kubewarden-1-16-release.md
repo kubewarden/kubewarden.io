@@ -6,6 +6,7 @@ date: 2024-08-19
 components:
   - Admission Controller
 types:
+  - release
   - security-advisory
 ---
 

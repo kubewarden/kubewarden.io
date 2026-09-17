@@ -7,7 +7,7 @@ components:
   - Admission Controller
   - SBOM Scanner
 types:
-  - security-advisory
+  - community
 ---
 
 The Kubewarden project was created four years ago at SUSE with the goal of redefining Policy As Code. We built a universal policy engine for Kubernetes and donated it to the CNCF.

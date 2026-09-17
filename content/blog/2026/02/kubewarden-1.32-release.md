@@ -5,7 +5,6 @@ authors:
 date: 2026-02-05
 components:
   - Admission Controller
-  - SBOM Scanner
 types:
   - release
 ---
