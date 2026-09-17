@@ -3,6 +3,10 @@ title: Watch Kubewarden in the ChatLoopBackOff Webinar
 authors:
   - Victor Cuadrado Juan
 date: 2025-03-18
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 We are happy to highlight a recent CNCF webinar that does a first-dive into

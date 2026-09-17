@@ -3,6 +3,10 @@ title: Deep Dive into policy logging
 authors:
     - Rafael Fernández López
 date: 2021-11-15
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 Policies are regular programs. As such they often have the need to log information. In general, we

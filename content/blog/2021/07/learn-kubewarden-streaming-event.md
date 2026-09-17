@@ -3,6 +3,10 @@ title: Let's learn Kubewarden - Streaming Event
 authors:
     - Flavio Castelli
 date: 2021-07-13
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 In case you missed, CNCF Ambassador [Saiyam Pathak](https://twitter.com/SaiyamPathak)

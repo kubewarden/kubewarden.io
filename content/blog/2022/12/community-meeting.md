@@ -3,6 +3,10 @@ title: Community meeting is coming!
 authors:
 - Olivier Vernin
 date: 2022-12-20
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 Community meetings have been a recurring demand from different sides and with the new year approaching,

@@ -3,6 +3,10 @@ title: Kubewarden 1.12 release
 authors:
   - Víctor Cuadrado
 date: 2024-04-24
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Today we're glad to announce the release of Kubewarden 1.12.

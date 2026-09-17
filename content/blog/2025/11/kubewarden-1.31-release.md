@@ -3,6 +3,11 @@ title: "Kubewarden 1.31 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2025-11-25
+components:
+  - Admission Controller
+  - SBOM Scanner
+types:
+  - release
 ---
 
 Preparing for season celebrations, Kubewarden grabbed its running shoes and

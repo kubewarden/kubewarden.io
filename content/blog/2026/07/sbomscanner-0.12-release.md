@@ -3,6 +3,10 @@ title: "SBOMscanner 0.12 Release: Full-Stack Security with Node Scanning"
 authors:
   - Alessio Greggi
 date: 2026-07-07
+components:
+  - SBOM Scanner
+types:
+  - security-advisory
 ---
 
 We are thrilled to announce the release of SBOMscanner

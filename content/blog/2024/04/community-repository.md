@@ -3,6 +3,10 @@ title: Introducing Kubewarden's Community Repository
 authors:
   - José Guilherme Vanz
 date: 2024-04-09
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 The Kubewarden project has recently improved how it shares information and

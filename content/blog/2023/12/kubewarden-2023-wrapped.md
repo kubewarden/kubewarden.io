@@ -3,6 +3,10 @@ title: Kubewarden 2023 Wrapped
 authors:
   - Flavio Castelli
 date: 2023-12-20
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 The end of the year is around the corner. Let's look at what the Kubewarden project achieved in 2023!

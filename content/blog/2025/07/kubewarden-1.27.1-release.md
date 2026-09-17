@@ -3,6 +3,10 @@ title: "Kubewarden 1.27.1 Patch Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2025-08-01
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 We have just released 1.27.1, a small patch release for `kwctl`.

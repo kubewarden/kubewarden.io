@@ -3,6 +3,10 @@ title: SBOMscanner 0.11.0 release
 authors:
   - Fabrizio Sestito
 date: 2026-05-06
+components:
+  - SBOM Scanner
+types:
+  - security-advisory
 ---
 
 We are happy to announce SBOMscanner v0.11.0. This release introduces an MCP

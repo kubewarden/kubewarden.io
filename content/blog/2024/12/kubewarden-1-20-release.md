@@ -3,6 +3,10 @@ title: Kubewarden 1.20 release
 authors:
   - Víctor Cuadrado Juan
 date: 2024-12-19
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 We're excited to announce the release of Kubewarden v1.20! This release brings

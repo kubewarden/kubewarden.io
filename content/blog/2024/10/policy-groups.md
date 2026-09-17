@@ -3,6 +3,10 @@ title: Policy Groups deep dive
 authors:
   - Víctor Cuadrado Juan
 date: 2024-10-02
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 With [v1.17](https://www.kubewarden.io/blog/2024/10/kubewarden-1-17-release/),

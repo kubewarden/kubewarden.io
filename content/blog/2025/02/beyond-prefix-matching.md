@@ -5,6 +5,10 @@ authors:
   - Nuno do Carmo
   - Víctor Cuadrado Juan
 date: 2025-02-19
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 A recent [Aqua Security blog](https://www.aquasec.com/blog/risks-misconfigured-kubernetes-policy-engines-opa-gatekeeper/) post highlighted

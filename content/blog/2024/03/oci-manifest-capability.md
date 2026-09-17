@@ -3,6 +3,10 @@ title: Retrieving OCI Image Manifests
 authors:
   - José Guilherme Vanz
 date: 2024-03-25
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 

@@ -3,6 +3,10 @@ title: kwctl 1.22.1 patch release
 authors:
   - Flavio Castelli
 date: 2025-03-04
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Today we published the 1.21.1 patch release of kwctl.

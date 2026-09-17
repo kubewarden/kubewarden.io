@@ -3,6 +3,10 @@ title: kwctl SHA support
 authors:
   - Fabrizio Sestito
 date: 2023-09-28
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 Recently, we have focused on improving the Kubewarden developer experience.

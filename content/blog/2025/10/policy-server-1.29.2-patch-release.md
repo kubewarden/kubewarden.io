@@ -3,6 +3,10 @@ title: "Policy Server 1.29.2 Patch Release"
 authors:
   - Flavio Castelli
 date: 2025-10-17
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Earlier this week we published a patch release of Policy Server. The fix was required to avoid a crash at startup time.

@@ -3,6 +3,10 @@ title: Policy Server on aarch64
 authors:
     - Rafael Fernández López
 date: 2022-01-21
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 We recently got notified that the `policy-server` [was crashing in an

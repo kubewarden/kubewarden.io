@@ -3,6 +3,10 @@ title: Kubewarden 1.23 release
 authors:
   - Flavio Castelli
 date: 2025-03-26
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 The wait is over—Kubewarden 1.23 has arrived! Packed with exciting security enhancements,

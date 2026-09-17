@@ -3,6 +3,10 @@ title: "SBOMscanner 0.10 Release"
 authors:
   - Alessio Greggi
 date: 2026-03-10
+components:
+  - SBOM Scanner
+types:
+  - release
 ---
 
 The Kubewarden ecosystem continues to expand its supply chain security capabilities!

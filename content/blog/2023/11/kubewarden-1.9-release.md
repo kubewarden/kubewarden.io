@@ -3,6 +3,10 @@ title: Kubewarden 1.9.0 release
 authors:
   - Flavio Castelli
 date: 2023-11-03
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Not even a month after the 1.8.0 release, today we are happy to announce Kubewarden 1.9.0! 🎉🥳

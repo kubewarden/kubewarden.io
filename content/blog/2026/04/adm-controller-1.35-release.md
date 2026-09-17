@@ -3,6 +3,10 @@ title: "Admission Controller 1.35 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2026-04-27
+components:
+  - Admission Controller
+types:
+  - security-advisory
 ---
 
 This Admission Controller 1.35 release is one that builds the nest properly:

@@ -3,6 +3,10 @@ title: Kubewarden UI 1.0.0 is released!
 authors:
 - Jordon Leach
 date: 2023-02-09
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 We are excited to announce that the Kubewarden UI 1.0.0 has been released!

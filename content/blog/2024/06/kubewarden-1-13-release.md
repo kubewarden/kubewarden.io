@@ -3,6 +3,10 @@ title: Kubewarden 1.13 release
 authors:
   - Flavio Castelli
 date: 2024-06-06
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 I'm pleased to announce a new release of Kubewarden, version 1.13. This release features a series of

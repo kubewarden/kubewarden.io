@@ -3,6 +3,10 @@ title: "Kubewarden 1.26 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2025-06-25
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Kubewarden 1.26 is fresh out of the oven, with a nice bunch of features.

@@ -3,6 +3,10 @@ title: First year of Kubewarden
 authors:
     - Flavio Castelli
 date: 2021-12-22
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 Year 2021 is almost over. Let's take that as a chance to look back at what has been achieved during the 1st year of life of the Kubewarden project.

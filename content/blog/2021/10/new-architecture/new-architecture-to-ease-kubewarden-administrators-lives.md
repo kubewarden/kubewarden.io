@@ -3,6 +3,10 @@ title: A new architecture to ease Kubewarden administrators' lives
 authors:
     - Víctor Cuadrado Juan
 date: 2021-10-01
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 We are pleased to announce a new architecture for the Kubewarden stack, in line

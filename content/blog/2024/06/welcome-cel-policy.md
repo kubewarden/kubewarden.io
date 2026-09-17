@@ -3,6 +3,10 @@ title: Introducing the CEL policy
 authors:
   - Victor Cuadrado Juan
 date: 2024-06-17
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 We are pleased to announce a new policy by the Kubewarden team: **[cel-policy](https://github.com/kubewarden/cel-policy)**.

@@ -3,6 +3,10 @@ title: "Kubewarden 1.25 Release: Priority Class Support and CI Security Enhancem
 authors:
   - José Guilherme Vanz
 date: 2025-05-15
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Kubewarden 1.25 arrives with:

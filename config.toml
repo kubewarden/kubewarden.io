@@ -95,3 +95,7 @@ identifier = "enterprise"
 name = "Enterprise"
 url = "https://docs.kubewarden.io/enterprise"
 weight = -50
+
+[taxonomies]
+component = "components"
+type = "types"

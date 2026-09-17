@@ -3,6 +3,10 @@ title: "Admission Controller 1.37 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2026-07-27
+components:
+  - Admission Controller
+types:
+  - security-advisory
 ---
 
 Here we are, at the tail end of July. Belugas are migrating up north for the

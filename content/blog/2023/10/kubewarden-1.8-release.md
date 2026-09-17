@@ -3,6 +3,10 @@ title: Kubewarden 1.8.0 release
 authors:
   - Víctor Cuadrado
 date: 2023-10-11
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Today we are happy to announce the release of Kubewarden 1.8.0! 🎉🥳

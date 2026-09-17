@@ -3,6 +3,10 @@ title: Kubewarden 1.15 release
 authors:
   - Jose Guilherme Vanz
 date: 2024-07-30
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 # Kubewarden v1.15.0 release

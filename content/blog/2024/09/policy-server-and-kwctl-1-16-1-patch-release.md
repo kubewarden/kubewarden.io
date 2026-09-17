@@ -3,6 +3,10 @@ title: Policy Server and kwctl 1.16.1 patch releases
 authors:
   - Flavio Castelli
 date: 2024-09-04
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 # Policy Server and kwctl 1.16.1 patch releases

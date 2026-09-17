@@ -3,6 +3,11 @@ title: "Admission Controller 1.36 Release"
 authors:
   - José Guilherme Vanz
 date: 2026-06-02
+components:
+  - Admission Controller
+  - SBOM Scanner
+types:
+  - release
 ---
 
 The garden has a new nameplate! Kubewarden 1.36 renames the repository and

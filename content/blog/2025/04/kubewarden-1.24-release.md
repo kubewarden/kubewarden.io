@@ -3,6 +3,10 @@ title: Kubewarden 1.24 release
 authors:
   - Víctor Cuadrado Juan
 date: 2025-04-30
+components:
+  - Admission Controller
+types:
+  - security-advisory
 ---
 
 The wait is over, Kubewarden 1.24 has arrived! We have some Easter eggs for you

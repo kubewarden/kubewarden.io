@@ -3,6 +3,10 @@ title: Kubewarden 1.22 release
 authors:
   - Víctor Cuadrado Juan
 date: 2025-02-26
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 We're excited to announce the release of Kubewarden v1.22! This release

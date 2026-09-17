@@ -3,6 +3,11 @@ title: "Admission Controller 1.33 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2026-03-09
+components:
+  - Admission Controller
+  - SBOM Scanner
+types:
+  - security-advisory
 ---
 
 The garden is thriving and Kubewarden 1.33 is ready to bloom! Following last

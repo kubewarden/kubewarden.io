@@ -3,6 +3,10 @@ title: "Kubewarden 1.29.1 Patch Release"
 authors:
   - Flavio Castelli
 date: 2025-10-13
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Today, we released patch updates for both Policy Server and kwctl.

@@ -4,6 +4,10 @@ authors:
     - Flavio Castelli
     - Rafael Fernández López
 date: 2021-09-21
+components:
+  - Admission Controller
+types:
+  - deep-dive
 ---
 
 Kubewarden is a policy framework for Kubernetes. It can be used to

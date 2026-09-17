@@ -3,6 +3,10 @@ title: Rego policy library relaunch
 authors:
   - Fabrizio Sestito
 date: 2025-04-22
+components:
+  - Admission Controller
+types:
+  - deep-dive
 ---
 
 We are excited to announce the latest additions to our policy library!

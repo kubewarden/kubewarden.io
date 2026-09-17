@@ -3,6 +3,10 @@ title: Kubewarden 1.21.1 patch release
 authors:
   - Flavio Castelli
 date: 2025-02-05
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Today we published the 1.21.1 patch releases of the kwctl and Policy Server components of the Kubewarden stack.

@@ -3,6 +3,10 @@ title: WebAssembly is coming to Cloud Native
 authors:
     - Flavio Castelli
 date: 2021-07-16
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 Is the title of this post a pun inspired by Christmas or by the Games of Thrones?

@@ -4,6 +4,10 @@ authors:
   - Víctor Cuadrado Juan
   - Flavio Castelli
 date: 2025-01-30
+components:
+  - Admission Controller
+types:
+  - security-advisory
 ---
 
 We're excited to announce the release of Kubewarden v1.21, our first release of 2025!

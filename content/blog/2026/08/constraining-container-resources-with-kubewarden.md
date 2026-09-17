@@ -4,6 +4,10 @@ authors:
   - Dan Čermák
   - John Krug
 date: 2026-08-31
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 # Constraining Container Resources with Kubewarden
 

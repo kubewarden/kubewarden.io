@@ -4,6 +4,10 @@ authors:
   - Víctor Cuadrado Juan
   - Flavio Castelli
 date: 2025-10-30
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Today, Kubewarden 1.30 woke up, shook itself, stretched its wings and took off

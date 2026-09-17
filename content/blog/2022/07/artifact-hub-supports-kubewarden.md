@@ -3,6 +3,10 @@ title: Kubewarden policies, now on Artifact Hub!
 authors:
 - Flavio Castelli
 date: 2022-07-22
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 Today we're happy to announce that [Artifact Hub](https://artifacthub.io/)

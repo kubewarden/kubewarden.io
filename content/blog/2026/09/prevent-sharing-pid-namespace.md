@@ -3,6 +3,10 @@ title: "Preventing containers from sharing the PID namespace with Kubewarden"
 authors:
   - Dan Čermák
 date: 2026-09-09
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 ## The PID namespace

@@ -3,6 +3,10 @@ title: "Secure Supply Chain: Verifying image signatures"
 authors:
 - Raul Cabello Martin
 date: 2022-05-20
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 After these last releases Kubewarden now has support for verifying the integrity and authenticity of artifacts within

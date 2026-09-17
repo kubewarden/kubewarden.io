@@ -3,6 +3,10 @@ title: Securing the usage of volumeMounts
 authors:
 - Víctor Cuadrado Juan
 date: 2022-11-03
+components:
+  - Admission Controller
+types:
+  - deep-dive
 ---
 
 We present to you the new

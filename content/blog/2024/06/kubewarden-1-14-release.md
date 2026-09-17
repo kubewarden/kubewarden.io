@@ -3,6 +3,10 @@ title: Kubewarden 1.14 release
 authors:
   - Jose Guilherme Vanz
 date: 2024-06-25
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 # Kubewarden v1.14.0 release

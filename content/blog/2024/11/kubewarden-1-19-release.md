@@ -3,6 +3,10 @@ title: Kubewarden 1.19 release
 authors:
   - José Guilherme Vanz
 date: 2024-12-02
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 We're excited to announce the release of Kubewarden v1.19! This release brings

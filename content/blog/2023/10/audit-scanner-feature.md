@@ -3,6 +3,10 @@ title: Welcoming the Audit Scanner
 authors:
   - Víctor Cuadrado
 date: 2023-10-11
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 Fresh in the already released Kubewarden `v1.7.0` stack, we welcome a new module:

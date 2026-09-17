@@ -3,6 +3,10 @@ title: Migrate your PSPs to Kubewarden policies!
 authors:
 - José Guilherme Vanz
 date: 2022-07-13
+components:
+  - Admission Controller
+types:
+  - deep-dive
 ---
 
 > Warning: the code snippets shown inside of this blog post have become

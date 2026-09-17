@@ -3,6 +3,10 @@ title: Kubewarden 1.7.0 release
 authors:
   - Flavio Castelli
 date: 2023-09-21
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Today we are delighted to announce the release of Kubewarden 1.7.0! 🎊 🥳

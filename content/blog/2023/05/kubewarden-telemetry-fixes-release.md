@@ -3,6 +3,10 @@ title: Telemetry enhancements released!
 authors:
 - José Guilherme Vanz
 date: 2023-05-09
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 We are excited to announce a variety of updates, fixes, and enhancements for Kubewarden components!

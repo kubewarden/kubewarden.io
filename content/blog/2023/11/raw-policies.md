@@ -3,6 +3,10 @@ title: Raw policies
 authors:
   - Fabrizio Sestito
 date: 2023-11-14
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 Kubewarden 1.9.0 has introduced even more features requested by the community, and we are excited to share them with you!
