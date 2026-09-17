@@ -1,12 +1,10 @@
-@import "../../themes/projects-theme/assets/sass/main";
+@import "base";
 @import "blog-archive";
 
 // ---------------------------------------------------------------------------
 // Webfonts
 //
-// Self-hosted, copied from the projects-theme submodule
-// (themes/projects-theme/assets/fonts/) into static/fonts/ so this site
-// doesn't depend on the theme's asset layout at runtime.
+// Self-hosted in static/fonts/. Original faces came from projects-theme.
 //   - Poppins: SIL Open Font License 1.1, see /fonts/POPPINS-OFL.txt
 //   - Roboto: Apache License 2.0, see /fonts/ROBOTO-LICENSE.txt
 // ---------------------------------------------------------------------------

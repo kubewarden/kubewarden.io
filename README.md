@@ -4,12 +4,17 @@
 
 This is the source repository for the https://www.kubewarden.io website.
 
-It is done with [Hugo](https://gohugo.io) and the Rancher Labs
+The site uses [Hugo](https://gohugo.io) with local layouts, styles, and fonts.
+It does not require a theme or Git submodules.
+
+Some base styles and templates derive from the Rancher Labs
 [project theme](https://github.com/rancherlabs/projects-theme).
+The original [MIT license](static/licenses/projects-theme.txt) applies to that code.
 
 ## Local development
 
+Install Hugo Extended to compile the Sass styles, then start the local server:
+
 ``` console
-$ git submodule init && git submodule update
 $ hugo server -D
 ```
