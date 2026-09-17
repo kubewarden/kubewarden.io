@@ -54,15 +54,15 @@ date: 2026-09-16T00:00:00+00:00
           </div>
         </div>
         <div class="hn-grid">
-          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>frontend</strong></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>frontend</strong></div>
           <div class="hn-edge"><span class="hn-edge-line"></span></div>
-          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>api</strong></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>api</strong></div>
           <div class="hn-edge"><span class="hn-edge-line"></span></div>
-          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>database</strong></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>database</strong></div>
           <div class="hn-branch">
             <span class="hn-branch-line"></span>
             <span class="hn-branch-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
-            <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>redis</strong></div>
+            <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>redis</strong></div>
           </div>
           <div class="hn-cell"></div>
           <div class="hn-cell"></div>
@@ -83,14 +83,14 @@ date: 2026-09-16T00:00:00+00:00
           </div>
         </div>
         <div class="hn-grid">
-          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>frontend</strong></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>frontend</strong></div>
           <div class="hn-edge hn-edge--violation">
             <span class="hn-edge-line hn-edge-line--deny"></span>
             <span class="hn-edge-badge"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-alert-triangle"></use></svg></span>
           </div>
-          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>api</strong></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>api</strong></div>
           <div class="hn-edge"><span class="hn-edge-line"></span></div>
-          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>database</strong></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>database</strong></div>
         </div>
         <div class="step-footer">Violations are reported (traffic is allowed)</div>
       </div>
@@ -106,14 +106,14 @@ date: 2026-09-16T00:00:00+00:00
           </div>
         </div>
         <div class="hn-grid">
-          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>frontend</strong></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>frontend</strong></div>
           <div class="hn-edge hn-edge--violation">
             <span class="hn-edge-line hn-edge-line--deny"></span>
             <span class="hn-edge-badge"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-x"></use></svg></span>
           </div>
-          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>api</strong></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>api</strong></div>
           <div class="hn-edge"><span class="hn-edge-line"></span></div>
-          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg><strong>database</strong></div>
+          <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>database</strong></div>
         </div>
         <div class="step-footer">Unexpected communication is blocked</div>
       </div>
@@ -135,9 +135,9 @@ date: 2026-09-16T00:00:00+00:00
         <div class="stack-flow">
           <span class="stack-node">ztunnel</span>
           <span class="stack-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
-          <span class="stack-node stack-node--enforcer"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>Network Enforcer</span>
+          <span class="stack-node stack-node--enforcer"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-nodes"></use></svg>Network Enforcer</span>
           <span class="stack-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
-          <span class="stack-node stack-node--policy"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg>AuthorizationPolicy</span>
+          <span class="stack-node stack-node--policy"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-file"></use></svg>AuthorizationPolicy</span>
         </div>
         <p class="stack-desc">Observe inbound TCP traffic and enforce using Istio's native authorization mechanism.</p>
       </div>
@@ -150,9 +150,9 @@ date: 2026-09-16T00:00:00+00:00
         <div class="stack-flow">
           <span class="stack-node">Goldmane</span>
           <span class="stack-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
-          <span class="stack-node stack-node--enforcer"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>Network Enforcer</span>
+          <span class="stack-node stack-node--enforcer"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-nodes"></use></svg>Network Enforcer</span>
           <span class="stack-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
-          <span class="stack-node stack-node--policy"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg>NetworkPolicy</span>
+          <span class="stack-node stack-node--policy"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-file"></use></svg>NetworkPolicy</span>
         </div>
         <p class="stack-desc">Observe ingress and egress TCP/UDP flows and enforce using Kubernetes NetworkPolicy.</p>
       </div>
@@ -165,9 +165,9 @@ date: 2026-09-16T00:00:00+00:00
         <div class="stack-flow">
           <span class="stack-node">Hubble Relay</span>
           <span class="stack-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
-          <span class="stack-node stack-node--enforcer"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>Network Enforcer</span>
+          <span class="stack-node stack-node--enforcer"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-nodes"></use></svg>Network Enforcer</span>
           <span class="stack-arrow"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
-          <span class="stack-node stack-node--policy"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg>NetworkPolicy</span>
+          <span class="stack-node stack-node--policy"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-file"></use></svg>NetworkPolicy</span>
         </div>
         <p class="stack-desc">Observe ingress and egress TCP/UDP flows and enforce using Kubernetes NetworkPolicy.</p>
       </div>
@@ -184,7 +184,7 @@ date: 2026-09-16T00:00:00+00:00
         <div class="step-panel">
           <div class="step-panel-head">Observed traffic (example)</div>
           <div class="step-panel-body">
-            <p class="step-record-path"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>payments-api</p>
+            <p class="step-record-path"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-container"></use></svg>payments-api</p>
             <ul class="hr-exec-list">
               <li class="hr-exec hr-exec--observed"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg>postgres :5432</li>
               <li class="hr-exec hr-exec--observed"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg>redis :6379</li>
