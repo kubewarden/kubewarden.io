@@ -41,10 +41,26 @@ As a pleasant side effect, we also noticed an improvement in the performances of
 
 These are some numbers we obtained while doing performance tests of a Gatekeeper policy fetching, among other resources, 10000 RoleBindings:
 
-|                    | HTTP Request Duration (avg) | Max RSS Under load | Idle RSS |
-| ------------------ | :-------------------------: | :----------------: | :------: |
-| Policy Server 1.12 |          436.15ms           |       1.4 Gb       |  1.2 Gb  |
-| Policy Server 1.13 |          233.663ms          |       1.2 Gb       |  264 Mb  |
+{{< comparison-table caption="Policy Server performance with 10000 RoleBindings" >}}
+<thead>
+  <tr>
+    <th scope="col">Policy Server version</th>
+    <th scope="col">HTTP Request Duration (avg)</th>
+    <th scope="col">Max RSS Under load</th>
+    <th scope="col">Idle RSS</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <th scope="row">Policy Server 1.12</th>
+    <td>436.15ms</td><td>1.4 Gb</td><td>1.2 Gb</td>
+  </tr>
+  <tr>
+    <th scope="row">Policy Server 1.13</th>
+    <td>233.663ms</td><td>1.2 Gb</td><td>264 Mb</td>
+  </tr>
+</tbody>
+{{< /comparison-table >}}
 
 ## Audit Scanner improvements
 
