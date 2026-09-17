@@ -20,7 +20,7 @@
         {{ with .Params.repoUrl }}<a class="btn-outline" href="{{ . }}" target="_blank" rel="noopener">View on GitHub <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-github"></use></svg><span class="sr-only"> (opens in new tab)</span></a>{{ end }}
       </div>
     </div>
-    <div class="component-hero-visual">
+    <div class="component-hero-visual component-hero-visual--{{ .Params.hero }}">
       {{ partial (printf "hero-%s.html" .Params.hero) . }}
     </div>
   </div>

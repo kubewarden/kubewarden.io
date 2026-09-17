@@ -6,7 +6,7 @@
   inputs into a cluster, so that shape (borrowed from hero-admission in
   an earlier pass) was misleading.
 */}}
-<div class="component-hero-diagram" aria-hidden="true">
+<div class="component-hero-diagram component-hero-diagram--sbom" aria-hidden="true">
   <div class="ha-cards">
     <div class="ha-card">
       <svg class="icon" aria-hidden="true"><use xlink:href="#icon-database"></use></svg>
@@ -22,11 +22,10 @@
     </div>
   </div>
 
-  <div class="ha-fanout">
-    <svg viewBox="0 0 40 120" preserveAspectRatio="none" focusable="false">
-      <path d="M2,10 C22,10 22,60 38,60" fill="none" stroke="#c70a41" stroke-width="2" stroke-linecap="round"/>
-      <path d="M2,60 L38,60" fill="none" stroke="#c70a41" stroke-width="2" stroke-linecap="round"/>
-      <path d="M2,110 C22,110 22,60 38,60" fill="none" stroke="#c70a41" stroke-width="2" stroke-linecap="round"/>
+  <div class="ha-collector">
+    <svg viewBox="0 0 50 120" preserveAspectRatio="none" focusable="false">
+      <path d="M4,4 C22,4 14,44 28,56 C31,58 33,59 36,60 C33,61 31,62 28,64 C14,76 22,116 4,116" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M36,60 H50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
     </svg>
   </div>
 

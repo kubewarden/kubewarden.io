@@ -1193,6 +1193,25 @@ footer {
   }
 }
 
+.ha-collector {
+  flex: 0 0 4rem;
+  align-self: stretch;
+  min-height: 12rem;
+  color: var(--primary-color);
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.component-hero-diagram--sbom {
+  gap: .6rem;
+
+  .ha-card { min-width: 13rem; }
+}
+
 .ha-connector {
   flex: 0 0 3.5rem;
   height: 0;
@@ -2928,6 +2947,8 @@ footer {
     max-width: 44rem;
     margin: 0 auto;
   }
+
+  .component-hero-visual--sbom { max-width: 58rem; }
 
   .hr-containers {
     flex-direction: column;
