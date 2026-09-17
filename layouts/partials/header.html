@@ -28,7 +28,7 @@
             {{- if $external }} target="_blank" rel="{{ with .Params.rel }}{{ . }} {{ end }}noopener"{{ else }}{{ with .Params.rel }} rel="{{ . }}"{{ end }}{{ end -}}
             {{- if $active }} aria-current="true"{{ end }}
             class="btn no-bg{{ if $active }} is-active{{ end }}">
-            {{ .Name }}{{ if $external }} <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span>{{ end }}{{ if .HasChildren }} <svg class="icon icon-sm icon-caret" aria-hidden="true"><use xlink:href="#icon-chevron-down"></use></svg>{{ end }}
+            {{ .Name }}{{ if $external }}<span class="sr-only"> (opens in new tab)</span>{{ end }}{{ if .HasChildren }} <svg class="icon icon-sm icon-caret" aria-hidden="true"><use xlink:href="#icon-chevron-down"></use></svg>{{ end }}
           </a>
           {{ if .HasChildren }}
           <ul class="submenu">
@@ -37,7 +37,7 @@
             <li>
               <a href="{{ .URL }}"
                 {{- if $external }} target="_blank" rel="{{ with .Params.rel }}{{ . }} {{ end }}noopener"{{ else }}{{ with .Params.rel }} rel="{{ . }}"{{ end }}{{ end -}}
-              >{{ .Name }}{{ if $external }} <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span>{{ end }}</a>
+              >{{ .Name }}{{ if $external }}<span class="sr-only"> (opens in new tab)</span>{{ end }}</a>
             </li>
             {{ end }}
           </ul>

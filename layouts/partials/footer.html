@@ -12,7 +12,7 @@
       {{ range . }}
       {{ if not .Parent }}
       {{ $external := strings.HasPrefix .URL "http" }}
-      <a href="{{ .URL }}"{{ if $external }} target="_blank" rel="{{ with .Params.rel }}{{ . }} {{ end }}noopener"{{ end }}>{{ .Name }}{{ if $external }} <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span>{{ end }}</a>
+      <a href="{{ .URL }}"{{ if $external }} target="_blank" rel="{{ with .Params.rel }}{{ . }} {{ end }}noopener"{{ end }}>{{ .Name }}{{ if $external }}<span class="sr-only"> (opens in new tab)</span>{{ end }}</a>
       {{ end }}
       {{ end }}
     </nav>
@@ -33,9 +33,9 @@
       <a href="https://www.linuxfoundation.org/trademark-usage">Trademark Usage page</a>.
     </p>
     <nav class="footer-legal" aria-label="Legal">
-      <a href="https://www.linuxfoundation.org/legal/privacy-policy" target="_blank" rel="noopener">Privacy <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
-      <a href="https://www.linuxfoundation.org/legal/terms" target="_blank" rel="noopener">Terms <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
-      <a href="https://github.com/kubewarden/community/security/policy" target="_blank" rel="noopener">Security <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-external"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      <a href="https://www.linuxfoundation.org/legal/privacy-policy" target="_blank" rel="noopener">Privacy<span class="sr-only"> (opens in new tab)</span></a>
+      <a href="https://www.linuxfoundation.org/legal/terms" target="_blank" rel="noopener">Terms<span class="sr-only"> (opens in new tab)</span></a>
+      <a href="https://github.com/kubewarden/community/security/policy" target="_blank" rel="noopener">Security<span class="sr-only"> (opens in new tab)</span></a>
       <a href="mailto:cncf-kubewarden-maintainers@lists.cncf.io">Contact</a>
     </nav>
   </div>

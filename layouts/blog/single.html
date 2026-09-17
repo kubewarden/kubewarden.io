@@ -65,7 +65,7 @@
         <a href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener"{{ end }}>
           <svg class="icon" aria-hidden="true"><use xlink:href="#icon-{{ .icon }}"></use></svg>
           <span><strong>{{ .title }}</strong><span>{{ .description }}</span></span>
-          <svg class="icon article-link-arrow" aria-hidden="true"><use xlink:href="#icon-{{ if .external }}external{{ else }}arrow{{ end }}"></use></svg>
+          {{ if not .external }}<svg class="icon article-link-arrow" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg>{{ end }}
           {{ if .external }}<span class="sr-only"> (opens in new tab)</span>{{ end }}
         </a>
         {{ end }}
