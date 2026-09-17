@@ -27,7 +27,7 @@ which provides an allowlist of volume types, and
 with an allowlist of hostPath volumes.
 
 
-### What is so useful about the new volumeMounts policy?
+## What is so useful about the new volumeMounts policy?
 
 The existing PSP policies restricted usage of volumes, as a cluster admin. The
 new volumeMounts policy has settings with 4 operators that enable you to check
@@ -70,7 +70,7 @@ controlling creation of Volumes in the cluster. Let's see them:
     ```
 
 
-### In action
+## In action
 
 Just instantiate an `AdmissionPolicy` or cluster-wide `ClusterAdmissionPolicy`
 with the policy module and settings. Here's a definition of a policy that

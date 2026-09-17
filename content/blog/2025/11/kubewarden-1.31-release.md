@@ -203,7 +203,7 @@ You can find them under `.Values.resources.preDeleteJob` and
 `.Values.resources.PostInstallJob` and set to very conservative values, as the
 jobs are small.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

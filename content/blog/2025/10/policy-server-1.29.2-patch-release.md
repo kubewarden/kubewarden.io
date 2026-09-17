@@ -23,7 +23,7 @@ The Kubewarden Helm charts have been updated to use the latest Policy Server con
 
 Note: This upgrade only affects the `default` Policy Server deployed by the `kubewarden-defaults` Helm chart. If you have custom PolicyServer instances defined, you will need to patch those manually.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

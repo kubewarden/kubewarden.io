@@ -12,7 +12,7 @@ types:
 Recently, we have focused on improving the Kubewarden developer experience.
 We have been implementing features requested by the community.
 
-# Reference policies by their SHA
+## Reference policies by their SHA
 
 Since `kwctl` release `v1.7.0` we support referencing policies by their SHA.
 
@@ -28,7 +28,7 @@ Here is an example of the new feature in action:
 
 {{<figure src="/images/kwctl_sha.gif" alt="kwctl sha support demo">}}
 
-# Give it a try!
+## Give it a try!
 
 You can update `kwctl` to the latest version `v1.7.0` by using your [package manager] https://github.com/kubewarden/kwctl#install
 or via [GH releases](https://github.com/kubewarden/kwctl/releases/tag/v1.7.0).

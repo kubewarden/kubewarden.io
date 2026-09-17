@@ -70,7 +70,7 @@ improve the resilience of the scanning loop:
 - _VulnerabilityReport Reconciliation_: Fixed a logic error where `CompletionTime`
   was being reset on every reconcile, which previously skewed scan duration metrics.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

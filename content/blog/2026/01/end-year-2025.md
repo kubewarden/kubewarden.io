@@ -116,7 +116,7 @@ Kubernetes security framework.
 Here’s to another year of innovation, collaboration, and making Kubernetes
 safer and more flexible for everyone!
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

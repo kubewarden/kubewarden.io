@@ -155,7 +155,7 @@ versions.
 Our docs at [doc.kubewarden.io](https://docs.kubewarden.io) will also get expanded in the near future. Stay
 tuned!
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

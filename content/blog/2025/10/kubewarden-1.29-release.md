@@ -177,7 +177,7 @@ setting too.
 With 1.29, we have corrected this regression, and this specific policy
 setting works as expected.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

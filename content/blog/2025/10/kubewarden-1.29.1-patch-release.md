@@ -27,7 +27,7 @@ you can use package managers like `brew` to update it.
 The Kubewarden helm charts have been updated to consume the latest version of the Policy Server container image. Doing a `helm upgrade`
 is enough to get the latest version of the Policy Server.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

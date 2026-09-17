@@ -20,11 +20,13 @@
       <ul class="menu">
         {{ range . }}
         {{ if not .Parent }}
+        {{ $active := or ($.IsMenuCurrent "main" .) (and (eq .Identifier "blog") (or (eq $.Section "blog") (and (in (slice "term" "taxonomy") $.Kind) (in (slice "components" "types") $.Data.Plural)))) }}
         <li class="menu-item{{ if .HasChildren }} has-children{{ end }}">
           <a href="{{ .URL }}"
             {{- with .Params.rel }} rel="{{ . }}"{{ end -}}
             {{- if strings.HasPrefix .URL "http" }} target="_blank"{{ end -}}
-            class="btn no-bg{{ if $.IsMenuCurrent "main" . }} is-active{{ end }}">
+            {{- if $active }} aria-current="true"{{ end }}
+            class="btn no-bg{{ if $active }} is-active{{ end }}">
             {{ .Name }}{{ if .HasChildren }} <svg class="icon icon-sm icon-caret" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg>{{ end }}
           </a>
           {{ if .HasChildren }}

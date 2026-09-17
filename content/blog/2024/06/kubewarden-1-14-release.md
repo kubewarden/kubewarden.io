@@ -9,13 +9,13 @@ types:
   - release
 ---
 
-# Kubewarden v1.14.0 release
+## Kubewarden v1.14.0 release
 
 We are thrilled to announce the release of Kubewarden v1.14.0! This version
 comes packed with new capabilities, enhancements, and fixes that make
 Kubewarden even more robust and user-friendly.
 
-## New Host Capability for Container Image Configuration
+### New Host Capability for Container Image Configuration
 
 One of the significant updates in this release is the introduction of a new
 host capability that allows policies to fetch the container image
@@ -29,7 +29,7 @@ the `oci-distribution` crate, which already has a method to fetch this
 information, we were able to extend our policy evaluator and SDKs to expose
 this capability. 
 
-## New CEL Policy on Artifact Hub
+### New CEL Policy on Artifact Hub
 
 Recently we've released our new  meta-policy policy that allows to
 run [CEL](https://cel.dev/) expressions against
@@ -38,7 +38,7 @@ Hub](https://artifacthub.io). For more insights into this policy and its
 applications, refer to our recent [blog
 post](https://www.kubewarden.io/blog/2024/06/welcome-cel-policy/).
 
-## Introducing "kwctl scaffold vap" Command
+### Introducing "kwctl scaffold vap" Command
 
 With Kubernetes v1.26, the
 [ValidatingAdmissionPolicy](https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/)
@@ -54,7 +54,7 @@ benefits of running these policies within the Kubewarden framework. For a
 detailed guide on how to use this new feature, check out
 [this section of our documentation](https://docs.kubewarden.io/howtos/vap-migration).
 
-## Policy Fixes
+### Policy Fixes
 
 In this release, we have addressed two issues in our existing policies:
 
@@ -72,7 +72,7 @@ In this release, we have addressed two issues in our existing policies:
    causing validation errors. We have fixed this by allowing a single resource
    setting to be empty, resolving the issue without breaking policy usage. The problem was describe in depth by [this issue](https://github.com/kubewarden/container-resources-policy/issues/33).
 
-## Best Practices: Domain-Qualified Finalizers
+### Best Practices: Domain-Qualified Finalizers
 
 The Kubewarden controller now follows best practices by using domain-qualified
 finalizers. Users must be aware that if they downgrade a Kubewarden
@@ -84,7 +84,7 @@ NOTE: Downgrade procedures are not supported by Kubewarden project. See the
 [documentation](https://docs.kubewarden.io/reference/upgrade-path#downgrades)
 to learn more about that.
 
-## KCD Italy: CEL for Cluster Security
+### KCD Italy: CEL for Cluster Security
 
 One of the Kubewarden maintainers,  [Flavio
 Castelli](https://github.com/flavio/),  delivered an insightful talk at [KCD
@@ -97,7 +97,7 @@ using CEL for cluster security.
 
 While the talk has been delivered in Italian, the slides are written in English and can be found [here](https://flavio.castelli.me/2024/06/25/kcd-italy---cel-kubernetes-validatingadmissionpolicy-and-kubewarden/).
 
-## Known Bugs and Future Plans
+### Known Bugs and Future Plans
 
 During the release process, we identified a bug related to the policy server
 certificate rotation. While the Root CA is set to expire in 10 years, each
@@ -108,7 +108,7 @@ releases we plan to properly implement an automated renewal process. For now,
 users can manually delete the expired cert secret (`policy-server-default`) and
 trigger the controller reconciliation by adding/removing/updating a policy or by adjusting the number of replicas of a `PolicyServer`.
 
-## Let's stay in touch!
+### Let's stay in touch!
 
 As always, we are curious about what features you would like next and how you
 are enjoying Kubewarden. Reach out on

@@ -99,3 +99,16 @@ weight = -50
 [taxonomies]
 component = "components"
 type = "types"
+
+[related]
+threshold = 30
+includeNewer = true
+toLower = true
+
+[[related.indices]]
+name = "components"
+weight = 100
+
+[[related.indices]]
+name = "types"
+weight = 40

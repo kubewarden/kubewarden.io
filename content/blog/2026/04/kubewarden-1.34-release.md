@@ -114,7 +114,7 @@ is now `github-token`, `VERSION` becomes `version`, and
 If your policy workflows use any Kubewarden-provided actions, please update
 your input names accordingly after upgrading.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

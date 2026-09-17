@@ -9,13 +9,13 @@ types:
   - release
 ---
 
-# Kubewarden v1.15.0 release
+## Kubewarden v1.15.0 release
 
 We are thrilled to announce the release of Kubewarden v1.15.0! This version
 comes packed with CEL policy updates, controller enhancements, and fixes that
 make Kubewarden even more robust and user-friendly.
 
-## Enhanced PolicyServer CRD with Tolerations 
+### Enhanced PolicyServer CRD with Tolerations
 
 One of the standout features of Kubewarden v1.15 is the extension of the
 `PolicyServer` Custom Resource Definition (CRD) to include a list of
@@ -28,7 +28,7 @@ ensures a more streamlined and consistent approach to handling node
 tolerations, making it easier to deploy policies in diverse and dynamic
 environments.
 
-## Centralized Management of Tolerations, Affinity, and Anti-Affinity 
+### Centralized Management of Tolerations, Affinity, and Anti-Affinity
 
 In line with making the deployment process more efficient, Kubewarden v1.15
 introduces a central place where tolerations, affinity, and anti-affinity rules
@@ -43,7 +43,7 @@ predictable policy enforcement setup.
 > The affinity configuration previously present in the default policy server values 
 > has been removed. Then, if you were using it, you need to migrate your configuration
 
-## Technical Debt Reduction in Kubewarden Controller 
+### Technical Debt Reduction in Kubewarden Controller
 
 For v1.15, significant efforts were made to reduce technical debt in the
 Kubewarden controller, ensuring better performance, easier maintenance, and a
@@ -65,14 +65,14 @@ These changes improve functionality and set the stage for more streamlined
 development and maintenance, reflecting a commitment to maintaining a
 high-quality codebase.
 
-## Performance improvements
+### Performance improvements
 
 During the controller refactoring, we removed unnecessary Kubernetes clients,
 including one that wasn't using a cache. With this client now eliminated, we've
 reduced the load on the API server.
 
 
-## Policy Grouping Code Implementation 
+### Policy Grouping Code Implementation
 
 The v1.15 release marks the beginning of implementing [RFC 0020: Policy
 Group](https://github.com/kubewarden/rfc/blob/main/rfc/0020-policy-group.md),
@@ -94,7 +94,7 @@ can already use this feature.
 > to validate any kind of JSON payload. See [this section](https://docs.kubewarden.io/howtos/raw-policies)
 > of our documentation.
 
-## CEL Policy Enhancements 
+### CEL Policy Enhancements
 
 The Common Expression Language (CEL) policies in Kubewarden have received two
 notable enhancements:
@@ -106,7 +106,7 @@ notable enhancements:
   variable evaluation until needed, thus improving performance and efficiency
   by reducing unnecessary computations.
 
-## Extended policies CRDs with MatchConditions 
+### Extended policies CRDs with MatchConditions
 
 Lastly, the ClusterAdmissionPolicy and AdmissionPolicy CRDs have been extended
 to include [`matchConditions`](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-matchconditions).
@@ -123,7 +123,7 @@ versions of Kubernetes:
   [feature gate](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) is enabled. Otherwise, the `matchConditions` are ignored
 - 1.30 or later: always available, no action required
 
-## Bye and Let's stay in touch!
+### Bye and Let's stay in touch!
 
 Stay tuned for more updates, and happy policy writing!
 

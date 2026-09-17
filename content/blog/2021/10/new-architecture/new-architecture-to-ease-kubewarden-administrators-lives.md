@@ -281,7 +281,7 @@ Error from server: error when creating "STDIN": admission webhook "privileged-po
 > ```
 ---
 
-# Foreword
+## Foreword
 
 The new Kubewarden stack, with the new cluster-wide PolicyServer resource,
 allows fine-tuning of policies, and at the same time makes the life of

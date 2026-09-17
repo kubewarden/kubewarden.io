@@ -213,7 +213,7 @@ This is now solved with
 [github-actions](https://github.com/kubewarden/github-actions/releases) v4.5.0,
 and Rego policies from monorepos correctly create release artifacts.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

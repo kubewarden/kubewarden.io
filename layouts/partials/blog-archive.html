@@ -1,0 +1,75 @@
+{{ $blog := site.GetPage "/blog" }}
+{{ $posts := where site.RegularPages "Section" "blog" }}
+{{ if eq .Kind "term" }}
+  {{ $posts = where .RegularPages "Section" "blog" }}
+{{ end }}
+<main class="blog-archive">
+  <section class="hero blog-hero">
+    <div class="wrap-lg hero-inner">
+      <div class="hero-copy">
+        <p class="blog-eyebrow">Blog</p>
+        <h1>The Kubewarden blog</h1>
+        <p class="hero-lead">Project news, releases, tutorials and stories from the Kubewarden community.</p>
+        {{ with $blog.OutputFormats.Get "RSS" }}
+        <a class="btn-outline" href="{{ .RelPermalink }}">
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss"></use></svg>Subscribe via RSS
+        </a>
+        {{ end }}
+      </div>
+      {{ partial "hero-platform.html" . }}
+    </div>
+  </section>
+
+  <section class="blog-results wrap-lg" aria-label="Blog posts">
+    <nav class="blog-filters" aria-label="Browse posts by component">
+      <a href="{{ $blog.RelPermalink }}"{{ if eq .Kind "section" }} aria-current="page"{{ end }}>All</a>
+      {{ range site.Taxonomies.components.Alphabetical }}
+      <a href="{{ .Page.RelPermalink }}"{{ if eq $.RelPermalink .Page.RelPermalink }} aria-current="page"{{ end }}>{{ .Page.Title }}</a>
+      {{ end }}
+    </nav>
+    <div class="blog-toolbar">
+      <nav class="blog-types" aria-label="Browse posts by type">
+        <span>Type:</span>
+        {{ $allTypes := $blog.RelPermalink }}
+        {{ if and (eq .Kind "term") (eq .Data.Plural "components") }}{{ $allTypes = .RelPermalink }}{{ end }}
+        <a href="{{ $allTypes }}"{{ if eq .RelPermalink $allTypes }} aria-current="page"{{ end }}>All types</a>
+        {{ range site.Taxonomies.types.Alphabetical }}
+        <a href="{{ .Page.RelPermalink }}"{{ if eq $.RelPermalink .Page.RelPermalink }} aria-current="page"{{ end }}>{{ replace .Page.Title "-" " " | title }}</a>
+        {{ end }}
+      </nav>
+      <span class="blog-count">{{ len $posts }} {{ if eq (len $posts) 1 }}post{{ else }}posts{{ end }}</span>
+    </div>
+
+    {{ if eq .Kind "taxonomy" }}
+      <h2 class="blog-archive-title">Browse by {{ .Data.Singular }}</h2>
+      <ul class="blog-term-list">
+        {{ range .Data.Terms.Alphabetical }}
+        <li><a href="{{ .Page.RelPermalink }}">{{ if eq $.Data.Plural "types" }}{{ replace .Page.Title "-" " " | title }}{{ else }}{{ .Page.Title }}{{ end }} <span>{{ .Count }} posts</span></a></li>
+        {{ end }}
+      </ul>
+    {{ else }}
+      {{ if eq .Kind "term" }}
+      <h2 class="blog-archive-title">{{ if eq .Data.Plural "types" }}{{ replace .Title "-" " " | title }}{{ else }}{{ .Title }}{{ end }} posts</h2>
+      {{ end }}
+      {{ $paginator := .Paginate $posts.ByDate.Reverse 10 }}
+      <div class="blog-posts">
+        {{ range $index, $post := $paginator.Pages }}
+          {{ partial "blog-post-card.html" (dict "post" $post "featured" (and (eq $paginator.PageNumber 1) (eq $index 0)) "filtered" (eq $.Kind "term")) }}
+        {{ end }}
+      </div>
+      {{ if gt $paginator.TotalPages 1 }}
+      <nav class="blog-pagination" aria-label="Blog pagination">
+        {{ if $paginator.HasPrev }}<a href="{{ $paginator.Prev.URL }}" rel="prev">Previous</a>{{ end }}
+        {{ range $paginator.Pagers }}
+          {{ if or (or (eq .PageNumber 1) (eq .PageNumber $paginator.TotalPages)) (and (ge .PageNumber (sub $paginator.PageNumber 1)) (le .PageNumber (add $paginator.PageNumber 1))) }}
+          <a href="{{ .URL }}" aria-label="Page {{ .PageNumber }}"{{ if eq .PageNumber $paginator.PageNumber }} aria-current="page"{{ end }}>{{ .PageNumber }}</a>
+          {{ else if or (eq .PageNumber (sub $paginator.PageNumber 2)) (eq .PageNumber (add $paginator.PageNumber 2)) }}
+          <span aria-hidden="true">...</span>
+          {{ end }}
+        {{ end }}
+        {{ if $paginator.HasNext }}<a href="{{ $paginator.Next.URL }}" rel="next">Next</a>{{ end }}
+      </nav>
+      {{ end }}
+    {{ end }}
+  </section>
+</main>

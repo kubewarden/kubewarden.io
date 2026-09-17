@@ -124,7 +124,7 @@ for the new repository.
 
 As usual, Go and Rust dependencies have been bumped to their latest versions.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

@@ -14,7 +14,9 @@
 
 	{{- $cache :=  now.Unix -}}
 	{{- $opt := (dict "outputStyle" "compressed" "enableSourceMap" "true") -}}
-	{{- $style := resources.Get "sass/blog.scss" | toCSS $opt | minify -}}
+	{{- $stylesheet := "sass/main.scss" -}}
+	{{- if .IsPage }}{{ $stylesheet = "sass/blog.scss" }}{{ end -}}
+	{{- $style := resources.Get $stylesheet | toCSS $opt | minify -}}
 	<link rel="stylesheet" type="text/css" href="{{ $style.Permalink }}?{{ $cache }}"/>
 
 	{{ with .OutputFormats.Get "RSS" -}}

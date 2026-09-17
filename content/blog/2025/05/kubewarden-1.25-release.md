@@ -105,7 +105,7 @@ to delete a policy. A big thank you to our community member
 [@manukirat](https://github.com/manukirat)! Your contribution significantly
 improves the usability of our tooling.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

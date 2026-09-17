@@ -183,7 +183,7 @@ apart from the usual dependency bumps, we have performed a partial migration to 
 - Our container images also got the bump, but the changes will be released on
   the next version.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

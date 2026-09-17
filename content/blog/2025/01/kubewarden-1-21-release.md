@@ -164,7 +164,7 @@ We’re happy to inform you that we have left X and you can now follow the Kubew
 - [Bluesky](https://bsky.app/profile/kubewarden.io)
 - [Mastodon](https://bsky.app/profile/kubewarden.io)
 
-### Getting in touch
+## Getting in touch
 
 As always, we welcome your feedback and contributions. Feel free to reach out
 to us on [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden)

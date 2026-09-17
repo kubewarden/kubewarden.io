@@ -311,7 +311,7 @@ The Kubewarden team expects that this will help users migrate from PSPs as soon 
 Let us know if you run into issues. We are happy to help!
 
 
-### References
+## References
 
 [Kubewarden policies cover all the Kubernetes Pod Security Policies](https://www.kubewarden.io/blog/2022/01/mutating-policy-behave-as-validating/)
 

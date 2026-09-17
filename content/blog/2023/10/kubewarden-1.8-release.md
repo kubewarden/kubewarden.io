@@ -67,7 +67,7 @@ telemetry:
 +    # endpoint: "all-in-one-collector.jaeger.svc.cluster.local:4317"
 ```
 
-#### Example
+### Example
 
 Up until 1.7.x inclusive we had:
 

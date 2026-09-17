@@ -9,7 +9,7 @@ components:
 types:
   - tutorial
 ---
-# Constraining Container Resources with Kubewarden
+## Constraining Container Resources with Kubewarden
 
 Kubewarden is a policy framework for Kubernetes that helps you set up tighter
 guardrails for your Kubernetes cluster. Policies allow you to restrict
@@ -24,7 +24,7 @@ boundaries and defaults to container resource limits for pods. You need is a
 running Kubernetes cluster (for example, k3s) and Helm to get started!
 
 
-## Install Kubewarden Admission Controller
+### Install Kubewarden Admission Controller
 
 The easiest way to install Kubewarden’s Admission controller is using Helm:
 
@@ -48,7 +48,7 @@ admission-controller    1/1     1            1           18h
 policy-server-default   1/1     1            1           18h
 ```
 
-## Container-Resources Policy
+### Container-Resources Policy
 
 When deploying applications on Kubernetes, you can define limits and set default
 values for requested resources, like CPU and memory. As an organization
@@ -62,7 +62,7 @@ Kubewarden’s
 policy allows you to set defaults and for requested CPU and memory and
 constraint the limits to both resources.
 
-## Example constraint policy
+### Example constraint policy
 
 You start by creating a namespace for our experiments, so it's easy to clean it
 up later:
@@ -183,7 +183,7 @@ Error from server: error when creating "STDIN": admission webhook "kw.cap.contai
 With this policy active Kubewarden rejects the pod, as its limit is below the
 minimum of 2G.
 
-### Additional Resource Constraint Policy Features
+#### Additional Resource Constraint Policy Features
 
 The `container-resources` policy does not require you to provide all values for
 all resource limits and requests, you can omit them and the policy will treat
@@ -339,7 +339,7 @@ EOF
 Error from server: error when creating "STDIN": admission webhook "kw.cap.container-resources-policy.kubewarden.admission" denied the request: memory limit '12Gi' exceeds the max allowed value '4G'
 ```
 
-### Debugging Policy Problems
+#### Debugging Policy Problems
 
 The Admission Controller validates your policy settings after it has been
 applied. So you can apply a policy that is invalid (for example, because the
@@ -368,7 +368,7 @@ Here the error is in the last line, you set a request that is higher than the
 limit. You can fix this by either patching the policy, or by deleting and
 re-creating it.
 
-## Next Steps
+### Next Steps
 
 You have learned how to apply constraints to resource limits and requests for
 pods. But `deployments` and `daemonsets` are still unconstrained. A potential

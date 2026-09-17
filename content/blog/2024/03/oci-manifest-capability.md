@@ -26,7 +26,7 @@ platform supported by the given container images. As well as inspecting annotati
 user, environment variables and other information available inside the image
 manifests.
 
-### Getting Started
+## Getting Started
 
 To showcase this capability, let's image a policy which verifies container
 images annotations. This policy can have a function to check if the container

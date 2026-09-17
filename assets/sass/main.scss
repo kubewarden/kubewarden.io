@@ -1,4 +1,5 @@
 @import "../../themes/projects-theme/assets/sass/main";
+@import "blog-archive";
 
 // ---------------------------------------------------------------------------
 // Webfonts
@@ -78,6 +79,10 @@ section.wrap p {
 }
 
 // Nav
+
+.main-menu .menu-item > a.btn.no-bg.is-active {
+  color: var(--primary-color) !important;
+}
 
 .menu-toggle {
   color: #4a4a4a;

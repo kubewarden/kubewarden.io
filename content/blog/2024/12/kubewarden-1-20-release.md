@@ -12,7 +12,7 @@ types:
 We're excited to announce the release of Kubewarden v1.20! This release brings
 a nice improvement for deploying with OpenTelemetry and some bug fixes.
 
-# Supporting more OpenTelemetry scenarios
+## Supporting more OpenTelemetry scenarios
 
 > ⚠️ **IMPORTANT**⚠️
 > The `kubewarden-controller` Helm chart has changed the `values.yml` schema
@@ -85,7 +85,7 @@ and added a new [example of the custom mode](https://docs.kubewarden.io/howtos/t
 Would you like to see more capabilities to interact with OpenTelemetry? Don't hesitate
 to get in touch!
 
-# Bug Fixes and Dependency Updates
+## Bug Fixes and Dependency Updates
 
 As always, we've addressed bugs and updated dependencies to ensure a smooth and
 reliable experience.
@@ -97,7 +97,7 @@ armored). Before, `kwctl` could stop with an error when trying to load the DER
 certificate. Now, `kwctl` has strengthened PEM/DER recognition and `kwctl`
 informs better if one is using a DER certificate.
 
-# Getting in touch
+## Getting in touch
 
 As always, we welcome your feedback and contributions. Feel free to reach out
 to us on [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden)

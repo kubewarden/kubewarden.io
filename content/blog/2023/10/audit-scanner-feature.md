@@ -27,7 +27,7 @@ Now with the new Audit Scanner, Kubewarden provides continuous verification on
 the compliance of cluster resources. The new Audit Scanner module is called via a
 Kubernetes `Cronjob`, which spawns the jobs that audit the cluster resources.
 
-#### Ok, but how does it work?
+### Ok, but how does it work?
 
 The Audit Scanner looks at all the deployed policies, and for each, at which
 cluster resources are involved. It builds tuples of `(policy,
@@ -67,7 +67,7 @@ modular architecture of Kubewarden. It allows operators to scale it as needed,
 configure its periodicity, monitoring and tracing, and making sure it doesn't
 influence the PolicyServers in a bad way.
 
-#### Fine, but what about a UI?
+### Fine, but what about a UI?
 
 Reading `(Cluster)PolicyReports` sounds cumbersome?
 
