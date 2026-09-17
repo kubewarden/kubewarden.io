@@ -1,5 +1,5 @@
 baseURL = ""
-languageCode = "en-us"
+locale = "en-us"
 timeZone = "UTC"
 title = "Kubewarden"
 pluralizeListTitles = false
@@ -8,6 +8,11 @@ pygmentsCodeFences = true
 pygmentsCodeFencesGuessSyntax = true
 enableGitInfo = true
 googleAnalytics = 'G-PSW07XK7TM'
+
+# Allow HTML content files. The site's four component pages are HTML,
+# not Markdown, so Hugo's newer default (deny text/html) blocks them.
+[security]
+allowContent = ["! ^text/org$"]
 
 [blackfriday]
 fractions = false
