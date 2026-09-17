@@ -1,10 +1,43 @@
 <footer>
-  <p>
-    &copy; {{ now.Year }} Kubewarden Project Authors. All rights reserved.
-    The Linux Foundation has registered trademarks and uses trademarks.
-    For a list of trademarks of The Linux Foundation, please see our
-    <a href="https://www.linuxfoundation.org/trademark-usage">Trademark Usage page</a>.
-  </p>
+  <div class="wrap-lg footer-top">
+    <div class="footer-brand">
+      <img src="/images/icon-kubewarden.svg" alt="" class="footer-mark">
+      <div>
+        <strong>{{ .Site.Title }}</strong>
+        <span>Secure what runs in Kubernetes.</span>
+      </div>
+    </div>
+    {{ with .Site.Menus.main }}
+    <nav class="footer-nav" aria-label="Footer">
+      {{ range . }}
+      {{ if not .Parent }}
+      <a href="{{ .URL }}"{{ if strings.HasPrefix .URL "http" }} target="_blank" rel="noopener"{{ end }}>{{ .Name }}</a>
+      {{ end }}
+      {{ end }}
+    </nav>
+    {{ end }}
+    <div class="footer-social">
+      <a href="{{ .Site.Params.github }}" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      <a href="https://www.linkedin.com/company/kubewarden/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-linkedin"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      <a href="https://hachyderm.io/@kubewarden" rel="me noopener" target="_blank" aria-label="Mastodon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mastodon"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+      <a href="https://x.com/kubewarden" target="_blank" rel="noopener" aria-label="X"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-x"></use></svg><span class="sr-only"> (opens in new tab)</span></a>
+    </div>
+  </div>
+
+  <div class="wrap-lg footer-bottom">
+    <p>
+      &copy; {{ now.Year }} Kubewarden Project Authors. All rights reserved.
+      The Linux Foundation has registered trademarks and uses trademarks.
+      For a list of trademarks of The Linux Foundation, please see our
+      <a href="https://www.linuxfoundation.org/trademark-usage">Trademark Usage page</a>.
+    </p>
+    <nav class="footer-legal" aria-label="Legal">
+      <a href="https://www.linuxfoundation.org/legal/privacy-policy" target="_blank" rel="noopener">Privacy</a>
+      <a href="https://www.linuxfoundation.org/legal/terms" target="_blank" rel="noopener">Terms</a>
+      <a href="https://github.com/kubewarden/community/security/policy" target="_blank" rel="noopener">Security</a>
+      <a href="mailto:cncf-kubewarden-maintainers@lists.cncf.io">Contact</a>
+    </nav>
+  </div>
 </footer>
 
 {{ template "_internal/google_analytics.html" . }}
