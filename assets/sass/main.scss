@@ -2128,19 +2128,22 @@ footer {
 }
 
 .stack-flow {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(4rem, 1fr) 1.8rem minmax(4rem, 1fr) 1.8rem minmax(4rem, 1fr);
   gap: .6rem;
-  flex-wrap: wrap;
   margin-bottom: 1.6rem;
 }
 
+.work-grid.network-stack { --card-rows: 3; }
+
 .stack-node {
+  box-sizing: border-box;
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: .5rem;
-  flex: 1 1 0;
   background: var(--surface-muted);
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -2151,6 +2154,8 @@ footer {
   line-height: 1.5;
   color: var(--text);
   text-align: center;
+
+  > span { min-width: 0; overflow-wrap: anywhere; }
 
   .icon {
     width: 1.6rem;
@@ -2179,8 +2184,21 @@ footer {
   }
 }
 
-.stack-arrow {
-  flex: 0 0 1.4rem;
+.stack-arrow.hn-edge-line {
+  justify-self: center;
+  width: 2px;
+  height: 1.4rem;
+
+  &::after {
+    top: 100%;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    border: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid currentColor;
+  }
 }
 
 .stack-desc {
