@@ -16,7 +16,7 @@
 
 <section class="section-components" id="components">
   <div class="wrap-lg">
-    <h2>Explore the Kubewarden components</h2>
+    {{ partial "section-heading.html" (dict "id" "components" "title" "Explore the Kubewarden components" "existingTarget" true) }}
     <p class="section-lead">A modular security platform. Use the components you need, together or independently.</p>
     {{ partial "component-grid.html" (dict "current" "") }}
   </div>
@@ -25,7 +25,7 @@
 <section class="section-news">
   <div class="wrap-lg">
     <div class="section-news-header">
-      <h2>Latest news</h2>
+      {{ partial "section-heading.html" (dict "id" "latest-news" "title" "Latest news") }}
       <a class="arrow-link" href="/blog/">View all posts <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
     </div>
     <div class="news-grid">
@@ -52,7 +52,7 @@
 
 <section class="section-touch" id="get-in-touch">
   <div class="wrap-lg">
-    <h2>Get in Touch</h2>
+    {{ partial "section-heading.html" (dict "id" "get-in-touch" "title" "Get in Touch" "existingTarget" true) }}
     <p class="section-lead">We hold monthly community meetings that are open to everybody.</p>
 
     <div class="social-row">

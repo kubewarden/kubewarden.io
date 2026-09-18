@@ -38,13 +38,21 @@
 {{ end }}
 
 <div class="component-body">
+  {{/* HTML content keeps real headings; add shared permalink controls here. */}}
+  {{ $content := .Content }}
+  {{ range findRE `<h2 id="[^"]+">[^<]+</h2>` $content }}
+    {{ $id := replaceRE `<h2 id="([^"]+)">[^<]+</h2>` "$1" . }}
+    {{ $title := replaceRE `<h2 id="[^"]+">([^<]+)</h2>` "$1" . | htmlUnescape }}
+    {{ $heading := partial "section-heading.html" (dict "id" $id "title" $title) }}
+    {{ $content = replace $content . $heading }}
+  {{ end }}
   {{/* Network diagrams can scroll when readers enlarge text. */}}
-  {{ replace .Content `class="hn-grid"` `class="hn-grid" tabindex="0"` | safeHTML }}
+  {{ replace $content `class="hn-grid"` `class="hn-grid" tabindex="0"` | safeHTML }}
 </div>
 
 <section class="component-other">
   <div class="wrap-lg">
-    <h2>Explore other Kubewarden components</h2>
+    {{ partial "section-heading.html" (dict "id" "other-components" "title" "Explore other Kubewarden components") }}
     <p class="section-lead">Extend your security posture across the entire workload lifecycle.</p>
     {{ partial "component-grid.html" (dict "current" .RelPermalink) }}
   </div>

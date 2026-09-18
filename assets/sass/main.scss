@@ -67,6 +67,33 @@ section.wrap p {
 
 // Nav
 
+.section-heading { scroll-margin-top: 2rem; }
+.section-permalink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-left: .6rem;
+  vertical-align: middle;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 4px;
+  .icon { width: 20px; height: 20px; margin: 0; }
+  &:hover, &:focus-visible { color: var(--link-color); }
+  &:focus-visible { outline: 2px solid var(--focus-color); outline-offset: 2px; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .section-permalink { opacity: 0; }
+  .section-heading:hover .section-permalink,
+  .section-heading:focus-within .section-permalink { opacity: 1; }
+}
+
+@media (any-pointer: coarse) {
+  .section-heading .section-permalink { opacity: 1; }
+}
+
 :root {
   --header-height: 6.4rem;
   --sticky-header-offset: 0px;
