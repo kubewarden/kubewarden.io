@@ -2459,6 +2459,7 @@ footer {
 }
 
 .pipeline-outcome {
+  --outcome-color: var(--accent-color);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -2489,6 +2490,7 @@ footer {
   }
 
   &--allow {
+    --outcome-color: var(--success-text);
     background: var(--success-bg);
   }
 
@@ -2524,7 +2526,7 @@ footer {
   align-items: center;
   gap: 1.5rem;
   flex-wrap: wrap;
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 @media (max-width: 900px) {
@@ -2532,6 +2534,8 @@ footer {
     flex-direction: column;
     align-items: stretch;
   }
+
+  .pipeline > .pipeline-step { flex: none; }
 
   .pipeline-arrow {
     transform: rotate(90deg);
@@ -2542,13 +2546,98 @@ footer {
   }
 
   .pipeline-outcomes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    position: relative;
     width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
+    padding-top: 3rem;
+    gap: .8rem;
+
+    // The trunk starts at the Admission Controller and joins both branches.
+    &::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -1rem;
+      height: 2rem;
+      border-left: 2px solid var(--accent-color);
+    }
   }
 
   .pipeline-outcome {
-    flex: 1 1 0;
+    position: relative;
+    min-width: 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -2rem;
+      height: 2rem;
+      width: calc(50% + .4rem);
+      border-top: 2px solid var(--outcome-color);
+      box-sizing: border-box;
+    }
+    &--allow::before { left: 50%; border-left: 2px solid var(--outcome-color); }
+    &--block::before { right: 50%; border-right: 2px solid var(--outcome-color); }
+    &::after {
+      content: '';
+      position: absolute;
+      top: -.6rem;
+      left: calc(50% - .4rem);
+      border-left: .4rem solid transparent;
+      border-right: .4rem solid transparent;
+      border-top: .6rem solid var(--outcome-color);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .pipeline-outcomes {
+    box-sizing: border-box;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0 0 0 2rem;
+    margin-top: 2rem;
+    border-left: 2px solid var(--accent-color);
+
+    &::before {
+      top: -3rem;
+      left: -2px;
+      width: 50%;
+      height: 1rem;
+      border-left: 0;
+      border-top: 0;
+      border-bottom: 2px solid var(--accent-color);
+      border-right: 2px solid var(--accent-color);
+    }
+    // Join the elbow to the vertical spine across the gap above the cards.
+    &::after {
+      content: '';
+      position: absolute;
+      left: -2px;
+      top: -2rem;
+      height: 2rem;
+      border-left: 2px solid var(--accent-color);
+    }
+  }
+
+  .pipeline-outcome {
+    &::before {
+      top: 50%;
+      left: calc(-2rem - 2px);
+      right: auto;
+      width: 2rem;
+      height: 0;
+      border: 0;
+      border-top: 2px solid var(--outcome-color);
+    }
+    &::after {
+      top: calc(50% - .3rem);
+      left: -.6rem;
+      border: 0;
+      border-top: .4rem solid transparent;
+      border-bottom: .4rem solid transparent;
+      border-left: .6rem solid var(--outcome-color);
+    }
   }
 }
 
