@@ -4,19 +4,9 @@
       <img src="/images/icon-kubewarden.svg" alt="" class="footer-mark">
       <div>
         <strong>{{ .Site.Title }}</strong>
-        <span>Secure what runs in Kubernetes.</span>
+        <span>Kubernetes security, from admission to runtime.</span>
       </div>
     </div>
-    {{ with .Site.Menus.main }}
-    <nav class="footer-nav" aria-label="Footer">
-      {{ range . }}
-      {{ if not .Parent }}
-      {{ $external := strings.HasPrefix .URL "http" }}
-      <a href="{{ .URL }}"{{ if $external }} target="_blank" rel="{{ with .Params.rel }}{{ . }} {{ end }}noopener"{{ end }}>{{ .Name }}{{ if $external }}<span class="sr-only"> (opens in new tab)</span>{{ end }}</a>
-      {{ end }}
-      {{ end }}
-    </nav>
-    {{ end }}
     <div class="footer-social">
       <a href="{{ .Site.Params.github }}" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github"></use></svg><span class="sr-only">GitHub (opens in new tab)</span></a>
       <a href="https://www.linkedin.com/company/kubewarden/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-linkedin"></use></svg><span class="sr-only">LinkedIn (opens in new tab)</span></a>

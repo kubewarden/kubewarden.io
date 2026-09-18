@@ -319,26 +319,8 @@ footer {
   span {
     display: block;
     font-size: 1.3rem;
+    line-height: 1.5;
     color: #626977;
-  }
-}
-
-.footer-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.6rem 2rem;
-
-  a {
-    font-size: 1.3rem;
-    font-weight: 700;
-    letter-spacing: .02em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--dark);
-
-    &:hover {
-      color: var(--primary-color);
-    }
   }
 }
 
