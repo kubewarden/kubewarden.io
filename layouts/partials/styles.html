@@ -1,0 +1,7 @@
+{{- $options := dict "outputStyle" "compressed" "enableSourceMap" true -}}
+{{- $main := resources.Get "sass/main.scss" | toCSS $options | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}" crossorigin="anonymous">
+{{- if and .IsPage (eq .Section "blog") }}
+  {{- $blog := resources.Get "sass/blog.scss" | toCSS $options | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $blog.RelPermalink }}" integrity="{{ $blog.Data.Integrity }}" crossorigin="anonymous">
+{{- end }}

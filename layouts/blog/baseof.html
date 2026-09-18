@@ -12,12 +12,7 @@
 	{{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
 	{{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
 
-	{{- $cache :=  now.Unix -}}
-	{{- $opt := (dict "outputStyle" "compressed" "enableSourceMap" "true") -}}
-	{{- $stylesheet := "sass/main.scss" -}}
-	{{- if .IsPage }}{{ $stylesheet = "sass/blog.scss" }}{{ end -}}
-	{{- $style := resources.Get $stylesheet | toCSS $opt | minify -}}
-	<link rel="stylesheet" type="text/css" href="{{ $style.Permalink }}?{{ $cache }}"/>
+	{{ partial "styles.html" . }}
 
 	{{ with .OutputFormats.Get "RSS" -}}
 		{{ printf `<link rel="%s" type="%s" href="%s" title="%s">` .Rel .MediaType.Type .RelPermalink $.Site.Title | safeHTML }}
