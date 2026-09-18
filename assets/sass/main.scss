@@ -73,6 +73,22 @@ section.wrap p {
 
 // Nav
 
+:root {
+  --header-height: 6.4rem;
+  --sticky-header-offset: 0px;
+}
+
+.site-header {
+  background: var(--light);
+  border-bottom: 1px solid #e5e7ec;
+}
+
+@media (min-width: 768px) {
+  :root { --sticky-header-offset: var(--header-height); }
+  html { scroll-padding-top: calc(var(--sticky-header-offset) + 1rem); }
+  .site-header { position: sticky; top: 0; z-index: 1000; }
+}
+
 .skip-link {
   position: fixed;
   top: 1rem;

@@ -1,5 +1,5 @@
 <a class="skip-link" href="#main-content">Skip to main content</a>
-<header>
+<header class="site-header">
   <div class="sub-header">
     <a href="{{ .Site.BaseURL }}" class="logo-link">
       <img src="/images/logo-{{lower .Site.Title }}.svg" alt="{{ .Site.Title }}">
@@ -44,3 +44,5 @@
 </header>
 {{ $menuScript := resources.Get "js/menu.js" | minify }}
 <script src="{{ $menuScript.RelPermalink }}" defer></script>
+{{ $headerScript := resources.Get "js/header.js" | minify }}
+<script src="{{ $headerScript.RelPermalink }}" defer></script>

@@ -62,14 +62,15 @@
 
   .article-layout--no-toc { grid-template-columns: minmax(0, 85rem); justify-content: center; }
   .article-body { grid-column: 1; grid-row: 1; min-width: 0; }
-  .article-sidebar { grid-column: 2; grid-row: 1; position: sticky; top: 2rem; min-width: 0; }
+  .article-sidebar { grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--sticky-header-offset) + 2rem); min-width: 0; }
 
   .article-toc {
     padding: 1.8rem;
     border: 1px solid #e5e7ec;
     border-radius: 1rem;
     background: white;
-    max-height: calc(100vh - 4rem);
+    box-sizing: border-box;
+    max-height: calc(100vh - var(--sticky-header-offset) - 4rem);
     overflow-y: auto;
     summary {
       cursor: pointer;
