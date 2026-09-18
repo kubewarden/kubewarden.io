@@ -31,6 +31,13 @@ params = ["categories", "tags"]
 [params]
 github = "https://github.com/kubewarden"
 
+[params.social]
+bluesky = "https://bsky.app/profile/kubewarden.io"
+linkedin = "https://www.linkedin.com/company/kubewarden/"
+mastodon = "https://hachyderm.io/@kubewarden"
+slack = "https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden"
+x = "https://x.com/kubewarden"
+
 [outputs]
 home = ["HTML", "RSS"]
 

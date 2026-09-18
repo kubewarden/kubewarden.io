@@ -2855,6 +2855,13 @@ footer {
   }
 }
 
+.step-card--learn {
+  .step-footer {
+    background: var(--info-bg);
+    color: var(--info-text);
+  }
+}
+
 .step-card--monitor {
   .step-panel-head,
   .step-footer {
