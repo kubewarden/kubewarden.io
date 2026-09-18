@@ -182,7 +182,7 @@ date: 2026-09-16T00:00:00+00:00
       <div class="policy-compare-col work-card">
         <div class="policy-compare-head"><h3>Observed traffic (example)</h3></div>
         <div class="traffic-policy-example">
-          <div class="hn-grid" role="img" aria-label="Frontend connects to API on TCP 443. API connects to Database on TCP 5432 and Redis on TCP 6379.">
+          <div class="hn-grid" role="img" aria-label="All workloads are in the store namespace. Frontend connects to API on TCP 443. API connects to Database on TCP 5432 and Redis on TCP 6379.">
             <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>frontend</strong><small>pod</small></div>
             <div class="hn-edge"><span class="hn-edge-line"></span></div>
             <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>api</strong><small>pod</small></div>
@@ -193,7 +193,7 @@ date: 2026-09-16T00:00:00+00:00
               <div class="hn-node"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg><strong>redis</strong><small>pod</small></div>
             </div>
           </div>
-          <p>After review, API can reach Database (TCP 5432) and Redis (TCP 6379). Frontend &rarr; API (TCP 443) belongs to a separate proposal.</p>
+          <p>All workloads are in the <code>store</code> namespace. After review, API can reach Database (TCP 5432) and Redis (TCP 6379). Frontend &rarr; API (TCP 443) belongs to a separate proposal.</p>
         </div>
       </div>
 
@@ -207,24 +207,28 @@ date: 2026-09-16T00:00:00+00:00
 <span class="tok-key">kind:</span> WorkloadNetworkPolicyProposal
 <span class="tok-key">metadata:</span>
   <span class="tok-key">name:</span> <span class="tok-str">deployment-api-egress</span>
-  <span class="tok-key">namespace:</span> <span class="tok-str">default</span>
+  <span class="tok-key">namespace:</span> <span class="tok-str">store</span>
 <span class="tok-key">spec:</span>
   <span class="tok-key">backend:</span> <span class="tok-str">kubernetes</span>
   <span class="tok-key">kubernetes:</span>
+    <span class="tok-key">egress:</span>
+    - <span class="tok-key">ports:</span>
+      - {<span class="tok-key">port:</span> <span class="tok-str">5432</span>, <span class="tok-key">protocol:</span> <span class="tok-str">TCP</span>}
+      <span class="tok-key">to:</span>
+      - <span class="tok-key">namespaceSelector:</span>
+          <span class="tok-key">matchLabels:</span> {<span class="tok-key">kubernetes.io/metadata.name:</span> <span class="tok-str">store</span>}
+        <span class="tok-key">podSelector:</span>
+          <span class="tok-key">matchLabels:</span> {<span class="tok-key">app:</span> <span class="tok-str">database</span>}
+    - <span class="tok-key">ports:</span>
+      - {<span class="tok-key">port:</span> <span class="tok-str">6379</span>, <span class="tok-key">protocol:</span> <span class="tok-str">TCP</span>}
+      <span class="tok-key">to:</span>
+      - <span class="tok-key">namespaceSelector:</span>
+          <span class="tok-key">matchLabels:</span> {<span class="tok-key">kubernetes.io/metadata.name:</span> <span class="tok-str">store</span>}
+        <span class="tok-key">podSelector:</span>
+          <span class="tok-key">matchLabels:</span> {<span class="tok-key">app:</span> <span class="tok-str">redis</span>}
     <span class="tok-key">podSelector:</span>
       <span class="tok-key">matchLabels:</span> {<span class="tok-key">app:</span> <span class="tok-str">api</span>}
-    <span class="tok-key">policyTypes:</span> [<span class="tok-str">Egress</span>]
-    <span class="tok-key">egress:</span>
-      - <span class="tok-key">to:</span>
-          - <span class="tok-key">podSelector:</span>
-              <span class="tok-key">matchLabels:</span> {<span class="tok-key">app:</span> <span class="tok-str">database</span>}
-        <span class="tok-key">ports:</span>
-          - {<span class="tok-key">port:</span> <span class="tok-str">5432</span>, <span class="tok-key">protocol:</span> <span class="tok-str">TCP</span>}
-      - <span class="tok-key">to:</span>
-          - <span class="tok-key">podSelector:</span>
-              <span class="tok-key">matchLabels:</span> {<span class="tok-key">app:</span> <span class="tok-str">redis</span>}
-        <span class="tok-key">ports:</span>
-          - {<span class="tok-key">port:</span> <span class="tok-str">6379</span>, <span class="tok-key">protocol:</span> <span class="tok-str">TCP</span>}</code></pre>
+    <span class="tok-key">policyTypes:</span> [<span class="tok-str">Egress</span>]</code></pre>
         </div>
       </div>
     </div>
