@@ -901,17 +901,7 @@ footer {
   border-radius: 1rem;
   overflow: hidden;
 
-  iframe {
-    // Teamup controls its own content; preserve its light palette.
-    color-scheme: light;
-    background: #fff;
-    display: block;
-    width: 100%;
-    height: 400px;
-    border: 0;
-  }
-
-  a:focus-visible, iframe:focus-visible {
+  a:focus-visible {
     outline: 2px solid var(--focus-color);
     outline-offset: 3px;
   }
@@ -950,7 +940,47 @@ footer {
 
 @media (max-width: 600px) {
   .events-header { padding: 1.6rem; }
-  .events-panel iframe { height: 480px; }
+}
+
+.events-status {
+  margin: 0;
+  padding: 2.4rem;
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  &:empty { display: none; }
+}
+
+.events-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  margin: 0;
+  padding: 2.4rem;
+  list-style: none;
+  &[hidden] { display: none; }
+}
+
+.event-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+  margin: 0;
+  padding: 1.8rem;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: .8rem;
+  .event-date { color: var(--accent-color); font-size: 1.4rem; font-weight: 600; }
+  h4.event-title { margin: 0; font-size: 1.8rem; line-height: 1.4; color: var(--text); }
+  .event-time { margin: 0; font-size: 1.4rem; line-height: 1.5; color: var(--text-muted); }
+  .arrow-link { margin-top: auto; padding-top: .6rem; font-size: 1.4rem; }
+}
+
+@media (max-width: 900px) {
+  .events-list { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  .events-list, .events-status { padding: 1.6rem; }
 }
 
 // Component single/list pages

@@ -67,18 +67,19 @@
       </a>
     </div>
 
-    <div class="events-panel" role="region" aria-labelledby="events-title">
+    <div id="community-events" class="events-panel" role="region" aria-labelledby="events-title" data-feed="https://webcal.prod.itx.linuxfoundation.org/lfx/a092M00001LkRyUQAV" data-calendar="https://zoom-lfx.platform.linuxfoundation.org/meetings/kubewarden?view=week">
       <div class="events-header">
         <div>
           <h3 id="events-title"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar"></use></svg>Upcoming events</h3>
-          <p id="events-timezone">Times shown in the calendar's default time zone.</p>
+          <p id="events-timezone">Upcoming meetings from the CNCF community calendar.</p>
         </div>
         <div class="events-links">
-          <a href="https://ics.teamup.com/feed/ks2bj74dvw132mhjtj/11992689.ics">Subscribe to calendar</a>
-          <a href="https://teamup.com/ks2bj74dvw132mhjtj" target="_blank" rel="noopener">Open full calendar<span class="sr-only"> (opens in new tab)</span></a>
+          <a href="https://webcal.prod.itx.linuxfoundation.org/lfx/a092M00001LkRyUQAV">Subscribe to calendar</a>
+          <a href="https://zoom-lfx.platform.linuxfoundation.org/meetings/kubewarden?view=week" target="_blank" rel="noopener">Open full calendar<span class="sr-only"> (opens in new tab)</span></a>
         </div>
       </div>
-      <iframe src="https://teamup.com/ks2bj74dvw132mhjtj?view=ti&tz=Calendar%20default&showHeader=0&showProfileAndInfo=1&disableSidepanel=1&showViewSelector=0&showMenu=0&showViewHeader=0&showAgendaDetails=0&listGroupBy=none&showDateControls=0&showDateRange=0&tilesGroupBy=none" title="Kubewarden upcoming events calendar" aria-describedby="events-timezone" loading="lazy"></iframe>
+      <p class="events-status" role="status">Open the full calendar or subscribe to see upcoming meetings.</p>
+      <ul class="events-list" aria-describedby="events-timezone" hidden></ul>
     </div>
   </div>
 </section>
@@ -86,4 +87,6 @@
 {{ partial "cncf-band.html" . }}
 
 </main>
+{{ $calendar := resources.Get "js/calendar.js" | js.Build (dict "minify" true "target" "es2020" "legalComments" "inline") | fingerprint }}
+<script type="module" src="{{ $calendar.RelPermalink }}" integrity="{{ $calendar.Data.Integrity }}" crossorigin="anonymous"></script>
 {{ end }}

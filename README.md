@@ -54,7 +54,6 @@ The build generates the dark wordmark from the original SVG without changing the
 Partner logos use their official white or white-text variants in dark mode.
 The Linux mascot keeps its original colors in both themes.
 Asset sources are listed in [the image source notes](static/images/SOURCES.md).
-The external Teamup calendar retains a light background.
 Code blocks use a dark palette in both themes.
 
 The theme script runs before the styles load to prevent a flash of the wrong theme.
@@ -75,3 +74,22 @@ hugo --environment production --minify
 
 Review both themes on the home page, all component pages, blog archives, and articles.
 Include an article with tables and code, keyboard focus, mobile navigation, and enlarged text.
+
+## Community calendar
+
+The homepage fetches the public CNCF/LFX ICS feed directly in the browser.
+The feed permits cross-origin requests and requires no token or proxy.
+`assets/js/calendar-events.mjs` expands recurring meetings with the pinned ICAL.js library
+and the time-zone definitions in the feed. It excludes cancelled and completed meetings.
+The cards show up to three meetings within the next 12 months, in the reader's local time zone.
+All-day dates keep their calendar dates. The full calendar and subscription links work without JavaScript.
+If the feed fails to load or parse, the page directs readers to those links.
+
+The library, source URL, checksum, and license are documented in `assets/js/vendor/SOURCES.md`.
+Only the homepage loads the bundled calendar code. No CDN is required at runtime.
+
+Run all browser-feature unit tests with:
+
+```console
+node --test tests/*.test.mjs
+```
