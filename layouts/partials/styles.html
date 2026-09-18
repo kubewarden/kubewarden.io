@@ -1,4 +1,6 @@
-{{- $options := dict "outputStyle" "compressed" "enableSourceMap" true -}}
+{{- $theme := resources.Get "js/theme.js" | minify | fingerprint -}}
+<script src="{{ $theme.RelPermalink }}" integrity="{{ $theme.Data.Integrity }}" crossorigin="anonymous"></script>
+{{- $options := dict "outputStyle" "compressed" "enableSourceMap" hugo.IsDevelopment -}}
 {{- $main := resources.Get "sass/main.scss" | toCSS $options | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}" crossorigin="anonymous">
 {{- if and .IsPage (eq .Section "blog") }}

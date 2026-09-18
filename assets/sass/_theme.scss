@@ -1,0 +1,120 @@
+// Theme palettes contain values only. Component styles consume these roles.
+:root {
+  color-scheme: light;
+  --brand-color: #bc2a46;
+  --accent-color: var(--brand-color);
+  --link-color: var(--accent-color);
+  --focus-color: var(--accent-color);
+  --button-bg: var(--brand-color);
+  --button-text: #fff;
+  --button-hover-bg: #982239;
+  --button-hover-text: #fff;
+  --selected-bg: var(--accent-color);
+  --selected-text: #fff;
+  --on-accent: #fff;
+  --page-bg: #fff;
+  --surface: #fff;
+  --surface-muted: #f6f7f9;
+  --surface-band: #faf7f8;
+  --surface-tint: #fdf1f4;
+  --surface-tint-soft: #fff9fb;
+  --surface-tint-strong: #fce5ed;
+  --text: #0f0f0f;
+  --text-body: #4a4a4a;
+  --text-muted: #626977;
+  --border: #e5e7ec;
+  --border-strong: #c9ccd3;
+  --border-tint: #f4d3de;
+  --success-bg: #e3f3ea;
+  --success-text: #1b7743;
+  --success-solid: #1e7d47;
+  --on-success: #fff;
+  --warning-bg: #fdf0e3;
+  --warning-text: #945209;
+  --warning-solid: #945209;
+  --on-warning: #fff;
+  --neutral-bg: #e9eaed;
+  --neutral-text: #5a5e68;
+  --info-bg: #eef4fb;
+  --info-text: #2f6fb0;
+  --info-border: #dce8f5;
+  --tutorial-bg: #eeedfa;
+  --tutorial-text: #57518c;
+  --deep-dive-bg: #f0edf4;
+  --deep-dive-text: #665675;
+  --plinth-face: #fff;
+  --plinth-left: #e5e7ec;
+  --plinth-right: #d5d7de;
+  --menu-bg: #0f0f0f;
+  --menu-text: #fff;
+  --menu-hover-bg: #25252f;
+  --syntax-key: #b5325b;
+  --syntax-string: #1b7743;
+  --syntax-function: var(--accent-color);
+  --syntax-comment: var(--text-muted);
+  // Code blocks stay dark in both themes, including articles without highlighting.
+  --code-bg: #1a1a1f;
+  --code-text: #f8f8f2;
+  --code-border: #42404c;
+  --code-comment: #aaaab5;
+  --code-key: #ff8fbc;
+  --code-function: #8edce6;
+  --code-string: #b5e681;
+  --logo-light-display: inline;
+  --logo-dark-display: none;
+}
+
+@mixin dark-palette {
+  color-scheme: dark;
+  --accent-color: #ed6a82;
+  --button-hover-bg: var(--accent-color);
+  --button-hover-text: #241019;
+  --selected-text: #241019;
+  --on-accent: #241019;
+  --page-bg: #141418;
+  --surface: #1d1d24;
+  --surface-muted: #25252f;
+  --surface-band: #19191f;
+  --surface-tint: #2c1d27;
+  --surface-tint-soft: var(--surface);
+  --surface-tint-strong: #38232d;
+  --text: #f3f1f5;
+  --text-body: #d0cbd4;
+  --text-muted: #b3adbd;
+  --border: #42404c;
+  --border-strong: #65616f;
+  --border-tint: #66404c;
+  --success-bg: #19382b;
+  --success-text: #8fdfb0;
+  --success-solid: #8fdfb0;
+  --on-success: #19382b;
+  --warning-bg: #3b2b1c;
+  --warning-text: #ffc78e;
+  --warning-solid: #ffc78e;
+  --on-warning: #3b2b1c;
+  --neutral-bg: var(--surface-muted);
+  --neutral-text: var(--text-muted);
+  --info-bg: #1d3045;
+  --info-text: #a5ceff;
+  --info-border: #395875;
+  --tutorial-bg: #2e2944;
+  --tutorial-text: #c6bcf4;
+  --deep-dive-bg: #342b3d;
+  --deep-dive-text: #d5bce8;
+  --plinth-face: #33313d;
+  --plinth-left: #25242c;
+  --plinth-right: #1d1c23;
+  --menu-bg: var(--surface);
+  --menu-text: var(--text);
+  --menu-hover-bg: var(--surface-muted);
+  --syntax-key: var(--code-key);
+  --syntax-string: var(--code-string);
+  --syntax-function: var(--code-function);
+  --logo-light-display: none;
+  --logo-dark-display: inline;
+}
+
+:root[data-theme="dark"] { @include dark-palette; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) { @include dark-palette; }
+}

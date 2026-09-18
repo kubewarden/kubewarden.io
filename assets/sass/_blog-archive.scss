@@ -5,7 +5,7 @@
   .blog-term-list a > :last-child { flex-shrink: 0; }
   .blog-hero {
     padding: 3.5rem 0;
-    background: linear-gradient(115deg, #fdf1f4, #fff9fb 65%, #fce5ed);
+    background: linear-gradient(115deg, var(--surface-tint), var(--surface-tint-soft) 65%, var(--surface-tint-strong));
   }
 
   .hero-copy h1 {
@@ -17,7 +17,7 @@
   .hero-lead { margin-bottom: 2rem; }
 
   .blog-eyebrow {
-    color: var(--primary-color);
+    color: var(--accent-color);
     font-size: 1.4rem;
     font-weight: 700;
     letter-spacing: .14em;
@@ -26,7 +26,7 @@
   }
 
   a:focus-visible {
-    outline: 2px solid var(--primary-color);
+    outline: 2px solid var(--focus-color);
     outline-offset: 4px;
   }
 
@@ -48,24 +48,24 @@
   .blog-filters a {
     padding: .8rem 2rem;
     border-radius: 3rem;
-    background: #f4f4f7;
-    color: #343844;
+    background: var(--surface-muted);
+    color: var(--text-body);
     font-size: 1.4rem;
     line-height: 2rem;
     text-decoration: none;
-    &:hover { background: #fce5ed; color: var(--primary-color); }
-    &[aria-current] { background: var(--primary-color); color: white; }
+    &:hover { background: var(--surface-tint-strong); color: var(--link-color); }
+    &[aria-current] { background: var(--selected-bg); color: var(--selected-text); }
   }
 
-  .blog-count { color: #626977; font-size: 1.4rem; white-space: nowrap; }
+  .blog-count { color: var(--text-muted); font-size: 1.4rem; white-space: nowrap; }
 
   .blog-types {
     font-size: 1.3rem;
-    color: #626977;
+    color: var(--text-muted);
     gap: .8rem 1.5rem;
-    a { color: #626977; text-decoration: none; padding: .3rem 0; }
+    a { color: var(--text-muted); text-decoration: none; padding: .3rem 0; }
     a:hover { text-decoration: underline; }
-    a:hover, a[aria-current] { color: var(--primary-color); }
+    a:hover, a[aria-current] { color: var(--link-color); }
     a[aria-current] { font-weight: 700; }
   }
 
@@ -85,15 +85,15 @@
     align-items: center;
     gap: 2rem;
     padding: 1.8rem 2.2rem;
-    border: 1px solid #e5e7ec;
+    border: 1px solid var(--border);
     border-radius: 1rem;
     box-shadow: 0 2px 6px rgba(15, 15, 15, .025);
 
     &--featured {
       padding-top: 2.4rem;
       padding-bottom: 2.4rem;
-      background: linear-gradient(115deg, #fff9fb, #fdf1f4);
-      border-color: #f4d3de;
+      background: linear-gradient(115deg, var(--surface-tint-soft), var(--surface-tint));
+      border-color: var(--border-tint);
     }
 
     h2, h3 {
@@ -101,13 +101,13 @@
       font-size: 1.7rem;
       line-height: 1.45;
       text-align: left;
-      a { color: var(--dark); text-decoration: none; }
-      a:hover { color: var(--primary-color); text-decoration: underline; }
+      a { color: var(--text); text-decoration: none; }
+      a:hover { color: var(--link-color); text-decoration: underline; }
     }
 
     p {
       margin: 0;
-      color: #626977;
+      color: var(--text-muted);
       font-size: 1.4rem;
       line-height: 1.5;
       display: -webkit-box;
@@ -129,9 +129,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #fff9fa;
-    border: 1px solid #f0e3e7;
-    color: var(--primary-color);
+    background: var(--surface-tint);
+    border: 1px solid var(--border-tint);
+    color: var(--accent-color);
     .icon { width: 3.6rem; height: 3.6rem; margin: 0; fill: none; }
   }
 
@@ -139,7 +139,7 @@
     gap: .6rem 1.2rem;
     font-size: 1.3rem;
     line-height: 1.5;
-    time { color: #626977; }
+    time { color: var(--text-muted); }
     a { text-decoration: none; }
     a:hover { text-decoration: underline; }
   }
@@ -148,13 +148,13 @@
     display: inline-block;
     padding: .2rem 1.2rem;
     border-radius: 2rem;
-    background: #fce5ed;
-    color: var(--primary-color);
+    background: var(--surface-tint-strong);
+    color: var(--accent-color);
   }
 
   .blog-post-components {
     margin-top: .5rem;
-    color: #626977;
+    color: var(--text-muted);
     font-size: 1.3rem;
     line-height: 1.5;
     a { color: inherit; text-decoration: none; }
@@ -170,17 +170,17 @@
     font-weight: 700;
   }
 
-  .blog-type--release { background: #eaf0fd; color: #315eae; }
-  .blog-type--tutorial { background: #eeedfa; color: #57518c; }
-  .blog-type--security-advisory { background: #e3f3ea; color: #1d7b46; }
-  .blog-type--deep-dive { background: #f0edf4; color: #665675; }
-  .blog-type--community { background: #e9eaed; color: #5a5e68; }
+  .blog-type--release { background: var(--info-bg); color: var(--info-text); }
+  .blog-type--tutorial { background: var(--tutorial-bg); color: var(--tutorial-text); }
+  .blog-type--security-advisory { background: var(--success-bg); color: var(--success-text); }
+  .blog-type--deep-dive { background: var(--deep-dive-bg); color: var(--deep-dive-text); }
+  .blog-type--community { background: var(--neutral-bg); color: var(--neutral-text); }
 
   .blog-read-more {
     display: inline-flex;
     align-items: center;
     gap: 1rem;
-    color: var(--primary-color);
+    color: var(--link-color);
     font-size: 1.4rem;
     font-weight: 700;
     white-space: normal;
@@ -196,12 +196,12 @@
     font-size: 1.4rem;
     a {
       padding: .6rem 1rem;
-      border: 1px solid #e5e7ec;
+      border: 1px solid var(--border);
       border-radius: .6rem;
-      color: #343844;
+      color: var(--text-body);
       text-decoration: none;
-      &:hover { border-color: var(--primary-color); color: var(--primary-color); }
-      &[aria-current] { background: var(--primary-color); border-color: var(--primary-color); color: white; }
+      &:hover { border-color: var(--link-color); color: var(--link-color); }
+      &[aria-current] { background: var(--selected-bg); border-color: var(--selected-bg); color: var(--selected-text); }
     }
   }
 
@@ -209,8 +209,8 @@
     list-style: none;
     margin: 0;
     li { font-size: 1.6rem; }
-    a { display: flex; justify-content: space-between; gap: 2rem; color: var(--primary-color); }
-    span { color: #626977; }
+    a { display: flex; justify-content: space-between; gap: 2rem; color: var(--link-color); }
+    span { color: var(--text-muted); }
   }
 
   @media (max-width: 900px) {

@@ -2,13 +2,11 @@
 <header class="site-header">
   <div class="sub-header">
     <a href="{{ .Site.BaseURL }}" class="logo-link">
-      <img src="/images/logo-{{lower .Site.Title }}.svg" alt="{{ .Site.Title }}">
+      <img class="logo-light" src="/images/logo-{{lower .Site.Title }}.svg" alt="{{ .Site.Title }}">
+      {{ $logo := readFile (printf "static/images/logo-%s.svg" (lower .Site.Title)) }}
+      {{ $darkLogo := resources.FromString "images/logo-dark.svg" (replace $logo "fill:#344845" "fill:#F3F1F5") | fingerprint }}
+      <img class="logo-dark" src="{{ $darkLogo.RelPermalink }}" alt="{{ .Site.Title }}">
     </a>
-    <button type="button" id="main-menu-toggle" class="menu-toggle" aria-label="Open main menu" aria-controls="main-menu" aria-expanded="false" hidden>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </button>
     {{ with .Site.Menus.main }}
     <nav id="main-menu" class="main-menu" aria-label="Main menu">
       <button type="button" id="main-menu-close" class="menu-close" aria-label="Close main menu" hidden>
@@ -39,6 +37,14 @@
       </ul>
     </nav>
     {{ end }}
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to dark theme" title="Switch to dark theme" hidden>
+      <svg class="icon" aria-hidden="true"><use href="#icon-moon"></use></svg>
+    </button>
+    <button type="button" id="main-menu-toggle" class="menu-toggle" aria-label="Open main menu" aria-controls="main-menu" aria-expanded="false" hidden>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
     <div class="backdrop" aria-hidden="true" hidden></div>
   </div>
 </header>

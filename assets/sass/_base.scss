@@ -15,18 +15,19 @@ html {
 body {
   font-family: 'roboto', sans-serif;
   margin: 0;
-  background-color: var(--light);
+  background-color: var(--page-bg);
+  color: var(--text);
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'poppins', sans-serif;
-  color: var(--dark);
+  color: var(--text);
   margin-top: 0;
   hyphens: none;
 }
 
 h4, h5, h6 {
-  color: var(--primary-color);
+  color: var(--accent-color);
 }
 
 h1 {
@@ -84,7 +85,7 @@ li {
   display: block;
   padding: 1.25rem 0;
   margin-bottom: -1px;
-  border-bottom: 1px solid rgba(51,49,59,.125);
+  border-bottom: 1px solid var(--border);
 }
 
 small {
@@ -92,7 +93,12 @@ small {
 }
 
 a {
-  color: var(--secondary-color);
+  color: var(--link-color);
+}
+
+a:focus-visible, button:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 3px;
 }
 
 .sub-header {
@@ -100,7 +106,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
+  background: var(--surface);
 
   a img {
     height: 40px;
@@ -112,7 +118,7 @@ footer {
   align-items: center;
 
   p, a {
-    color: var(--light);
+    color: var(--text-muted);
     margin: 0;
     font-size: 1.2rem;
   }
@@ -123,15 +129,12 @@ hr {
   max-width: 1200px;
   border: 0;
   height: 1px;
-  background-image: -webkit-linear-gradient(left, #F3F3F3, #adadb1, #F3F3F3);
-  background-image: -moz-linear-gradient(left, #F3F3F3, #adadb1, #F3F3F3);
-  background-image: -ms-linear-gradient(left, #F3F3F3, #adadb1, #F3F3F3);
-  background-image: -o-linear-gradient(left, #F3F3F3, #adadb1, #F3F3F3);
+  background: var(--border);
 }
 
 pre {
-  background: var(--dark);
-  color: var(--light);
+  background: var(--code-bg);
+  color: var(--code-text);
   page-break-inside: avoid;
   font-family: monospace;
   font-size: 1.5rem;
@@ -155,18 +158,18 @@ main {
 }
 
 blockquote {
-  background: #f9f9f9;
-  border-left: 5px solid #ccc;
+  background: var(--surface-muted);
+  border-left: 5px solid var(--border-strong);
   padding: 3px 1em 3px;
 }
 
 table {
   margin: auto;
-  border-top: 1px solid #BFBFBF;
-  border-bottom: 1px solid #BFBFBF;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 
   thead th {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border);
   }
 }
 
@@ -175,14 +178,14 @@ th, td {
 }
 
 thead, tfoot, tr:nth-child(even) {
-  background: #eee;
+  background: var(--surface-muted);
 }
 
 a.btn {
   font-family: 'poppins', sans-serif;
   text-transform: uppercase;
-  background: var(--secondary-color);
-  color: var(--light) !important;
+  background: var(--button-bg);
+  color: var(--button-text) !important;
   padding: 10px 20px;
   text-decoration: none;
   font-size: 1.25rem;
@@ -194,7 +197,7 @@ a.btn {
 
   &.no-bg {
     background: transparent;
-    color: var(--secondary-color) !important;
+    color: var(--link-color) !important;
   }
 }
 
@@ -232,7 +235,7 @@ section {
 
 .menu-toggle:hover,
 .menu-toggle:focus {
-  color: var(--primary-color);
+  color: var(--accent-color);
 }
 
 .main-menu {
@@ -254,7 +257,7 @@ section {
   box-shadow: -8px 0 8px rgba(0,0,0,.5);
   min-height: 100%;
   width: 200px;
-  background: var(--dark);
+  background: var(--menu-bg);
 }
 
 .main-menu a {
@@ -262,18 +265,18 @@ section {
   padding: .75em 15px;
   line-height: 1em;
   font-size: 1em;
-  color: var(--light);
+  color: var(--menu-text);
   text-decoration: none;
-  border-bottom: 1px solid var(--dark);
+  border-bottom: 1px solid var(--border);
 }
 
 .main-menu li:first-child a {
-  border-top: 1px solid var(--dark);
+  border-top: 1px solid var(--border);
 }
 
 .main-menu a:hover,
 .main-menu a:focus {
-  background: var(--dark);
+  background: var(--menu-hover-bg);
   text-decoration: underline;
 }
 
@@ -312,13 +315,13 @@ section {
   }
 
   .main-menu a {
-    color: var(--secondary-color);
+    color: var(--link-color);
     border: 0 !important;
   }
 
   .main-menu a:hover,
   .main-menu a:focus {
     background: none;
-    color: var(--primary-color);
+    color: var(--link-color);
   }
 }
