@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>{{ .Title }}</title>
+	<title>{{ if .IsSection }}{{ .Site.Title }} Blog{{ else }}{{ .Title }}{{ end }}</title>
 	{{ if and (.Site.Params.gtm_id) (templates.Exists "partials/gtm.html") }}{{- partial "gtm.html" . }}{{ end }}
 
 	{{ partial "favicon.html" .}}
