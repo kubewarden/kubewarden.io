@@ -45,9 +45,9 @@
   --plinth-face: #fff;
   --plinth-left: #e5e7ec;
   --plinth-right: #d5d7de;
-  --menu-bg: #0f0f0f;
-  --menu-text: #fff;
-  --menu-hover-bg: #25252f;
+  --menu-bg: var(--surface);
+  --menu-text: var(--text);
+  --menu-hover-bg: var(--surface-muted);
   --syntax-key: #b5325b;
   --syntax-string: #1b7743;
   --syntax-function: var(--accent-color);
@@ -104,9 +104,6 @@
   --plinth-face: #33313d;
   --plinth-left: #25242c;
   --plinth-right: #1d1c23;
-  --menu-bg: var(--surface);
-  --menu-text: var(--text);
-  --menu-hover-bg: var(--surface-muted);
   --syntax-key: var(--code-key);
   --syntax-string: var(--code-string);
   --syntax-function: var(--code-function);
