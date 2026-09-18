@@ -21,7 +21,10 @@ $ hugo server -D
 
 ## Fonts and readability
 
-The site serves its fonts locally. Font sources, licenses, and conversion commands
+The site uses self-hosted SUSE fonts for headings, body text, and interface labels.
+Upright and italic variable fonts provide the full upstream character set.
+Body text uses weight 400, navigation and subheadings use 600, and main headings use 700.
+Font sources, licenses, and historical conversion commands
 are recorded in [the font source notes](static/fonts/SOURCES.md).
 The base font size follows browser preferences while preserving the default design.
 Code uses the browser's monospace font.

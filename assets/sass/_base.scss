@@ -13,14 +13,15 @@ html {
 }
 
 body {
-  font-family: 'roboto', sans-serif;
+  font-family: var(--font-sans);
+  font-weight: 400;
   margin: 0;
   background-color: var(--page-bg);
   color: var(--text);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   color: var(--text);
   margin-top: 0;
   hyphens: none;
@@ -29,6 +30,10 @@ h1, h2, h3, h4, h5, h6 {
 h4, h5, h6 {
   color: var(--accent-color);
 }
+
+h1, h2 { font-weight: 700; }
+h3, h4, h5, h6 { font-weight: 600; }
+button, input, select, textarea { font-family: inherit; }
 
 h1 {
   margin-bottom: 3rem;
@@ -182,7 +187,7 @@ thead, tfoot, tr:nth-child(even) {
 }
 
 a.btn {
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   text-transform: uppercase;
   background: var(--button-bg);
   color: var(--button-text) !important;
@@ -190,7 +195,7 @@ a.btn {
   text-decoration: none;
   font-size: 1.25rem;
   line-height: 0;
-  font-weight: bold;
+  font-weight: 600;
   align-items: center;
   border-radius: 3px;
   letter-spacing: 1px;

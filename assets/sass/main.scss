@@ -304,7 +304,7 @@ footer {
 
   strong {
     display: block;
-    font-family: 'poppins', sans-serif;
+    font-family: var(--font-sans);
     font-weight: 700;
     font-size: 1.5rem;
     color: var(--text);
@@ -432,9 +432,9 @@ footer {
 .btn-outline {
   display: inline-flex;
   align-items: center;
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
   padding: 1.1rem 2.2rem;
   border-radius: 4px;
@@ -497,7 +497,7 @@ footer {
 
 .pill {
   display: inline-block;
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: .02em;
@@ -528,7 +528,7 @@ footer {
   display: inline-flex;
   align-items: center;
   color: var(--link-color);
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-size: 1.6rem;
   font-weight: 700;
   text-decoration: none;
@@ -667,7 +667,7 @@ footer {
   border-radius: 8px;
   box-shadow: 0 6px 20px rgba(91, 7, 0, 0.05);
   padding: 1rem 1.2rem;
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.3rem;
   line-height: 1.5;
@@ -1205,7 +1205,7 @@ footer {
   border-radius: 6px;
   box-shadow: 0 6px 16px rgba(15, 15, 15, 0.08);
   padding: .8rem 1rem;
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.3rem;
   line-height: 1.5;
@@ -1343,7 +1343,7 @@ footer {
   }
 
   strong {
-    font-family: 'poppins', sans-serif;
+    font-family: var(--font-sans);
     font-weight: 700;
     font-size: 1.3rem;
     line-height: 1.5;
@@ -1388,7 +1388,7 @@ footer {
   align-items: center;
   gap: .6rem;
   margin-bottom: 1.2rem;
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.3rem;
   color: var(--text);
@@ -1433,7 +1433,7 @@ footer {
   }
 
   strong {
-    font-family: 'poppins', sans-serif;
+    font-family: var(--font-sans);
     font-weight: 700;
     font-size: 1.3rem;
     line-height: 1.5;
@@ -1520,7 +1520,7 @@ footer {
   gap: .6rem;
   background: var(--surface-tint);
   color: var(--accent-color);
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.3rem;
   padding: .8rem 1.6rem;
@@ -1544,7 +1544,7 @@ footer {
   border-radius: 8px;
   box-shadow: 0 6px 16px rgba(15, 15, 15, 0.06);
   color: var(--text);
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.3rem;
   padding: .9rem 1.6rem;
@@ -1592,7 +1592,7 @@ footer {
 
   strong {
     display: block;
-    font-family: 'poppins', sans-serif;
+    font-family: var(--font-sans);
     font-weight: 700;
     font-size: 1.3rem;
     line-height: 1.5;
@@ -1823,8 +1823,8 @@ footer {
 }
 
 .ha-node-title {
-  font-family: 'poppins', sans-serif;
-  font-weight: 700;
+  font-family: var(--font-sans);
+  font-weight: 600;
   font-size: 1.4rem;
   line-height: 1.9rem;
   color: var(--text);
@@ -1845,7 +1845,7 @@ footer {
   gap: .8rem;
   padding: .7rem 1rem;
   border-radius: 6px;
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.3rem;
   line-height: 1.5;
@@ -1904,7 +1904,7 @@ footer {
   align-items: center;
   gap: 1rem;
   flex: 0 0 auto;
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.3rem;
   color: var(--text);
@@ -2148,7 +2148,7 @@ footer {
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: .7rem 1rem;
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.3rem;
   line-height: 1.5;
@@ -2407,7 +2407,7 @@ footer {
 
   strong {
     display: block;
-    font-family: "poppins", sans-serif;
+    font-family: var(--font-sans);
     font-weight: 700;
     font-size: 1.3rem;
     color: var(--text);
@@ -2488,7 +2488,7 @@ footer {
 
   strong {
     display: block;
-    font-family: "poppins", sans-serif;
+    font-family: var(--font-sans);
     font-weight: 700;
     font-size: 1.3rem;
     line-height: 1.5;
@@ -2708,7 +2708,7 @@ footer {
   border-radius: 50%;
   background: var(--accent-color);
   color: var(--on-accent);
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.3rem;
   flex-shrink: 0;
@@ -2811,7 +2811,7 @@ footer {
   margin-top: auto;
   background: var(--surface-tint);
   color: var(--accent-color);
-  font-family: 'poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.3rem;
   text-align: center;

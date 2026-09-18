@@ -74,8 +74,8 @@
     overflow-y: auto;
     summary {
       cursor: pointer;
-      font-family: 'poppins', sans-serif;
-      font-weight: 700;
+      font-family: var(--font-sans);
+      font-weight: 600;
       font-size: 1.6rem;
       color: var(--text);
     }
@@ -108,6 +108,7 @@
       scroll-margin-top: 2rem;
     }
     h2 { font-size: 2.6rem; }
+    h3, h4, h5, h6 { font-weight: 600; }
     h3 { font-size: 2.1rem; }
     h4, h5, h6 { font-size: 1.8rem; }
     p, li { font-size: inherit; line-height: inherit; }
