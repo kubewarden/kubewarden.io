@@ -3,6 +3,10 @@ title:  Keeping track of Kubernetes deprecated resources
 authors:
 - Víctor Cuadrado Juan
 date: 2022-11-09
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 It's fact of life: as the Kubernetes API evolves, it's periodically reorganized
@@ -12,7 +16,7 @@ We deserve to easily keep track of those deprecations and removals. For that, we
 have just released
 the [deprecated-api-versions policy](https://github.com/kubewarden/deprecated-api-versions-policy/).
 
-### A look at the deprecated-api-versions policy
+## A look at the deprecated-api-versions policy
 
 This policy detects the usage of Kubernetes resources that have been deprecated
 or removed from the Kubernetes API.
@@ -43,7 +47,7 @@ kubernetes_version: "1.19.0"
 deny_on_deprecation: true # (the default)
 ```
 
-### Don't live in the past
+## Don't live in the past
 
 Kubernetes deprecations evolve; as soon as there are new deprecations, the
 policy will be updated.
@@ -52,7 +56,7 @@ The policy versioning scheme tells you up to what version of Kubernetes the
 policy knows about, e.g. `0.1.0-k8sv1.26.0` means that the policy knows about
 deprecations up to Kubernetes `v1.26.0`.
 
-### Back to the future
+## Back to the future
 
 You are updating your cluster's Kubernetes version, and want to know if you will
 be in trouble because of deprecated or removed resources in the new version?
@@ -61,7 +65,7 @@ Check before updating! Just instantiate the deprecated-api-versions policy with
 the targeted Kubernetes version and `deny_on_deprecation` set to false, and get
 an overview of future-you problems.
 
-### In action
+## In action
 
 As usual, instantiate a `ClusterAdmissionPolicy` (cluster-wide) or
 `AdmissionPolicy` (namespaced) that makes use of the policy.

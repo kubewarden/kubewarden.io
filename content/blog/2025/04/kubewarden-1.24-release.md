@@ -3,6 +3,11 @@ title: Kubewarden 1.24 release
 authors:
   - Víctor Cuadrado Juan
 date: 2025-04-30
+components:
+  - Admission Controller
+types:
+  - release
+  - security-advisory
 ---
 
 The wait is over, Kubewarden 1.24 has arrived! We have some Easter eggs for you
@@ -20,8 +25,7 @@ we decided it was time to highlight their stability by promoting them to `v1.0.0
 We have released most of our policies, those we consider stable,
 as `v1.0.0`. This shows our commitment over time,
 now paraded in Semantic Versioning. You can find
-[here](https://github.com/kubewarden/community?tab=readme-ov-file#repositories)
-a list of policy repositories and their maturity level; note that the
+[a list of policy repositories and their maturity level](https://github.com/kubewarden/community?tab=readme-ov-file#repositories); note that the
 majority are declared stable. The ones that are still considered experimental,
 like the `kyverno-dsl-policy` one, have not reached `v1` yet.
 
@@ -52,8 +56,8 @@ v4.4.4:
    draft release, and opens a PR with [Updatecli](updatecli.io) if it finds changes. This is done
    via the new
    [`open-release-pr`](https://github.com/kubewarden/github-actions/blob/main/.github/workflows/reusable-release-pr.yml) reusable workflow.
-   You can find the updatecli policy
-   [here](https://github.com/kubewarden/automation/tree/main/updatecli).
+   You can find the
+   [updatecli policy](https://github.com/kubewarden/automation/tree/main/updatecli).
 2. We have a second reusable workflow,
    [`reusable-release-tag`](https://github.com/kubewarden/github-actions/blob/main/.github/workflows/reusable-release-tag.yml).
    This workflow checks for PRs that the previous workflow opened, and, once the

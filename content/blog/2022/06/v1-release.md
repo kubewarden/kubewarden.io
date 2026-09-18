@@ -4,6 +4,10 @@ authors:
 - Flavio Castelli
 date: 2022-06-22
 lastmod: 2022-06-24
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Kubewarden is a policy engine for Kubernetes that is part of CNCF Sandbox.

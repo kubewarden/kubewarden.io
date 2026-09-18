@@ -1,0 +1,58 @@
+{{/*
+  Renders the "Explore the Kubewarden components" card grid.
+  Cards are hardcoded on purpose: there are exactly four components
+  and no more are planned, so a data-driven layout isn't worth the
+  indirection. Listed in alphabetical order by name.
+
+  Maturity ("status") is not hardcoded here: it is read from each
+  component page's front matter, so the grid and the component page
+  can never disagree about it.
+
+  Context: pass a dict with "current" set to the current page's
+  RelPermalink to omit that component's own card (used on the
+  component single pages, under "Other components"). Pass an empty
+  string to show all four cards.
+*/}}
+{{ $current := .current }}
+
+{{ $components := slice
+  (dict
+    "icon" "icon-shield"
+    "name" "Admission Controller"
+    "desc" "Stop unsafe workloads before they enter your cluster."
+    "link" "/component/adm-controller/"
+  )
+  (dict
+    "icon" "icon-nodes"
+    "name" "Network Enforcer"
+    "desc" "Discover network activity and secure the communication between your workloads."
+    "link" "/component/network-enforcer/"
+  )
+  (dict
+    "icon" "icon-cube"
+    "name" "Runtime Enforcer"
+    "desc" "Control what can run inside your Kubernetes pods."
+    "link" "/component/runtime-enforcer/"
+  )
+  (dict
+    "icon" "icon-scan"
+    "name" "SBOM Scanner"
+    "desc" "Find vulnerabilities in the container images running inside your cluster."
+    "link" "/component/sbom-scanner/"
+  )
+}}
+
+<div class="cards cards-4">
+  {{ range $components }}
+  {{ if ne .link $current }}
+  {{ $page := site.GetPage (strings.TrimSuffix "/" .link) }}
+  <div class="card">
+    <div class="card-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#{{ .icon }}"></use></svg></div>
+    <h3>{{ .name }}</h3>
+    <p>{{ .desc }}</p>
+    {{ with $page }}{{ with .Params.status }}<span class="pill pill-{{ . | lower }}">{{ . }}</span>{{ end }}{{ end }}
+    <a class="arrow-link" href="{{ .link }}">Learn more<span class="sr-only"> about {{ .name }}</span> <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
+  </div>
+  {{ end }}
+  {{ end }}
+</div>

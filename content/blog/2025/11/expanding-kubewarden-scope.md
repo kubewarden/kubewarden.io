@@ -3,6 +3,11 @@ title: "Expanding Kubewarden Scope"
 authors:
   - Flavio Castelli
 date: 2025-11-11
+components:
+  - Admission Controller
+  - SBOM Scanner
+types:
+  - community
 ---
 
 The Kubewarden project was created four years ago at SUSE with the goal of redefining Policy As Code. We built a universal policy engine for Kubernetes and donated it to the CNCF.
@@ -17,7 +22,7 @@ We continue to expand the list of [host capabilities](https://docs.kubewarden.io
 
 Kubewarden has gone from strength to strength and today I'm excited to announce something new. The Kubewarden project is expanding its scope, looking beyond admission policies.
 
-# Announcing SBOMscanner
+## Announcing SBOMscanner
 
 As mentioned earlier, the requirement to keep cloud native environments secure is constantly growing. A critical aspect is keeping track of vulnerabilities affecting the workloads running inside Kubernetes clusters.
 
@@ -26,7 +31,7 @@ We take this challenge seriously and have found a solution. Today SUSE is making
 > **Meet [SBOMscanner](https://github.com/kubewarden/sbomscanner):**  
 > A SBOM security scanner for Kubernetes that helps teams proactively monitor and manage vulnerabilities in their workloads, improving cluster security and compliance.
 
-# What makes SBOMscanner different
+## What makes SBOMscanner different
 
 SBOMscanner is an image scanner that integrates seamlessly with Kubernetes. It uses Kubernetes concepts like Custom Resource Definitions and uses advanced Kubernetes features such as the [API Aggregation Layer](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/apiserver-aggregation/) for performance and scalability.
 
@@ -34,7 +39,7 @@ As the name suggests, SBOMscanner is built around the concept of Software Bill o
 
 Currently, SBOMscanner relies on [trivy](https://github.com/aquasecurity/trivy) to scan container images. However, it's designed to support multiple vulnerability scanners. Building SBOMscanner wouldn't have been possible without trivy, as well as CNCF projects like [NATS](https://nats.io/) and [CloudNativePG](https://cloudnative-pg.io/).
 
-# Trying SBOMscanner
+## Trying SBOMscanner
 
 SBOMscanner is not yet production-ready, but it's already capable of delivering value, especially when used with Kubewarden. We've created [this policy](https://github.com/kubewarden/image-cve-policy) that allows you to prevent the usage of vulnerable container images inside your Kubernetes cluster.
 

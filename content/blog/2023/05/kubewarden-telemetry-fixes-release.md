@@ -3,13 +3,17 @@ title: Telemetry enhancements released!
 authors:
 - José Guilherme Vanz
 date: 2023-05-09
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 We are excited to announce a variety of updates, fixes, and enhancements for Kubewarden components!
 
 This release primarily focuses on improvements to Kubewarden telemetry and dependency updates.
 
-# Telemetry Enhancements and Fixes
+## Telemetry Enhancements and Fixes
 
 The Kubewarden controller has received several fixes and improvements in the telemetry department.
 These include a streamlined process for users to deploy a policy server with telemetry enabled,
@@ -30,7 +34,7 @@ configuration removed from its values file.
 If you want more information about how to enable telemetry on Kubewarden.
 Please, check out our [documentation](https://docs.kubewarden.io/operator-manual/telemetry/opentelemetry/quickstart)!
 
-# Give it a try!
+## Give it a try!
 
 You can test the changes mentioned above by using the Helm charts in the following versions:
 

@@ -3,11 +3,15 @@ title: Kubewarden UI 1.0.0 is released!
 authors:
 - Jordon Leach
 date: 2023-02-09
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 We are excited to announce that the Kubewarden UI 1.0.0 has been released!
 
-The UI is an Extension for [Rancher Manager](https://github.com/rancher/rancher/), now you will be able to enable Kubewarden policies for your Kubernetes clusters with a streamlined user experience. You can find the latest releases of the extension Helm chart [here](https://github.com/kubewarden/ui/releases/), the release provides a [Github Pages deployment](https://kubewarden.github.io/ui/) which can be used when adding the UI as a Helm repository.
+The UI is an Extension for [Rancher Manager](https://github.com/rancher/rancher/), now you will be able to enable Kubewarden policies for your Kubernetes clusters with a streamlined user experience. You can find the [latest releases of the extension Helm chart](https://github.com/kubewarden/ui/releases/), the release provides a [Github Pages deployment](https://kubewarden.github.io/ui/) which can be used when adding the UI as a Helm repository.
 
 Currently Rancher is required to run this extension, however, in the future it will be possible to deploy the same UI as a stand-alone platform.
 
@@ -19,7 +23,7 @@ Let's see what is achievable from the UI as a Cluster Admin.
 
 With Extensions enabled in Rancher Dashboard and the option to add the Rancher Extensions Repository enabled, the "Kubewarden" menu item will appear automatically. Click on this item to install the extension. Once installed there will be a new side-navigation item within your cluster for Kubewarden, which provides a walkthrough to guide you through the installation of the `kubewarden-controller`.
 
-Documentation to install the extension can be found [here](https://docs.kubewarden.io/operator-manual/ui-extension/install). 
+Read the [documentation to install the extension](https://docs.kubewarden.io/operator-manual/ui-extension/install).
 
 We provide a structured installation of Kubewarden and the prerequisites through the UI:
 

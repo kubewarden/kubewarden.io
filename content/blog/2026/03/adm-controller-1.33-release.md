@@ -3,6 +3,11 @@ title: "Admission Controller 1.33 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2026-03-09
+components:
+  - Admission Controller
+types:
+  - release
+  - security-advisory
 ---
 
 The garden is thriving and Kubewarden 1.33 is ready to bloom! Following last
@@ -214,7 +219,7 @@ coverage](https://app.codecov.io/github/kubewarden/kubewarden-controller). We
 also have automation back for Rust toolchain updates, spell checking,
 contribution docs, and a general cleanup.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

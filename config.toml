@@ -1,14 +1,18 @@
-baseURL = ""
-languageCode = "en-us"
+baseURL = "https://www.kubewarden.io/"
+locale = "en-us"
 timeZone = "UTC"
 title = "Kubewarden"
-theme = "projects-theme"
 pluralizeListTitles = false
 enableRobotsTXT = true
 pygmentsCodeFences = true
 pygmentsCodeFencesGuessSyntax = true
 enableGitInfo = true
 googleAnalytics = 'G-PSW07XK7TM'
+
+# Allow HTML content files. The site's four component pages are HTML,
+# not Markdown, so Hugo's newer default (deny text/html) blocks them.
+[security]
+allowContent = ["! ^text/org$"]
 
 [blackfriday]
 fractions = false
@@ -27,6 +31,13 @@ params = ["categories", "tags"]
 [params]
 github = "https://github.com/kubewarden"
 
+[params.social]
+bluesky = "https://bsky.app/profile/kubewarden.io"
+linkedin = "https://www.linkedin.com/company/kubewarden/"
+mastodon = "https://hachyderm.io/@kubewarden"
+slack = "https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden"
+x = "https://x.com/kubewarden"
+
 [outputs]
 home = ["HTML", "RSS"]
 
@@ -37,57 +48,51 @@ anonymizeIP = true
 [menu]
 
 [[menu.main]]
-identifier = "hub"
-name = "Policies"
-url = "https://artifacthub.io/packages/search?kind=13&sort=relevance&page=1"
-weight = -130
-
-[[menu.main]]
-identifier = "charts"
-name = "Helm Charts"
-url = "https://charts.kubewarden.io/"
-weight = -120
+identifier = "platform"
+name = "Platform"
+url = "/#components"
+weight = -140
 
 [[menu.main]]
 identifier = "docs"
 name = "Docs"
 url = "https://docs.kubewarden.io/"
-weight = -110
-
-[[menu.main]]
-identifier = "slack"
-name = "Slack"
-url = "https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden"
-weight = -90
-
-[[menu.main]]
-identifier = "bluesky"
-name = "Bluesky"
-url = "https://bsky.app/profile/kubewarden.io"
-weight = -85
-
-[[menu.main]]
-identifier = "mastodon"
-name = "Mastodon"
-url = "https://hachyderm.io/@kubewarden"
-weight = -80
-[menu.main.params]
-rel = 'me'
-
-[[menu.main]]
-identifier = "community"
-name = "Community"
-url = "/#get-in-touch"
-weight = -70
+weight = -130
 
 [[menu.main]]
 identifier = "blog"
 name = "Blog"
 url = "/blog"
-weight = -60
+weight = -110
+
+[[menu.main]]
+identifier = "community"
+name = "Community"
+url = "/#get-in-touch"
+weight = -100
 
 [[menu.main]]
 identifier = "enterprise"
 name = "Enterprise"
 url = "https://docs.kubewarden.io/enterprise"
 weight = -50
+
+[taxonomies]
+component = "components"
+type = "types"
+
+[markup.highlight]
+noClasses = false
+
+[related]
+threshold = 30
+includeNewer = true
+toLower = true
+
+[[related.indices]]
+name = "components"
+weight = 100
+
+[[related.indices]]
+name = "types"
+weight = 40

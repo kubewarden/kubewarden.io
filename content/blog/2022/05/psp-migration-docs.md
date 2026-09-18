@@ -4,6 +4,10 @@ authors:
 - José Guilherme Vanz
 date: 2022-05-12
 lastmod: 2022-05-19
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 If you use a version of Kubernetes (< v1.24) that supports the deprecated PodSecurityPolicy (a.k.a PSP), you would be

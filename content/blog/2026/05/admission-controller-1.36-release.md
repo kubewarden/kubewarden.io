@@ -3,6 +3,10 @@ title: "Admission Controller 1.36 Release"
 authors:
   - José Guilherme Vanz
 date: 2026-06-02
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 The garden has a new nameplate! Kubewarden 1.36 renames the repository and
@@ -120,7 +124,7 @@ for the new repository.
 
 As usual, Go and Rust dependencies have been bumped to their latest versions.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

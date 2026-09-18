@@ -3,6 +3,10 @@ title: Kubewarden 1.10 release
 authors:
   - Víctor Cuadrado
 date: 2024-01-26
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 We have the first release of 2024, Kubewarden 1.10.0! 🎉🥳
@@ -30,7 +34,7 @@ containing 13 policies:
 The policy-server was configured with one worker to start, progressing to eight. For each worker
 value, 10 samplings were taken.
 
-#### Constant memory consumption when scaling horizontally
+### Constant memory consumption when scaling horizontally
 
 Before, we needed one instance of the policy evaluator (hence the Wasmstime stack)
 for each policy deployed.
@@ -49,7 +53,7 @@ allows us to keep a deduplicated list of all the policies in use, in their
 pre-initialized form. This list is shared between all policy evaluators in the
 policy-server.
 
-#### Protection against policy memory leaks, and clean slate per policy
+### Protection against policy memory leaks, and clean slate per policy
 
 Before, there were long-running policy evaluators, ready to process policy requests.
 
@@ -66,7 +70,7 @@ Using this on-demand approach to policy evaluators brings two main advantages:
 - Each evaluation starts with a clean slate, preventing bugs caused by policies
   leaving unclean state between evaluations.
 
-#### Codebase simplification and increased test coverage
+### Codebase simplification and increased test coverage
 
 Also, thanks to a big refactor, together with additional unit and integration
 tests, the policy-server codebase has moved away from using a worker thread

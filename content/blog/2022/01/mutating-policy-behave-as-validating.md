@@ -3,6 +3,10 @@ title: Kubewarden policies cover all the Kubernetes Pod Security Policies
 authors:
     - José Guilherme Vanz
 date: 2022-01-31
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 The Kubewarden team worked tirelessly to create equivalent Kubewarden policies

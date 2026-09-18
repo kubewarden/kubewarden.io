@@ -3,6 +3,10 @@ title: Verify image signatures with GitHub Actions and KeylessPrefix
 authors:
 - Raul Cabello Martin 
 date: 2022-07-21
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 With the latest releases of Kubewarden v1.1.0 and

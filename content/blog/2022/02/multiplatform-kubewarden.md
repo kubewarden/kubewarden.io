@@ -3,6 +3,10 @@ title: Multiplatform Kubewarden
 authors:
     - Rafael Fernández López
 date: 2022-02-04
+components:
+  - Admission Controller
+types:
+  - deep-dive
 ---
 
 The Kubewarden team is glad to announce that in the spirit of helping

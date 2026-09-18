@@ -1,32 +1,54 @@
-<header>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="site-header">
   <div class="sub-header">
-    <a href="{{ .Site.BaseURL }}">
-      <img src="/images/logo-{{lower .Site.Title }}.svg" alt="{{ .Site.Title }}">
-    </a>
-    <a href="#main-menu" id="main-menu-toggle" class="menu-toggle" aria-label="Open main menu">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
+    <a href="{{ .Site.BaseURL }}" class="logo-link">
+      <img class="logo-light" src="/images/logo-{{lower .Site.Title }}.svg" alt="{{ .Site.Title }}">
+      {{ $logo := readFile (printf "static/images/logo-%s.svg" (lower .Site.Title)) }}
+      {{ $darkLogo := resources.FromString "images/logo-dark.svg" (replace $logo "fill:#344845" "fill:#F3F1F5") | fingerprint }}
+      <img class="logo-dark" src="{{ $darkLogo.RelPermalink }}" alt="{{ .Site.Title }}">
     </a>
     {{ with .Site.Menus.main }}
     <nav id="main-menu" class="main-menu" aria-label="Main menu">
-      <a href="#main-menu-toggle" id="main-menu-close" class="menu-close" aria-label="Close main menu">
+      <button type="button" id="main-menu-close" class="menu-close" aria-label="Close main menu" hidden>
         <span class="sr-only">Close main menu</span>
-        <span class="fa fa-close" aria-hidden="true"></span>
-      </a>
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-x"></use></svg>
+      </button>
 
       <h2 id="main-menu-heading" class="sr-only">Main menu</h2>
 
       <ul class="menu">
         {{ range . }}
-        <li><a href="{{ .URL }}" {{- with .Params.rel -}}rel="{{ . }}"{{- end }} target="_blank" class="btn no-bg">{{ .Name }}</a></li>
+        {{ if not .Parent }}
+        {{ $active := or ($.IsMenuCurrent "main" .) (and (eq .Identifier "blog") (or (eq $.Section "blog") (and (in (slice "term" "taxonomy") $.Kind) (in (slice "components" "types") $.Data.Plural)))) }}
+        {{ $external := strings.HasPrefix .URL "http" }}
+        <li class="menu-item">
+          <a href="{{ .URL }}"
+            {{- if $external }} target="_blank" rel="{{ with .Params.rel }}{{ . }} {{ end }}noopener"{{ else }}{{ with .Params.rel }} rel="{{ . }}"{{ end }}{{ end -}}
+            {{- if $active }} aria-current="true"{{ end }}
+            class="btn no-bg{{ if $active }} is-active{{ end }}">
+            {{ .Name }}{{ if $external }}<span class="sr-only"> (opens in new tab)</span>{{ end }}
+          </a>
+        </li>
+        {{ end }}
         {{ end }}
         <!-- github  -->
-        <li><a href="{{ $.Site.Params.github }}" class="btn github"><img src="/images/icon-github.svg"><span>Github</span></a>
+        <li><a href="{{ $.Site.Params.github }}" target="_blank" rel="noopener" class="btn-outline header-github"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github"></use></svg><span>GitHub</span><span class="sr-only"> (opens in new tab)</span></a>
         </li>
       </ul>
     </nav>
     {{ end }}
-    <a href="#main-menu-toggle" class="backdrop" tabindex="-1" aria-hidden="true" hidden></a>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to dark theme" title="Switch to dark theme" hidden>
+      <svg class="icon" aria-hidden="true"><use href="#icon-moon"></use></svg>
+    </button>
+    <button type="button" id="main-menu-toggle" class="menu-toggle" aria-label="Open main menu" aria-controls="main-menu" aria-expanded="false" hidden>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+    <div class="backdrop" aria-hidden="true" hidden></div>
   </div>
 </header>
+{{ $menuScript := resources.Get "js/menu.js" | minify }}
+<script src="{{ $menuScript.RelPermalink }}" defer></script>
+{{ $headerScript := resources.Get "js/header.js" | minify }}
+<script src="{{ $headerScript.RelPermalink }}" defer></script>

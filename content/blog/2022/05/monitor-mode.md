@@ -3,6 +3,10 @@ title: Introducing the Monitor mode
 authors:
 - Rafael Fernández López
 date: 2022-05-06
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 Policies are a core component of a Kubernetes cluster story that

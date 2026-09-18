@@ -3,6 +3,10 @@ title: Kubewarden 1.9.0 release
 authors:
   - Flavio Castelli
 date: 2023-11-03
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Not even a month after the 1.8.0 release, today we are happy to announce Kubewarden 1.9.0! 🎉🥳
@@ -49,7 +53,7 @@ a user managed one must be allocated to host them.
 The controller will not allow the user to change the Policy Server ConfigMap to add a Raw policy,
 since it will try to reconcile it reverting the changes.
 
-More details about raw policies can be found [here](https://docs.kubewarden.io/howtos/raw-policies).
+You can find more details in the [raw policies documentation](https://docs.kubewarden.io/howtos/raw-policies).
 A detailed blog post will also be posted in the next few days.
 
 ## See you around!

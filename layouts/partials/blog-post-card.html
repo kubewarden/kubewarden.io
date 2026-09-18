@@ -1,0 +1,31 @@
+{{ $post := .post }}
+{{ $components := $post.GetTerms "components" }}
+{{ $icons := dict "Admission Controller" "shield" "Network Enforcer" "nodes" "Runtime Enforcer" "cube" "SBOM Scanner" "scan" }}
+{{ $icon := "" }}
+{{ if eq (len $components) 1 }}{{ $icon = index $icons (index $components 0).Title }}{{ end }}
+<article class="blog-post{{ if .featured }} blog-post--featured{{ end }}">
+  <div class="blog-post-icon" aria-hidden="true">
+    <svg class="icon"><use xlink:href="#icon-{{ $icon | default "layers" }}"></use></svg>
+  </div>
+  <div class="blog-post-copy">
+    {{ if .featured }}<span class="blog-latest">{{ if .filtered }}Latest in this archive{{ else }}Latest post{{ end }}</span>{{ end }}
+    <div class="blog-post-meta">
+      <time datetime="{{ $post.Date.Format "2006-01-02" }}">{{ $post.Date.Format "02 Jan 2006" }}</time>
+      {{ range $post.GetTerms "types" }}
+      <a class="blog-badge blog-type--{{ .Data.Term | urlize }}" href="{{ .RelPermalink }}">{{ replace .Title "-" " " | title }}</a>
+      {{ end }}
+    </div>
+    <div class="blog-post-components">
+      {{ range $components }}
+      <a class="blog-component-badge" href="{{ .RelPermalink }}">{{ .Title }}</a>
+      {{ else }}
+      <span>Kubewarden / Platform</span>
+      {{ end }}
+    </div>
+    {{ $heading := "h2" }}
+    {{ if .filtered }}{{ $heading = "h3" }}{{ end }}
+    {{ printf "<%s>" $heading | safeHTML }}<a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a>{{ printf "</%s>" $heading | safeHTML }}
+    <p>{{ $post.Summary | plainify | htmlUnescape | truncate 240 }}</p>
+  </div>
+  <a class="blog-read-more" href="{{ $post.RelPermalink }}">Read more<span class="sr-only">: {{ $post.Title }}</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
+</article>

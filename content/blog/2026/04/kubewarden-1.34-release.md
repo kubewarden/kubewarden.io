@@ -3,6 +3,10 @@ title: "Kubewarden 1.34 Release"
 authors:
   - José Guilherme Vanz
 date: 2026-04-09
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 After the big blooms of 1.33, this release turns its attention to the garden
@@ -110,7 +114,7 @@ is now `github-token`, `VERSION` becomes `version`, and
 If your policy workflows use any Kubewarden-provided actions, please update
 your input names accordingly after upgrading.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

@@ -3,6 +3,10 @@ title: A new architecture to ease Kubewarden administrators' lives
 authors:
     - Víctor Cuadrado Juan
 date: 2021-10-01
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 We are pleased to announce a new architecture for the Kubewarden stack, in line
@@ -170,7 +174,7 @@ default   38s
 ```
 
 The default configuration values should be good enough for the majority of
-deployments (all options are documented [here](https://charts.kubewarden.io/#configuration)).
+deployments (see all options in the [Helm chart configuration reference](https://charts.kubewarden.io/#configuration)).
 
 Now, you can use Kubewarden, with Go, Rust, Swift, Open Policy Agent and
 Gatekeeper policies, as you are used to.
@@ -277,7 +281,7 @@ Error from server: error when creating "STDIN": admission webhook "privileged-po
 > ```
 ---
 
-# Foreword
+## Foreword
 
 The new Kubewarden stack, with the new cluster-wide PolicyServer resource,
 allows fine-tuning of policies, and at the same time makes the life of

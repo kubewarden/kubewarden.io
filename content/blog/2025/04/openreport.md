@@ -3,6 +3,10 @@ title: Kubewarden joins OpenReports Initiative
 authors:
   - José Guilherme Vanz
 date: 2025-05-12
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 Kubewarden is an open-source CNCF project actively engaged with the wider

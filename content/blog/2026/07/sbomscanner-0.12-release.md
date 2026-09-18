@@ -3,6 +3,10 @@ title: "SBOMscanner 0.12 Release: Full-Stack Security with Node Scanning"
 authors:
   - Alessio Greggi
 date: 2026-07-07
+components:
+  - SBOM Scanner
+types:
+  - release
 ---
 
 We are thrilled to announce the release of SBOMscanner
@@ -16,7 +20,7 @@ the nodes that run them.
 
 ## Why scan nodes?
 
-Until now, SBOMscanner focused on what runs *inside* your cluster: container
+Until now, SBOMscanner focused on what runs _inside_ your cluster: container
 images pulled from your registries and, more recently, the workloads actually
 deployed on the cluster. That is a big part of the story, but it is not the
 whole story.
@@ -34,19 +38,19 @@ container image running on top of it.
 ## Introducing Node Scan
 
 Node Scan is delivered the Kubernetes-native way: through Custom Resource
-Definitions. You describe *what* you want to happen with a small set of CRDs,
+Definitions. You describe _what_ you want to happen with a small set of CRDs,
 and SBOMscanner takes care of the rest, scheduling scans, running them on
 every eligible node, and producing SBOMs and vulnerability reports that you
 can query with `kubectl`.
 
 The new CRDs introduced in this release are:
 
-* **`NodeScanConfiguration`**: a cluster-scoped, singleton resource that acts
+- **`NodeScanConfiguration`**: a cluster-scoped, singleton resource that acts
   as the single entry point to control node scanning globally.
-* **`NodeScanJob`**: represents a single scan execution against a specific
+- **`NodeScanJob`**: represents a single scan execution against a specific
   node, either scheduled automatically or created on demand.
-* **`NodeSBOM`**: the Software Bill of Materials for a node, in SPDX format.
-* **`NodeVulnerabilityReport`**: the vulnerability analysis results produced
+- **`NodeSBOM`**: the Software Bill of Materials for a node, in SPDX format.
+- **`NodeVulnerabilityReport`**: the vulnerability analysis results produced
   from a `NodeSBOM`.
 
 ## Getting started
@@ -73,13 +77,13 @@ resources for you.
 Real clusters are rarely uniform, so `NodeScanConfiguration` gives you a few
 knobs to focus the scan where it matters:
 
-* **`scanInterval`**: how often the scan runs automatically.
-* **`nodeSelector`**: a standard Kubernetes label selector that limits
+- **`scanInterval`**: how often the scan runs automatically.
+- **`nodeSelector`**: a standard Kubernetes label selector that limits
   scanning to a subset of nodes. Useful for skipping nodes that don't have
   enough resources or for targeting a specific node pool.
-* **`platforms`**: restrict scanning to specific OS/architecture
+- **`platforms`**: restrict scanning to specific OS/architecture
   combinations, handy on mixed-architecture clusters.
-* **`skipPatterns`**: gitignore-style patterns for files and directories to
+- **`skipPatterns`**: gitignore-style patterns for files and directories to
   exclude from the scan. By default, SBOMscanner already skips the container
   runtime state directories (`/var/lib/containerd/`, `/var/lib/docker/`, and
   friends) so that image content already covered by registry scanning is
@@ -177,9 +181,9 @@ kubectl get nodevulnerabilityreport worker-1 -o yaml
 With Node Scan, SBOMscanner now covers the three layers that make up your
 cluster's runtime attack surface:
 
-* **Registries**: the images you *could* run.
-* **Workloads**: the images you *are* running.
-* **Nodes**: the infrastructure they are running *on*.
+- **Registries**: the images you _could_ run.
+- **Workloads**: the images you _are_ running.
+- **Nodes**: the infrastructure they are running _on_.
 
 That combination gives platform and security teams a single, consistent,
 Kubernetes-native view of vulnerabilities across the whole stack. Combined

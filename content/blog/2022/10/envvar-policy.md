@@ -3,6 +3,10 @@ title: Enforcing compliance of container's environment variables
 authors:
 - José Guilherme Vanz
 date: 2022-10-31
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 We're glad to present the new [environment-variable-policy](https://github.com/kubewarden/environment-variable-policy) to Kubewarden users. With this policy, you will now be able to inspect init containers and ephemeral containers. You can also restrict their usage by reviewing the names and values defined under the containers' [`env[*]`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#envvar-v1-core) field.

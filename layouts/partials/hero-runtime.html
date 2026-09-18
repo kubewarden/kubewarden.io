@@ -1,0 +1,51 @@
+{{/*
+  Vertical "enforcement path" graphic for the Runtime Enforcer hero.
+  A Pod with two containers sits on top; eBPF enforcement in the Linux
+  kernel is what allows or blocks each executable, so the diagram reads
+  top (workload) to bottom (kernel), with the enforcement layer in the
+  middle of the two arrows that connect them.
+*/}}
+<div class="component-hero-diagram component-hero-diagram--stack" aria-hidden="true">
+  <div class="hr-pod">
+    <div class="hr-pod-head">
+      <img src="/images/kubernetes-logo.svg" alt="">
+      <span>Pod: payments-api</span>
+    </div>
+    <div class="hr-containers">
+      <div class="hr-container">
+        <div class="hr-container-head">
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg>
+          <span><strong>init container</strong><small>init-setup</small></span>
+        </div>
+        <ul class="hr-exec-list">
+          <li class="hr-exec hr-exec--allow"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>/bin/bash</li>
+          <li class="hr-exec hr-exec--allow"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>/scripts/setup.sh</li>
+        </ul>
+      </div>
+      <div class="hr-container">
+        <div class="hr-container-head">
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg>
+          <span><strong>main container</strong><small>app</small></span>
+        </div>
+        <ul class="hr-exec-list">
+          <li class="hr-exec hr-exec--allow"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>/usr/bin/payments-api</li>
+          <li class="hr-exec hr-exec--deny"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-x"></use></svg>/bin/bash</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <span class="hr-arrow hr-arrow--up"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+
+  <div class="hr-ebpf">
+    <img class="logo-light" src="/images/ebpf-logo-light.png" alt="eBPF" width="84" height="32">
+    <img class="logo-dark" src="/images/ebpf-logo-dark.png" alt="eBPF" width="84" height="32">
+  </div>
+
+  <span class="hr-arrow hr-arrow--down"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></span>
+
+  <div class="hr-kernel">
+    <img src="/images/tux.svg" alt="" width="24" height="28">
+    Linux kernel
+  </div>
+</div>

@@ -3,6 +3,10 @@ title: "Policy Server 1.29.2 Patch Release"
 authors:
   - Flavio Castelli
 date: 2025-10-17
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Earlier this week we published a patch release of Policy Server. The fix was required to avoid a crash at startup time.
@@ -19,7 +23,7 @@ The Kubewarden Helm charts have been updated to use the latest Policy Server con
 
 Note: This upgrade only affects the `default` Policy Server deployed by the `kubewarden-defaults` Helm chart. If you have custom PolicyServer instances defined, you will need to patch those manually.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

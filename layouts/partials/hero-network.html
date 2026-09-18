@@ -1,0 +1,55 @@
+{{/*
+  Network Enforcer hero: a small pod-to-pod traffic graph. Three
+  workloads (frontend, api, database) talk to each other over learned,
+  allowed ports; frontend's other attempt is blocked, and api also
+   connects to Redis. A legend explains the traffic colors.
+*/}}
+<div class="component-hero-diagram component-hero-diagram--stack hn-diagram" aria-hidden="true">
+  <div class="hn-grid">
+    <div class="hn-node">
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg>
+      <strong>frontend</strong><small>pod</small>
+    </div>
+    <div class="hn-edge">
+      <span class="hn-edge-label"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>HTTPS :443</span>
+      <span class="hn-edge-line"></span>
+    </div>
+    <div class="hn-node">
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg>
+      <strong>api</strong><small>pod</small>
+    </div>
+    <div class="hn-edge">
+      <span class="hn-edge-label"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Postgres :5432</span>
+      <span class="hn-edge-line"></span>
+    </div>
+    <div class="hn-node">
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg>
+      <strong>database</strong><small>pod</small>
+    </div>
+
+    <div class="hn-branch hn-branch--deny">
+      <span class="hn-branch-line"></span>
+      <div class="hn-node hn-node--flag">
+        <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-x"></use></svg>
+        <strong>Blocked</strong><small>unexpected</small>
+      </div>
+    </div>
+    <div class="hn-cell"></div>
+    <div class="hn-branch">
+      <span class="hn-edge-label hn-edge-label--sm"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Redis :6379</span>
+      <span class="hn-branch-line"></span>
+      <div class="hn-node">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-container"></use></svg>
+        <strong>redis</strong><small>pod</small>
+      </div>
+    </div>
+    <div class="hn-cell"></div>
+    <div class="hn-cell"></div>
+  </div>
+
+  <div class="hn-legend">
+    <span><i class="hn-legend-line"></i>Learned traffic</span>
+    <span><i class="hn-legend-line hn-legend-line--deny"></i>Blocked traffic</span>
+    <span><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-container"></use></svg>Pod / Workload</span>
+  </div>
+</div>

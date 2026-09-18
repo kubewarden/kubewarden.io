@@ -3,6 +3,10 @@ title: "Scanning secrets in environment variables"
 authors:
 - Raul Cabello Martin
 date: 2022-10-24
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 We are thrilled to announce you can now scan your environment variables for secrets with the new

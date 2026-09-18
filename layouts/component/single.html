@@ -1,0 +1,63 @@
+{{ define "main" }}
+<main id="main-content" tabindex="-1">
+{{ if .Params.hero }}
+<section class="component-hero">
+  <div class="wrap-lg component-hero-inner">
+    <div class="component-hero-copy">
+      <p class="breadcrumb"><a href="/#components">Platform</a> <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg> {{ .Title }}</p>
+      <div class="component-hero-title">
+        <span class="component-hero-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#{{ .Params.icon }}"></use></svg></span>
+        <div class="component-hero-heading">
+          <h1>{{ .Title }}</h1>
+          {{ with .Params.status }}<span class="pill pill-{{ . | lower }}">{{ . }}</span>{{ end }}
+        </div>
+      </div>
+      {{ with .Params.tagline }}<p class="component-tagline component-tagline--left">{{ . }}</p>{{ end }}
+      {{ with .Params.intro }}<p class="component-intro">{{ . | safeHTML }}</p>{{ end }}
+      <div class="component-hero-actions">
+        {{ with .Params.docs }}<a class="btn-primary" href="{{ . }}" target="_blank" rel="noopener">Read the docs<span class="sr-only"> (opens in new tab)</span></a>{{ end }}
+        {{ with .Params.policiesUrl }}<a class="btn-outline" href="{{ . }}" target="_blank" rel="noopener">Browse ready-to-use policies<span class="sr-only"> (opens in new tab)</span></a>{{ end }}
+        {{ with .Params.repoUrl }}<a class="btn-outline" href="{{ . }}" target="_blank" rel="noopener">View on GitHub <svg class="icon icon-sm icon-trail" aria-hidden="true"><use xlink:href="#icon-github"></use></svg><span class="sr-only"> (opens in new tab)</span></a>{{ end }}
+      </div>
+    </div>
+    <div class="component-hero-visual component-hero-visual--{{ .Params.hero }}">
+      {{ partial (printf "hero-%s.html" .Params.hero) . }}
+    </div>
+  </div>
+</section>
+{{ else }}
+<section class="component-header">
+  <div class="wrap-lg">
+    <div class="component-header-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#{{ .Params.icon }}"></use></svg></div>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.status }}<span class="pill pill-{{ . | lower }}">{{ . }}</span>{{ end }}
+    {{ with .Params.tagline }}<p class="component-tagline">{{ . }}</p>{{ end }}
+    {{ with .Params.docs }}<a class="btn-primary" href="{{ . }}" target="_blank" rel="noopener">Read the docs<span class="sr-only"> (opens in new tab)</span></a>{{ end }}
+  </div>
+</section>
+{{ end }}
+
+<div class="component-body">
+  {{/* HTML content keeps real headings; add shared permalink controls here. */}}
+  {{ $content := .Content }}
+  {{ range findRE `<h2 id="[^"]+">[^<]+</h2>` $content }}
+    {{ $id := replaceRE `<h2 id="([^"]+)">[^<]+</h2>` "$1" . }}
+    {{ $title := replaceRE `<h2 id="[^"]+">([^<]+)</h2>` "$1" . | htmlUnescape }}
+    {{ $heading := partial "section-heading.html" (dict "id" $id "title" $title) }}
+    {{ $content = replace $content . $heading }}
+  {{ end }}
+  {{/* Network diagrams can scroll when readers enlarge text. */}}
+  {{ replace $content `class="hn-grid"` `class="hn-grid" tabindex="0"` | safeHTML }}
+</div>
+
+<section class="component-other">
+  <div class="wrap-lg">
+    {{ partial "section-heading.html" (dict "id" "other-components" "title" "Explore other Kubewarden components") }}
+    <p class="section-lead">Extend your security posture across the entire workload lifecycle.</p>
+    {{ partial "component-grid.html" (dict "current" .RelPermalink) }}
+  </div>
+</section>
+
+{{ partial "cncf-band.html" . }}
+</main>
+{{ end }}

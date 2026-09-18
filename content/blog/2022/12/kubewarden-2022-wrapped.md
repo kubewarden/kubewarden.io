@@ -3,6 +3,10 @@ title: Kubewarden 2022 Wrapped
 authors:
 - Flavio Castelli
 date: 2022-12-29
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 With 2022 almost over, it's time to look back at what happened within

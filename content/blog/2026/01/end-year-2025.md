@@ -3,6 +3,11 @@ title: "The year in review: Kubewarden's progress in 2025"
 authors:
   - Víctor Cuadrado Juan
 date: 2026-01-07
+components:
+  - Admission Controller
+  - SBOM Scanner
+types:
+  - community
 ---
 
 Join us in celebrating a fruitful 2025 for the Kubewarden project!
@@ -111,7 +116,7 @@ Kubernetes security framework.
 Here’s to another year of innovation, collaboration, and making Kubernetes
 safer and more flexible for everyone!
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

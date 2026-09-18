@@ -4,6 +4,10 @@ authors:
 - Raul Cabello Martin
 date: 2022-03-16
 lastmod: 2022-03-29
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 Up till now, the only way to define a policy in Kubewarden was to use the [`ClusterAdmissionPolicy`](https://github.com/kubewarden/kubewarden-controller/blob/main/docs/crds/README.asciidoc#k8s-api-github-com-kubewarden-kubewarden-controller-apis-policies-v1alpha2-clusteradmissionpolicy) resource that would be applied to cluster-wide resources across all namespaces.
@@ -97,9 +101,8 @@ If your policy needs to be applied to resources across all namespaces or cluster
 
 On the other hand, if your cluster is shared by multiple users or teams, uses different namespaces or your policy needs to be applied only to resources within a namespace, then the new `AdmissionPolicy` would be the right choice.
 
-You can find the `AdmissionPolicy` specification [here](https://github.com/kubewarden/kubewarden-controller/blob/e0433fc3774d06dcf5e08bf2c600ad0117b89448/docs/crds/README.asciidoc#admissionpolicy).
+You can find the [`AdmissionPolicy` specification](https://github.com/kubewarden/kubewarden-controller/blob/e0433fc3774d06dcf5e08bf2c600ad0117b89448/docs/crds/README.asciidoc#admissionpolicy).
 
 As a community, we thrive on feedback and welcome your suggestions! Feel free to open an issue against our
 [GitHub repository](https://github.com/kubewarden/kubewarden-controller) or get in
 touch on the [#kubewarden Slack channel](https://kubernetes.slack.com/archives/C01T3GTC3L7)!
-

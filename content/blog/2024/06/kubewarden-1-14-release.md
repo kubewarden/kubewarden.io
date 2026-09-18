@@ -1,11 +1,14 @@
 ---
 title: Kubewarden 1.14 release
+titleAnchor: kubewarden-v1140-release
 authors:
   - Jose Guilherme Vanz
 date: 2024-06-25
+components:
+  - Admission Controller
+types:
+  - release
 ---
-
-# Kubewarden v1.14.0 release
 
 We are thrilled to announce the release of Kubewarden v1.14.0! This version
 comes packed with new capabilities, enhancements, and fixes that make
@@ -91,7 +94,7 @@ Kubernetes 1.28 and discussed how to use CEL with other dynamic admission
 controllers. This talk highlighted the practical applications and advantages of
 using CEL for cluster security.
 
-While the talk has been delivered in Italian, the slides are written in English and can be found [here](https://flavio.castelli.me/2024/06/25/kcd-italy---cel-kubernetes-validatingadmissionpolicy-and-kubewarden/).
+While the talk has been delivered in Italian, the [slides on CEL for cluster security](https://flavio.castelli.me/2024/06/25/kcd-italy---cel-kubernetes-validatingadmissionpolicy-and-kubewarden/) are written in English.
 
 ## Known Bugs and Future Plans
 

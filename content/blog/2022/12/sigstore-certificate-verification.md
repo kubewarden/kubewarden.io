@@ -3,6 +3,10 @@ title: Support for sigstore certificate signing
 authors:
 - Flavio Castelli
 date: 2022-12-05
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 Secure supply chain is one of the hottest topics right now. Many organizations

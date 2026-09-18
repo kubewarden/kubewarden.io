@@ -3,6 +3,10 @@ title: My Experience in the LFX Mentorship Program with the Linux Foundation
 authors:
 - Khaled Emara
 date: 2023-05-30
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 > This text was originally written by Khaled Emara on his [blog](https://blog.khaledemara.dev/my-experience-in-the-lfx-mentorship-program-with-the-linux-foundation?showSharer=true).

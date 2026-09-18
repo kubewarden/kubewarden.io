@@ -4,6 +4,10 @@ authors:
   - Víctor Cuadrado Juan
   - Flavio Castelli
 date: 2025-10-30
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Today, Kubewarden 1.30 woke up, shook itself, stretched its wings and took off
@@ -143,7 +147,7 @@ The policy now can be a mutating policy with the addition of
 used together with the allow list or deny list, the default must pass the
 validation of these lists.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

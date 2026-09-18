@@ -3,6 +3,10 @@ title: Writing your first policy with Kubewarden
 authors:
     - Rafael Fernández López
 date: 2021-06-02
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 Kubewarden is a project focused on security and compliance. Its main

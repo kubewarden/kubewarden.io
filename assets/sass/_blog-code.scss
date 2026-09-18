@@ -1,0 +1,18 @@
+// Every token color meets normal-text contrast on this background.
+.blog-single .blog-prose .chroma {
+  color: #f8f8f2;
+  background: #1a1a1f;
+
+  .k, .kc, .kd, .kn, .kp, .kr, .kt, .o, .ow, .nt { color: #ff8fbc; }
+  .na, .nc, .nd, .ne, .nf, .fm { color: #b5e681; }
+  .nb, .bp, .no, .nv, .vc, .vg, .vi, .vm { color: #8edce6; }
+  .s, .sa, .sb, .sc, .dl, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss { color: #e6db9c; }
+  .m, .mb, .mf, .mh, .mi, .il, .mo { color: #c7a9ff; }
+  .c, .ch, .cm, .c1, .cs, .cp, .cpf { color: #aaaab5; }
+  .err, .gd, .gr, .gt { color: #ffabab; }
+  .gi { color: #b5e681; }
+  .gh, .gu, .gs { font-weight: bold; }
+  .ge { font-style: italic; }
+  .gl { text-decoration: underline; }
+  .line { display: flex; }
+}

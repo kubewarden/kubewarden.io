@@ -3,6 +3,10 @@ title: "Kubewarden 1.28 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2025-08-27
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Kubewarden 1.28 has emerged refreshed from a bath in the lake (just like my dog
@@ -179,7 +183,7 @@ apart from the usual dependency bumps, we have performed a partial migration to 
 - Our container images also got the bump, but the changes will be released on
   the next version.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

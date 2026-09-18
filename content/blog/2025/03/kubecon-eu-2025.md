@@ -3,6 +3,10 @@ title: Kubewarden at KubeCon EU 2025
 authors:
   - Flavio Castelli
 date: 2025-03-27
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 For those attending KubeCon EU 2025 in London, we’re excited to announce that some of our team will be there!
