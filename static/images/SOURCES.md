@@ -1,6 +1,6 @@
 # Theme artwork sources
 
-These SVG files are local copies of upstream artwork, without color changes or filters.
+These image files are local copies of upstream artwork, without color changes or filters.
 
 ## Rancher by SUSE
 
@@ -28,3 +28,14 @@ These SVG files are local copies of upstream artwork, without color changes or f
 - Refinement and cleanup by IFo Hancroft.
 - License: CC0 / public domain, as stated in the [upstream README](https://github.com/garrett/Tux/blob/master/README.md).
 - The same artwork appears in both themes.
+
+## eBPF
+
+- Files: `ebpf-logo-light.png` and `ebpf-logo-dark.png`
+- Source: https://ebpf.foundation/wp-content/uploads/sites/9/2025/09/ebpf_logos.zip
+- Original archive names: `ebpf_logo_color_on_white.png` and `ebpf_logo_color_on_dark.png`.
+- Official color logo variations from the [eBPF Foundation brand guidelines](https://ebpf.foundation/brand-guidelines/).
+- Used unchanged with transparent backgrounds, without a backing panel or filters.
+- eBPF Foundation owns the logo and associated trademarks.
+- Light SHA-256: `cfacb933ae346a0c151c48747fb381bf01ea2dffad3336f7c4e5cc3044aec775`
+- Dark SHA-256: `f86b4907cde47a1121d086d9f387deae834c007a89d25e9381ec2d94311a6f2a`

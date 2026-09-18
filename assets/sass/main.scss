@@ -1574,21 +1574,16 @@ footer {
 .hr-ebpf {
   display: flex;
   align-items: center;
-  gap: .6rem;
+  justify-content: center;
   background: var(--surface-tint);
-  color: var(--accent-color);
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 1.3rem;
-  padding: .8rem 1.6rem;
+  padding: .8rem 1.2rem;
   border-radius: 8px;
 
-  .icon {
-    width: 1.6rem;
-    height: 1.6rem;
-    color: var(--accent-color);
-    fill: none;
-    margin-right: 0;
+  img {
+    width: 8.4rem;
+    height: 3.2rem;
+    object-fit: contain;
+    flex-shrink: 0;
   }
 }
 
