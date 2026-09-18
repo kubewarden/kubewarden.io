@@ -1,7 +1,14 @@
 {{ $blog := site.GetPage "/blog" }}
+{{ $feedPage := $blog }}
+{{ $feedLabel := "Subscribe via RSS" }}
 {{ $posts := where site.RegularPages "Section" "blog" }}
 {{ if eq .Kind "term" }}
   {{ $posts = where .RegularPages "Section" "blog" }}
+  {{ $feedPage = . }}
+  {{ $feedLabel = printf "Subscribe to %s posts" (replace .Title "-" " ") }}
+  {{ if and (eq .Data.Plural "types") (eq .Data.Term "release") }}
+    {{ $feedLabel = "Subscribe to releases" }}
+  {{ end }}
 {{ end }}
 <main id="main-content" tabindex="-1" class="blog-archive">
   <section class="hero blog-hero">
@@ -9,9 +16,9 @@
       <div class="hero-copy">
         <h1>The Kubewarden blog</h1>
         <p class="hero-lead">Project news, releases, tutorials and stories from the Kubewarden community.</p>
-        {{ with $blog.OutputFormats.Get "RSS" }}
-        <a class="btn-outline" href="{{ .RelPermalink }}">
-          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss"></use></svg>Subscribe via RSS
+        {{ with $feedPage.OutputFormats.Get "RSS" }}
+        <a class="btn-outline" href="{{ .RelPermalink }}" type="application/rss+xml">
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss"></use></svg>{{ $feedLabel }}{{ if eq $.Kind "term" }}<span class="sr-only"> via RSS</span>{{ end }}
         </a>
         {{ end }}
       </div>
