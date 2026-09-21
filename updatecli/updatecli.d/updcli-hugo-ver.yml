@@ -1,0 +1,88 @@
+name: 'ci: update Hugo version used to build kubewarden.io'
+pipelineid: hugo/latest
+
+actions:
+  default:
+    kind: github/pullrequest
+    scmid: default
+    spec:
+      merge:
+        strategy: manual
+      mergemethod: squash
+      labels:
+        - "kind/chore"
+        - "dependencies"
+
+scms:
+  default:
+    kind: github
+    spec:
+      owner: "kubewarden"
+      repository: kubewarden.io
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
+      branch: main
+      commitusingapi: true
+      commitmessage:
+        footers: "Signed-off-by: Kubewarden bot <cncf-kubewarden-maintainers@lists.cncf.io>"
+
+sources:
+  hugo-version:
+    name: Get the latest Hugo release
+    kind: githubrelease
+    spec:
+      owner: gohugoio
+      repository: hugo
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
+      versionfilter:
+        kind: semver
+        pattern: ">0.1"
+    transformers:
+      - trimprefix: "v"
+
+  hugo-sha256:
+    name: Get the SHA256 checksum of the Hugo extended linux/amd64 tarball
+    kind: file
+    dependson:
+      - hugo-version
+    spec:
+      file: 'https://github.com/gohugoio/hugo/releases/download/v{{ source "hugo-version" }}/hugo_{{ source "hugo-version" }}_checksums.txt'
+    transformers:
+      - findsubmatch:
+          pattern: '(?m)^([0-9a-f]{64})\s+hugo_extended_{{ source "hugo-version" }}_linux-amd64\.tar\.gz$'
+          captureindex: 1
+
+targets:
+  netlify-hugo-version:
+    name: 'ci: update Hugo to version {{ source "hugo-version" }} in netlify.toml'
+    kind: file
+    sourceid: hugo-version
+    scmid: default
+    spec:
+      files:
+        - netlify.toml
+      matchpattern: 'HUGO_VERSION = ".*"'
+      replacepattern: 'HUGO_VERSION = "{{ source "hugo-version" }}"'
+
+  workflow-hugo-version:
+    name: 'ci: update Hugo to version {{ source "hugo-version" }} in the publish workflow'
+    kind: file
+    sourceid: hugo-version
+    scmid: default
+    spec:
+      files:
+        - .github/workflows/publish.yml
+      matchpattern: 'HUGO_VERSION: .*'
+      replacepattern: 'HUGO_VERSION: {{ source "hugo-version" }}'
+
+  workflow-hugo-sha256:
+    name: 'ci: update Hugo tarball checksum in the publish workflow'
+    kind: file
+    sourceid: hugo-sha256
+    scmid: default
+    spec:
+      files:
+        - .github/workflows/publish.yml
+      matchpattern: 'HUGO_SHA256: .*'
+      replacepattern: 'HUGO_SHA256: {{ source "hugo-sha256" }}'
