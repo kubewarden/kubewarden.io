@@ -59,6 +59,10 @@ resources to `namespacedPoliciesAllowedResources`.
 affected by this change. Cluster-wide policies already need cluster-wide
 privileges.
 
+Please refer to our
+[documentation](https://docs.kubewarden.io/admission-controller/1.38/en/howtos/security-hardening/security-hardening.html#_namespaced_policy_allowed_resources)
+for more details.
+
 ## Hardening policy evaluation against memory exhaustion
 
 We also hardened policy evaluation against memory exhaustion. Without this
@@ -81,7 +85,9 @@ evaluation. Starting from this release, the Policy Server
 limits to 256 MiB the maximum amount of memory a policy can allocate.
 
 The value can be changed or completely removed by using environment
-variables. Please refer to our documentation for more details.
+variables. Please refer to our
+[documentation](https://docs.kubewarden.io/admission-controller/1.38/en/reference/policy-evaluation-timeout.html#_policy_memory_limit)
+for more details.
 
 ## Fixing an unbounded memory growth with context-aware policies
 
