@@ -4,6 +4,11 @@ authors:
   - Víctor Cuadrado Juan
   - José Guilherme Vanz
 date: 2026-09-21
+components:
+  - Admission Controller
+types:
+  - release
+  - security-advisory
 ---
 
 Welcome to the monthly release of Admission Controller. On the menu for this
