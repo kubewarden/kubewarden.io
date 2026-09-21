@@ -3,14 +3,39 @@
   <title id="t">Median latency in a mixed workload: cached versus moka</title>
   <desc id="d">Bar chart with a linear scale. In a 90 percent hit and 10 percent miss workload, the cached crate median latency rises to 12.8 milliseconds at concurrency 64 because hits queue behind misses. moka stays at 42 microseconds.</desc>
   <style>
-    .axis { stroke: #94a3b8; stroke-width: 1; }
-    .grid { stroke: #e2e8f0; stroke-width: 1; }
-    .lbl  { fill: #475569; font-size: 13px; }
-    .tick { fill: #64748b; font-size: 12px; }
+    :root {
+      --background: #f6f7f9;
+      --heading: #0f172a;
+      --label: #475569;
+      --muted: #64748b;
+      --legend: #334155;
+      --axis: #94a3b8;
+      --grid: #e2e8f0;
+      --cached: #dc2626;
+      --moka: #16a34a;
+    }
+    /* Embedded SVGs follow the page's color-scheme, including the theme toggle. */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #25252f;
+        --heading: #f3f1f5;
+        --label: #d0cbd4;
+        --muted: #b3adbd;
+        --legend: #d0cbd4;
+        --axis: #b3adbd;
+        --grid: #42404c;
+        --cached: #f87171;
+        --moka: #8fdfb0;
+      }
+    }
+    .axis { stroke: var(--axis); stroke-width: 1; }
+    .grid { stroke: var(--grid); stroke-width: 1; }
+    .lbl  { fill: var(--label); font-size: 13px; }
+    .tick { fill: var(--muted); font-size: 12px; }
     .val  { font-size: 13px; font-weight: 600; text-anchor: middle; }
   </style>
-  <rect width="760" height="440" fill="#ffffff"/>
-  <text x="380" y="28" text-anchor="middle" font-size="17" font-weight="600" fill="#0f172a">Mixed workload (90% hits / 10% misses): median latency</text>
+  <rect width="760" height="440" fill="var(--background)"/>
+  <text x="380" y="28" text-anchor="middle" font-size="17" font-weight="600" fill="var(--heading)">Mixed workload (90% hits / 10% misses): median latency</text>
 
   <!-- plot area x 90..700, y 70..360. linear scale: 0 ms -> y360, 13 ms -> y70. y = 360 - ms*22.3077 -->
   <g class="grid">
@@ -32,20 +57,20 @@
        Microsecond bars round to less than 1 px; drawn at a 2 px minimum height. -->
   <g>
     <!-- concurrency 1 -->
-    <rect x="125" y="358" width="60" height="2" fill="#dc2626" rx="1"/>
-    <rect x="195" y="358" width="60" height="2" fill="#16a34a" rx="1"/>
-    <text class="val" x="155" y="352" fill="#dc2626">3 µs</text>
-    <text class="val" x="225" y="338" fill="#16a34a">5 µs</text>
+    <rect x="125" y="358" width="60" height="2" fill="var(--cached)" rx="1"/>
+    <rect x="195" y="358" width="60" height="2" fill="var(--moka)" rx="1"/>
+    <text class="val" x="155" y="352" fill="var(--cached)">3 µs</text>
+    <text class="val" x="225" y="338" fill="var(--moka)">5 µs</text>
     <!-- concurrency 8 -->
-    <rect x="330" y="313.2" width="60" height="46.8" fill="#dc2626" rx="1"/>
-    <rect x="400" y="358" width="60" height="2" fill="#16a34a" rx="1"/>
-    <text class="val" x="360" y="307" fill="#dc2626">2.1 ms</text>
-    <text class="val" x="430" y="352" fill="#16a34a">9 µs</text>
+    <rect x="330" y="313.2" width="60" height="46.8" fill="var(--cached)" rx="1"/>
+    <rect x="400" y="358" width="60" height="2" fill="var(--moka)" rx="1"/>
+    <text class="val" x="360" y="307" fill="var(--cached)">2.1 ms</text>
+    <text class="val" x="430" y="352" fill="var(--moka)">9 µs</text>
     <!-- concurrency 64 -->
-    <rect x="535" y="74.5" width="60" height="285.5" fill="#dc2626" rx="1"/>
-    <rect x="605" y="358" width="60" height="2" fill="#16a34a" rx="1"/>
-    <text class="val" x="565" y="68" fill="#dc2626">12.8 ms</text>
-    <text class="val" x="635" y="352" fill="#16a34a">42 µs</text>
+    <rect x="535" y="74.5" width="60" height="285.5" fill="var(--cached)" rx="1"/>
+    <rect x="605" y="358" width="60" height="2" fill="var(--moka)" rx="1"/>
+    <text class="val" x="565" y="68" fill="var(--cached)">12.8 ms</text>
+    <text class="val" x="635" y="352" fill="var(--moka)">42 µs</text>
   </g>
 
   <g class="tick" text-anchor="middle">
@@ -57,11 +82,11 @@
 
   <!-- legend -->
   <g font-size="13">
-    <rect x="110" y="40" width="16" height="12" fill="#dc2626" rx="2"/>
-    <text x="132" y="50" fill="#334155">cached crate (before)</text>
-    <rect x="310" y="40" width="16" height="12" fill="#16a34a" rx="2"/>
-    <text x="332" y="50" fill="#334155">moka (after)</text>
+    <rect x="110" y="40" width="16" height="12" fill="var(--cached)" rx="2"/>
+    <text x="132" y="50" fill="var(--legend)">cached crate (before)</text>
+    <rect x="310" y="40" width="16" height="12" fill="var(--moka)" rx="2"/>
+    <text x="332" y="50" fill="var(--legend)">moka (after)</text>
   </g>
 
-  <text x="380" y="424" text-anchor="middle" font-size="12" fill="#94a3b8">Source: microbenchmark of the can_i host-call path, 10,000 requests, mock API server with a fixed 1 ms delay</text>
+  <text x="380" y="424" text-anchor="middle" font-size="12" fill="var(--muted)">Source: microbenchmark of the can_i host-call path, 10,000 requests, mock API server with a fixed 1 ms delay</text>
 </svg>
