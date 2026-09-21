@@ -18,14 +18,20 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Keep in sync with HUGO_VERSION in netlify.toml
+      HUGO_VERSION: 0.166.0
+      HUGO_SHA256: 0e39b901e3f919f1daae05c8ff64f0c14c8a348ef46886d63f8e6d1bb2653885
     steps:
-      - name: Temporal workaround for innacessible mirrors
-        run: |
-          sudo sed -i 's|mirror+file:/etc/apt/apt-mirrors.txt|http://archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list
-          sudo apt-get update
       - name: Install hugo
         run: |
-          sudo apt install hugo
+          set -euo pipefail
+          tarball="hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
+          curl -fsSL -o "${tarball}" \
+            "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${tarball}"
+          echo "${HUGO_SHA256}  ${tarball}" | sha256sum -c -
+          sudo tar -xzf "${tarball}" -C /usr/local/bin hugo
+          rm -f "${tarball}"
           hugo version
       - name: Checkout Repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
