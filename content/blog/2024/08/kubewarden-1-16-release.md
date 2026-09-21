@@ -1,11 +1,15 @@
 ---
 title: Kubewarden 1.16 release
+titleAnchor: kubewarden-v1160-release
 authors:
   - Víctor Cuadrado Juan
 date: 2024-08-19
+components:
+  - Admission Controller
+types:
+  - release
+  - security-advisory
 ---
-
-# Kubewarden v1.16.0 release
 
 We are thrilled to announce the release of Kubewarden v1.16.0! Following the
 northern hemisphere summer, this version packs some goodies but is a bit more

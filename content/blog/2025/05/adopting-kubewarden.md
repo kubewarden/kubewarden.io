@@ -3,6 +3,10 @@ title: "Adopting of Kubewarden"
 authors:
   - Robert Sirchia
 date: 2025-05-23
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 ## Call for Adopters

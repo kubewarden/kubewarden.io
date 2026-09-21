@@ -3,6 +3,10 @@ title: Kubewarden 1.18 release, SLSA level 3
 authors:
   - Víctor Cuadrado Juan
 date: 2024-11-04
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 We are thrilled to announce the release of Kubewarden v1.18.0. For this release

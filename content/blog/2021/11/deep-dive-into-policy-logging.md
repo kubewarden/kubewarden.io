@@ -3,6 +3,10 @@ title: Deep Dive into policy logging
 authors:
     - Rafael Fernández López
 date: 2021-11-15
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 Policies are regular programs. As such they often have the need to log information. In general, we
@@ -123,7 +127,7 @@ As happens with the Go SDK implementation, our Rust implementation of the `slog`
 logging events to the host by using
 waPC](https://github.com/kubewarden/policy-sdk-rust/blob/642d13b07053be6455c0b5f49df0e87ff6f022c5/src/logging/drain.rs#L57-L60).
 
-You can read more about slog [here](https://github.com/slog-rs/slog).
+You can read more about [slog](https://github.com/slog-rs/slog).
 
 ### Swift
 

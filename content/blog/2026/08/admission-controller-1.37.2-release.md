@@ -3,6 +3,11 @@ title: "Admission controller 1.37.2 Release"
 authors:
   - José Guilherme Vanz
 date: 2026-08-17
+components:
+  - Admission Controller
+types:
+  - release
+  - security-advisory
 ---
 
 Hi all! This patch release ships several fixes for the community. One of them

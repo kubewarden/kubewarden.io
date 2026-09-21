@@ -3,6 +3,10 @@ title: Watch Kubewarden in the ChatLoopBackOff Webinar
 authors:
   - Victor Cuadrado Juan
 date: 2025-03-18
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 We are happy to highlight a recent CNCF webinar that does a first-dive into
@@ -17,7 +21,7 @@ admission control or runtime to ensure compliance and security.
 
 Thanks Carlos!
 
-### Getting in touch
+## Getting in touch
 
 As always, we welcome your feedback and contributions. Feel free to reach out
 to us on [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden)

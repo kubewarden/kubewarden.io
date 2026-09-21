@@ -3,6 +3,10 @@ title: "Kubewarden 1.26 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2025-06-25
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Kubewarden 1.26 is fresh out of the oven, with a nice bunch of features.
@@ -209,7 +213,7 @@ This is now solved with
 [github-actions](https://github.com/kubewarden/github-actions/releases) v4.5.0,
 and Rego policies from monorepos correctly create release artifacts.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

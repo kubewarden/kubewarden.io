@@ -3,6 +3,10 @@ title: "Introducing the Kubewarden JavaScript/TypeScript SDK"
 authors:
   - Esosa Ohangbon
 date: 2025-11-18
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 Writing Kubewarden policies is now even more accessible. Today, we're excited to announce the alpha release of the [Kubewarden JavaScript/TypeScript SDK](https://github.com/kubewarden/policy-sdk-js), bringing policy development to the world's most popular programming language.

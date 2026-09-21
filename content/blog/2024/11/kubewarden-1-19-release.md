@@ -3,20 +3,24 @@ title: Kubewarden 1.19 release
 authors:
   - José Guilherme Vanz
 date: 2024-12-02
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 We're excited to announce the release of Kubewarden v1.19! This release brings
 a host of improvements focused on minor bug fixes, adding tests, and developer
 tech debt improvements. 
 
-# Bug Fixes and Dependency Updates 
+## Bug Fixes and Dependency Updates
 
 As always, we've addressed bugs and updated dependencies to ensure a smooth and
 reliable experience. Notably, we've updated the dependencies for our major
 components. These updates contribute to the overall stability and security of
 the Kubewarden stack.
 
-# Fix to Policy-Server CI and SBOM file generation 
+## Fix to Policy-Server CI and SBOM file generation
 
 In our previous release,
 [v1.18](https://www.kubewarden.io/blog/2024/11/kubewarden-1-18-release-slsa-level-3/),
@@ -49,7 +53,7 @@ slsactl download sbom ghcr.io/kubewarden/policy-server:v1.19.0
 All the above commands can be used to verify the Kubewarden controller and
 audit scanner container images.
 
-# Removal of Old Post-Install Helm Chart Hooks
+## Removal of Old Post-Install Helm Chart Hooks
 
 We've cleaned up some legacy code by removing old post-install Helm chart hooks
 that were necessary for older releases. This streamlines the installation
@@ -61,7 +65,7 @@ process and reduces potential compatibility issues.
 > path](https://docs.kubewarden.io/reference/upgrade-path). Notably, you should
 > update without jumping minor versions."
 
-# Updated OpenTelemetry CRDs to Beta v1
+## Updated OpenTelemetry CRDs to Beta v1
 
 We've updated the OpenTelemetry Custom Resource Definitions (CRDs) from alpha
 v1 to beta v1. This reflects the maturity of the OpenTelemetry project and
@@ -69,13 +73,13 @@ ensures better compatibility with the latest versions of the OpenTelemetry
 Operator. Please note that the minimum required version of the OpenTelemetry
 Operator Helm chart is now 0.65.0.
 
-# Community shout out!
+## Community shout out!
 
  We also want to shout out to [Anton Gilgur](https://github.com/agilgur5) for the
  several improvements in our documentation and policies repositories. He has
  added missing information and fixed out-of-date information. Thanks, Anton!
 
-# Getting in touch
+## Getting in touch
 
 As always, we welcome your feedback and contributions. Feel free to reach out
 to us on  [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden)

@@ -1,0 +1,167 @@
+---
+title: "Admission Controller"
+tagline: "Stop unsafe workloads before they enter your cluster."
+icon: icon-shield
+status: Stable
+docs: https://docs.kubewarden.io/admission-controller/latest/en/introduction.html
+repoUrl: https://github.com/kubewarden/adm-controller
+hero: admission
+intro: "The Kubewarden Admission Controller is an extensible, <strong>Kubernetes-native</strong> policy engine. It evaluates built-in and custom resources before admission to your cluster. Your policies can allow a request, modify its resources, or deny it."
+date: 2021-04-16T13:28:46+02:00
+---
+
+<section class="section-why">
+  <div class="wrap-lg">
+    <h2 id="why-admission-controller">Why the Admission Controller?</h2>
+    <div class="feature-row feature-row--divided">
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-code"></use></svg>
+        <h3>Write policies your way</h3>
+        <p>Use Rust, Go, Rego, CEL and other familiar technologies.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>
+        <h3>Distribute like containers</h3>
+        <p>Package and share policies through standard OCI registries.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg>
+        <h3>Build once, run anywhere</h3>
+        <p>Policies are compiled to WebAssembly for portability and isolation.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-people"></use></svg>
+        <h3>Start from the community</h3>
+        <p>Use and extend a growing collection of ready-to-use policies.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-built">
+  <div class="wrap-lg">
+    <h2 id="built-for-your-work">Built for the people doing the work</h2>
+    <div class="work-grid aligned-rows">
+
+      <div class="work-card">
+        <div class="work-card-head">
+          <div>
+            <h3>For policy authors</h3>
+            <p>Write, test, and share policies as regular software.</p>
+          </div>
+        </div>
+        <ul class="checklist">
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Use familiar languages and tooling</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Reuse OPA, Gatekeeper and ValidatingAdmissionPolicy policies</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Validate and mutate any Kubernetes resource</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Test locally with kwctl, publish to any OCI registry</li>
+        </ul>
+        <div class="code-panel">
+          <div class="code-panel-head" id="adm-controller-lib-rs">lib.rs</div>
+          <pre tabindex="0" role="region" aria-labelledby="adm-controller-lib-rs"><code><span class="tok-comment">// validate incoming Pods</span>
+<span class="tok-kw">use</span> kubewarden_policy_sdk <span class="tok-kw">as</span> kubewarden;
+
+<span class="tok-kw">fn</span> <span class="tok-fn">validate</span>(payload: &amp;[u8]) -&gt; CallResult {
+    <span class="tok-kw">let</span> req: ValidationRequest&lt;Settings&gt; =
+        ValidationRequest::new(payload)?;
+    <span class="tok-comment">// ... your policy logic here</span>
+    kubewarden::accept_request()
+}</code></pre>
+        </div>
+        <a class="arrow-link" href="https://docs.kubewarden.io/admission-controller/latest/en/tutorials/writing-policies/index.html" target="_blank" rel="noopener">Learn about writing policies<span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+
+      <div class="work-card">
+        <div class="work-card-head">
+          <div>
+            <h3>For Kubernetes operators</h3>
+            <p>Deploy and manage policies without extra complexity.</p>
+          </div>
+        </div>
+        <ul class="checklist">
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Manage policies as Kubernetes resources, GitOps-ready</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Roll out safely in monitor mode before enforcing</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Audit running workloads and get PolicyReports</li>
+          <li><svg class="icon icon-check" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg>Start from hundreds of ready-to-use policies</li>
+        </ul>
+        <div class="code-panel">
+          <div class="code-panel-head" id="adm-controller-policy-yaml">policy.yaml</div>
+          <pre tabindex="0" role="region" aria-labelledby="adm-controller-policy-yaml"><code><span class="tok-key">apiVersion:</span> policies.kubewarden.io/v1
+<span class="tok-key">kind:</span> ClusterAdmissionPolicy
+<span class="tok-key">metadata:</span>
+  <span class="tok-key">name:</span> <span class="tok-str">privileged-pods</span>
+<span class="tok-key">spec:</span>
+  <span class="tok-key">module:</span> <span class="tok-str">ghcr.io/kubewarden/policies/pod-privileged:v1.0.0</span>
+  <span class="tok-key">rules:</span>
+    - <span class="tok-key">apiGroups:</span> [<span class="tok-str">""</span>]
+      <span class="tok-key">apiVersions:</span> [<span class="tok-str">"v1"</span>]
+      <span class="tok-key">resources:</span> [<span class="tok-str">"pods"</span>]
+      <span class="tok-key">operations:</span> [<span class="tok-str">"CREATE"</span>]</code></pre>
+        </div>
+        <a class="arrow-link" href="https://docs.kubewarden.io/admission-controller/latest/en/howtos/policies.html" target="_blank" rel="noopener">Learn about deploying policies<span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section-ready">
+  <div class="wrap-lg">
+    <h2 id="get-started">Ready to try it?</h2>
+    <p class="section-lead">Install the Admission Controller with Helm and deploy your first policy in a few minutes.</p>
+    <div class="section-ready-inner">
+      <div class="code-panel code-panel--dark code-panel--terminal">
+        <pre tabindex="0" role="region" aria-label="Admission Controller installation commands"><code><span class="tok-comment"># Add the Kubewarden Helm repository</span>
+helm repo add kubewarden https://charts.kubewarden.io
+
+<span class="tok-comment"># Install the admission controller</span>
+helm install --wait -n kubewarden --create-namespace \
+  admission-controller kubewarden/admission-controller</code></pre>
+      </div>
+      <div class="section-ready-actions">
+        <a class="btn-primary" href="https://docs.kubewarden.io/admission-controller/latest/en/quick-start.html" target="_blank" rel="noopener">Follow the quickstart<span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-policies">
+  <div class="wrap-lg">
+    <h2 id="ready-to-use-policies">Ready-to-use policies</h2>
+    <p class="section-lead">Browse hundreds of policies and start securing your cluster today. Use them as-is, or as a reference to build your own.</p>
+
+    <div class="policy-grid">
+      <div class="policy-card">
+        <span class="pill pill-security">Security</span>
+        <h3>Restrict privileged containers</h3>
+        <p>Block Pods that request privileged containers or escalated capabilities.</p>
+        <a class="arrow-link" href="https://artifacthub.io/packages/kubewarden/kubewarden-policy-library/pod-privileged-policy" target="_blank" rel="noopener">View on Artifact Hub<span class="sr-only">: Restrict privileged containers</span><span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+
+      <div class="policy-card">
+        <span class="pill pill-supply">Supply chain</span>
+        <h3>Verify image signatures</h3>
+        <p>Admit only Pods whose container images carry valid Sigstore signatures.</p>
+        <a class="arrow-link" href="https://artifacthub.io/packages/kubewarden/kubewarden-policy-library/verify-image-signatures" target="_blank" rel="noopener">View on Artifact Hub<span class="sr-only">: Verify image signatures</span><span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+
+      <div class="policy-card">
+        <span class="pill pill-supply">Supply chain</span>
+        <h3>Trusted repositories</h3>
+        <p>Restrict which registries, images and tags workloads are allowed to pull from.</p>
+        <a class="arrow-link" href="https://artifacthub.io/packages/kubewarden/kubewarden-policy-library/trusted-repos" target="_blank" rel="noopener">View on Artifact Hub<span class="sr-only">: Trusted repositories</span><span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+
+      <div class="policy-card">
+        <span class="pill pill-practice">Best practice</span>
+        <h3>Container resources</h3>
+        <p>Enforce CPU and memory requests and limits on every container.</p>
+        <a class="arrow-link" href="https://artifacthub.io/packages/kubewarden/kubewarden-policy-library/container-resources" target="_blank" rel="noopener">View on Artifact Hub<span class="sr-only">: Container resources</span><span class="sr-only"> (opens in new tab)</span></a>
+      </div>
+    </div>
+
+    <div class="section-policies-footer">
+      <a class="btn-outline" href="https://artifacthub.io/packages/search?kind=13&amp;sort=relevance&amp;page=1" target="_blank" rel="noopener">Browse all policies<span class="sr-only"> (opens in new tab)</span></a>
+    </div>
+  </div>
+</section>

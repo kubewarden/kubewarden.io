@@ -1,46 +1,101 @@
 {{ define "main" }}
-  <link rel="stylesheet" href="/css/blog.css"/>
-
-  <section class="intro">
-    <div class="bg-primary">
-      <div class="wrap grid-one">
-        <div>
-          <h1 style="color: white;">
-            <a href="/blog">The Kubewarden blog</a>
-            <a href="/blog/index.xml">
-              <img src="/images/icon-rss.svg" class="fill-white" height="20">
-            </a>
-          </h1>
+{{ $toc := .TableOfContents }}
+{{ $hasTOC := in $toc "<a " }}
+<main id="main-content" tabindex="-1" class="blog-single">
+  <article>
+    <div class="article-masthead blog-archive">
+      <div class="wrap-lg">
+        <nav class="article-backlinks" aria-label="Blog navigation">
+          <a href="{{ with site.GetPage "/blog" }}{{ .RelPermalink }}{{ end }}"><svg class="icon article-back-arrow" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg>Back to the blog</a>
+          <a href="/blog/index.xml"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss"></use></svg>RSS</a>
+        </nav>
+        <div class="blog-post-meta">
+          {{ range .GetTerms "types" }}
+          <a class="blog-badge blog-type--{{ .Data.Term | urlize }}" href="{{ .RelPermalink }}">{{ replace .Title "-" " " | title }}</a>
+          {{ end }}
+        </div>
+        <div class="blog-post-components article-components">
+          {{ $icons := dict "Admission Controller" "shield" "Network Enforcer" "nodes" "Runtime Enforcer" "cube" "SBOM Scanner" "scan" }}
+          {{ range .GetTerms "components" }}
+          <a href="{{ .RelPermalink }}"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-{{ index $icons .Title | default "layers" }}"></use></svg>{{ .Title }}</a>
+          {{ else }}<span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg>Kubewarden / Platform</span>{{ end }}
+        </div>
+        <h1{{ with .Params.titleAnchor }} id="{{ . }}"{{ end }}>{{ .Title }}</h1>
+        {{ with .Description }}<p class="article-description">{{ . }}</p>{{ end }}
+        <div class="article-meta">
+          {{ with .Params.authors }}<span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-people"></use></svg><span>By {{ delimit . ", " " and " }}</span></span>{{ end }}
+          <span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar"></use></svg><span>Published <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan 2006" }}</time></span></span>
+          {{ if and (ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) (gt .Lastmod .Date) }}
+          <span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-pencil"></use></svg><span>Updated <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "02 Jan 2006" }}</time></span></span>
+          {{ end }}
+          <span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clock"></use></svg><span>About {{ .ReadingTime }} min read</span></span>
         </div>
       </div>
     </div>
-  </section>
 
-  <main>
-  	<section class="wrap">
-  		<article>
-  			<h1>{{ .Title }}</h1>
-        <p>Author: <author>{{ delimit .Params.authors ", " " and "}}</author></p>
-        <p>Published: <time>{{ .Date.Format "02 Jan 2006" }}</time></p>
-        {{ $date := .Date.Format "02 Jan 2006" }}
-        {{ $lastmod := .Lastmod.Format "02 Jan 2006" }}
-        {{ if and (ne $lastmod $date) (gt .Lastmod .Date) }}
-        <p>Updated: <time>{{ $lastmod }}</time></p>
+    <div class="wrap-lg article-layout{{ if not $hasTOC }} article-layout--no-toc{{ end }}">
+      {{ if $hasTOC }}
+      <aside class="article-sidebar" aria-label="Article contents">
+        <details class="article-toc" open>
+          <summary id="article-toc-title">On this page</summary>
+          {{ replace $toc `<nav id="TableOfContents">` `<nav id="TableOfContents" aria-labelledby="article-toc-title">` | safeHTML }}
+        </details>
+      </aside>
+      {{ end }}
+      <div class="article-body">
+        {{/* Make overflow areas keyboard-accessible without changing code highlighting. */}}
+        {{ $content := replaceRE `<pre(\s|>)` `<pre tabindex="0" aria-label="Code block"${1}` .Content }}
+        {{ $content = replace $content "<table>" `<div class="article-table" tabindex="0" role="region" aria-label="Scrollable table"><table>` }}
+        {{ $content = replace $content "</table>" "</table></div>" }}
+        <div class="blog-prose" id="blog-post-content">{{ $content | safeHTML }}</div>
+        {{ template "_internal/disqus.html" . }}
+      </div>
+    </div>
+  </article>
+
+  <div class="wrap-lg article-bottom">
+    <section class="article-explore" aria-labelledby="explore-title">
+      <h2 id="explore-title">Continue exploring</h2>
+      <div class="article-explore-grid">
+        {{ range slice
+          (dict "title" "Documentation" "description" "Learn how to use Kubewarden" "url" "https://docs.kubewarden.io/" "icon" "file" "external" true)
+          (dict "title" "GitHub" "description" "Explore the Kubewarden projects" "url" site.Params.github "icon" "github" "external" true)
+          (dict "title" "Community" "description" "Join the conversation" "url" "/#get-in-touch" "icon" "people" "external" false)
+        }}
+        <a href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener"{{ end }}>
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-{{ .icon }}"></use></svg>
+          <span><strong>{{ .title }}</strong><span>{{ .description }}</span></span>
+          {{ if not .external }}<svg class="icon article-link-arrow" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg>{{ end }}
+          {{ if .external }}<span class="sr-only"> (opens in new tab)</span>{{ end }}
+        </a>
         {{ end }}
-        <div id="blog-post-content">
-  				{{ .Content }}
-  			</div>
-  			<div>
-  				<ul id="tags">
-  					{{ range .Params.tags }}
-  					<li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a></li>
-  					{{ end }}
-  				</ul>
-  			</div>
-  			<div>
-  				{{ template "_internal/disqus.html" . }}
-  			</div>
-  		</article>
-  	</section>
-  </main>
+      </div>
+    </section>
+
+    {{ $posts := where site.RegularPages "Section" "blog" }}
+    {{ with $posts.Related . | first 3 }}
+    <section class="article-related blog-archive" aria-labelledby="related-title">
+      <div class="article-related-heading">
+        <h2 id="related-title">Related posts</h2>
+        <a class="arrow-link" href="/blog/">View all posts <svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
+      </div>
+      <div class="article-related-grid">
+        {{ range . }}
+        <article class="article-related-card">
+          <div class="blog-post-meta">
+            {{ range .GetTerms "types" }}<a class="blog-badge blog-type--{{ .Data.Term | urlize }}" href="{{ .RelPermalink }}">{{ replace .Title "-" " " | title }}</a>{{ end }}
+          </div>
+          <div class="blog-post-components">
+            {{ range .GetTerms "components" }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ else }}<span>Kubewarden / Platform</span>{{ end }}
+          </div>
+          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          <p>{{ .Summary | plainify | htmlUnescape | truncate 140 }}</p>
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan 2006" }}</time>
+        </article>
+        {{ end }}
+      </div>
+    </section>
+    {{ end }}
+  </div>
+</main>
 {{ end }}

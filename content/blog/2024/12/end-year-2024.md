@@ -5,6 +5,10 @@ authors:
   - John Krug
   - José Guilherme Vanz
 date: 2025-01-07
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 It was an exciting year for Kubewarden policy management. We had new features,

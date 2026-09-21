@@ -1,0 +1,44 @@
+<div class="hero-visual" aria-hidden="true">
+  <div class="hero-diagram">
+    <svg class="diagram-svg" viewBox="0 0 640 480" focusable="false">
+      <defs>
+        <radialGradient id="heroGlow">
+          <stop offset="0%" stop-color="var(--accent-color)" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="var(--accent-color)" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle class="diagram-glow" cx="320" cy="280" r="180"/>
+      <circle class="diagram-halo" cx="320" cy="280" r="140"/>
+      <circle class="diagram-halo" cx="320" cy="280" r="110"/>
+
+      <!-- Open protection circle. Each solid point represents a shipped component. -->
+      <path class="diagram-ring" d="M146.8 345 A185 185 0 1 1 493.2 345"/>
+      <circle class="diagram-node" cx="320" cy="95" r="6"/>
+      <circle class="diagram-node" cx="189.2" cy="149.2" r="6"/>
+      <circle class="diagram-node" cx="450.8" cy="149.2" r="6"/>
+      <circle class="diagram-node" cx="505" cy="280" r="6"/>
+
+      <polygon class="plinth-face" points="320,259 406,292 320,325 234,292"/>
+      <polygon class="plinth-side--left" points="234,292 320,325 320,379 234,346"/>
+      <polygon class="plinth-side--right" points="320,325 406,292 406,346 320,379"/>
+    </svg>
+    <img class="diagram-hub-logo" src="/images/kubernetes-logo.svg" alt="">
+
+    <div class="diagram-card diagram-card--top">
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-cube"></use></svg>
+      <span>Runtime Enforcer</span>
+    </div>
+    <div class="diagram-card diagram-card--left">
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shield"></use></svg>
+      <span>Admission Controller</span>
+    </div>
+    <div class="diagram-card diagram-card--right">
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-nodes"></use></svg>
+      <span>Network Enforcer</span>
+    </div>
+    <div class="diagram-card diagram-card--lower-right">
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-scan"></use></svg>
+      <span>SBOM Scanner</span>
+    </div>
+  </div>
+</div>

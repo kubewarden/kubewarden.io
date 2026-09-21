@@ -3,6 +3,11 @@ title: "Admission Controller 1.37 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2026-07-27
+components:
+  - Admission Controller
+types:
+  - release
+  - security-advisory
 ---
 
 Here we are, at the tail end of July. Belugas are migrating up north for the
@@ -82,13 +87,13 @@ This Helm chart change is not a small one. In addition of updating our CI/CD
 end-to-end tests, we have manually tested the new chart, and we provide tested
 migration documentation to simplify the life of our cluster operators.
 
-#### New Installs of `admission-controller-6.0.0` (1.37)
+### New Installs of `admission-controller-6.0.0` (1.37)
 
 No new changes here besides the simplification to 1 chart. Follow our updated
 [quickstart](https://docs.kubewarden.io/admission-controller/1.37/en/quick-start.html)
 for new installations.
 
-#### Upgrading to `admission-controller-6.0.0` (1.37)
+### Upgrading to `admission-controller-6.0.0` (1.37)
 
 For upgrading from the 3 legacy charts in `1.36` to new the chart in `1.37`, we
 provide several migrationg how-tos. We generally favour performing a backup,
@@ -106,7 +111,7 @@ Consisting on Fleet steps for GitOps migrations, both as a reinstallation, and
 as a no-downtime migration done by adopting the resources from old charts into
 the new chart.
 
-#### Uninstalling `admission-controller-6.0.0` (1.37)
+### Uninstalling `admission-controller-6.0.0` (1.37)
   
 As mentioned above and contrary to the legacy 3 Helm charts, the new
 `admission-controller` Helm chart leaves CRDs, and CRs for policies and

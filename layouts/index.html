@@ -1,0 +1,98 @@
+{{ define "main" }}
+<main id="main-content" tabindex="-1">
+
+<section class="hero">
+  <div class="wrap-lg hero-inner">
+    <div class="hero-copy">
+      <h1>Kubernetes security,<br><span class="accent">from admission to runtime.</span></h1>
+      <p class="hero-lead">Kubewarden is an open source security platform for Kubernetes. A set of
+      complementary components to secure your workloads across the entire lifecycle. From
+      admission, to runtime, and beyond.</p>
+    </div>
+
+    {{ partial "hero-platform.html" . }}
+  </div>
+</section>
+
+<section class="section-components" id="components">
+  <div class="wrap-lg">
+    {{ partial "section-heading.html" (dict "id" "components" "title" "Explore the Kubewarden components" "existingTarget" true) }}
+    <p class="section-lead">A modular security platform. Use the components you need, together or independently.</p>
+    {{ partial "component-grid.html" (dict "current" "") }}
+  </div>
+</section>
+
+<section class="section-news">
+  <div class="wrap-lg">
+    <div class="section-news-header">
+      {{ partial "section-heading.html" (dict "id" "latest-news" "title" "Latest news") }}
+      <a class="arrow-link" href="/blog/">View all posts <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
+    </div>
+    <div class="news-grid">
+      {{ $posts := where .Site.RegularPages "Section" "blog" }}
+      {{ $icons := dict "Admission Controller" "shield" "Network Enforcer" "nodes" "Runtime Enforcer" "cube" "SBOM Scanner" "scan" }}
+      {{ range first 3 $posts.ByDate.Reverse }}
+      {{ $components := .GetTerms "components" }}
+      {{ $icon := "layers" }}
+      {{ if eq (len $components) 1 }}{{ $icon = index $icons (index $components 0).Title | default "layers" }}{{ end }}
+      <article class="news-card">
+        <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+        <div class="news-components">
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-{{ $icon }}"></use></svg>
+          <span>{{ range $index, $component := $components }}{{ if $index }} / {{ end }}{{ .Title }}{{ else }}Kubewarden / Platform{{ end }}</span>
+        </div>
+        <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+        <p>{{ .Plain | truncate 140 " …" }}</p>
+        <a class="arrow-link" href="{{ .Permalink }}">Read more<span class="sr-only">: {{ .Title }}</span> <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-arrow"></use></svg></a>
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<section class="section-touch" id="get-in-touch">
+  <div class="wrap-lg">
+    {{ partial "section-heading.html" (dict "id" "get-in-touch" "title" "Get in Touch" "existingTarget" true) }}
+    <p class="section-lead">We hold monthly community meetings that are open to everybody.</p>
+
+    <div class="social-row">
+      <a class="btn-outline" href="{{ .Site.Params.social.bluesky }}" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-bluesky"></use></svg>Bluesky<span class="sr-only"> (opens in new tab)</span>
+      </a>
+      <a class="btn-outline" href="{{ .Site.Params.social.linkedin }}" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-linkedin"></use></svg>LinkedIn<span class="sr-only"> (opens in new tab)</span>
+      </a>
+      <a class="btn-outline" href="{{ .Site.Params.social.mastodon }}" target="_blank" rel="me noopener">
+        <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-mastodon"></use></svg>Mastodon<span class="sr-only"> (opens in new tab)</span>
+      </a>
+      <a class="btn-outline" href="{{ .Site.Params.social.slack }}" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-slack"></use></svg>Slack<span class="sr-only"> (opens in new tab)</span>
+      </a>
+      <a class="btn-outline" href="{{ .Site.Params.social.x }}" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-x-brand"></use></svg>X<span class="sr-only"> (opens in new tab)</span>
+      </a>
+    </div>
+
+    <div id="community-events" class="events-panel" role="region" aria-labelledby="events-title" data-feed="https://webcal.prod.itx.linuxfoundation.org/lfx/a092M00001LkRyUQAV" data-calendar="https://zoom-lfx.platform.linuxfoundation.org/meetings/kubewarden?view=week">
+      <div class="events-header">
+        <div>
+          <h3 id="events-title"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar"></use></svg>Upcoming events</h3>
+          <p id="events-timezone">Upcoming meetings from the CNCF community calendar.</p>
+        </div>
+        <div class="events-links">
+          <a href="https://webcal.prod.itx.linuxfoundation.org/lfx/a092M00001LkRyUQAV">Subscribe to calendar</a>
+          <a href="https://zoom-lfx.platform.linuxfoundation.org/meetings/kubewarden?view=week" target="_blank" rel="noopener">Open full calendar<span class="sr-only"> (opens in new tab)</span></a>
+        </div>
+      </div>
+      <p class="events-status" role="status">Open the full calendar or subscribe to see upcoming meetings.</p>
+      <ul class="events-list" aria-describedby="events-timezone" hidden></ul>
+    </div>
+  </div>
+</section>
+
+{{ partial "cncf-band.html" . }}
+
+</main>
+{{ $calendar := resources.Get "js/calendar.js" | js.Build (dict "minify" true "target" "es2020" "legalComments" "inline") | fingerprint }}
+<script type="module" src="{{ $calendar.RelPermalink }}" integrity="{{ $calendar.Data.Integrity }}" crossorigin="anonymous"></script>
+{{ end }}

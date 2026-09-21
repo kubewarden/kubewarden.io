@@ -1,0 +1,16 @@
+{{ define "main" }}
+<main id="main-content" tabindex="-1">
+<section class="component-header component-header--list">
+  <div class="wrap-lg">
+    <h1>{{ .Title }}</h1>
+    {{ with .Content }}<div class="component-tagline">{{ . }}</div>{{ end }}
+  </div>
+</section>
+
+<section class="wrap-lg">
+  {{ partial "component-grid.html" (dict "current" "") }}
+</section>
+
+{{ partial "cncf-band.html" . }}
+</main>
+{{ end }}

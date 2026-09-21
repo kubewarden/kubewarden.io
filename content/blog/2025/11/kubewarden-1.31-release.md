@@ -3,6 +3,10 @@ title: "Kubewarden 1.31 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2025-11-25
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Preparing for season celebrations, Kubewarden grabbed its running shoes and
@@ -182,8 +186,7 @@ testsuite to ensure that backing up and restoring keeps being supported with
 each Kubewarden release.
 
 You can read how to backup and restore Kubewarden with this operator in our
-kubewarden docs
-[here](https://docs.kubewarden.io/howtos/rancher-backup-operator).
+[rancher-backup Operator guide](https://docs.kubewarden.io/howtos/rancher-backup-operator).
 
 ## kubewarden-controller chart gains resource limits & requests for post-install and pre-delete hooks
 
@@ -199,7 +202,7 @@ You can find them under `.Values.resources.preDeleteJob` and
 `.Values.resources.PostInstallJob` and set to very conservative values, as the
 jobs are small.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

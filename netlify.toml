@@ -2,7 +2,7 @@
 # previewing it on Netlify.
 [build]
 publish = "public"
-command = "hugo --config config.toml,config-netlify.toml"
+command = 'hugo --config config.toml,config-netlify.toml --baseURL "${DEPLOY_PRIME_URL:-${URL:-https://www.kubewarden.io/}}"'
 
 [build.environment]
-HUGO_VERSION = "0.133.0"
+HUGO_VERSION = "0.166.0"

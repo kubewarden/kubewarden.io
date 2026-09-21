@@ -3,6 +3,10 @@ title: "Kubewarden 1.25 Release: Priority Class Support and CI Security Enhancem
 authors:
   - José Guilherme Vanz
 date: 2025-05-15
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Kubewarden 1.25 arrives with:
@@ -101,7 +105,7 @@ to delete a policy. A big thank you to our community member
 [@manukirat](https://github.com/manukirat)! Your contribution significantly
 improves the usability of our tooling.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

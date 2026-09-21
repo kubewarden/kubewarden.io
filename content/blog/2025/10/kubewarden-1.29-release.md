@@ -3,6 +3,10 @@ title: "Kubewarden 1.29 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2025-10-01
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Straight from the kitchen, Kubewarden 1.29 is served! This release is a poké
@@ -173,7 +177,7 @@ setting too.
 With 1.29, we have corrected this regression, and this specific policy
 setting works as expected.
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

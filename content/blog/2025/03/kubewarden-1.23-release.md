@@ -3,6 +3,10 @@ title: Kubewarden 1.23 release
 authors:
   - Flavio Castelli
 date: 2025-03-26
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 The wait is over—Kubewarden 1.23 has arrived! Packed with exciting security enhancements,
@@ -95,7 +99,7 @@ more intuitive.
 ## Google Summer of Code
 
 We're proud to announce that Kubewarden has two projects available under CNCF's Google Summer of Code.
-You can find all the details [here](https://github.com/cncf/mentoring/blob/main/programs/summerofcode/2025.md#kubewarden).
+You can find all the details in the [Kubewarden Google Summer of Code project list](https://github.com/cncf/mentoring/blob/main/programs/summerofcode/2025.md#kubewarden).
 
 ## Getting in touch
 

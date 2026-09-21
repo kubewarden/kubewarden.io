@@ -3,6 +3,10 @@ title: CNCF Sandbox admission 🎊
 authors:
 - Flavio Castelli
 date: 2022-06-15
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 Today the whole Kubewarden team is overjoyed because the

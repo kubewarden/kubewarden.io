@@ -3,6 +3,10 @@ title: Introducing the PSP host namespaces policy
 authors:
     - Rafael Fernández López
 date: 2021-06-11
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 As you probably know, Kubernetes Pod Security Policies (PSPs) [are being

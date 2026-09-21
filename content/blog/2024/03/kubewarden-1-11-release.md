@@ -3,6 +3,10 @@ title: Kubewarden 1.11 release
 authors:
   - Flavio Castelli
 date: 2024-03-21
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Today we're glad to announce the release of Kubewarden 1.11.

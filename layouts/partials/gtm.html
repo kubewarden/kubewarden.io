@@ -1,0 +1,36 @@
+{{/* Retained optional integration from projects-theme; see /licenses/projects-theme.txt. */}}
+{{ if not (in (.Site.BaseURL | string) "localhost") }}{{ if .Site.Params.gtm_id }}
+<link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+{{ end }}
+{{ if eq .Site.Params.gtm_datalayer "basic" }}
+<script>
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    {{ if .IsPage }}
+    'pageReadingTimeMinutes': {{ .ReadingTime }},
+    'pageReadingTimeSeconds': {{ math.Round (mul (div (countwords .Content) 220.0) 60) }},
+    'pageWordCount': {{ .WordCount }},
+    'pageFuzzyWordCount': {{ .FuzzyWordCount }},
+    {{ end }}
+    'pageKind': '{{ .Kind }}',
+    'pageId': '{{ with .File }}{{ .UniqueID }}{{ end }}',
+    'pageTitle': '{{ .LinkTitle }}',
+    'pagePermalink': '{{ .Permalink }}',
+    'pageType': '{{ .Type }}',
+    'pageTranslated': {{ .IsTranslated }},
+    {{ with .Params.author }}'pageAuthor': '{{ . }}',{{ end }}
+    {{ with .Params.categories }}'pageCategory': '{{ index . 0 }}',{{ end }}
+    {{ with .Params.tags }}'pageTags': '{{ delimit . "|" }}',{{ end }}
+    'pageType2': '{{ if .IsHome }}home{{ else if eq .Kind "taxonomy" }}tag{{ else if eq .Type "page" }}page{{ else }}post{{ end }}',
+    'pageLanguage': '{{ .Language }}'
+  });
+</script>
+{{ end }}
+{{ if .Site.Params.gtm_id }}
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','{{ .Site.Params.gtm_id }}');</script>
+{{ end }}{{ end }}

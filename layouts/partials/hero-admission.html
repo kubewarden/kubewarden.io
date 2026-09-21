@@ -1,0 +1,54 @@
+{{/*
+  Simple "how the Admission Controller sits in the request path" graphic
+  for the adm-controller hero. Message: the controller can evaluate any
+  kind of Kubernetes resource, built-in or custom (CRDs) - not just
+  workloads - before it enters the cluster, and it can allow, mutate or
+  deny the request.
+*/}}
+<div class="component-hero-diagram component-hero-diagram--admission" aria-hidden="true">
+  <div class="ha-resources-col">
+    <div class="ha-resources">
+      <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-container"></use></svg>Pod</div>
+      <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-layers"></use></svg>Deployment</div>
+      <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-globe"></use></svg>Ingress</div>
+      <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-folder"></use></svg>Namespace</div>
+      <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-lock"></use></svg>Secret</div>
+      <div class="ha-resource"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-puzzle"></use></svg>Custom resources</div>
+    </div>
+    <p class="ha-caption">&hellip;and any other Kubernetes resource &mdash; built-in or custom.</p>
+  </div>
+
+  <div class="ha-fanout">
+    <svg class="ha-collector-vertical" viewBox="0 0 120 40" preserveAspectRatio="none" focusable="false">
+      <path d="M6,6 C6,24 54,18 60,36 C66,18 114,24 114,6" fill="none" stroke="var(--accent-color)" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div class="ha-admission-flow">
+  <div class="ha-node">
+    <div class="ha-node-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shield"></use></svg></div>
+    <h3 class="ha-node-title">Admission Controller</h3>
+    <div class="ha-outcomes">
+      <div class="ha-outcome ha-outcome--allow">
+        <span class="ha-outcome-icon"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-check-sm"></use></svg></span>
+        Allow
+      </div>
+      <div class="ha-outcome ha-outcome--mutate">
+        <span class="ha-outcome-icon"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-pencil"></use></svg></span>
+        Mutate
+      </div>
+      <div class="ha-outcome ha-outcome--deny">
+        <span class="ha-outcome-icon"><svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-x"></use></svg></span>
+        Deny
+      </div>
+    </div>
+  </div>
+
+  <span class="ha-connector"></span>
+
+  <div class="ha-cluster">
+    <img src="/images/kubernetes-logo.svg" alt="">
+    <span>Kubernetes cluster</span>
+  </div>
+  </div>
+</div>

@@ -3,6 +3,10 @@ title: Introducing kwctl to Kubernetes Administrators
 authors:
     - Flavio Castelli
 date: 2021-06-09
+components:
+  - Admission Controller
+types:
+  - tutorial
 ---
 
 We are pleased to announce the availability of a new tool within the Kubewarden

@@ -3,6 +3,10 @@ title: Introducing Kubewarden WASI policies
 authors:
   - Flavio Castelli
 date: 2023-10-24
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 Kubewarden policies can be written using either a [traditional programming language](https://docs.kubewarden.io/writing-policies) (like Go, Rust, C#, Swift, &hellip;) or using a domain-specific language like [Rego](https://docs.kubewarden.io/writing-policies/rego/intro-rego).

@@ -3,6 +3,10 @@ title: "Kubewarden 1.32 Release"
 authors:
   - Víctor Cuadrado Juan
 date: 2026-02-05
+components:
+  - Admission Controller
+types:
+  - release
 ---
 
 Another year rolls around, and Kubewarden is still growing like a well-watered
@@ -151,7 +155,7 @@ versions.
 Our docs at [doc.kubewarden.io](https://docs.kubewarden.io) will also get expanded in the near future. Stay
 tuned!
 
-# Getting in touch
+## Getting in touch
 
 Join the conversation on
 [Slack](https://kubernetes.slack.com/?redir=%2Fmessages%2Fkubewarden) or

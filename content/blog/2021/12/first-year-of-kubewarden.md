@@ -3,6 +3,10 @@ title: First year of Kubewarden
 authors:
     - Flavio Castelli
 date: 2021-12-22
+components:
+  - Admission Controller
+types:
+  - community
 ---
 
 Year 2021 is almost over. Let's take that as a chance to look back at what has been achieved during the 1st year of life of the Kubewarden project.
@@ -17,7 +21,7 @@ Finally, I'll also talk about what we plan to do during the next one.
 
 The Kubewarden project has been introduced to the masses for the 1st time during KubeCon Europe 2021.
 During this presentation, Rafael and I explained what lead us to rethink how Kubernetes policies could be written and distributed.
-The talk recording can be found [here](http://www.youtube.com/watch?v=Bhw5Qi78jj8), watch it to better understand Kubewarden's mission.
+Watch the [KubeCon Europe 2021 talk recording](http://www.youtube.com/watch?v=Bhw5Qi78jj8) to better understand Kubewarden's mission.
 
 During the remaining part of the year, Kubewarden talks featured at other conferences like
 [KubeCon EU Security Day](https://www.youtube.com/watch?v=VF0-VPu6nW0&list=PLj6h78yzYM2ORbHrvs32QYLqfs080dqte&index=10),
@@ -123,5 +127,4 @@ Also, don't forget to look at [this](https://www.youtube.com/watch?v=w2tUQUoizP4
 
 
 Happy holidays and happy hacking! See you in 2022 🥳
-
 
