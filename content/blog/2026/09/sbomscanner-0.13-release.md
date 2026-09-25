@@ -20,15 +20,26 @@ image discovery for workloads, and a cleaner registry catalog.
 
 ## Why telemetry?
 
-A scan in SBOMscanner is a chain of messages across several components,
-connected by NATS JetStream. The controller creates a `ScanJob` and
-publishes a "create catalog" message. A worker consumes it, lists the
-registry, and publishes one "generate SBOM" message per image. Workers
-consume those messages, generate the SBOMs with Trivy, and publish one
-"scan SBOM" message per SBOM. Workers scan them and write the results to
-the storage API server. The storage API server stores them in PostgreSQL
-and fans the watch events out to the other components over NATS. When the
-last report lands, the controller marks the `ScanJob` complete.
+A scan in SBOMscanner is a chain of messages over NATS JetStream. The
+controller publishes work for the workers, and the workers publish the next
+stage to each other: one message per image to generate an SBOM, one per SBOM
+to scan it. The results go to the storage API server, which stores them in
+PostgreSQL and notifies the other components over NATS.
+
+```mermaid
+flowchart LR
+    C[Controller]
+    N[NATS JetStream]
+    W[Workers]
+    S[Storage API server]
+
+    C -- create catalog --> N
+    N -- scan messages --> W
+    W -- next stage --> N
+    W -- write reports --> S
+    S -- watch events --> N
+    N -. watch events .-> C
+```
 
 Every step is asynchronous, and a scan of a large registry spreads over
 hundreds of messages and several worker replicas. When a scan is slow or
@@ -85,7 +96,8 @@ Every component exports metrics over OTLP. The most useful ones are:
 
 {{< figure src="/images/sbomscanner-0.13-dashboard-overview.png" alt="The Overview row of the SBOMscanner Grafana dashboard: finished registry, node, and workload scan jobs by result, and images scanned by registry" >}}
 
-The histograms carry exemplars. An exemplar is one real measurement tagged
+The histograms carry [exemplars](https://opentelemetry.io/docs/specs/otel/metrics/data-model/#exemplars).
+An exemplar is one real measurement tagged
 with the trace ID that produced it. In a backend that supports exemplars,
 you can click a slow point on a latency panel and land in the trace that
 caused it.

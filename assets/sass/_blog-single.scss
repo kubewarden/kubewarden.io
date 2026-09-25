@@ -130,6 +130,21 @@
       margin: 0 0 1.8rem;
       code { font-size: inherit; background: none; padding: 0; border-radius: 0; }
     }
+    // Mermaid diagrams are rendered into the <pre> by the client-side script:
+    // give them the page background instead of the code-block look.
+    pre.mermaid {
+      background: transparent;
+      padding: 0;
+      text-align: center;
+      svg { max-width: 100%; height: auto; }
+      // Mermaid paints a box behind each edge label (.labelBkg) so the label
+      // hides the line under it. Paint it with the page color, so it follows the theme.
+      .labelBkg, .edgeLabel, .edgeLabel p {
+        background-color: var(--page-bg) !important;
+        color: var(--text) !important;
+      }
+      .labelBkg { padding: .15em .4em; border-radius: .3em; }
+    }
     blockquote {
       margin: 1.8rem 0;
       padding: 1.6rem 2rem;
