@@ -50,7 +50,7 @@ To get started, clone our [policy template repository](https://github.com/kubewa
 - Example policy demonstrating best practices
 - Integration with Kubernetes TypeScript types for complete type safety
 
-For a step-by-step guide on using the template, check out our [comprehensive tutorial](https://docs.kubewarden.io/tutorials/writing-policies/typescript/intro-typescript).
+For a step-by-step guide on using the template, check out our [comprehensive tutorial](https://docs.kubewarden.io/admission-controller/latest/en/tutorials/writing-policies/typescript/01-intro-typescript.html).
 
 Here's what a simple policy looks like:
 ```typescript
@@ -114,7 +114,7 @@ npm install
 # Start writing your policy in src/index.ts
 ```
 
-We've also created a comprehensive [tutorial](https://docs.kubewarden.io/tutorials/writing-policies/typescript/intro-typescript) that walks you through building a policy using the template.
+We've also created a comprehensive [tutorial](https://docs.kubewarden.io/admission-controller/latest/en/tutorials/writing-policies/typescript/01-intro-typescript.html) that walks you through building a policy using the template.
 
 ## A Note on GSoC
 
