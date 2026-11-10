@@ -699,8 +699,16 @@ footer {
   font-size: 1.3rem;
   line-height: 1.5;
   color: var(--text);
+  text-decoration: none;
   box-sizing: border-box;
   max-width: 40%;
+  transition: border-color .15s ease-out, box-shadow .15s ease-out;
+
+  &:hover, &:focus-visible {
+    color: var(--text);
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 24px rgba(91, 7, 0, 0.12);
+  }
 
   span { min-width: 0; overflow-wrap: anywhere; }
 
