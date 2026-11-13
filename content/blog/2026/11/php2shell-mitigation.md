@@ -25,7 +25,7 @@ allow remote code execution in the PHP interpreter:
   read from the incorrectly freed memory. This behavior can be exploited to
   execute code remotely.
 
-PHP2Shell made it into major news outlets all over the world, caused temporary
+PHP2Shell made front page news all over the world, caused temporary
 shutdown of many webpages using PHP and was reported as being exploited in the
 wild, e.g. by
 [AWS](https://aws.amazon.com/blogs/security/amazon-threat-intelligence-identifies-php2shell-exploitation-prior-to-public-disclosure-in-madpot/).
@@ -234,8 +234,8 @@ kubectl wait -n php-demo --for=condition=Available \
 
 The PHP script executes a shell command, evaluates PHP code, or prints usage
 instructions, depending on the URL query. Every response includes the process ID
-(PID) and the script owner's name. This allows us to demonstrate the fallout
-from PHP2Shell.
+(PID) and the script owner's name. This demonstrates the serious implications
+of PHP2Shell.
 
 ## Recording a policy
 
@@ -501,9 +501,9 @@ contains several executables used during container startup:
 ]
 ```
 
-These executable are included in the policy via the container image entry
-point. An attacker with write access to any of these executables could replace it
-without changing its path or triggering an execution policy violation.
+These executables are included in the policy via the container image entry
+point. An attacker with write access to any of these executables could replace them
+without changing their path or triggering an execution policy violation.
 
 A good next step would be to write a simpler container entrypoint, that omits a
 majority of the current script. The current entrypoint is written for convenient
