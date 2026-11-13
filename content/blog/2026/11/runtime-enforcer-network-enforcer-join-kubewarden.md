@@ -3,7 +3,7 @@ title: Kubewarden is expanding into runtime security
 authors:
 - Dan Čermák
 - John Krug
-date: 2026-11-15
+date: 2026-11-13
 components:
   - Network Enforcer
   - Runtime Enforcer
