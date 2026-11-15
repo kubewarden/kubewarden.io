@@ -42,7 +42,7 @@ sources:
       - trimprefix: "v"
 
   hugo-sha256:
-    name: Get the SHA256 checksum of the Hugo extended linux/amd64 tarball
+    name: Get the SHA256 checksum of the Hugo linux/amd64 tarball
     kind: file
     dependson:
       - hugo-version
@@ -50,7 +50,7 @@ sources:
       file: 'https://github.com/gohugoio/hugo/releases/download/v{{ source "hugo-version" }}/hugo_{{ source "hugo-version" }}_checksums.txt'
     transformers:
       - findsubmatch:
-          pattern: '(?m)^([0-9a-f]{64})\s+hugo_extended_{{ source "hugo-version" }}_linux-amd64\.tar\.gz$'
+          pattern: '(?m)^([0-9a-f]{64})\s+hugo_{{ source "hugo-version" }}_linux-amd64\.tar\.gz$'
           captureindex: 1
 
 targets:

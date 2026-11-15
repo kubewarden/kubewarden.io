@@ -1,4 +1,4 @@
-// Theme palettes contain values only. Component styles consume these roles.
+/* Theme palettes contain values only. Component styles consume these roles. */
 :root {
   color-scheme: light;
   --brand-color: #bc2a46;
@@ -52,7 +52,7 @@
   --syntax-string: #1b7743;
   --syntax-function: var(--accent-color);
   --syntax-comment: var(--text-muted);
-  // Code blocks stay dark in both themes, including articles without highlighting.
+  /* Code blocks stay dark in both themes, including articles without highlighting. */
   --code-bg: #1a1a1f;
   --code-text: #f8f8f2;
   --code-border: #42404c;
@@ -64,7 +64,8 @@
   --logo-dark-display: none;
 }
 
-@mixin dark-palette {
+/* Keep the two dark-theme blocks below in sync. */
+:root[data-theme="dark"] {
   color-scheme: dark;
   --accent-color: #ed6a82;
   --button-hover-bg: var(--accent-color);
@@ -111,7 +112,51 @@
   --logo-dark-display: inline;
 }
 
-:root[data-theme="dark"] { @include dark-palette; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) { @include dark-palette; }
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --accent-color: #ed6a82;
+    --button-hover-bg: var(--accent-color);
+    --button-hover-text: #241019;
+    --selected-text: #241019;
+    --on-accent: #241019;
+    --page-bg: #141418;
+    --surface: #1d1d24;
+    --surface-muted: #25252f;
+    --surface-band: #19191f;
+    --surface-tint: #2c1d27;
+    --surface-tint-soft: var(--surface);
+    --surface-tint-strong: #38232d;
+    --text: #f3f1f5;
+    --text-body: #d0cbd4;
+    --text-muted: #b3adbd;
+    --border: #42404c;
+    --border-strong: #65616f;
+    --border-tint: #66404c;
+    --success-bg: #19382b;
+    --success-text: #8fdfb0;
+    --success-solid: #8fdfb0;
+    --on-success: #19382b;
+    --warning-bg: #3b2b1c;
+    --warning-text: #ffc78e;
+    --warning-solid: #ffc78e;
+    --on-warning: #3b2b1c;
+    --neutral-bg: var(--surface-muted);
+    --neutral-text: var(--text-muted);
+    --info-bg: #1d3045;
+    --info-text: #a5ceff;
+    --info-border: #395875;
+    --tutorial-bg: #2e2944;
+    --tutorial-text: #c6bcf4;
+    --deep-dive-bg: #342b3d;
+    --deep-dive-text: #d5bce8;
+    --plinth-face: #33313d;
+    --plinth-left: #25242c;
+    --plinth-right: #1d1c23;
+    --syntax-key: var(--code-key);
+    --syntax-string: var(--code-string);
+    --syntax-function: var(--code-function);
+    --logo-light-display: none;
+    --logo-dark-display: inline;
+  }
 }

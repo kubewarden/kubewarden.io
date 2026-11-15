@@ -21,13 +21,13 @@ jobs:
     env:
       # Updated by updatecli/updatecli.d/updcli-hugo-ver.yml together
       # with HUGO_VERSION in netlify.toml
-      HUGO_VERSION: 0.166.0
-      HUGO_SHA256: 0e39b901e3f919f1daae05c8ff64f0c14c8a348ef46886d63f8e6d1bb2653885
+      HUGO_VERSION: 0.170.1
+      HUGO_SHA256: 841a5462853aefc9942e4de1e8a5d75584b6a5181941e6ad3f1d745190e03cd8
     steps:
       - name: Install hugo
         run: |
           set -euo pipefail
-          tarball="hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
+          tarball="hugo_${HUGO_VERSION}_linux-amd64.tar.gz"
           curl -fsSL -o "${tarball}" \
             "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${tarball}"
           echo "${HUGO_SHA256}  ${tarball}" | sha256sum -c -

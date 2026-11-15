@@ -1,9 +1,8 @@
 {{- $theme := resources.Get "js/theme.js" | minify | fingerprint -}}
 <script src="{{ $theme.RelPermalink }}" integrity="{{ $theme.Data.Integrity }}" crossorigin="anonymous"></script>
-{{- $options := dict "outputStyle" "compressed" "enableSourceMap" hugo.IsDevelopment -}}
-{{- $main := resources.Get "sass/main.scss" | toCSS $options | minify | fingerprint -}}
+{{- $main := slice (resources.Get "css/fonts.css") (resources.Get "css/theme.css") (resources.Get "css/base.css") (resources.Get "css/blog-archive.css") (resources.Get "css/layout.css") (resources.Get "css/theme-controls.css") | resources.Concat "css/main.css" | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}" crossorigin="anonymous">
 {{- if and .IsPage (eq .Section "blog") }}
-  {{- $blog := resources.Get "sass/blog.scss" | toCSS $options | minify | fingerprint -}}
+  {{- $blog := slice (resources.Get "css/blog-single.css") (resources.Get "css/blog-code.css") | resources.Concat "css/blog.css" | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ $blog.RelPermalink }}" integrity="{{ $blog.Data.Integrity }}" crossorigin="anonymous">
 {{- end }}

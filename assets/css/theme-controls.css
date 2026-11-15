@@ -15,11 +15,11 @@
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
-  .icon { width: 20px; height: 20px; margin: 0; }
-  &:hover { color: var(--accent-color); }
-  &:focus-visible { outline: 2px solid var(--focus-color); outline-offset: 3px; }
-  &[hidden] { display: none; }
 }
+.theme-toggle .icon { width: 20px; height: 20px; margin: 0; }
+.theme-toggle:hover { color: var(--accent-color); }
+.theme-toggle:focus-visible { outline: 2px solid var(--focus-color); outline-offset: 3px; }
+.theme-toggle[hidden] { display: none; }
 
 .sub-header { gap: 1rem; }
 .theme-toggle { order: 2; }
