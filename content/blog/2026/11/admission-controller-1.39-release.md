@@ -11,8 +11,8 @@ types:
 ---
 
 The Admission Controller took some time this November to get cozy with a warm
-drink or an icey drink, depending on where you have it deployed, some chill
-vibes music, and a plated selection of bug fixes and features to snack on.
+drink or an iced drink, depending on where you have it deployed, some chill
+vibes tunes, and a plated selection of bug fixes and features to snack on.
 Let's share!
 
 ## Advisory: fail to reload PolicyServer certificate with mTLS (CVSS 2.3 score) 
@@ -56,7 +56,7 @@ PolicyServers). For subsequent Helm upgrades, our controller took ownership of
 rotating the CA certificate, and writing it in the respective Secret.
 
 This is an usual pattern for installations, but certain GitOps tools throw a
-wrench to it. For example, ArgoCD doesn't use Helm to render and install the
+wrench in it. For example, ArgoCD doesn't use Helm to render and install the
 templates as normal against a running Kubernetes cluster. It instead renders
 all the Helm templates in a vacuum, and then applies them. Which means that our
 chart cannot query the cluster to see if there's already a CA certificate that
@@ -64,7 +64,7 @@ doesn't need to be rotated nor overwritten.
 
 Therefore, for this release we have decided to refactor our certificate story.
 Now, the admission controller takes care of generating all the needed
-certificatess (CA, and leaf certs), create the Secret, and create the needed
+certificates (CA, and leaf certs), create the Secret, and create the needed
 Webhooks once the certificates are in place (so mutualTLS can work correctly).
 
 For achieving that, we have added 2 new modes to the controller binary:
@@ -144,7 +144,7 @@ We are proud to announce that `kwctl` can now compile existing CEL policies
 (Kubernetes ValidatingAdmissionPolicies, or other CEL policies in the wild)
 right into WebAssembly, so they can be run in our PolicyServers.
 
-This an alternative approach to our already existing [CEL
+This is an alternative approach to our already existing [CEL
 policy](https://artifacthub.io/packages/kubewarden/kubewarden-policy-library/cel-policy),
 that runs policies using the official CEL Go interpreter.
 
@@ -153,9 +153,9 @@ Being new, we are marking it as experimental on its first release for this
 https://docs.kubewarden.io/admission-controller/1.39/en/tutorials/writing-policies/CEL/02-compile-cel-to-wasm.html).
 
 We feel this is a great feature that opens new posibilities for us, and as such
-you will be reading more of it as it deserves its own dedicated blog post!
+you will be reading more on it as it deserves its own dedicated blog post!
 
-## One policy monorepo for cozy times
+## One policy monorepo for the future
 
 Before, the code for policies maintained by the Kubewarden team was distributed
 between github.com/kubewarden/policies (a monorepo for policies written in
