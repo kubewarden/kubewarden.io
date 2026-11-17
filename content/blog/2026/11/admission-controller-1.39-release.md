@@ -90,8 +90,6 @@ certificate
 story](https://docs.kubewarden.io/admission-controller/1.39/en/explanations/certificates.html),
 and also added a new page on how to recover from  [certificate
 problems](https://docs.kubewarden.io/admission-controller/1.39/en/howtos/certificate-recovery.html).
-Nobody deserves to rush for understanding if something in the cluster is not as
-peachy as it should!
 
 ### ArgoCD install simplified
 
