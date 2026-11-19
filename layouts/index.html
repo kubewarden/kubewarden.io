@@ -52,8 +52,19 @@
 
 <section class="section-touch" id="get-in-touch">
   <div class="wrap-lg">
-    {{ partial "section-heading.html" (dict "id" "get-in-touch" "title" "Get in Touch" "existingTarget" true) }}
-    <p class="section-lead">We hold monthly community meetings that are open to everybody.</p>
+    {{ partial "section-heading.html" (dict "id" "get-in-touch" "title" "Community" "existingTarget" true) }}
+    <p class="section-lead">Connect with the community, get help, or find your way into contributing.</p>
+
+    <div class="community-paths">
+      <article class="community-path">
+        <h3>Get help with Kubewarden</h3>
+        <p>Ask questions and share what’s worked for you in <a href="https://kubernetes.slack.com/archives/kubewarden" target="_blank" rel="noopener">#kubewarden on Slack<span class="sr-only"> (opens in new tab)</span></a>.</p>
+      </article>
+      <article class="community-path">
+        <h3>Contribute to Kubewarden</h3>
+        <p>Report a bug, improve the docs, write a policy, or contribute code. <a href="https://github.com/kubewarden/community/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Read the contributing guide<span class="sr-only"> (opens in new tab)</span></a> to get started. If you’re unsure where to help, ask in <a href="https://kubernetes.slack.com/archives/kubewarden-dev" target="_blank" rel="noopener">#kubewarden-dev on Slack<span class="sr-only"> (opens in new tab)</span></a>.</p>
+      </article>
+    </div>
 
     <div class="social-row">
       <a class="btn-outline" href="{{ .Site.Params.social.bluesky }}" target="_blank" rel="noopener">
@@ -64,9 +75,6 @@
       </a>
       <a class="btn-outline" href="{{ .Site.Params.social.mastodon }}" target="_blank" rel="me noopener">
         <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-mastodon"></use></svg>Mastodon<span class="sr-only"> (opens in new tab)</span>
-      </a>
-      <a class="btn-outline" href="{{ .Site.Params.social.slack }}" target="_blank" rel="noopener">
-        <svg class="icon icon-sm" aria-hidden="true"><use xlink:href="#icon-slack"></use></svg>Slack<span class="sr-only"> (opens in new tab)</span>
       </a>
     </div>
 
