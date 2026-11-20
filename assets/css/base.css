@@ -8,7 +8,7 @@
 }
 
 html {
-  // Preserve the current rem scale while respecting browser font preferences.
+  /* Preserve the current rem scale while respecting browser font preferences. */
   font-size: 62.5%;
 }
 
@@ -112,21 +112,22 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   justify-content: space-between;
   align-items: center;
   background: var(--surface);
+}
 
-  a img {
-    height: 40px;
-  }
+.sub-header a img {
+  height: 40px;
 }
 
 footer {
   justify-content: space-between;
   align-items: center;
+}
 
-  p, a {
-    color: var(--text-muted);
-    margin: 0;
-    font-size: 1.2rem;
-  }
+footer p,
+footer a {
+  color: var(--text-muted);
+  margin: 0;
+  font-size: 1.2rem;
 }
 
 hr {
@@ -172,10 +173,10 @@ table {
   margin: auto;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+}
 
-  thead th {
-    border-bottom: 1px solid var(--border);
-  }
+table thead th {
+  border-bottom: 1px solid var(--border);
 }
 
 th, td {
@@ -199,11 +200,11 @@ a.btn {
   align-items: center;
   border-radius: 3px;
   letter-spacing: 1px;
+}
 
-  &.no-bg {
-    background: transparent;
-    color: var(--link-color) !important;
-  }
+a.btn.no-bg {
+  background: transparent;
+  color: var(--link-color) !important;
 }
 
 section {
@@ -232,7 +233,7 @@ section {
   border: 0;
 }
 
-// Menu state, backdrop and progressive enhancement are owned by main.scss.
+/* Menu state, backdrop and progressive enhancement are owned by layout.css. */
 .menu-toggle {
   line-height: 1em;
   font-size: 1em;
@@ -302,21 +303,21 @@ section {
     margin: 0;
     flex-direction: row;
     align-items: center;
+  }
 
-    li {
-      display: inline-block;
-      padding: 0;
-      margin: 0;
-      border: none;
+  .main-menu ul li {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
 
-      &:last-child {
-        padding-right: 0;
-      }
-    }
+  .main-menu ul li:last-child {
+    padding-right: 0;
+  }
 
-    a.btn {
-      display: inline-flex;
-    }
+  .main-menu ul a.btn {
+    display: inline-flex;
   }
 
   .main-menu a {

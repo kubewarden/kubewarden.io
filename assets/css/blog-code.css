@@ -1,0 +1,78 @@
+/* Every token color meets normal-text contrast on this background. */
+.blog-single .blog-prose .chroma {
+  color: #f8f8f2;
+  background: #1a1a1f;
+}
+
+.blog-single .blog-prose .chroma .k,
+.blog-single .blog-prose .chroma .kc,
+.blog-single .blog-prose .chroma .kd,
+.blog-single .blog-prose .chroma .kn,
+.blog-single .blog-prose .chroma .kp,
+.blog-single .blog-prose .chroma .kr,
+.blog-single .blog-prose .chroma .kt,
+.blog-single .blog-prose .chroma .o,
+.blog-single .blog-prose .chroma .ow,
+.blog-single .blog-prose .chroma .nt { color: #ff8fbc; }
+
+.blog-single .blog-prose .chroma .na,
+.blog-single .blog-prose .chroma .nc,
+.blog-single .blog-prose .chroma .nd,
+.blog-single .blog-prose .chroma .ne,
+.blog-single .blog-prose .chroma .nf,
+.blog-single .blog-prose .chroma .fm { color: #b5e681; }
+
+.blog-single .blog-prose .chroma .nb,
+.blog-single .blog-prose .chroma .bp,
+.blog-single .blog-prose .chroma .no,
+.blog-single .blog-prose .chroma .nv,
+.blog-single .blog-prose .chroma .vc,
+.blog-single .blog-prose .chroma .vg,
+.blog-single .blog-prose .chroma .vi,
+.blog-single .blog-prose .chroma .vm { color: #8edce6; }
+
+.blog-single .blog-prose .chroma .s,
+.blog-single .blog-prose .chroma .sa,
+.blog-single .blog-prose .chroma .sb,
+.blog-single .blog-prose .chroma .sc,
+.blog-single .blog-prose .chroma .dl,
+.blog-single .blog-prose .chroma .sd,
+.blog-single .blog-prose .chroma .s2,
+.blog-single .blog-prose .chroma .se,
+.blog-single .blog-prose .chroma .sh,
+.blog-single .blog-prose .chroma .si,
+.blog-single .blog-prose .chroma .sx,
+.blog-single .blog-prose .chroma .sr,
+.blog-single .blog-prose .chroma .s1,
+.blog-single .blog-prose .chroma .ss { color: #e6db9c; }
+
+.blog-single .blog-prose .chroma .m,
+.blog-single .blog-prose .chroma .mb,
+.blog-single .blog-prose .chroma .mf,
+.blog-single .blog-prose .chroma .mh,
+.blog-single .blog-prose .chroma .mi,
+.blog-single .blog-prose .chroma .il,
+.blog-single .blog-prose .chroma .mo { color: #c7a9ff; }
+
+.blog-single .blog-prose .chroma .c,
+.blog-single .blog-prose .chroma .ch,
+.blog-single .blog-prose .chroma .cm,
+.blog-single .blog-prose .chroma .c1,
+.blog-single .blog-prose .chroma .cs,
+.blog-single .blog-prose .chroma .cp,
+.blog-single .blog-prose .chroma .cpf { color: #aaaab5; }
+
+.blog-single .blog-prose .chroma .err,
+.blog-single .blog-prose .chroma .gd,
+.blog-single .blog-prose .chroma .gr,
+.blog-single .blog-prose .chroma .gt { color: #ffabab; }
+
+.blog-single .blog-prose .chroma .gi { color: #b5e681; }
+
+.blog-single .blog-prose .chroma .gh,
+.blog-single .blog-prose .chroma .gu,
+.blog-single .blog-prose .chroma .gs { font-weight: bold; }
+
+.blog-single .blog-prose .chroma .ge { font-style: italic; }
+.blog-single .blog-prose .chroma .gl { text-decoration: underline; }
+.blog-single .blog-prose .chroma .line { display: flex; }

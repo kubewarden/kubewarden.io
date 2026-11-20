@@ -1,5 +1,5 @@
-// SUSE v2.001 release, full variable webfonts. See static/fonts/SOURCES.md.
-// License: /fonts/SUSE-OFL.txt (SIL Open Font License 1.1).
+/* SUSE v2.001 release, full variable webfonts. See static/fonts/SOURCES.md. */
+/* License: /fonts/SUSE-OFL.txt (SIL Open Font License 1.1). */
 @font-face {
   font-family: 'SUSE';
   src: url('/fonts/suse-v2.001-normal.woff2') format('woff2');

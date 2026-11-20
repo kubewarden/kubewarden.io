@@ -13,7 +13,7 @@ The original [MIT license](static/licenses/projects-theme.txt) applies to that c
 
 ## Local development
 
-Install Hugo Extended to compile the Sass styles, then start the local server:
+Install Hugo, then start the local server:
 
 ``` console
 $ hugo server -D
@@ -41,7 +41,7 @@ Other tabs and pages restored through browser history use the same choice.
 Without JavaScript, the site follows the device theme through CSS.
 If storage is blocked, the switch still works for the current page.
 
-`assets/sass/_theme.scss` defines the color roles for both themes.
+`assets/css/theme.css` defines the color roles for both themes.
 Component styles use these variables directly, without separate dark-theme selectors.
 Use `--link-color` for links, `--focus-color` for focus outlines, and the
 `--button-*` variables for primary buttons.
