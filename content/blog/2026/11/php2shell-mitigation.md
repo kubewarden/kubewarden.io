@@ -2,7 +2,7 @@
 title: "PHP2Shell: what happens after an attacker gains access"
 authors:
   - Dan Čermák
-date: 2026-11-24
+date: 2026-11-26
 components:
   - Runtime Enforcer
 types:
