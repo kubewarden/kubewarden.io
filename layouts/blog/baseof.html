@@ -17,10 +17,6 @@
 	{{ with .OutputFormats.Get "RSS" -}}
 		{{ printf `<link rel="%s" type="%s" href="%s" title="%s">` .Rel .MediaType.Type .RelPermalink $.Site.Title | safeHTML }}
 	{{- end }}
-
-	<!-- github buttons -->
-	<script async defer src="https://buttons.github.io/buttons.js"></script>
-	<script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
 </head>
 <body>
 	{{ if .Site.Params.gtm_id}}
