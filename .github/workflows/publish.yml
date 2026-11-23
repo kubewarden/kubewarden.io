@@ -10,14 +10,15 @@ on:
     - cron: '12 0 * * *'
 permissions:
   contents: read
-  pages: write
-  id-token: write
 concurrency:
   group: "pages"
   cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read # actions/configure-pages reads the Pages settings
     env:
       # Updated by updatecli/updatecli.d/updcli-hugo-ver.yml together
       # with HUGO_VERSION in netlify.toml
@@ -36,6 +37,8 @@ jobs:
           hugo version
       - name: Checkout Repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Test browser features
         run: node --test tests/*.test.mjs
       - name: Setup Pages
@@ -54,6 +57,9 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
