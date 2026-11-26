@@ -13,14 +13,14 @@ A new release of Runtime Enforcer just landed: [`v0.11.0`](https://github.com/ku
 
 This release includes several fixes and a new command line tool. It also contains
 breaking changes in the Helm chart and in the telemetry export. Before you
-upgrade, read the [upgrade notes](#upgrade-notes)!
+upgrade, read the [upgrade notes](#upgrade-notes).
 
 ## `wpgen`: draft and check policies without a cluster
 
 Before this release, you would promote a `WorkloadPolicyProposal` from the learn
 phase, or you had to write the policy by hand. This release adds `wpgen`, a new
 standalone command line tool that drafts a `WorkloadPolicy` from the contents of
-a container image! It does not need a cluster, so you can run it on a
+a container image. It does not need a cluster, so you can run it on a
 workstation or in a CI pipeline.
 
 ### Draft a policy without running the container
@@ -29,20 +29,20 @@ workstation or in a CI pipeline.
 as the output of `helm template`:
 
 ```console
-wpgen image registry.suse.com/suse/nginx:1.27
+wpgen image docker.io/library/nginx:1.27
 helm template my-release ./chart | wpgen workload -
 ```
 
 The draft starts in `monitor` mode and allows every program and script from the
 image. It cannot inspect files in volumes, files that the workload creates at
-runtime, or foreign roots. Trim the allow-list and test the policy in monitor
+runtime, or files in foreign root file systems. Trim the allow-list and test the policy in monitor
 mode before you switch it to `protect` mode.
 
 ### Find images with too many executables
 
 `wpgen` reports how many executables a policy drafted from each container image
 allows. When the count exceeds 50, `wpgen` prints a warning. For example,
-`registry.suse.com/suse/nginx:1.27` contains 234 executables but an nginx
+`docker.io/library/nginx:1.27` contains 504 executables but an nginx
 container usually only runs a few of those binaries.
 
 A policy that allows hundreds of executables is too lax and prevents nearly
@@ -60,7 +60,7 @@ wpgen check policy.yaml --image ghcr.io/example/my-app:1.1.0 --list-not-allowed
 ```
 
 `wpgen check` compares the paths that the policy allows with the executables in
-the new image, irrespective of whether the policy came from the learn phase or
+the new image. It does not matter whether the policy came from the learn phase or
 from `wpgen`. The report shows two kinds of difference:
 
 - Stale paths: the policy allows them, but the new image does not have them
@@ -157,7 +157,7 @@ has the full procedure.
 
 This release changes how we build and sign the release artifacts:
 
-- Container images: the Kubewarden release workflow builds the images,
+- Container images: the Kubewarden reusable workflow builds the images,
   with SLSA Build L3 provenance (a signed record of how a build ran). The
   identity of the signer changed, so the `cosign` commands for the images have
   changed.
@@ -176,8 +176,8 @@ tutorial has the commands for the images, the binaries, and the Helm chart.
 - Runtime Enforcer no longer reports, blocks, or learns the executions that an
   OCI runtime performs at the start of a container, such as `runc init`. This
   removes false positives. The exclusion does not work on nodes that isolate the
-  container runtime in a private mount namespace, there OCI runtime executions
-  remain being reported.
+  container runtime in a private mount namespace. On these nodes, Runtime Enforcer 
+  still reports the OCI runtime executions.
 - The delete webhook ignores Pods in the `Succeeded` or `Failed` phase. As a
   result, the Pods of finished Jobs and CronJobs no longer block the deletion
   of a `WorkloadPolicy`.
