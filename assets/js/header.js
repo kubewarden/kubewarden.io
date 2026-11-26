@@ -9,7 +9,8 @@ if (siteHeader) {
 
   // Keep keyboard focus visible even when the browser scrolls only minimally.
   document.addEventListener('focusin', event => {
-    if (getComputedStyle(siteHeader).position !== 'sticky' ||
+    if (!event.target.matches(':focus-visible') ||
+        getComputedStyle(siteHeader).position !== 'sticky' ||
         siteHeader.contains(event.target) || event.target.matches('.skip-link')) return;
     const bounds = event.target.getBoundingClientRect();
     const bottom = siteHeader.getBoundingClientRect().bottom;
