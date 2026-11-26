@@ -82,22 +82,19 @@ Verify that the Runtime Enforcer Pods are running:
 ```ShellSession
 ❯ kubectl get pods -n runtime-enforcer
 NAME                                                   READY   STATUS    RESTARTS   AGE
-runtime-enforcer-agent-6rr98                           1/1     Running   0          43s
-runtime-enforcer-agent-9wsvs                           1/1     Running   0          43s
-runtime-enforcer-agent-frmss                           1/1     Running   0          43s
-runtime-enforcer-agent-qdh8h                           1/1     Running   0          43s
-runtime-enforcer-agent-tjg2v                           1/1     Running   0          43s
-runtime-enforcer-controller-manager-76995d6d94-pl742   1/1     Running   0          43s
-runtime-enforcer-otel-collector-7875ddd497-gg4t5       1/1     Running   0          43s
+runtime-enforcer-agent-9kj7w                           1/1     Running   0          113s
+runtime-enforcer-agent-kjz7c                           1/1     Running   0          113s
+runtime-enforcer-agent-ppfml                           1/1     Running   0          113s
+runtime-enforcer-agent-ql24j                           1/1     Running   0          113s
+runtime-enforcer-controller-manager-6dbf7c8678-6jnf7   1/1     Running   0          113s
 ```
 
-Expect one agent per node, a controller, and an OpenTelemetry collector.
-If any component is missing or not running, consult the
-[troubleshooting guide](https://docs.kubewarden.io/runtime-enforcer/latest/en/troubleshooting.html)
+Expect one agent per node and the controller-manager. If any component is
+missing or not running, consult the [troubleshooting
+guide](https://docs.kubewarden.io/runtime-enforcer/latest/en/troubleshooting.html)
 or ask in our [community channels](/#get-in-touch).
 
 ## Simulating remote code execution
-
 
 We will not be creating a working exploit in this tutorial, as we only want to
 focus on the post-exploitation case. Therefore, we replicate the remote code
@@ -302,14 +299,14 @@ Inspect the resulting `WorkloadPolicy`:
 apiVersion: runtimeenforcer.kubewarden.io/v1alpha1
 kind: WorkloadPolicy
 metadata:
-  creationTimestamp: "2026-11-24T12:26:29Z"
+  creationTimestamp: "2026-11-26T10:41:52Z"
   generation: 1
   labels:
     runtimeenforcer.kubewarden.io/promoted-from: deploy-php2shell-demo
   name: deploy-php2shell-demo
   namespace: php-demo
-  resourceVersion: "225453"
-  uid: e5d638d9-589e-4b84-a47e-7eb37b694b41
+  resourceVersion: "15390"
+  uid: bcfad517-7173-4f0e-9d5f-d23a3f0fc250
 spec:
   mode: monitor
   rulesByContainer:
@@ -321,8 +318,9 @@ spec:
         - /usr/bin/sed
         - /usr/bin/readlink
         - /usr/bin/dirname
-        - /usr/sbin/httpd-prefork
         - /usr/bin/mkdir
+        - /usr/sbin/httpd-prefork
+        foreignRoot: Deny
 ```
 
 ## Connecting a policy to a workload
@@ -350,14 +348,14 @@ Inspect the `WorkloadPolicy` status. The following example shows the new
 apiVersion: runtimeenforcer.kubewarden.io/v1alpha1
 kind: WorkloadPolicy
 metadata:
-  creationTimestamp: "2026-11-24T12:26:29Z"
+  creationTimestamp: "2026-11-26T10:41:52Z"
   generation: 1
   labels:
     runtimeenforcer.kubewarden.io/promoted-from: deploy-php2shell-demo
   name: deploy-php2shell-demo
   namespace: php-demo
-  resourceVersion: "270688"
-  uid: e5d638d9-589e-4b84-a47e-7eb37b694b41
+  resourceVersion: "15452"
+  uid: bcfad517-7173-4f0e-9d5f-d23a3f0fc250
 spec:
   mode: monitor
   rulesByContainer:
@@ -369,14 +367,15 @@ spec:
         - /usr/bin/sed
         - /usr/bin/readlink
         - /usr/bin/dirname
-        - /usr/sbin/httpd-prefork
         - /usr/bin/mkdir
+        - /usr/sbin/httpd-prefork
+        foreignRoot: Deny
 status:
   activeViolationCount: 0
   observedGeneration: 1
   phase: Ready
-  successfulNodes: 3
-  totalNodes: 3
+  successfulNodes: 4
+  totalNodes: 4
   violationCount: 0
 ```
 
@@ -391,16 +390,15 @@ pid=23 script_owner=root
 wwwrun
 ```
 
-The violation is emitted as an OpenTelemetry event. Without a full OpenTelemetry
-Stack, we check the collectors logs directly:
+The violation is recorded by Runtime Enforcer and shows up as a violation event
+in the `WorkloadPolicy`'s status. We filter only the relevant output using
+`kubectl`:
 
 ```ShellSession
-❯ kubectl logs -n runtime-enforcer deployment/runtime-enforcer-otel-collector
-
-# lots of output
-policy_violation policy.name=deploy-php2shell-demo k8s.namespace.name=php-demo k8s.pod.name=php2shell-demo-6b7f77459c-h76vn container.name=php-apache proc.exepath=/usr/bin/bash node.name=k3s-node-b6d5bbd7d1bd4ed1a2a3197393db58a4 action=monitor
-policy_violation policy.name=deploy-php2shell-demo k8s.namespace.name=php-demo k8s.pod.name=php2shell-demo-6b7f77459c-h76vn container.name=php-apache proc.exepath=/usr/bin/whoami node.name=k3s-node-b6d5bbd7d1bd4ed1a2a3197393db58a4 action=monitor
-
+❯ kubectl get workloadpolicy deploy-php2shell-demo -n php-demo \
+      -o jsonpath='{range .status.violations[*]}{"- action: "}{.action}{", container: "}{.containerName}{", path: "}{.executablePath}{"\n"}{end}'
+- action: monitor, container: php-apache, path: /usr/bin/whoami
+- action: monitor, container: php-apache, path: /usr/bin/bash
 ```
 
 ## Blocking executables using the policy
@@ -421,11 +419,9 @@ kubectl patch workloadpolicy deploy-php2shell-demo -n php-demo --type=json \
 Verify that the policy reports mode `protect` and phase `Ready`:
 
 ```ShellSession
-❯ kubectl get workloadpolicy deploy-php2shell-demo \
-      -n php-demo \
-      -o jsonpath='{"spec.mode: "}{.spec.mode}{"\nstatus.phase: "}{.status.phase}{"\n"}'
-spec.mode: protect
-status.phase: Ready
+❯ kubectl runtime-enforcer policy show protection -n php-demo
+WORKLOAD                  KIND         POLICY                  MODE      STATUS
+php-demo/php2shell-demo   Deployment   deploy-php2shell-demo   Protect   Ready
 ```
 
 Repeat the request that simulates our remote code execution to call `whoami`:
@@ -437,15 +433,15 @@ pid=26 script_owner=root
 ```
 
 The HTTP request still succeeds, but in `protect` mode `whoami` produces no
-output as the call was blocked by Runtime Enforcer. The OpenTelemetry collector
-logs show that Runtime Enforcer blocked the shell execution:
+output as the call was blocked by Runtime Enforcer. The `WorkloadPolicy` status
+records the denied shell execution:
 
 ```ShellSession
-❯ kubectl logs -n runtime-enforcer deployment/runtime-enforcer-otel-collector
-
-# lots of output
-ScopeLog #0 violation-reporter
-policy_violation policy.name=deploy-php2shell-demo k8s.namespace.name=php-demo k8s.pod.name=php2shell-demo-6b7f77459c-h76vn container.name=php-apache proc.exepath=/usr/bin/bash node.name=k3s-node-b6d5bbd7d1bd4ed1a2a3197393db58a4 action=protect
+❯ kubectl get workloadpolicy deploy-php2shell-demo -n php-demo \
+      -o jsonpath='{range .status.violations[*]}{"- action: "}{.action}{", container: "}{.containerName}{", path: "}{.executablePath}{"\n"}{end}'
+- action: protect, container: php-apache, path: /usr/bin/bash
+- action: monitor, container: php-apache, path: /usr/bin/whoami
+- action: monitor, container: php-apache, path: /usr/bin/bash
 ```
 
 We have successfully blocked one potential exploit path!
