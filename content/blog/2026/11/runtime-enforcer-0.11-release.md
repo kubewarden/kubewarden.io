@@ -40,12 +40,12 @@ mode before you switch it to `protect` mode.
 
 ### Find images with too many executables
 
-`wpgen` reports how many executables a policy drafted from each container image
-allows. When the count exceeds 50, `wpgen` prints a warning. For example,
-`docker.io/library/nginx:1.27` contains 504 executables but an nginx
-container usually only runs a few of those binaries.
+`wpgen` reports how many executables each image contains. When the count exceeds
+50, `wpgen` prints a warning. For example, `docker.io/library/nginx:1.27`
+contains 504 executables but an nginx container usually only runs a few of those
+binaries.
 
-A policy that allows hundreds of executables is too lax and prevents nearly
+A policy that allowlists all 504 executables is too lax and prevents nearly
 nothing. `wpgen` therefore alerts you in such a case, so you can use it as a
 gating check in a CI pipeline.
 
@@ -61,7 +61,7 @@ wpgen check policy.yaml --image ghcr.io/example/my-app:1.1.0 --list-not-allowed
 
 `wpgen check` compares the paths that the policy allows with the executables in
 the new image. It does not matter whether the policy came from the learn phase or
-from `wpgen`. The report shows two kinds of difference:
+from `wpgen`. The report shows two kinds of differences:
 
 - Stale paths: the policy allows them, but the new image does not have them
   as executables. The new version may have removed or renamed them.
@@ -176,8 +176,8 @@ tutorial has the commands for the images, the binaries, and the Helm chart.
 - Runtime Enforcer no longer reports, blocks, or learns the executions that an
   OCI runtime performs at the start of a container, such as `runc init`. This
   removes false positives. The exclusion does not work on nodes that isolate the
-  container runtime in a private mount namespace. On these nodes, Runtime Enforcer 
-  still reports the OCI runtime executions.
+  container runtime in a private mount namespace. On these nodes, Runtime
+  Enforcer still reports the OCI runtime executions.
 - The delete webhook ignores Pods in the `Succeeded` or `Failed` phase. As a
   result, the Pods of finished Jobs and CronJobs no longer block the deletion
   of a `WorkloadPolicy`.
@@ -195,8 +195,8 @@ tutorial has the commands for the images, the binaries, and the Helm chart.
 
 ## Upgrade notes
 
-Runtime Enforcer supports the upgrade from `0.10.x` to `0.11.0`, we recommend
-starting from `0.10.1`. Do not skip a minor or major version in one step!
+Runtime Enforcer supports upgrading from 0.10.x to 0.11.0. Direct upgrades
+spanning more than one minor version are not supported.
 
 **CAUTION:** do not use `helm upgrade --reuse-values`. With this option, Helm
 keeps the old image tags, and the Pods run the v0.10 images.
